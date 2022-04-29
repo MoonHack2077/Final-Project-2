@@ -4,17 +4,27 @@
  */
 package Vista.Admin;
 
+import Controlador.ControladorHospital;
+import Modelo.Doctor;
+import Vista.VistaPrincipal;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author USER
  */
 public class GestionarDoctores extends javax.swing.JFrame {
 
+    private ControladorHospital controlador;
+    
     /**
      * Creates new form GestionarDoctores
      */
-    public GestionarDoctores() {
+    public GestionarDoctores(ControladorHospital controlador) {
         initComponents();
+        this.setLocationRelativeTo(null);
+        this.controlador = controlador;
+        setEnabledInputs(false);
     }
 
     /**
@@ -27,78 +37,317 @@ public class GestionarDoctores extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        txtNombre2 = new javax.swing.JTextField();
+        txtDocumento = new javax.swing.JTextField();
+        btnAñadir = new javax.swing.JButton();
+        btnBuscar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
+        btnEditar = new javax.swing.JButton();
+        txtEspecialidad = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        txtEdad = new javax.swing.JTextField();
+        btnVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "FOO", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 
+        jLabel1.setText("Nombre:");
+
+        jLabel2.setText("Documento: ");
+
+        jLabel3.setText("Especialidad");
+
+        txtNombre2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombre2KeyTyped(evt);
+            }
+        });
+
+        txtDocumento.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDocumentoKeyTyped(evt);
+            }
+        });
+
+        btnAñadir.setText("Añadir");
+        btnAñadir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAñadirActionPerformed(evt);
+            }
+        });
+
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
+
+        btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setText("Edad:");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(50, 50, 50)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jLabel2)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING))
+                    .addComponent(btnEliminar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnAñadir, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(126, 126, 126)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnBuscar)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(57, 57, 57)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtDocumento)
+                            .addComponent(txtNombre2)
+                            .addComponent(txtEspecialidad)
+                            .addComponent(txtEdad, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE))))
+                .addContainerGap(58, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(71, 71, 71)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(txtNombre2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(21, 21, 21)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(txtDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(24, 24, 24)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(txtEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(txtEdad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(45, 45, 45)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAñadir)
+                    .addComponent(btnBuscar))
+                .addGap(27, 27, 27)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnEliminar)
+                    .addComponent(btnEditar))
+                .addContainerGap(47, Short.MAX_VALUE))
         );
+
+        btnVolver.setText("Volver");
+        btnVolver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVolverActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(138, 138, 138)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(134, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(142, 142, 142)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addComponent(btnVolver)))
+                .addContainerGap(214, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(86, 86, 86)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(13, Short.MAX_VALUE)
+                .addComponent(btnVolver)
+                .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(72, Short.MAX_VALUE))
+                .addGap(53, 53, 53))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     /**
-     * @param args the command line arguments
+     * Metodo para limpiar el contenido de los textFields
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GestionarDoctores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GestionarDoctores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GestionarDoctores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GestionarDoctores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new GestionarDoctores().setVisible(true);
-            }
-        });
+    private void limpiarInputs(){
+        txtDocumento.setText("");
+        txtEdad.setText("");
+        txtNombre.setText("");
+        txtEspecialidad.setText("");
     }
+    
+    /**
+     * Metodo para activar o desactivar los botones de eliminar y editar
+     * @param enabled 
+     */
+    private void setEnabledInputs(boolean enabled){
+        btnEditar.setEnabled(enabled);
+        btnEliminar.setEnabled(enabled);
+    }
+    
+    /*** VALIDACIONES ***/
+    /*
+    private void txtNombre2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombre2KeyTyped
+        VistaParqueadero.vg.validarCaracteresEspeciales(evt);
+    }//GEN-LAST:event_txtNombre2KeyTyped
+
+    private void txtDocumentoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDocumentoKeyTyped
+        VistaParqueadero.vg.validarCaracteresEspeciales(evt);
+        VistaParqueadero.vg.soloNumeros(evt);
+    }//GEN-LAST:event_txtDocumentoKeyTyped
+    */
+    
+    /*** EVENTOS DE BOTONES ***/
+    
+    /**
+     * Metodo que maneja el evento del boton de añadir para ejecutar su accion
+     * @param evt 
+     */
+    private void btnAñadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirActionPerformed
+        //Se obtienen los valores de los textFields
+        int documento = Integer.parseInt(txtDocumento.getText());
+        int edad = Integer.parseInt(txtEdad.getText());
+        String especialidad = txtEspecialidad.getText();
+        String nombre = txtNombre.getText();
+
+        //Creamos al doctor con sus respectivos datos
+        Doctor doctor = new Doctor(nombre,documento,edad, especialidad);
+        
+
+        //Verificamos se se añade el empleado
+        boolean añadido = controlador.añadirDoctor(doctor);
+        if(añadido){
+            JOptionPane.showMessageDialog(null, "Doctor con el documento: " + documento + " añadido");
+            limpiarInputs();
+        }else{
+            JOptionPane.showMessageDialog(null, "No se pudo añadir al doctor");
+        }
+        
+    }//GEN-LAST:event_btnAñadirActionPerformed
+
+    /**
+     * Metodo que maneja el evento del boton de buscar para ejecutar su accion
+     * @param evt 
+     */
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        // Se obtiene el documento
+        int documento = Integer.parseInt(txtDocumento.getText());
+
+
+        //Verificamos si el empleado fue encontrado
+        Doctor encontrado = controlador.buscarDoctor(documento);
+        if(encontrado != null){
+            txtNombre.setText(encontrado.getNombre());
+            txtEspecialidad.setText(encontrado.getEspecialidad());
+            setEnabledInputs(true);
+        }else{
+            JOptionPane.showMessageDialog(null, "Doctor no encontrado");
+        }
+        
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    /**
+     * Metodo que maneja el evento del boton de eliminar para ejecutar su accion
+     * @param evt 
+     */
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // Se obtiene el documento
+        int documento = Integer.parseInt(txtDocumento.getText());
+
+        //Verificamos se se elimina el empleado
+        boolean eliminado = controlador.eliminarDoctor(documento);
+        if(eliminado){
+            JOptionPane.showMessageDialog(null, "Doctor con el documento: " + documento + " eliminado");
+            limpiarInputs();
+            setEnabledInputs(false);
+        }else{
+            JOptionPane.showMessageDialog(null, "No se pudo eliminar al doctor");
+        }
+        
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    /**
+     * Metodo que maneja el evento del boton de editar para ejecutar su accion
+     * @param evt 
+     */
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        // Se obtienen los valores de lso textFields
+        int documento = Integer.parseInt(txtDocumento.getText());
+        int edad = Integer.parseInt(txtEdad.getText());
+        String especialidad = txtEspecialidad.getText();
+        String nombre = txtNombre.getText();
+        
+        Doctor doctor = new Doctor(nombre,documento,edad, especialidad);
+        
+        //Verificamos si los datos del empleado fueron editados
+        boolean editado = controlador.editarDoctor(doctor);
+        if(editado){
+            JOptionPane.showMessageDialog(null, "Doctor con el documento: " + documento + " editado");
+            limpiarInputs();
+            setEnabledInputs(false);
+        }else{
+            JOptionPane.showMessageDialog(null, "No se pudo editar la información del doctor");
+        }
+        
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    /**
+     * Metodo que maneja el evento del boton de volver para ejecutar su accion
+     * @param evt 
+     */
+    private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
+        VistaAdmin admin = new VistaAdmin(controlador);
+        admin.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnVolverActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAñadir;
+    private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnVolver;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JTextField txtDocumento;
+    private javax.swing.JTextField txtEdad;
+    private javax.swing.JTextField txtEspecialidad;
+    private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtNombre1;
+    private javax.swing.JTextField txtNombre2;
     // End of variables declaration//GEN-END:variables
 }
