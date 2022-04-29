@@ -11,11 +11,15 @@ package Modelo;
 public class Paciente extends Persona {
     private boolean hasSisben;
     private boolean hasEps;
+    private boolean hasCita;
     
-    public Paciente(String nombre, int documento, int edad, boolean hasSisben, boolean hasEps){
+    public Paciente(String nombre, int documento, int edad, 
+            boolean hasSisben, boolean hasEps, boolean hasCita)
+    {
         super(nombre, documento, edad);
         this.hasSisben = hasSisben;
         this.hasEps = hasEps;
+        this.hasCita = hasCita;
     }
 
     /**
@@ -44,5 +48,19 @@ public class Paciente extends Persona {
      */
     public void setHasEps(boolean hasEps) {
         this.hasEps = hasEps;
+    }
+
+    /**
+     * @return the hasCita
+     */
+    public boolean isHasCita() {
+        return hasCita;
+    }
+
+    /**
+     * @param hasCita the hasCita to set
+     */
+    public void setHasCita(boolean hasCita) {
+        this.hasCita = hasCita;
     }
 }
