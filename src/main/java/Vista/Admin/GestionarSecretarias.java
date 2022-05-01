@@ -293,11 +293,11 @@ public class GestionarSecretarias extends javax.swing.JFrame {
         //Verificamos si los datos del empleado fueron editados
         boolean editado = controlador.editarSecretaria(secretaria);
         if(editado){
-            JOptionPane.showMessageDialog(null, "Doctor con el documento: " + documento + " editado");
+            JOptionPane.showMessageDialog(null, "Secretaria con el documento: " + documento + " editado");
             limpiarInputs();
             setEnabledInputs(false);
         }else{
-            JOptionPane.showMessageDialog(null, "No se pudo editar la información del doctor");
+            JOptionPane.showMessageDialog(null, "No se pudo editar la información de la secretaria");
         }
     }//GEN-LAST:event_btnEditarActionPerformed
      /**
