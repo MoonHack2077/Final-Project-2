@@ -233,7 +233,7 @@ public class GestionarSecretarias extends javax.swing.JFrame {
        
        boolean añadido = controlador.añadirSecretaria(secretaria);
        if(añadido){
-           JOptionPane.showMessageDialog(null, "Secretaria con el documento: " + documento + " añadida");
+           JOptionPane.showMessageDialog(null, "Secretaria con el documento: " + documento + " ha sido añadida");
             
         }else{
             JOptionPane.showMessageDialog(null, "No se pudo añadir a la secretaria");
@@ -269,7 +269,7 @@ public class GestionarSecretarias extends javax.swing.JFrame {
         //Verificamos se se elimina el empleado
         boolean eliminado = controlador.eliminarSecretaria(documento);
         if(eliminado){
-            JOptionPane.showMessageDialog(null, "Secretaria con el documento: " + documento + " eliminada");
+            JOptionPane.showMessageDialog(null, "Secretaria con el documento: " + documento + " ha sido eliminada");
             limpiarInputs();
             setEnabledInputs(false);
         }else{
@@ -293,7 +293,7 @@ public class GestionarSecretarias extends javax.swing.JFrame {
         //Verificamos si los datos del empleado fueron editados
         boolean editado = controlador.editarSecretaria(secretaria);
         if(editado){
-            JOptionPane.showMessageDialog(null, "Secretaria con el documento: " + documento + " editado");
+            JOptionPane.showMessageDialog(null, "Secretaria con el documento: " + documento + " ha sido editado");
             limpiarInputs();
             setEnabledInputs(false);
         }else{
