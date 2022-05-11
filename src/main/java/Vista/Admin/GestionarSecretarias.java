@@ -43,7 +43,7 @@ public class GestionarSecretarias extends javax.swing.JFrame {
         txtDocumento.setText("");
         txtEdad.setText("");
         txtNombre.setText("");
-        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -247,10 +247,10 @@ public class GestionarSecretarias extends javax.swing.JFrame {
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         int documento = Integer.parseInt(txtDocumento.getText());
         
-//Verificamos si el empleado fue encontrado
-        Secretaria encontrado = controlador.buscarSecretaria(documento);
-        if(encontrado != null){
-            txtNombre.setText(encontrado.getNombre());
+        //Verificamos si la secretaria fue encontrada
+        Secretaria encontrada = controlador.buscarSecretaria(documento);
+        if(encontrada != null){
+            txtNombre.setText(encontrada.getNombre());
             txtDocumento.setText(String.valueOf(documento));
             setEnabledInputs(true);
         }else{
@@ -301,59 +301,29 @@ public class GestionarSecretarias extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnEditarActionPerformed
      /**
-     * Metodo que maneja el evento del boton de volver a la ventana de administrador para ejecutar su accion
+     * Metodo que maneja el evento del boton de volver a la ventana de administrador 
      * @param evt 
      */
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-     VistaAdmin admin = new VistaAdmin(controlador);
+        VistaAdmin admin = new VistaAdmin(controlador);
         admin.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnVolverActionPerformed
-/** */
+    
+    /**
+     * Metodo que maneja el evento del boton de limpiar para resetear los textFields
+     * @param evt 
+     */
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
-      txtNombre.setText(" ");
-      txtEdad.setText(" ");
-      txtDocumento.setText(" ");
+      txtNombre.setText("");
+      txtEdad.setText("");
+      txtDocumento.setText("");
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombreActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GestionarSecretarias.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GestionarSecretarias.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GestionarSecretarias.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GestionarSecretarias.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-            new GestionarSecretarias().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAñadir;

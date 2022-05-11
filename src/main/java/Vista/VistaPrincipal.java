@@ -4,6 +4,7 @@
  */
 package Vista;
 
+import Controlador.ControladorHospital;
 import Vista.Admin.VistaAdmin;
 import Vista.Secretaria.VistaSecretaria;
 import Vista.Paciente.VistaPaciente;
@@ -14,7 +15,8 @@ import Vista.Doctor.VistaDoctor;
  * @author USER
  */
 public class VistaPrincipal extends javax.swing.JFrame {
-
+    
+    private ControladorHospital controlador;
     /**
      * Creates new form VistaPrincipal
      */
@@ -22,7 +24,10 @@ public class VistaPrincipal extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
     }
-
+    public VistaPrincipal(ControladorHospital controlador){
+        initComponents();
+        this.setLocationRelativeTo(null);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -126,7 +131,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminActionPerformed
-        VistaAdmin admin = new VistaAdmin(); //En el contructor hay que pasarle el controlador
+        VistaAdmin admin = new VistaAdmin(controlador); //En el contructor hay que pasarle el controlador
         admin.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnAdminActionPerformed
@@ -136,7 +141,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnDoctorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoctorActionPerformed
-        VistaDoctor doctor = new VistaDoctor(); //En el contructor hay que pasarle el controlador
+        VistaDoctor doctor = new VistaDoctor(controlador); //En el contructor hay que pasarle el controlador
         doctor.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnDoctorActionPerformed
@@ -146,7 +151,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnSecretariaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSecretariaActionPerformed
-        VistaSecretaria secretaria = new VistaSecretaria(); //En el contructor hay que pasarle el controlador
+        VistaSecretaria secretaria = new VistaSecretaria(controlador); //En el contructor hay que pasarle el controlador
         secretaria.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnSecretariaActionPerformed

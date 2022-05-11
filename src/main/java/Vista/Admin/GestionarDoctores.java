@@ -6,7 +6,6 @@ package Vista.Admin;
 
 import Controlador.ControladorHospital;
 import Modelo.Doctor;
-import Vista.VistaPrincipal;
 import javax.swing.JOptionPane;
 
 /**
