@@ -225,10 +225,12 @@ public class GestionarSecretarias extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnAñadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirActionPerformed
+       //Obtenemos los datos
        String nombre = txtNombre.getText();
        int documento = Integer.parseInt(txtDocumento.getText());
        int edad = Integer.parseInt(txtEdad.getText());
        
+       //Creamos la secretaria
        Secretaria secretaria = new Secretaria(nombre, documento, edad);
        
        boolean añadido = controlador.añadirSecretaria(secretaria);
@@ -240,6 +242,7 @@ public class GestionarSecretarias extends javax.swing.JFrame {
         }
        
     }//GEN-LAST:event_btnAñadirActionPerformed
+    
     /**
      * Metodo que maneja el evento del boton de buscar secretaria para ejecutar su accion
      * @param evt 
@@ -249,16 +252,20 @@ public class GestionarSecretarias extends javax.swing.JFrame {
         
         //Verificamos si la secretaria fue encontrada
         Secretaria encontrada = controlador.buscarSecretaria(documento);
+        
+        //EXCEPCION
         if(encontrada != null){
             txtNombre.setText(encontrada.getNombre());
             txtDocumento.setText(String.valueOf(documento));
+            txtEdad.setText(String.valueOf(encontrada.getEdad()));
             setEnabledInputs(true);
         }else{
             JOptionPane.showMessageDialog(null, "Secretaria no encontrada");
         }
         
     }//GEN-LAST:event_btnBuscarActionPerformed
-     /**
+    
+    /**
      * Metodo que maneja el evento del boton de eliminar secretaria para ejecutar su accion
      * @param evt 
      */
@@ -268,6 +275,8 @@ public class GestionarSecretarias extends javax.swing.JFrame {
 
         //Verificamos se se elimina el empleado
         boolean eliminado = controlador.eliminarSecretaria(documento);
+        
+        //EXCEPCION
         if(eliminado){
             JOptionPane.showMessageDialog(null, "Secretaria con el documento: " + documento + " ha sido eliminada");
             limpiarInputs();
@@ -290,7 +299,7 @@ public class GestionarSecretarias extends javax.swing.JFrame {
         
         Secretaria secretaria = new Secretaria(nombre,documento, edad);
         
-        //Verificamos si los datos del empleado fueron editados
+        //EXCEPCION
         boolean editado = controlador.editarSecretaria(secretaria);
         if(editado){
             JOptionPane.showMessageDialog(null, "Secretaria con el documento: " + documento + " ha sido editado");

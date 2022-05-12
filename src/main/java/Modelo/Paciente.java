@@ -4,6 +4,8 @@
  */
 package Modelo;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author USER
@@ -12,6 +14,7 @@ public class Paciente extends Persona {
     private boolean hasSisben;
     private boolean hasEps;
     private boolean hasCita;
+    private ArrayList<String> historial;
     
     public Paciente(String nombre, int documento, int edad, 
             boolean hasSisben, boolean hasEps, boolean hasCita)
@@ -20,6 +23,7 @@ public class Paciente extends Persona {
         this.hasSisben = hasSisben;
         this.hasEps = hasEps;
         this.hasCita = hasCita;
+        this.historial = new ArrayList<>();
     }
 
     /**
@@ -62,5 +66,12 @@ public class Paciente extends Persona {
      */
     public void setHasCita(boolean hasCita) {
         this.hasCita = hasCita;
+    }
+
+    /**
+     * @return the historial
+     */
+    public ArrayList<String> getHistorial() {
+        return historial;
     }
 }

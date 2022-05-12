@@ -4,6 +4,8 @@
  */
 package Controlador;
 
+import Excepciones.MayorDeEdad;
+import Modelo.Cita;
 import Modelo.Doctor;
 import Modelo.Paciente;
 import Modelo.Secretaria;
@@ -17,13 +19,16 @@ public class ControladorHospital {
     private ArrayList<Doctor> doctores;
     private ArrayList<Secretaria> secretarias;
     private ArrayList<Paciente> pacientes;
+    private ArrayList<Cita> citas;
     
     public ControladorHospital(){
         doctores = new ArrayList<>();
         secretarias = new ArrayList<>();
         pacientes = new ArrayList<>();
+        citas = new ArrayList<>();
     }
 
+    
     /********* GESTION DOCTORES *********/
     
     /**
@@ -31,8 +36,7 @@ public class ControladorHospital {
      * @param documento
      * @return doctor si lo encuentra, de lo contrario null
      */
-    public Doctor buscarDoctor(int documento){
-    
+    public Doctor buscarDoctor(int documento){   
         for (Doctor doctor : doctores) {
             if(doctor.getDocumento() == documento) return doctor;
         }
@@ -44,10 +48,11 @@ public class ControladorHospital {
      * @param doctor
      * @return true si pudo añadirlo, de lo contrario false;
      */
-    public boolean añadirDoctor(Doctor doctor){
+    public boolean añadirDoctor(Doctor doctor) throws MayorDeEdad{
         Doctor aux = buscarDoctor(doctor.getDocumento());
         
         if(aux == null){
+            if( doctor.getEdad() < 18) throw new MayorDeEdad();
             doctores.add(doctor);
             return true;
         }
@@ -174,8 +179,7 @@ public class ControladorHospital {
     }
     
     
-    
-  
+     
     /********* GESTION PACIENTES *********/
     /**
      * Metodo para buscar un paciente registrado por medio del documento
@@ -249,6 +253,56 @@ public class ControladorHospital {
         return false;
     }
     
+    /********* GESTION CITAS *********/
+    /**
+     * Metodo para buscar una cita registrada por medio del documento del paciente
+     * @param documento
+     * @return cita si la encuentra, de lo contrario null
+     */
+    public Cita buscarCita(int documento){
+    
+        for (Cita cita : citas) {
+            if(cita.getPaciente().getDocumento() == documento) return cita;
+        }
+        return null;
+    }
+    
+    /**
+     * Metodo para añadir una cita
+     * @param doctor
+     * @return true si pudo añadirla, de lo contrario false;
+     */
+    public boolean añadirCita(Cita cita){
+        Cita aux = buscarCita(cita.getPaciente().getDocumento());
+        
+        if(aux == null){
+            citas.add(cita);
+            return true;
+        }
+        
+        return false;
+    }
+    
+    /**
+     * Metodo para eliminar una cita almacenada
+     * @param documento
+     * @return true si pudo eliminarla, de lo contrario false
+     */
+    public boolean eliminarCita(int documento){
+        Cita aux = buscarCita(documento);
+        
+        if( aux != null ){
+            for (int i = 0; i < citas.size(); i++) {
+                if(citas.get(i).getPaciente().getDocumento() == documento){
+                    citas.remove(i);
+                    return true;
+                }
+                
+            }
+        }
+        return false;
+    }
+    
     
     
     /**
@@ -259,24 +313,10 @@ public class ControladorHospital {
     }
 
     /**
-     * @param doctores the doctores to set
-     */
-    public void setDoctores(ArrayList<Doctor> doctores) {
-        this.doctores = doctores;
-    }
-
-    /**
      * @return the secretarias
      */
     public ArrayList<Secretaria> getSecretarias() {
         return secretarias;
-    }
-
-    /**
-     * @param secretarias the secretarias to set
-     */
-    public void setSecretarias(ArrayList<Secretaria> secretarias) {
-        this.secretarias = secretarias;
     }
 
     /**
@@ -287,10 +327,11 @@ public class ControladorHospital {
     }
 
     /**
-     * @param pacientes the pacientes to set
+     * @return the citas
      */
-    public void setPacientes(ArrayList<Paciente> pacientes) {
-        this.pacientes = pacientes;
+    public ArrayList<Cita> getCitas() {
+        return citas;
     }
+
             
 }

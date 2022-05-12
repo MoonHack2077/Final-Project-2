@@ -61,18 +61,6 @@ public class GestionarDoctores extends javax.swing.JFrame {
 
         jLabel3.setText("Especialidad");
 
-        txtNombre2.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtNombre2KeyTyped(evt);
-            }
-        });
-
-        txtDocumento.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtDocumentoKeyTyped(evt);
-            }
-        });
-
         btnAñadir.setText("Añadir");
         btnAñadir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -230,17 +218,6 @@ public class GestionarDoctores extends javax.swing.JFrame {
         btnEliminar.setEnabled(enabled);
     }
     
-    /*** VALIDACIONES ***/
-    /*
-    private void txtNombre2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombre2KeyTyped
-        VistaParqueadero.vg.validarCaracteresEspeciales(evt);
-    }//GEN-LAST:event_txtNombre2KeyTyped
-
-    private void txtDocumentoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDocumentoKeyTyped
-        VistaParqueadero.vg.validarCaracteresEspeciales(evt);
-        VistaParqueadero.vg.soloNumeros(evt);
-    }//GEN-LAST:event_txtDocumentoKeyTyped
-    */
     
     /*** EVENTOS DE BOTONES ***/
     
@@ -284,6 +261,7 @@ public class GestionarDoctores extends javax.swing.JFrame {
         if(encontrado != null){
             txtNombre2.setText(encontrado.getNombre());
             txtEspecialidad.setText(encontrado.getEspecialidad());
+            txtEdad.setText(String.valueOf(encontrado.getEdad()));
             setEnabledInputs(true);
         }else{
             JOptionPane.showMessageDialog(null, "Doctor no encontrado");
