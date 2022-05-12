@@ -8,6 +8,7 @@ import Controlador.ControladorHospital;
 import Modelo.Cita;
 import Modelo.Doctor;
 import Modelo.Paciente;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JOptionPane;
 
@@ -19,6 +20,7 @@ public class SolicitarCita extends javax.swing.JFrame {
 
     private ControladorHospital controlador;
     private javax.swing.JFrame vistaVolver;
+    
     /**
      * Creates new form GestionarCita
      */
@@ -27,6 +29,8 @@ public class SolicitarCita extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         this.controlador = controlador;
         this.vistaVolver = vistaVolver;
+        llenarComboDoctores();
+        llenarComboPacientes();
     }
 
     /**
@@ -40,7 +44,7 @@ public class SolicitarCita extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         cbxDoctores = new javax.swing.JComboBox();
-        cbxPaciente = new javax.swing.JComboBox();
+        cbxPacientes = new javax.swing.JComboBox();
         jLabel3 = new javax.swing.JLabel();
         cbxDia = new javax.swing.JComboBox<>();
         cbxMes = new javax.swing.JComboBox<>();
@@ -78,7 +82,7 @@ public class SolicitarCita extends javax.swing.JFrame {
                 .addGap(37, 37, 37)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtAñoCita, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbxPaciente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cbxPacientes, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(cbxDoctores, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
                     .addComponent(cbxDia, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -93,7 +97,7 @@ public class SolicitarCita extends javax.swing.JFrame {
                 .addGap(22, 22, 22)
                 .addComponent(cbxDoctores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(cbxPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cbxPacientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -144,13 +148,37 @@ public class SolicitarCita extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     /**
+     * Metodo que se encarga de llenar el combobox con los doctres y su especialidad para ser seleccionados
+     */
+    private void llenarComboDoctores(){
+        cbxDoctores.removeAllItems();
+        cbxDoctores.addItem("Seleccione un doctor");
+        ArrayList<Doctor> doctores = controlador.getDoctores();
+        for (Doctor doctor : doctores) {
+            cbxDoctores.addItem(doctor);
+        }
+    }
+    
+    /**
+     * Metodo que se encarga de llenar el combobox con los pacientes para ser seleccionados
+     */
+    private void llenarComboPacientes(){
+        cbxPacientes.removeAllItems();
+        cbxPacientes.addItem("Seleccione un paciente");
+        ArrayList<Paciente> pacientes = controlador.getPacientes();
+        for (Paciente paciente : pacientes) {
+            cbxPacientes.addItem(paciente);
+        }
+    }
+    
+    /**
      * Metodo que maneja el evento del boton solicitar para ejecutar su acción
      * @param evt 
      */
     private void btnSolicitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSolicitarActionPerformed
         //Obteniendo los datos
         Doctor doctor = (Doctor) cbxDoctores.getSelectedItem();
-        Paciente paciente = (Paciente) cbxPaciente.getSelectedItem();
+        Paciente paciente = (Paciente) cbxPacientes.getSelectedItem();
         int dia = Integer.parseInt(cbxDia.getSelectedItem().toString());
         int hora = Integer.parseInt(cbxHora.getSelectedItem().toString());
         int mes = Integer.parseInt(cbxMes.getSelectedItem().toString());
@@ -187,11 +215,10 @@ public class SolicitarCita extends javax.swing.JFrame {
     private javax.swing.JComboBox cbxDoctores;
     private javax.swing.JComboBox<String> cbxHora;
     private javax.swing.JComboBox<String> cbxMes;
-    private javax.swing.JComboBox cbxPaciente;
+    private javax.swing.JComboBox cbxPacientes;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField txtAño;
     private javax.swing.JTextField txtAñoCita;
     // End of variables declaration//GEN-END:variables
 }

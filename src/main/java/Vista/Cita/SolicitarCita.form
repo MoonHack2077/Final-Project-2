@@ -67,7 +67,7 @@
                   <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="txtAñoCita" alignment="0" min="-2" pref="62" max="-2" attributes="0"/>
-                      <Component id="cbxPaciente" max="32767" attributes="0"/>
+                      <Component id="cbxPacientes" max="32767" attributes="0"/>
                       <Component id="cbxDoctores" max="32767" attributes="0"/>
                       <Component id="jLabel3" alignment="0" pref="155" max="32767" attributes="0"/>
                       <Component id="cbxDia" alignment="0" max="32767" attributes="0"/>
@@ -85,7 +85,7 @@
                   <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                   <Component id="cbxDoctores" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="cbxPaciente" min="-2" max="-2" attributes="0"/>
+                  <Component id="cbxPacientes" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                   <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -114,7 +114,7 @@
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value=""/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JComboBox" name="cbxPaciente">
+        <Component class="javax.swing.JComboBox" name="cbxPacientes">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="0"/>

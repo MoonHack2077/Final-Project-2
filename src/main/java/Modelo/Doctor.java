@@ -41,4 +41,11 @@ public class Doctor extends Persona {
     public ArrayList<Date> getAgenda() {
         return agenda;
     }
+
+    @Override
+    public String toString() {
+        return getNombre() + " - " + getEspecialidad();
+    }
+    
+    
 }

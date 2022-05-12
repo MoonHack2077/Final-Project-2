@@ -45,10 +45,10 @@ public class GestionarDoctores extends javax.swing.JFrame {
         btnBuscar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
-        txtEspecialidad = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         txtEdad = new javax.swing.JTextField();
         btnLimpiar = new javax.swing.JButton();
+        cbxEspecialidad = new javax.swing.JComboBox<>();
         btnVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -98,6 +98,8 @@ public class GestionarDoctores extends javax.swing.JFrame {
             }
         });
 
+        cbxEspecialidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione una especialidad", "Medico General", "Dermatologo", "Odontologo" }));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -105,22 +107,23 @@ public class GestionarDoctores extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addGap(55, 55, 55)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel3)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(txtDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtNombre2, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(54, 54, 54)
-                                .addComponent(jLabel4)))
-                        .addGap(28, 28, 28)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txtDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtNombre2, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtEdad, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(28, 28, 28)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(txtEdad)
+                                    .addComponent(cbxEspecialidad, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addGap(18, 18, 18)
                         .addComponent(btnLimpiar))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -139,21 +142,21 @@ public class GestionarDoctores extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(67, 67, 67)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
                     .addComponent(txtNombre2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnLimpiar))
+                    .addComponent(btnLimpiar)
+                    .addComponent(jLabel1))
                 .addGap(13, 13, 13)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(txtEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
+                    .addComponent(cbxEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addGap(27, 27, 27)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(txtEdad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtEdad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
                 .addGap(45, 45, 45)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAñadir)
@@ -189,7 +192,7 @@ public class GestionarDoctores extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(9, Short.MAX_VALUE)
+                .addContainerGap(10, Short.MAX_VALUE)
                 .addComponent(btnVolver)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -206,7 +209,7 @@ public class GestionarDoctores extends javax.swing.JFrame {
         txtDocumento.setText("");
         txtEdad.setText("");
         txtNombre2.setText("");
-        txtEspecialidad.setText("");
+        cbxEspecialidad.setSelectedItem("Seleccione una especialidad");
     }
     
     /**
@@ -229,7 +232,7 @@ public class GestionarDoctores extends javax.swing.JFrame {
         //Se obtienen los valores de los textFields
         int documento = Integer.parseInt(txtDocumento.getText());
         int edad = Integer.parseInt(txtEdad.getText());
-        String especialidad = txtEspecialidad.getText();
+        String especialidad = cbxEspecialidad.getSelectedItem().toString();
         String nombre = txtNombre2.getText();
 
         //Creamos al doctor con sus respectivos datos
@@ -260,7 +263,7 @@ public class GestionarDoctores extends javax.swing.JFrame {
         Doctor encontrado = controlador.buscarDoctor(documento);
         if(encontrado != null){
             txtNombre2.setText(encontrado.getNombre());
-            txtEspecialidad.setText(encontrado.getEspecialidad());
+            cbxEspecialidad.setSelectedItem(encontrado.getEspecialidad());
             txtEdad.setText(String.valueOf(encontrado.getEdad()));
             setEnabledInputs(true);
         }else{
@@ -297,12 +300,13 @@ public class GestionarDoctores extends javax.swing.JFrame {
         // Se obtienen los valores de lso textFields
         int documento = Integer.parseInt(txtDocumento.getText());
         int edad = Integer.parseInt(txtEdad.getText());
-        String especialidad = txtEspecialidad.getText();
+        String especialidad = cbxEspecialidad.getSelectedItem().toString();
         String nombre = txtNombre2.getText();
         
+        //Creamos al doctor con la nueva informacion
         Doctor doctor = new Doctor(nombre,documento,edad, especialidad);
         
-        //Verificamos si los datos del empleado fueron editados
+        //Verificamos si los datos del doctor fueron editados
         boolean editado = controlador.editarDoctor(doctor);
         if(editado){
             JOptionPane.showMessageDialog(null, "Doctor con el documento: " + documento + " editado");
@@ -324,11 +328,15 @@ public class GestionarDoctores extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnVolverActionPerformed
 
+    /**
+     * Metodo que maneja el evento del boton de limpiar para resetear los textFields
+     * @param evt 
+     */
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
-    txtNombre2.setText(" ");
-    txtDocumento.setText(" ");
-    txtEspecialidad.setText(" ");
-    txtEdad.setText(" ");
+    txtNombre2.setText("");
+    txtDocumento.setText("");
+    cbxEspecialidad.setSelectedItem("Seleccione una especialidad");
+    txtEdad.setText("");
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
 
@@ -339,6 +347,7 @@ public class GestionarDoctores extends javax.swing.JFrame {
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnVolver;
+    private javax.swing.JComboBox<String> cbxEspecialidad;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -346,7 +355,6 @@ public class GestionarDoctores extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField txtDocumento;
     private javax.swing.JTextField txtEdad;
-    private javax.swing.JTextField txtEspecialidad;
     private javax.swing.JTextField txtNombre2;
     // End of variables declaration//GEN-END:variables
 }

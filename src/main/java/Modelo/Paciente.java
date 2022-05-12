@@ -74,4 +74,11 @@ public class Paciente extends Persona {
     public ArrayList<String> getHistorial() {
         return historial;
     }
+
+    @Override
+    public String toString() {
+        return getNombre() + " - " + getDocumento();
+    }
+    
+    
 }
