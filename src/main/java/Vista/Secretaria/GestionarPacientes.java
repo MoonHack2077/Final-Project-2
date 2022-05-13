@@ -22,6 +22,13 @@ public class GestionarPacientes extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         this.controlador = controlador;
+        setEnabledInputs(false);
+        /*Los botones del sisben y eps se deben manejar así
+        * porque el paciente solo puede tener uno de ellos, no ambos
+        * Esto hace que al seleccionar uno se desmarqu el otro
+        */
+        botones.add(rbnSisben);
+        botones.add(rbnEps);
     }
 
     /**
@@ -71,10 +78,25 @@ public class GestionarPacientes extends javax.swing.JFrame {
         });
 
         btnBuscar.setText("BUSCAR");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
         btnEliminar.setText("ELIMINAR");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         btnEditar.setText("EDITAR");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
         btnVolver.setText("Volver");
         btnVolver.addActionListener(new java.awt.event.ActionListener() {
@@ -87,6 +109,9 @@ public class GestionarPacientes extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(btnVolver)
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(65, 65, 65)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -108,20 +133,15 @@ public class GestionarPacientes extends javax.swing.JFrame {
                                     .addComponent(txtDocumento)
                                     .addComponent(txtEdad, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnEditar)
-                                    .addComponent(btnBuscar))))
+                                    .addComponent(btnEliminar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnRegistrar))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(btnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addGap(69, 69, 69))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(79, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnEliminar)
-                    .addComponent(btnRegistrar))
-                .addGap(216, 216, 216))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(btnVolver)
-                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -147,11 +167,11 @@ public class GestionarPacientes extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRegistrar)
                     .addComponent(btnBuscar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
+                .addGap(27, 27, 27)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEliminar)
                     .addComponent(btnEditar))
-                .addContainerGap())
+                .addContainerGap(62, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -159,32 +179,47 @@ public class GestionarPacientes extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(71, 71, 71)
+                .addGap(47, 47, 47)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(133, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(54, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(25, 25, 25)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     /**
+     * Metodo para resetear los campos
+     */
+    private void limpiarInputs(){
+        txtDocumento.setText("");
+        txtEdad.setText("");
+        txtNombre.setText("");
+        rbnEps.setSelected(false);
+        rbnSisben.setSelected(false);
+    }
+    
+    /**
+     * Metodo para activar o desactivar los botones de eliminar y editar
+     * @param enabled 
+     */
+    private void setEnabledInputs(boolean enabled){
+        btnEditar.setEnabled(enabled);
+        btnEliminar.setEnabled(enabled);
+    }
+    
+    /**
      * Metodo que maneja el evento del boton registrar para agregar al paciente
      * @param evt 
      */
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-        /*Los botones del sisben y eps se deben manejar así
-        * porque el paciente solo puede tener uno de ellos, no ambos
-        * Esto hace que al seleccionar uno se desmarqu el otro
-        */
-        botones.add(rbnSisben);
-        botones.add(rbnEps);
+
         
         //Obteniendo los datos del paciente
         String nombre = txtNombre.getText();
@@ -201,6 +236,7 @@ public class GestionarPacientes extends javax.swing.JFrame {
         
         if( añadido ){
             JOptionPane.showMessageDialog(null, "Se añadio el paciente con documento " + documento);
+            limpiarInputs();
         }else{
             JOptionPane.showMessageDialog(null, "No se pudo añadir al paciente");
         }
@@ -215,6 +251,82 @@ public class GestionarPacientes extends javax.swing.JFrame {
         secre.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnVolverActionPerformed
+
+    /**
+     * Metodo que maneja el evento del boton editar para editar la informacion paciente
+     * @param evt 
+     */
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        /*Los botones del sisben y eps se deben manejar así
+        * porque el paciente solo puede tener uno de ellos, no ambos
+        * Esto hace que al seleccionar uno se desmarqu el otro
+        */
+        //botones.add(rbnSisben);
+        //botones.add(rbnEps);
+        
+        //Obteniendo los datos del paciente
+        String nombre = txtNombre.getText();
+        int documento = Integer.parseInt(txtDocumento.getText());
+        int edad = Integer.parseInt(txtEdad.getText());       
+        boolean hasSisben = rbnSisben.isSelected();
+        boolean hasEps = rbnEps.isSelected();
+        
+        //Creamos al paciente
+        Paciente paciente = new Paciente(nombre, documento, edad, hasSisben, hasEps, hasEps);
+        
+        /*** EXCEPCION ****/
+        boolean editado = controlador.editarPaciente(paciente);
+        
+        if( editado ){
+            JOptionPane.showMessageDialog(null, "Se editó la información el paciente con documento " + documento);
+            limpiarInputs();
+            setEnabledInputs(false);
+        }else{
+            JOptionPane.showMessageDialog(null, "No se pudo editar la información del paciente");
+        }
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    /**
+     * Metodo que maneja el evento del boton eliminar para eliminar al paciente
+     * @param evt 
+     */
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        //Obteniendo el documento del paciente
+        int documento = Integer.parseInt(txtDocumento.getText());
+        
+        /*** EXCEPCION ****/
+        boolean eliminado = controlador.eliminarPaciente(documento);
+        
+        if( eliminado ){
+            JOptionPane.showMessageDialog(null, "Se eliminó el paciente con documento " + documento);
+            limpiarInputs();
+            setEnabledInputs(false);
+        }else{
+            JOptionPane.showMessageDialog(null, "No se pudo eliminar al paciente");
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    /**
+     * Metodo que maneja el evento del boton de buscar para buscar al paciente
+     * @param evt 
+     */
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        //Obteniendo el documento del paciente
+        int documento = Integer.parseInt(txtDocumento.getText());
+        
+        /*** EXCEPCION ****/
+        Paciente paciente = controlador.buscarPaciente(documento);
+        
+        if( paciente != null ){
+            txtNombre.setText(paciente.getNombre());
+            txtEdad.setText(String.valueOf(paciente.getEdad()));
+            rbnSisben.setSelected(paciente.hasSisben());
+            rbnEps.setSelected(paciente.hasEps());
+            setEnabledInputs(true);
+        }else{
+            JOptionPane.showMessageDialog(null, "No se encontró al paciente");
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

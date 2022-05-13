@@ -53,7 +53,7 @@ public class GestionarDoctores extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "FOO", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "GESTIONAR DOCTORES", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 
         jLabel1.setText("Nombre:");
 
@@ -182,12 +182,12 @@ public class GestionarDoctores extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(142, 142, 142)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(34, 34, 34)
-                        .addComponent(btnVolver)))
-                .addContainerGap(197, Short.MAX_VALUE))
+                        .addComponent(btnVolver))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(55, 55, 55)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -203,7 +203,7 @@ public class GestionarDoctores extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     /**
-     * Metodo para limpiar el contenido de los textFields
+     * Metodo para resetear los campos
      */
     private void limpiarInputs(){
         txtDocumento.setText("");
@@ -229,6 +229,12 @@ public class GestionarDoctores extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnAñadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirActionPerformed
+        //Condicion para verificar que se seleccione una especialidad válida
+        if( cbxEspecialidad.getSelectedIndex()==0 ){
+            JOptionPane.showMessageDialog(null, "Especialidad no válida");
+            return;
+        }
+
         //Se obtienen los valores de los textFields
         int documento = Integer.parseInt(txtDocumento.getText());
         int edad = Integer.parseInt(txtEdad.getText());
@@ -238,8 +244,8 @@ public class GestionarDoctores extends javax.swing.JFrame {
         //Creamos al doctor con sus respectivos datos
         Doctor doctor = new Doctor(nombre,documento,edad, especialidad);
         
-
         //Verificamos se se añade el empleado
+        /*** EXCEPCION ***/
         boolean añadido = controlador.añadirDoctor(doctor);
         if(añadido){
             JOptionPane.showMessageDialog(null, "Doctor con el documento: " + documento + " añadido");
@@ -297,6 +303,12 @@ public class GestionarDoctores extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        //Condicion para verificar que se seleccione una especialidad válida
+        if( cbxEspecialidad.getSelectedIndex()==0 ){
+            JOptionPane.showMessageDialog(null, "Especialidad no válida");
+            return;
+        }
+
         // Se obtienen los valores de lso textFields
         int documento = Integer.parseInt(txtDocumento.getText());
         int edad = Integer.parseInt(txtEdad.getText());

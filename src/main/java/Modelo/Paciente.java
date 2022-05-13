@@ -24,12 +24,13 @@ public class Paciente extends Persona {
         this.hasEps = hasEps;
         this.hasCita = hasCita;
         this.historial = new ArrayList<>();
+        this.hasCita = false;
     }
 
     /**
      * @return the hasSisben
      */
-    public boolean isHasSisben() {
+    public boolean hasSisben() {
         return hasSisben;
     }
 
@@ -43,7 +44,7 @@ public class Paciente extends Persona {
     /**
      * @return the hasEps
      */
-    public boolean isHasEps() {
+    public boolean hasEps() {
         return hasEps;
     }
 
@@ -57,7 +58,7 @@ public class Paciente extends Persona {
     /**
      * @return the hasCita
      */
-    public boolean isHasCita() {
+    public boolean hasCita() {
         return hasCita;
     }
 

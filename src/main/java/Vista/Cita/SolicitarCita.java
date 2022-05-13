@@ -72,7 +72,7 @@ public class SolicitarCita extends javax.swing.JFrame {
             }
         });
 
-        cbxHora.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hora", "7", "8", "9", "10", "11", "1", "2", "3", "4", "5", "6" }));
+        cbxHora.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hora", "7:00 AM", "7:20 AM", "7:40 AM", "8:00 AM", "8:20 AM", "8:40 AM", "9:00 AM", "9:20 AM", "9:40 AM", "10:00 AM", "10:20 AM", "10:40 AM", "11:00 AM", "11:20 AM", "11:40 AM", "1:00 PM", "1:20 PM", "1:40 PM", "2:00 PM", "2:20 PM", "2:40 PM", "3:00 PM", "3:20 PM", "3:40 PM", "4:00 PM", "4:20 PM", "4:40 PM", "5:00 PM", "5:20 PM", "5:40 PM" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -89,7 +89,7 @@ public class SolicitarCita extends javax.swing.JFrame {
                     .addComponent(cbxMes, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnSolicitar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(cbxHora, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -104,13 +104,13 @@ public class SolicitarCita extends javax.swing.JFrame {
                 .addComponent(cbxDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cbxHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(cbxMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtAñoCita, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
+                .addGap(54, 54, 54)
                 .addComponent(btnSolicitar)
-                .addGap(19, 19, 19))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         jButton2.setText("Volver");
@@ -137,16 +137,28 @@ public class SolicitarCita extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(12, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(42, 42, 42))
+                .addGap(50, 50, 50))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Metod que resetea los campos
+     */
+    private void resetear(){
+        txtAñoCita.setText("AÑO");
+        cbxDia.setSelectedItem("Dia");
+        cbxMes.setSelectedItem("Mes");
+        cbxHora.setSelectedItem("Hora");
+        cbxDoctores.setSelectedItem("Seleccione un doctor");
+        cbxPacientes.setSelectedItem("Seleccione un paciente");
+    }
+    
     /**
      * Metodo que se encarga de llenar el combobox con los doctres y su especialidad para ser seleccionados
      */
@@ -167,7 +179,8 @@ public class SolicitarCita extends javax.swing.JFrame {
         cbxPacientes.addItem("Seleccione un paciente");
         ArrayList<Paciente> pacientes = controlador.getPacientes();
         for (Paciente paciente : pacientes) {
-            cbxPacientes.addItem(paciente);
+            //Condicion para que el combobox solo se llene con los pacientes que no tengan una cita activa
+            if( !paciente.hasCita() ) cbxPacientes.addItem(paciente);
         }
     }
     
@@ -176,24 +189,46 @@ public class SolicitarCita extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnSolicitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSolicitarActionPerformed
-        //Obteniendo los datos
+        //Validacion necesaria por si en algun combobox se selecciona un elemento que no corresponde 
+        if( cbxDia.getSelectedIndex() == 0 || cbxHora.getSelectedIndex() == 0 ||
+            cbxMes.getSelectedIndex() == 0 || cbxPacientes.getSelectedIndex() == 0 || 
+            cbxDoctores.getSelectedIndex() == 0)
+        {
+            JOptionPane.showMessageDialog(null, "Faltan campos por seleccionar");
+            return;
+        }
+
+        //Obteniendo al doctor y al paciente
         Doctor doctor = (Doctor) cbxDoctores.getSelectedItem();
         Paciente paciente = (Paciente) cbxPacientes.getSelectedItem();
+        
+        //Parseamos los datos para crear la fecha
         int dia = Integer.parseInt(cbxDia.getSelectedItem().toString());
-        int hora = Integer.parseInt(cbxHora.getSelectedItem().toString());
         int mes = Integer.parseInt(cbxMes.getSelectedItem().toString());
         int año = Integer.parseInt(txtAñoCita.getText());
         
+        //El combobox de la hora viene en este formato: hora:minuto
+        //Por lo tanto se le hace un split a la hora seleccionada y así optenemos ambos por separado
+        String[] horas = cbxHora.getSelectedItem().toString().split(":");
+        int hora = Integer.parseInt(horas[0]);
+        
+        //En el anterior split el dato nos quedaria de la siguiente manera: ["hora" , "minuto AM/PM"]
+        //Por lo tanto se le hace un split nuevamente para solo obtener el dato numerico
+        int minuto = Integer.parseInt(horas[1].split(" ")[0]);
+        
         //Creamos la fecha de la cita
-        Date fecha = new Date(año, mes, dia, hora, 0);
+        Date fecha = new Date(año, mes, dia, hora, minuto);
         //Creamos la cita
         Cita cita = new Cita( paciente,doctor,fecha );
         
-        //DEBE IR UNA EXCEPCION
+        /*** EXCEPCION ***/
         boolean creada = controlador.añadirCita(cita);
         
         if( creada ){
             JOptionPane.showMessageDialog(null, "Cita asignada al paciente: " + paciente);
+            paciente.setHasCita(true);
+            llenarComboPacientes();
+            resetear();
         }else{
             JOptionPane.showMessageDialog(null, "No se asigno la cita");
         }
