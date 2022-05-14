@@ -5,6 +5,7 @@
 package Vista.Paciente;
 
 import Controlador.ControladorHospital;
+import Vista.Cita.CancelarCita;
 import Vista.Cita.SolicitarCita;
 import Vista.VistaPrincipal;
 
@@ -52,6 +53,11 @@ public class VistaPaciente extends javax.swing.JFrame {
         });
 
         jButton2.setText("CANCELAR CITA");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("REGISTRARSE");
 
@@ -118,7 +124,7 @@ public class VistaPaciente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     /**
-     * Metodo que maneja el evento del boton solicitar cita para ejecutar su acción
+     * Metodo que maneja el evento del boton solicitar cita para abrir su ventana
      * @param evt 
      */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -136,6 +142,16 @@ public class VistaPaciente extends javax.swing.JFrame {
         main.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnVolverActionPerformed
+
+    /**
+     * Metodo que maneja el evento del boton cancelar cita para abrir su ventana
+     * @param evt 
+     */
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        CancelarCita cancelar = new CancelarCita(controlador, this);
+        cancelar.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

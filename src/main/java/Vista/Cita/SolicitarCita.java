@@ -227,6 +227,7 @@ public class SolicitarCita extends javax.swing.JFrame {
         if( creada ){
             JOptionPane.showMessageDialog(null, "Cita asignada al paciente: " + paciente);
             paciente.setHasCita(true);
+            paciente.setCita(cita);
             llenarComboPacientes();
             resetear();
         }else{

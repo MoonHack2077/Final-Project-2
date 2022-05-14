@@ -5,6 +5,7 @@
 package Vista.Secretaria;
 
 import Controlador.ControladorHospital;
+import Vista.Cita.CancelarCita;
 import Vista.Cita.SolicitarCita;
 import Vista.VistaPrincipal;
 
@@ -52,6 +53,11 @@ public class VistaSecretaria extends javax.swing.JFrame {
         });
 
         btnCancelarCita.setText("CANCELAR CITA");
+        btnCancelarCita.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarCitaActionPerformed(evt);
+            }
+        });
 
         btGestionarPac.setText("GESTIONAR PACIENTES");
         btGestionarPac.addActionListener(new java.awt.event.ActionListener() {
@@ -147,6 +153,16 @@ public class VistaSecretaria extends javax.swing.JFrame {
         pacientes.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btGestionarPacActionPerformed
+
+    /**
+     * Metodo que maneja el evento del boton cancelar cita para abrir su ventana
+     * @param evt 
+     */
+    private void btnCancelarCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarCitaActionPerformed
+        CancelarCita cancelar = new CancelarCita(controlador, this);
+        cancelar.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnCancelarCitaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

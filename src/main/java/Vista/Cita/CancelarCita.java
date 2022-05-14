@@ -5,6 +5,9 @@
 package Vista.Cita;
 
 import Controlador.ControladorHospital;
+import Modelo.Paciente;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -22,6 +25,7 @@ public class CancelarCita extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         this.controlador = controlador;
         this.vistaVolver = vistaVolver;
+        llenarComboPacientes();
     }
 
     /**
@@ -34,21 +38,64 @@ public class CancelarCita extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        cbxPacientes = new javax.swing.JComboBox();
+        btnCancelar = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtDetalleCita = new javax.swing.JTextArea();
         btnVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "CANCELAR CITA", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 
+        cbxPacientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxPacientesActionPerformed(evt);
+            }
+        });
+
+        btnCancelar.setText("CANCELAR CITA");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
+        jLabel1.setText("Detalle de la cita:");
+
+        txtDetalleCita.setEditable(false);
+        txtDetalleCita.setColumns(20);
+        txtDetalleCita.setRows(5);
+        txtDetalleCita.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jScrollPane1.setViewportView(txtDetalleCita);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 169, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(32, 32, 32)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(cbxPacientes, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 173, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addComponent(cbxPacientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
+                .addComponent(btnCancelar)
+                .addContainerGap())
         );
 
         btnVolver.setText("Volver");
@@ -65,34 +112,109 @@ public class CancelarCita extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(125, 125, 125)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addComponent(btnVolver)))
-                .addContainerGap(145, Short.MAX_VALUE))
+                        .addComponent(btnVolver))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(37, 37, 37)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(btnVolver)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(81, 81, 81))
+                .addContainerGap(81, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Metodo para resetaer la informacion de los campos
+     */
+    private void resetearCampos(){
+        cbxPacientes.setSelectedItem("Seleccione un paciente");
+        txtDetalleCita.setText("");
+    }
+    
+    /**
+     * Metodo que se encarga de llenar el combobox con los pacientes para ser seleccionados
+     */
+    private void llenarComboPacientes(){
+        cbxPacientes.removeAllItems();
+        cbxPacientes.addItem("Seleccione un paciente");
+        ArrayList<Paciente> pacientes = controlador.getPacientes();
+        for (Paciente paciente : pacientes) {
+            //Condicion para que el combobox solo se llene con los pacientes que tengan una cita activa
+            if( paciente.hasCita() ) cbxPacientes.addItem(paciente);
+        }
+    }
+    
+    /**
+     * Metodo que maneja el evento del boton volver para ejecutar su acción
+     * @param evt 
+     */
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
         vistaVolver.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnVolverActionPerformed
 
+    /**
+     * Metodo que maneja el evento del boton cancelar para cancelar la cita
+     * @param evt 
+     */
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        //El primer elemento no es válido
+        if( cbxPacientes.getSelectedIndex()==0 ){
+            JOptionPane.showMessageDialog(null, "Cita no válida");
+            return;
+        }
+        Paciente paciente = (Paciente) cbxPacientes.getSelectedItem();
+        
+        int confirmacion = JOptionPane.showConfirmDialog(null, "¿Seguro desea cancelar esta cita?");
+        
+        if( confirmacion==0 ){
+            /*** EXCEPCION ***/
+            boolean cancelada = controlador.eliminarCita(paciente.getDocumento());
+            if( cancelada ){
+                JOptionPane.showMessageDialog(null, "Cita cancelada");
+                paciente.setCita(null);
+                paciente.setHasCita(false);
+                resetearCampos();
+                llenarComboPacientes();
+            }else{
+                JOptionPane.showMessageDialog(null, "No se pudo cancelar la cita");
+            }    
+        }
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    /**
+     * Metodo para que cada vez que se seleccione un paciente se muestre el detalle de su cita
+     * @param evt 
+     */
+    private void cbxPacientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxPacientesActionPerformed
+        //Si el primer elemento esta seleccionado, no es válido
+        //por lo tanto se muestra ese aviso
+        if( cbxPacientes.getSelectedIndex()==0 ) {
+            txtDetalleCita.setText("Ningun paciente seleccionado");
+            return;
+        }
+        //ESTA LANZANDO UNA EXCEPCION CUANDO SE CANCELA UNA CITA
+        Paciente paciente = (Paciente) cbxPacientes.getSelectedItem();
+        txtDetalleCita.setText(paciente.getCita().toString());
+    }//GEN-LAST:event_cbxPacientesActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnVolver;
+    private javax.swing.JComboBox cbxPacientes;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea txtDetalleCita;
     // End of variables declaration//GEN-END:variables
 }

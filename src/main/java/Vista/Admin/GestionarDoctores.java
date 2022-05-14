@@ -98,7 +98,7 @@ public class GestionarDoctores extends javax.swing.JFrame {
             }
         });
 
-        cbxEspecialidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione una especialidad", "Medico General", "Dermatologo", "Odontologo" }));
+        cbxEspecialidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione una especialidad", "Medina General", "Dermatologia", "Odontologia", "Pediatria", "Cardiología", "Urologia", "Gastroenterología", "Anatomía", "Ortopedia", "Oftalmología", "Oncología" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);

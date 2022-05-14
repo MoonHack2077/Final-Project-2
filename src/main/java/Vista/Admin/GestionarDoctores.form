@@ -218,11 +218,19 @@
         <Component class="javax.swing.JComboBox" name="cbxEspecialidad">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="4">
+              <StringArray count="12">
                 <StringItem index="0" value="Seleccione una especialidad"/>
-                <StringItem index="1" value="Medico General"/>
-                <StringItem index="2" value="Dermatologo"/>
-                <StringItem index="3" value="Odontologo"/>
+                <StringItem index="1" value="Medina General"/>
+                <StringItem index="2" value="Dermatologia"/>
+                <StringItem index="3" value="Odontologia"/>
+                <StringItem index="4" value="Pediatria"/>
+                <StringItem index="5" value="Cardiolog&#xed;a"/>
+                <StringItem index="6" value="Urologia"/>
+                <StringItem index="7" value="Gastroenterolog&#xed;a"/>
+                <StringItem index="8" value="Anatom&#xed;a"/>
+                <StringItem index="9" value="Ortopedia"/>
+                <StringItem index="10" value="Oftalmolog&#xed;a"/>
+                <StringItem index="11" value="Oncolog&#xed;a"/>
               </StringArray>
             </Property>
           </Properties>

@@ -14,6 +14,7 @@ public class Paciente extends Persona {
     private boolean hasSisben;
     private boolean hasEps;
     private boolean hasCita;
+    private Cita cita;
     private ArrayList<String> historial;
     
     public Paciente(String nombre, int documento, int edad, 
@@ -79,6 +80,20 @@ public class Paciente extends Persona {
     @Override
     public String toString() {
         return getNombre() + " - " + getDocumento();
+    }
+
+    /**
+     * @return the cita
+     */
+    public Cita getCita() {
+        return cita;
+    }
+
+    /**
+     * @param cita the cita to set
+     */
+    public void setCita(Cita cita) {
+        this.cita = cita;
     }
     
     

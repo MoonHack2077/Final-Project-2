@@ -99,8 +99,7 @@ public class Cita {
         return "Fecha: " + getFecha().toString() + "\n" +
                "Doctor: " + getDoctor().getNombre() + "\n" +
                "Paciente: " + getPaciente().getNombre() + "\n" + 
-               "Motivo: " + getDoctor().getEspecialidad() + "\n" +
-               "Conclusiones: " + getConclusiones();
+               "Motivo: " + getDoctor().getEspecialidad() + "\n";
     }
     
     
