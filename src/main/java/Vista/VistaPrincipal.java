@@ -146,7 +146,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
      */
     private void btnDoctorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoctorActionPerformed
         //Validando si el doctor existe
-        int documento = Integer.parseInt(JOptionPane.showInputDialog("Introduce tu documento para verificar si eres un doctor"));
+        String documento = JOptionPane.showInputDialog("Introduce tu documento para verificar si eres un doctor");
         Doctor validado = controlador.buscarDoctor(documento);
         
         if( validado != null ){
@@ -163,8 +163,8 @@ public class VistaPrincipal extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnSecretariaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSecretariaActionPerformed
-        //Validando si la secretario existe
-        int documento = Integer.parseInt(JOptionPane.showInputDialog("Introduce tu documento para verificar si eres una secretaria"));
+        //Validando si la secretaria existe
+        String documento = JOptionPane.showInputDialog("Introduce tu documento para verificar si eres una secretaria");
         Secretaria validada = controlador.buscarSecretaria(documento);
         
         if( validada != null ){
@@ -182,8 +182,8 @@ public class VistaPrincipal extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPacienteActionPerformed
-        //Validando si el doctor existe
-        int documento = Integer.parseInt(JOptionPane.showInputDialog("Introduce tu documento para verificar si eres un paciente"));
+        //Validando si el paciente existe
+        String documento = JOptionPane.showInputDialog("Introduce tu documento para verificar si eres un paciente");
         Paciente validado = controlador.buscarPaciente(documento);
         
         if( validado != null ){

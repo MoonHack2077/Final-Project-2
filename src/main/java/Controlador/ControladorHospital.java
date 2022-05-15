@@ -10,7 +10,6 @@ import Modelo.Doctor;
 import Modelo.Paciente;
 import Modelo.Secretaria;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  *
@@ -39,9 +38,9 @@ public class ControladorHospital {
      * @param documento
      * @return doctor si lo encuentra, de lo contrario null
      */
-    public Doctor buscarDoctor(int documento){   
+    public Doctor buscarDoctor(String documento){   
         for (Doctor doctor : doctores) {
-            if(doctor.getDocumento() == documento) return doctor;
+            if(doctor.getDocumento().equals(documento)) return doctor;
         }
         return null;
     }
@@ -68,12 +67,12 @@ public class ControladorHospital {
      * @param documento
      * @return true si pudo eliminarlo, de lo contrario false
      */
-    public boolean eliminarDoctor(int documento){
+    public boolean eliminarDoctor(String documento){
         Doctor aux = buscarDoctor(documento);
         
         if( aux != null ){
             for (int i = 0; i < doctores.size(); i++) {
-                if(doctores.get(i).getDocumento() == documento){
+                if(doctores.get(i).getDocumento().equals(documento)){
                     doctores.remove(i);
                     return true;
                 }
@@ -93,7 +92,7 @@ public class ControladorHospital {
         
         if( aux != null ){
             for(int i=0 ; i<doctores.size(); i++){
-                if(doctores.get(i).getDocumento() == doctor.getDocumento()){
+                if(doctores.get(i).getDocumento().equals(doctor.getDocumento())){
                     
                     //Inyectando los nuevos valores
                     doctores.get(i).setNombre(doctor.getNombre());
@@ -114,10 +113,10 @@ public class ControladorHospital {
      * @param documento
      * @return secretaria si la encuentra, de lo contrario null
      */
-    public Secretaria buscarSecretaria(int documento){
+    public Secretaria buscarSecretaria(String documento){
     
         for (Secretaria secretaria : secretarias) {
-            if(secretaria.getDocumento() == documento) return secretaria;
+            if(secretaria.getDocumento().equals(documento)) return secretaria;
         }
         return null;
     }
@@ -143,12 +142,12 @@ public class ControladorHospital {
      * @param documento
      * @return true si pudo eliminarla, de lo contrario false
      */
-    public boolean eliminarSecretaria(int documento){
+    public boolean eliminarSecretaria(String documento){
         Secretaria aux = buscarSecretaria(documento);
         
         if( aux != null ){
             for (int i = 0; i < secretarias.size(); i++) {
-                if(secretarias.get(i).getDocumento() == documento){
+                if(secretarias.get(i).getDocumento().equals(documento)){
                     secretarias.remove(i);
                     return true;
                 }
@@ -168,7 +167,7 @@ public class ControladorHospital {
         
         if( aux != null ){
             for(int i=0 ; i<secretarias.size(); i++){
-                if(secretarias.get(i).getDocumento() == secretaria.getDocumento()){
+                if(secretarias.get(i).getDocumento().equals(secretaria.getDocumento())){
                     
                     //Inyectando los nuevos valores
                     secretarias.get(i).setNombre(secretaria.getNombre());
@@ -189,10 +188,10 @@ public class ControladorHospital {
      * @param documento
      * @return paciente si lo encuentra, de lo contrario null
      */
-    public Paciente buscarPaciente(int documento){
+    public Paciente buscarPaciente(String documento){
     
         for (Paciente paciente : pacientes) {
-            if(paciente.getDocumento() == documento) return paciente;
+            if(paciente.getDocumento().equals(documento)) return paciente;
         }
         return null;
     }
@@ -218,12 +217,12 @@ public class ControladorHospital {
      * @param documento
      * @return true si pudo eliminarlo, de lo contrario false
      */
-    public boolean eliminarPaciente(int documento){
+    public boolean eliminarPaciente(String documento){
         Paciente aux = buscarPaciente(documento);
         
         if( aux != null ){
             for (int i = 0; i < pacientes.size(); i++) {
-                if( pacientes.get(i).getDocumento() == documento ){
+                if( pacientes.get(i).getDocumento().equals(documento )){
                     pacientes.remove(i);
                     return true;
                 }
@@ -243,7 +242,7 @@ public class ControladorHospital {
         
         if( aux != null ){
             for(int i=0 ; i < pacientes.size(); i++){
-                if( pacientes.get(i).getDocumento() == paciente.getDocumento() ){
+                if( pacientes.get(i).getDocumento().equals(paciente.getDocumento() )){
                     
                     //Inyectando los nuevos valores
                     pacientes.get(i).setNombre(paciente.getNombre());
@@ -262,10 +261,10 @@ public class ControladorHospital {
      * @param documento
      * @return cita si la encuentra, de lo contrario null
      */
-    public Cita buscarCita(int documento){
+    public Cita buscarCita(String documento){
     
         for (Cita cita : citas) {
-            if(cita.getPaciente().getDocumento() == documento) return cita;
+            if(cita.getPaciente().getDocumento().equals(documento) ) return cita;
         }
         return null;
     }
@@ -295,12 +294,12 @@ public class ControladorHospital {
      * @param documento
      * @return true si pudo eliminarla, de lo contrario false
      */
-    public boolean eliminarCita(int documento){
+    public boolean eliminarCita(String documento){
         Cita aux = buscarCita(documento);
         
         if( aux != null ){
             for (int i = 0; i < citas.size(); i++) {
-                if(citas.get(i).getPaciente().getDocumento() == documento){
+                if(citas.get(i).getPaciente().getDocumento().equals(documento)){
                     if(controladorDoctor.eliminarCitaDeLaAgenda(citas.get(i))){
                         citas.remove(i);                  
                     }

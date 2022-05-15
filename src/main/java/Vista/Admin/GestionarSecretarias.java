@@ -37,8 +37,7 @@ public class GestionarSecretarias extends javax.swing.JFrame {
      
     /**
      * Metodo para limpiar el contenido de los textFields
-     */
-    
+     */   
     private void limpiarInputs(){
         txtDocumento.setText("");
         txtEdad.setText("");
@@ -77,18 +76,6 @@ public class GestionarSecretarias extends javax.swing.JFrame {
         jLabel2.setText("Documento:");
 
         jLabel3.setText("Edad:");
-
-        txtNombre.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNombreActionPerformed(evt);
-            }
-        });
-
-        txtEdad.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtEdadActionPerformed(evt);
-            }
-        });
 
         btnAñadir.setText("Añadir");
         btnAñadir.addActionListener(new java.awt.event.ActionListener() {
@@ -215,18 +202,15 @@ public class GestionarSecretarias extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void txtEdadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEdadActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtEdadActionPerformed
-     /**
+     
+    /**
      * Metodo que maneja el evento del boton de añadir secretaria para ejecutar su accion
      * @param evt 
      */
     private void btnAñadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirActionPerformed
        //Obtenemos los datos
        String nombre = txtNombre.getText();
-       int documento = Integer.parseInt(txtDocumento.getText());
+       String documento = txtDocumento.getText();
        int edad = Integer.parseInt(txtEdad.getText());
        
        //Creamos la secretaria
@@ -235,7 +219,7 @@ public class GestionarSecretarias extends javax.swing.JFrame {
        boolean añadido = controlador.añadirSecretaria(secretaria);
        if(añadido){
            JOptionPane.showMessageDialog(null, "Secretaria con el documento: " + documento + " ha sido añadida");
-            
+            limpiarInputs();
         }else{
             JOptionPane.showMessageDialog(null, "No se pudo añadir a la secretaria");
         }
@@ -247,7 +231,8 @@ public class GestionarSecretarias extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        int documento = Integer.parseInt(txtDocumento.getText());
+        //Obtenemos el documento
+        String documento = txtDocumento.getText();
         
         //Verificamos si la secretaria fue encontrada
         Secretaria encontrada = controlador.buscarSecretaria(documento);
@@ -269,8 +254,8 @@ public class GestionarSecretarias extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-       // Se obtiene el documento
-        int documento = Integer.parseInt(txtDocumento.getText());
+        //Se obtiene el documento
+        String documento = txtDocumento.getText();
 
         //Verificamos se se elimina el empleado
         boolean eliminado = controlador.eliminarSecretaria(documento);
@@ -290,12 +275,12 @@ public class GestionarSecretarias extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        // Se obtienen los valores de lso textFields
+        //Se obtienen los valores de lso textFields
         String nombre = txtNombre.getText();
-        int documento = Integer.parseInt(txtDocumento.getText());
+        String documento = txtDocumento.getText();
         int edad = Integer.parseInt(txtEdad.getText());
         
-        
+        //Creamos la secretaria con los nuevos datos
         Secretaria secretaria = new Secretaria(nombre,documento, edad);
         
         //EXCEPCION
@@ -327,10 +312,6 @@ public class GestionarSecretarias extends javax.swing.JFrame {
       txtEdad.setText("");
       txtDocumento.setText("");
     }//GEN-LAST:event_btnLimpiarActionPerformed
-
-    private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNombreActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

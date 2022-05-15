@@ -223,7 +223,7 @@ public class GestionarPacientes extends javax.swing.JFrame {
         
         //Obteniendo los datos del paciente
         String nombre = txtNombre.getText();
-        int documento = Integer.parseInt(txtDocumento.getText());
+        String documento = txtDocumento.getText();
         int edad = Integer.parseInt(txtEdad.getText());       
         boolean hasSisben = rbnSisben.isSelected();
         boolean hasEps = rbnEps.isSelected();
@@ -266,7 +266,7 @@ public class GestionarPacientes extends javax.swing.JFrame {
         
         //Obteniendo los datos del paciente
         String nombre = txtNombre.getText();
-        int documento = Integer.parseInt(txtDocumento.getText());
+        String documento = txtDocumento.getText();
         int edad = Integer.parseInt(txtEdad.getText());       
         boolean hasSisben = rbnSisben.isSelected();
         boolean hasEps = rbnEps.isSelected();
@@ -292,7 +292,7 @@ public class GestionarPacientes extends javax.swing.JFrame {
      */
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         //Obteniendo el documento del paciente
-        int documento = Integer.parseInt(txtDocumento.getText());
+        String documento = txtDocumento.getText();
         
         /*** EXCEPCION ****/
         boolean eliminado = controlador.eliminarPaciente(documento);
@@ -312,7 +312,7 @@ public class GestionarPacientes extends javax.swing.JFrame {
      */
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         //Obteniendo el documento del paciente
-        int documento = Integer.parseInt(txtDocumento.getText());
+        String documento = txtDocumento.getText();
         
         /*** EXCEPCION ****/
         Paciente paciente = controlador.buscarPaciente(documento);

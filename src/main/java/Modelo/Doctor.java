@@ -15,7 +15,7 @@ public class Doctor extends Persona {
     private String especialidad;
     private ArrayList<Date> agenda;
     
-    public Doctor(String nombre, int documento, int edad, String especialidad){
+    public Doctor(String nombre, String documento, int edad, String especialidad){
         super(nombre, documento, edad);
         this.especialidad = especialidad;
         agenda = new ArrayList<>();

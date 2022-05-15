@@ -17,7 +17,7 @@ public class Paciente extends Persona {
     private Cita cita;
     private ArrayList<String> historial;
     
-    public Paciente(String nombre, int documento, int edad, 
+    public Paciente(String nombre, String documento, int edad, 
             boolean hasSisben, boolean hasEps, boolean hasCita)
     {
         super(nombre, documento, edad);

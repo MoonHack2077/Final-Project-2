@@ -236,7 +236,7 @@ public class GestionarDoctores extends javax.swing.JFrame {
         }
 
         //Se obtienen los valores de los textFields
-        int documento = Integer.parseInt(txtDocumento.getText());
+        String documento = txtDocumento.getText();
         int edad = Integer.parseInt(txtEdad.getText());
         String especialidad = cbxEspecialidad.getSelectedItem().toString();
         String nombre = txtNombre2.getText();
@@ -262,8 +262,7 @@ public class GestionarDoctores extends javax.swing.JFrame {
      */
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // Se obtiene el documento
-        int documento = Integer.parseInt(txtDocumento.getText());
-
+        String documento = txtDocumento.getText();
 
         //Verificamos si el empleado fue encontrado
         Doctor encontrado = controlador.buscarDoctor(documento);
@@ -284,7 +283,7 @@ public class GestionarDoctores extends javax.swing.JFrame {
      */
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // Se obtiene el documento
-        int documento = Integer.parseInt(txtDocumento.getText());
+        String documento = txtDocumento.getText();
 
         //Verificamos se se elimina el empleado
         boolean eliminado = controlador.eliminarDoctor(documento);
@@ -310,7 +309,7 @@ public class GestionarDoctores extends javax.swing.JFrame {
         }
 
         // Se obtienen los valores de lso textFields
-        int documento = Integer.parseInt(txtDocumento.getText());
+        String documento = txtDocumento.getText();
         int edad = Integer.parseInt(txtEdad.getText());
         String especialidad = cbxEspecialidad.getSelectedItem().toString();
         String nombre = txtNombre2.getText();

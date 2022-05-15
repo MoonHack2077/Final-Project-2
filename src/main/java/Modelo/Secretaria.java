@@ -9,7 +9,7 @@ package Modelo;
  * @author USER
  */
 public class Secretaria extends Persona {
-    public Secretaria(String nombre, int documento, int edad){
+    public Secretaria(String nombre, String documento, int edad){
         super(nombre, documento, edad);
     }
 }
