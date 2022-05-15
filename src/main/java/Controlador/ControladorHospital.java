@@ -10,18 +10,21 @@ import Modelo.Doctor;
 import Modelo.Paciente;
 import Modelo.Secretaria;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
  * @author USER
  */
 public class ControladorHospital {
+    private ControladorDoctor controladorDoctor;
     private ArrayList<Doctor> doctores;
     private ArrayList<Secretaria> secretarias;
     private ArrayList<Paciente> pacientes;
     private ArrayList<Cita> citas;
     
     public ControladorHospital(){
+        controladorDoctor = new ControladorDoctor();
         doctores = new ArrayList<>();
         secretarias = new ArrayList<>();
         pacientes = new ArrayList<>();
@@ -276,8 +279,12 @@ public class ControladorHospital {
         Cita aux = buscarCita(cita.getPaciente().getDocumento());
         
         if(aux == null){
-            citas.add(cita);
-            return true;
+            boolean verificada = controladorDoctor.verificarDisponibilidad(cita);
+            if( !verificada ){
+                citas.add(cita);
+                cita.getDoctor().getAgenda().add(cita.getFecha());
+                return true;
+            }
         }
         
         return false;
@@ -294,7 +301,9 @@ public class ControladorHospital {
         if( aux != null ){
             for (int i = 0; i < citas.size(); i++) {
                 if(citas.get(i).getPaciente().getDocumento() == documento){
-                    citas.remove(i);
+                    if(controladorDoctor.eliminarCitaDeLaAgenda(citas.get(i))){
+                        citas.remove(i);                  
+                    }
                     return true;
                 }
                 
