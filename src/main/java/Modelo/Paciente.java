@@ -4,6 +4,8 @@
  */
 package Modelo;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author USER
@@ -12,20 +14,24 @@ public class Paciente extends Persona {
     private boolean hasSisben;
     private boolean hasEps;
     private boolean hasCita;
+    private Cita cita;
+    private ArrayList<String> historial;
     
-    public Paciente(String nombre, int documento, int edad, 
+    public Paciente(String nombre, String documento, int edad, 
             boolean hasSisben, boolean hasEps, boolean hasCita)
     {
         super(nombre, documento, edad);
         this.hasSisben = hasSisben;
         this.hasEps = hasEps;
         this.hasCita = hasCita;
+        this.historial = new ArrayList<>();
+        this.hasCita = false;
     }
 
     /**
      * @return the hasSisben
      */
-    public boolean isHasSisben() {
+    public boolean hasSisben() {
         return hasSisben;
     }
 
@@ -39,7 +45,7 @@ public class Paciente extends Persona {
     /**
      * @return the hasEps
      */
-    public boolean isHasEps() {
+    public boolean hasEps() {
         return hasEps;
     }
 
@@ -53,7 +59,7 @@ public class Paciente extends Persona {
     /**
      * @return the hasCita
      */
-    public boolean isHasCita() {
+    public boolean hasCita() {
         return hasCita;
     }
 
@@ -63,4 +69,32 @@ public class Paciente extends Persona {
     public void setHasCita(boolean hasCita) {
         this.hasCita = hasCita;
     }
+
+    /**
+     * @return the historial
+     */
+    public ArrayList<String> getHistorial() {
+        return historial;
+    }
+
+    @Override
+    public String toString() {
+        return getNombre() + " - " + getDocumento();
+    }
+
+    /**
+     * @return the cita
+     */
+    public Cita getCita() {
+        return cita;
+    }
+
+    /**
+     * @param cita the cita to set
+     */
+    public void setCita(Cita cita) {
+        this.cita = cita;
+    }
+    
+    
 }

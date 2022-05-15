@@ -4,6 +4,8 @@
  */
 package Controlador;
 
+import Excepciones.MayorDeEdad;
+import Modelo.Cita;
 import Modelo.Doctor;
 import Modelo.Paciente;
 import Modelo.Secretaria;
@@ -14,16 +16,21 @@ import java.util.ArrayList;
  * @author USER
  */
 public class ControladorHospital {
+    private ControladorDoctor controladorDoctor;
     private ArrayList<Doctor> doctores;
     private ArrayList<Secretaria> secretarias;
     private ArrayList<Paciente> pacientes;
+    private ArrayList<Cita> citas;
     
     public ControladorHospital(){
+        controladorDoctor = new ControladorDoctor();
         doctores = new ArrayList<>();
         secretarias = new ArrayList<>();
         pacientes = new ArrayList<>();
+        citas = new ArrayList<>();
     }
 
+    
     /********* GESTION DOCTORES *********/
     
     /**
@@ -31,10 +38,9 @@ public class ControladorHospital {
      * @param documento
      * @return doctor si lo encuentra, de lo contrario null
      */
-    public Doctor buscarDoctor(int documento){
-    
+    public Doctor buscarDoctor(String documento){   
         for (Doctor doctor : doctores) {
-            if(doctor.getDocumento() == documento) return doctor;
+            if(doctor.getDocumento().equals(documento)) return doctor;
         }
         return null;
     }
@@ -44,10 +50,11 @@ public class ControladorHospital {
      * @param doctor
      * @return true si pudo añadirlo, de lo contrario false;
      */
-    public boolean añadirDoctor(Doctor doctor){
+    public boolean añadirDoctor(Doctor doctor) throws MayorDeEdad{
         Doctor aux = buscarDoctor(doctor.getDocumento());
         
         if(aux == null){
+            if( doctor.getEdad() < 18) throw new MayorDeEdad();
             doctores.add(doctor);
             return true;
         }
@@ -60,12 +67,12 @@ public class ControladorHospital {
      * @param documento
      * @return true si pudo eliminarlo, de lo contrario false
      */
-    public boolean eliminarDoctor(int documento){
+    public boolean eliminarDoctor(String documento){
         Doctor aux = buscarDoctor(documento);
         
         if( aux != null ){
             for (int i = 0; i < doctores.size(); i++) {
-                if(doctores.get(i).getDocumento() == documento){
+                if(doctores.get(i).getDocumento().equals(documento)){
                     doctores.remove(i);
                     return true;
                 }
@@ -85,7 +92,7 @@ public class ControladorHospital {
         
         if( aux != null ){
             for(int i=0 ; i<doctores.size(); i++){
-                if(doctores.get(i).getDocumento() == doctor.getDocumento()){
+                if(doctores.get(i).getDocumento().equals(doctor.getDocumento())){
                     
                     //Inyectando los nuevos valores
                     doctores.get(i).setNombre(doctor.getNombre());
@@ -106,10 +113,10 @@ public class ControladorHospital {
      * @param documento
      * @return secretaria si la encuentra, de lo contrario null
      */
-    public Secretaria buscarSecretaria(int documento){
+    public Secretaria buscarSecretaria(String documento){
     
         for (Secretaria secretaria : secretarias) {
-            if(secretaria.getDocumento() == documento) return secretaria;
+            if(secretaria.getDocumento().equals(documento)) return secretaria;
         }
         return null;
     }
@@ -135,12 +142,12 @@ public class ControladorHospital {
      * @param documento
      * @return true si pudo eliminarla, de lo contrario false
      */
-    public boolean eliminarSecretaria(int documento){
+    public boolean eliminarSecretaria(String documento){
         Secretaria aux = buscarSecretaria(documento);
         
         if( aux != null ){
             for (int i = 0; i < secretarias.size(); i++) {
-                if(secretarias.get(i).getDocumento() == documento){
+                if(secretarias.get(i).getDocumento().equals(documento)){
                     secretarias.remove(i);
                     return true;
                 }
@@ -160,7 +167,7 @@ public class ControladorHospital {
         
         if( aux != null ){
             for(int i=0 ; i<secretarias.size(); i++){
-                if(secretarias.get(i).getDocumento() == secretaria.getDocumento()){
+                if(secretarias.get(i).getDocumento().equals(secretaria.getDocumento())){
                     
                     //Inyectando los nuevos valores
                     secretarias.get(i).setNombre(secretaria.getNombre());
@@ -174,18 +181,17 @@ public class ControladorHospital {
     }
     
     
-    
-  
+     
     /********* GESTION PACIENTES *********/
     /**
      * Metodo para buscar un paciente registrado por medio del documento
      * @param documento
      * @return paciente si lo encuentra, de lo contrario null
      */
-    public Paciente buscarPaciente(int documento){
+    public Paciente buscarPaciente(String documento){
     
         for (Paciente paciente : pacientes) {
-            if(paciente.getDocumento() == documento) return paciente;
+            if(paciente.getDocumento().equals(documento)) return paciente;
         }
         return null;
     }
@@ -211,12 +217,12 @@ public class ControladorHospital {
      * @param documento
      * @return true si pudo eliminarlo, de lo contrario false
      */
-    public boolean eliminarPaciente(int documento){
+    public boolean eliminarPaciente(String documento){
         Paciente aux = buscarPaciente(documento);
         
         if( aux != null ){
             for (int i = 0; i < pacientes.size(); i++) {
-                if( pacientes.get(i).getDocumento() == documento ){
+                if( pacientes.get(i).getDocumento().equals(documento )){
                     pacientes.remove(i);
                     return true;
                 }
@@ -236,7 +242,7 @@ public class ControladorHospital {
         
         if( aux != null ){
             for(int i=0 ; i < pacientes.size(); i++){
-                if( pacientes.get(i).getDocumento() == paciente.getDocumento() ){
+                if( pacientes.get(i).getDocumento().equals(paciente.getDocumento() )){
                     
                     //Inyectando los nuevos valores
                     pacientes.get(i).setNombre(paciente.getNombre());
@@ -246,6 +252,62 @@ public class ControladorHospital {
             }
         }
         
+        return false;
+    }
+    
+    /********* GESTION CITAS *********/
+    /**
+     * Metodo para buscar una cita registrada por medio del documento del paciente
+     * @param documento
+     * @return cita si la encuentra, de lo contrario null
+     */
+    public Cita buscarCita(String documento){
+    
+        for (Cita cita : citas) {
+            if(cita.getPaciente().getDocumento().equals(documento) ) return cita;
+        }
+        return null;
+    }
+    
+    /**
+     * Metodo para añadir una cita
+     * @param doctor
+     * @return true si pudo añadirla, de lo contrario false;
+     */
+    public boolean añadirCita(Cita cita){
+        Cita aux = buscarCita(cita.getPaciente().getDocumento());
+        
+        if(aux == null){
+            boolean verificada = controladorDoctor.verificarDisponibilidad(cita);
+            if( !verificada ){
+                citas.add(cita);
+                cita.getDoctor().getAgenda().add(cita.getFecha());
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
+    /**
+     * Metodo para eliminar una cita almacenada
+     * @param documento
+     * @return true si pudo eliminarla, de lo contrario false
+     */
+    public boolean eliminarCita(String documento){
+        Cita aux = buscarCita(documento);
+        
+        if( aux != null ){
+            for (int i = 0; i < citas.size(); i++) {
+                if(citas.get(i).getPaciente().getDocumento().equals(documento)){
+                    if(controladorDoctor.eliminarCitaDeLaAgenda(citas.get(i))){
+                        citas.remove(i);                  
+                    }
+                    return true;
+                }
+                
+            }
+        }
         return false;
     }
     
@@ -259,24 +321,10 @@ public class ControladorHospital {
     }
 
     /**
-     * @param doctores the doctores to set
-     */
-    public void setDoctores(ArrayList<Doctor> doctores) {
-        this.doctores = doctores;
-    }
-
-    /**
      * @return the secretarias
      */
     public ArrayList<Secretaria> getSecretarias() {
         return secretarias;
-    }
-
-    /**
-     * @param secretarias the secretarias to set
-     */
-    public void setSecretarias(ArrayList<Secretaria> secretarias) {
-        this.secretarias = secretarias;
     }
 
     /**
@@ -287,10 +335,11 @@ public class ControladorHospital {
     }
 
     /**
-     * @param pacientes the pacientes to set
+     * @return the citas
      */
-    public void setPacientes(ArrayList<Paciente> pacientes) {
-        this.pacientes = pacientes;
+    public ArrayList<Cita> getCitas() {
+        return citas;
     }
+
             
 }

@@ -4,25 +4,36 @@
  */
 package Vista;
 
+import Controlador.ControladorHospital;
+import Modelo.Doctor;
+import Modelo.Paciente;
+import Modelo.Secretaria;
 import Vista.Admin.VistaAdmin;
 import Vista.Secretaria.VistaSecretaria;
 import Vista.Paciente.VistaPaciente;
 import Vista.Doctor.VistaDoctor;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author USER
  */
 public class VistaPrincipal extends javax.swing.JFrame {
-
+    
+    private ControladorHospital controlador;
     /**
      * Creates new form VistaPrincipal
      */
     public VistaPrincipal() {
         initComponents();
         this.setLocationRelativeTo(null);
+        this.controlador = new ControladorHospital();
     }
-
+    public VistaPrincipal(ControladorHospital controlador){
+        initComponents();
+        this.setLocationRelativeTo(null);
+        this.controlador = controlador;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -74,29 +85,27 @@ public class VistaPrincipal extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(90, 90, 90)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnSecretaria, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(38, 38, 38)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnDoctor, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(55, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(btnAdmin, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnSecretaria, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnDoctor, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(97, Short.MAX_VALUE))
+                .addGap(53, 53, 53))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(90, 90, 90)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAdmin)
-                    .addComponent(btnDoctor))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSecretaria)
-                    .addComponent(btnPaciente))
-                .addContainerGap(90, Short.MAX_VALUE))
+                .addComponent(btnAdmin)
+                .addGap(18, 18, 18)
+                .addComponent(btnSecretaria)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnDoctor)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnPaciente)
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -104,16 +113,16 @@ public class VistaPrincipal extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(70, 70, 70)
+                .addGap(37, 37, 37)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(70, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(70, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(37, 37, 37)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(70, 70, 70))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
 
         pack();
@@ -126,7 +135,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminActionPerformed
-        VistaAdmin admin = new VistaAdmin(); //En el contructor hay que pasarle el controlador
+        VistaAdmin admin = new VistaAdmin(controlador); 
         admin.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnAdminActionPerformed
@@ -136,9 +145,17 @@ public class VistaPrincipal extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnDoctorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoctorActionPerformed
-        VistaDoctor doctor = new VistaDoctor(); //En el contructor hay que pasarle el controlador
-        doctor.setVisible(true);
-        this.dispose();
+        //Validando si el doctor existe
+        String documento = JOptionPane.showInputDialog("Introduce tu documento para verificar si eres un doctor");
+        Doctor validado = controlador.buscarDoctor(documento);
+        
+        if( validado != null ){
+            VistaDoctor doctor = new VistaDoctor(controlador); 
+            doctor.setVisible(true);
+            this.dispose();
+        }else{
+            JOptionPane.showMessageDialog(null, "Doctor no válido");
+        }
     }//GEN-LAST:event_btnDoctorActionPerformed
 
     /**
@@ -146,9 +163,18 @@ public class VistaPrincipal extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnSecretariaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSecretariaActionPerformed
-        VistaSecretaria secretaria = new VistaSecretaria(); //En el contructor hay que pasarle el controlador
-        secretaria.setVisible(true);
-        this.dispose();
+        //Validando si la secretaria existe
+        String documento = JOptionPane.showInputDialog("Introduce tu documento para verificar si eres una secretaria");
+        Secretaria validada = controlador.buscarSecretaria(documento);
+        
+        if( validada != null ){
+            VistaSecretaria secretaria = new VistaSecretaria(controlador);
+            secretaria.setVisible(true);
+            this.dispose();
+        }else{
+            JOptionPane.showMessageDialog(null, "Secretaria no válida");
+        }
+        
     }//GEN-LAST:event_btnSecretariaActionPerformed
 
     /**
@@ -156,9 +182,17 @@ public class VistaPrincipal extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPacienteActionPerformed
-        VistaPaciente paciente = new VistaPaciente(); //En el contructor hay que pasarle el controlador
-        paciente.setVisible(true);
-        this.dispose();
+        //Validando si el paciente existe
+        String documento = JOptionPane.showInputDialog("Introduce tu documento para verificar si eres un paciente");
+        Paciente validado = controlador.buscarPaciente(documento);
+        
+        if( validado != null ){
+            VistaPaciente paciente = new VistaPaciente(controlador); 
+            paciente.setVisible(true);
+            this.dispose();
+        }else{
+            JOptionPane.showMessageDialog(null, "Paciente no válido");
+        }
     }//GEN-LAST:event_btnPacienteActionPerformed
 
     /**

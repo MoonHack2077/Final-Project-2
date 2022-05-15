@@ -10,10 +10,10 @@ package Modelo;
  */
 public class Persona {
     private String nombre;
-    private int documento;
+    private String documento;
     private int edad;	
     
-    public Persona(String nombre, int documento, int edad){
+    public Persona(String nombre, String documento, int edad){
         this.nombre = nombre;
         this.documento = documento;
         this.edad = edad;
@@ -36,14 +36,14 @@ public class Persona {
     /**
      * @return the documento
      */
-    public int getDocumento() {
+    public String getDocumento() {
         return documento;
     }
 
     /**
      * @param documento the documento to set
      */
-    public void setDocumento(int documento) {
+    public void setDocumento(String documento) {
         this.documento = documento;
     }
 

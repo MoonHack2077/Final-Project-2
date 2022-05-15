@@ -6,7 +6,6 @@ package Vista.Admin;
 
 import Controlador.ControladorHospital;
 import Modelo.Doctor;
-import Vista.VistaPrincipal;
 import javax.swing.JOptionPane;
 
 /**
@@ -46,32 +45,21 @@ public class GestionarDoctores extends javax.swing.JFrame {
         btnBuscar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
-        txtEspecialidad = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         txtEdad = new javax.swing.JTextField();
+        btnLimpiar = new javax.swing.JButton();
+        cbxEspecialidad = new javax.swing.JComboBox<>();
         btnVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "FOO", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "GESTIONAR DOCTORES", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 
         jLabel1.setText("Nombre:");
 
         jLabel2.setText("Documento: ");
 
         jLabel3.setText("Especialidad");
-
-        txtNombre2.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtNombre2KeyTyped(evt);
-            }
-        });
-
-        txtDocumento.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtDocumentoKeyTyped(evt);
-            }
-        });
 
         btnAñadir.setText("Añadir");
         btnAñadir.addActionListener(new java.awt.event.ActionListener() {
@@ -103,54 +91,72 @@ public class GestionarDoctores extends javax.swing.JFrame {
 
         jLabel4.setText("Edad:");
 
+        btnLimpiar.setText("Limpiar");
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
+
+        cbxEspecialidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione una especialidad", "Medicina General", "Dermatologia", "Odontologia", "Pediatria", "Cardiología", "Urologia", "Gastroenterología", "Anatomía", "Ortopedia", "Oftalmología", "Oncología" }));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(50, 50, 50)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jLabel2)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING))
-                    .addComponent(btnEliminar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnAñadir, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(126, 126, 126)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnBuscar)))
+                        .addGap(26, 26, 26)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(txtDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtNombre2, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(28, 28, 28)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(txtEdad)
+                                    .addComponent(cbxEspecialidad, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(18, 18, 18)
+                        .addComponent(btnLimpiar))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(57, 57, 57)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtDocumento)
-                            .addComponent(txtNombre2)
-                            .addComponent(txtEspecialidad)
-                            .addComponent(txtEdad, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE))))
-                .addContainerGap(58, Short.MAX_VALUE))
+                        .addGap(89, 89, 89)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnEliminar)
+                            .addComponent(btnAñadir, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(92, 92, 92)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnBuscar))))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(71, 71, 71)
+                .addGap(67, 67, 67)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(txtNombre2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(21, 21, 21)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(txtDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(24, 24, 24)
+                    .addComponent(txtNombre2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnLimpiar)
+                    .addComponent(jLabel1))
+                .addGap(13, 13, 13)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(txtEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(txtDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(txtEdad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbxEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addGap(27, 27, 27)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtEdad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
                 .addGap(45, 45, 45)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAñadir)
@@ -176,17 +182,17 @@ public class GestionarDoctores extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(142, 142, 142)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(34, 34, 34)
-                        .addComponent(btnVolver)))
-                .addContainerGap(214, Short.MAX_VALUE))
+                        .addComponent(btnVolver))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(55, 55, 55)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(13, Short.MAX_VALUE)
+                .addContainerGap(10, Short.MAX_VALUE)
                 .addComponent(btnVolver)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -197,13 +203,13 @@ public class GestionarDoctores extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     /**
-     * Metodo para limpiar el contenido de los textFields
+     * Metodo para resetear los campos
      */
     private void limpiarInputs(){
         txtDocumento.setText("");
         txtEdad.setText("");
-        txtNombre.setText("");
-        txtEspecialidad.setText("");
+        txtNombre2.setText("");
+        cbxEspecialidad.setSelectedItem("Seleccione una especialidad");
     }
     
     /**
@@ -215,17 +221,6 @@ public class GestionarDoctores extends javax.swing.JFrame {
         btnEliminar.setEnabled(enabled);
     }
     
-    /*** VALIDACIONES ***/
-    /*
-    private void txtNombre2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombre2KeyTyped
-        VistaParqueadero.vg.validarCaracteresEspeciales(evt);
-    }//GEN-LAST:event_txtNombre2KeyTyped
-
-    private void txtDocumentoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDocumentoKeyTyped
-        VistaParqueadero.vg.validarCaracteresEspeciales(evt);
-        VistaParqueadero.vg.soloNumeros(evt);
-    }//GEN-LAST:event_txtDocumentoKeyTyped
-    */
     
     /*** EVENTOS DE BOTONES ***/
     
@@ -234,17 +229,23 @@ public class GestionarDoctores extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnAñadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirActionPerformed
+        //Condicion para verificar que se seleccione una especialidad válida
+        if( cbxEspecialidad.getSelectedIndex()==0 ){
+            JOptionPane.showMessageDialog(null, "Especialidad no válida");
+            return;
+        }
+
         //Se obtienen los valores de los textFields
-        int documento = Integer.parseInt(txtDocumento.getText());
+        String documento = txtDocumento.getText();
         int edad = Integer.parseInt(txtEdad.getText());
-        String especialidad = txtEspecialidad.getText();
-        String nombre = txtNombre.getText();
+        String especialidad = cbxEspecialidad.getSelectedItem().toString();
+        String nombre = txtNombre2.getText();
 
         //Creamos al doctor con sus respectivos datos
         Doctor doctor = new Doctor(nombre,documento,edad, especialidad);
         
-
         //Verificamos se se añade el empleado
+        /*** EXCEPCION ***/
         boolean añadido = controlador.añadirDoctor(doctor);
         if(añadido){
             JOptionPane.showMessageDialog(null, "Doctor con el documento: " + documento + " añadido");
@@ -261,14 +262,14 @@ public class GestionarDoctores extends javax.swing.JFrame {
      */
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // Se obtiene el documento
-        int documento = Integer.parseInt(txtDocumento.getText());
-
+        String documento = txtDocumento.getText();
 
         //Verificamos si el empleado fue encontrado
         Doctor encontrado = controlador.buscarDoctor(documento);
         if(encontrado != null){
-            txtNombre.setText(encontrado.getNombre());
-            txtEspecialidad.setText(encontrado.getEspecialidad());
+            txtNombre2.setText(encontrado.getNombre());
+            cbxEspecialidad.setSelectedItem(encontrado.getEspecialidad());
+            txtEdad.setText(String.valueOf(encontrado.getEdad()));
             setEnabledInputs(true);
         }else{
             JOptionPane.showMessageDialog(null, "Doctor no encontrado");
@@ -282,7 +283,7 @@ public class GestionarDoctores extends javax.swing.JFrame {
      */
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // Se obtiene el documento
-        int documento = Integer.parseInt(txtDocumento.getText());
+        String documento = txtDocumento.getText();
 
         //Verificamos se se elimina el empleado
         boolean eliminado = controlador.eliminarDoctor(documento);
@@ -301,15 +302,22 @@ public class GestionarDoctores extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        //Condicion para verificar que se seleccione una especialidad válida
+        if( cbxEspecialidad.getSelectedIndex()==0 ){
+            JOptionPane.showMessageDialog(null, "Especialidad no válida");
+            return;
+        }
+
         // Se obtienen los valores de lso textFields
-        int documento = Integer.parseInt(txtDocumento.getText());
+        String documento = txtDocumento.getText();
         int edad = Integer.parseInt(txtEdad.getText());
-        String especialidad = txtEspecialidad.getText();
-        String nombre = txtNombre.getText();
+        String especialidad = cbxEspecialidad.getSelectedItem().toString();
+        String nombre = txtNombre2.getText();
         
+        //Creamos al doctor con la nueva informacion
         Doctor doctor = new Doctor(nombre,documento,edad, especialidad);
         
-        //Verificamos si los datos del empleado fueron editados
+        //Verificamos si los datos del doctor fueron editados
         boolean editado = controlador.editarDoctor(doctor);
         if(editado){
             JOptionPane.showMessageDialog(null, "Doctor con el documento: " + documento + " editado");
@@ -331,13 +339,26 @@ public class GestionarDoctores extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnVolverActionPerformed
 
+    /**
+     * Metodo que maneja el evento del boton de limpiar para resetear los textFields
+     * @param evt 
+     */
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+    txtNombre2.setText("");
+    txtDocumento.setText("");
+    cbxEspecialidad.setSelectedItem("Seleccione una especialidad");
+    txtEdad.setText("");
+    }//GEN-LAST:event_btnLimpiarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAñadir;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnVolver;
+    private javax.swing.JComboBox<String> cbxEspecialidad;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -345,9 +366,6 @@ public class GestionarDoctores extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField txtDocumento;
     private javax.swing.JTextField txtEdad;
-    private javax.swing.JTextField txtEspecialidad;
-    private javax.swing.JTextField txtNombre;
-    private javax.swing.JTextField txtNombre1;
     private javax.swing.JTextField txtNombre2;
     // End of variables declaration//GEN-END:variables
 }
