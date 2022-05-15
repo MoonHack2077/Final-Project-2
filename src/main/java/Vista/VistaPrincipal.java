@@ -5,10 +5,14 @@
 package Vista;
 
 import Controlador.ControladorHospital;
+import Modelo.Doctor;
+import Modelo.Paciente;
+import Modelo.Secretaria;
 import Vista.Admin.VistaAdmin;
 import Vista.Secretaria.VistaSecretaria;
 import Vista.Paciente.VistaPaciente;
 import Vista.Doctor.VistaDoctor;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -131,7 +135,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminActionPerformed
-        VistaAdmin admin = new VistaAdmin(controlador); //En el contructor hay que pasarle el controlador
+        VistaAdmin admin = new VistaAdmin(controlador); 
         admin.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnAdminActionPerformed
@@ -141,9 +145,17 @@ public class VistaPrincipal extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnDoctorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoctorActionPerformed
-        VistaDoctor doctor = new VistaDoctor(controlador); //En el contructor hay que pasarle el controlador
-        doctor.setVisible(true);
-        this.dispose();
+        //Validando si el doctor existe
+        int documento = Integer.parseInt(JOptionPane.showInputDialog("Introduce tu documento para verificar si eres un doctor"));
+        Doctor validado = controlador.buscarDoctor(documento);
+        
+        if( validado != null ){
+            VistaDoctor doctor = new VistaDoctor(controlador); 
+            doctor.setVisible(true);
+            this.dispose();
+        }else{
+            JOptionPane.showMessageDialog(null, "Doctor no válido");
+        }
     }//GEN-LAST:event_btnDoctorActionPerformed
 
     /**
@@ -151,9 +163,18 @@ public class VistaPrincipal extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnSecretariaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSecretariaActionPerformed
-        VistaSecretaria secretaria = new VistaSecretaria(controlador); //En el contructor hay que pasarle el controlador
-        secretaria.setVisible(true);
-        this.dispose();
+        //Validando si la secretario existe
+        int documento = Integer.parseInt(JOptionPane.showInputDialog("Introduce tu documento para verificar si eres una secretaria"));
+        Secretaria validada = controlador.buscarSecretaria(documento);
+        
+        if( validada != null ){
+            VistaSecretaria secretaria = new VistaSecretaria(controlador);
+            secretaria.setVisible(true);
+            this.dispose();
+        }else{
+            JOptionPane.showMessageDialog(null, "Secretaria no válida");
+        }
+        
     }//GEN-LAST:event_btnSecretariaActionPerformed
 
     /**
@@ -161,9 +182,17 @@ public class VistaPrincipal extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPacienteActionPerformed
-        VistaPaciente paciente = new VistaPaciente(controlador); //En el contructor hay que pasarle el controlador
-        paciente.setVisible(true);
-        this.dispose();
+        //Validando si el doctor existe
+        int documento = Integer.parseInt(JOptionPane.showInputDialog("Introduce tu documento para verificar si eres un paciente"));
+        Paciente validado = controlador.buscarPaciente(documento);
+        
+        if( validado != null ){
+            VistaPaciente paciente = new VistaPaciente(controlador); 
+            paciente.setVisible(true);
+            this.dispose();
+        }else{
+            JOptionPane.showMessageDialog(null, "Paciente no válido");
+        }
     }//GEN-LAST:event_btnPacienteActionPerformed
 
     /**
