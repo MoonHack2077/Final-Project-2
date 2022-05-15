@@ -4,6 +4,7 @@
  */
 package Vista.Cita;
 
+import Controlador.ControladorDoctor;
 import Controlador.ControladorHospital;
 import Modelo.Cita;
 import Modelo.Doctor;
@@ -19,6 +20,7 @@ import javax.swing.JOptionPane;
 public class SolicitarCita extends javax.swing.JFrame {
 
     private ControladorHospital controlador;
+    private ControladorDoctor controladorDoctor;
     private javax.swing.JFrame vistaVolver;
     
     /**
@@ -29,6 +31,7 @@ public class SolicitarCita extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         this.controlador = controlador;
         this.vistaVolver = vistaVolver;
+        this.controladorDoctor = new ControladorDoctor();
         llenarComboDoctores();
         llenarComboPacientes();
     }
@@ -51,7 +54,7 @@ public class SolicitarCita extends javax.swing.JFrame {
         txtAñoCita = new javax.swing.JTextField();
         btnSolicitar = new javax.swing.JButton();
         cbxHora = new javax.swing.JComboBox<>();
-        jButton2 = new javax.swing.JButton();
+        btnVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -121,10 +124,10 @@ public class SolicitarCita extends javax.swing.JFrame {
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
-        jButton2.setText("Volver");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnVolver.setText("Volver");
+        btnVolver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnVolverActionPerformed(evt);
             }
         });
 
@@ -138,24 +141,24 @@ public class SolicitarCita extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButton2))
-                .addContainerGap(40, Short.MAX_VALUE))
+                    .addComponent(btnVolver))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2)
+                .addComponent(btnVolver)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50))
+                .addGap(30, 30, 30))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     /**
-     * Metod que resetea los campos
+     * Metodo que resetea los campos
      */
     private void resetear(){
         txtAñoCita.setText("AÑO");
@@ -199,7 +202,7 @@ public class SolicitarCita extends javax.swing.JFrame {
         //Validacion necesaria por si en algun combobox se selecciona un elemento que no corresponde 
         if( cbxDia.getSelectedIndex() == 0 || cbxHora.getSelectedIndex() == 0 ||
             cbxMes.getSelectedIndex() == 0 || cbxPacientes.getSelectedIndex() == 0 || 
-            cbxDoctores.getSelectedIndex() == 0)
+            cbxDoctores.getSelectedIndex() == 0 || txtAñoCita.getText().equals("AÑO"))
         {
             JOptionPane.showMessageDialog(null, "Faltan campos por seleccionar");
             return;
@@ -214,23 +217,51 @@ public class SolicitarCita extends javax.swing.JFrame {
         int mes = Integer.parseInt(cbxMes.getSelectedItem().toString());
         int año = Integer.parseInt(txtAñoCita.getText());
         
+        //En caso de que el mes sea 2 (febrero), validar si los dias y el año corresponden
+        if( mes == 2 && dia >= 30 ){
+            JOptionPane.showMessageDialog(null, "Febrero no tiene esa cantidad de dias");
+            return;
+        }
+        
+        //En caso de que el mes sea 2 (febrero), validar si es un año bisiesto
+        if( mes == 2 && dia == 29 && año % 4 != 0 ){
+            JOptionPane.showMessageDialog(null, "Febrero no tiene esa cantidad de dias");
+            return;
+        }
+        
+        // los meses 4, 6, 9 y 11 solo tienen 30 dias
+        if( (mes == 4 || mes == 6 || mes == 9 || mes == 11 ) && ( dia == 31 ) ){
+            JOptionPane.showMessageDialog(null, "El mes seleccionado no tiene esa cantidad de dias");
+            return;
+        }
+        
+        //Creamos la fecha para compararla con la fecha bloqueada
+        Date fechaAux = new Date(año, mes-1, dia);
+       
+        //Validamos si la fecha elegida no es la misma que la fecha que ha bloqueado el doctor
+        boolean validar = controladorDoctor.validarFechaBloqueada(doctor, fechaAux);
+        if( validar ){            
+            JOptionPane.showMessageDialog(null, "El doctor " + doctor.getNombre() + " ha bloqueado ese dia para tener citas\n Por favor seleccione otro");
+            return;
+        }
+        
         //El combobox de la hora viene en este formato: hora:minuto
         //Por lo tanto se le hace un split a la hora seleccionada y así optenemos ambos por separado
         String[] horas = cbxHora.getSelectedItem().toString().split(":");
         int hora = Integer.parseInt(horas[0]);
         
         //En el anterior split el dato nos quedaria de la siguiente manera: ["hora" , "minuto AM/PM"]
-        //Por lo tanto se le hace un split nuevamente para solo obtener el dato numerico
+        //Por lo tanto se le hace un split nuevamente al segundo elemento para solo obtener el dato numerico
+        //El AM y PM son indicadores mas que todo
         int minuto = Integer.parseInt(horas[1].split(" ")[0]);
         
         //Creamos la fecha de la cita
-        Date fecha = new Date(año, mes, dia, hora, minuto);
+        Date fecha = new Date(año, mes-1, dia, hora, minuto);
         //Creamos la cita
         Cita cita = new Cita( paciente,doctor,fecha );
         
         /*** EXCEPCION ***/
-        boolean creada = controlador.añadirCita(cita);
-        
+        boolean creada = controlador.añadirCita(cita);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
         if( creada ){
             JOptionPane.showMessageDialog(null, "Cita asignada al paciente: " + paciente);
             paciente.setHasCita(true);
@@ -246,10 +277,10 @@ public class SolicitarCita extends javax.swing.JFrame {
      * Metodo que maneja el evento del boton volver para ejecutar su acción
      * @param evt 
      */
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
         vistaVolver.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnVolverActionPerformed
 
     /**
      * Metodo para remover el texto del texfield del año, ya que este es solo un indicador
@@ -275,12 +306,12 @@ public class SolicitarCita extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSolicitar;
+    private javax.swing.JButton btnVolver;
     private javax.swing.JComboBox<String> cbxDia;
     private javax.swing.JComboBox cbxDoctores;
     private javax.swing.JComboBox<String> cbxHora;
     private javax.swing.JComboBox<String> cbxMes;
     private javax.swing.JComboBox cbxPacientes;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField txtAñoCita;
