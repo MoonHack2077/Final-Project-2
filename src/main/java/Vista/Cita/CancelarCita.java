@@ -126,7 +126,7 @@ public class CancelarCita extends javax.swing.JFrame {
                 .addComponent(btnVolver)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(81, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         pack();
@@ -202,9 +202,11 @@ public class CancelarCita extends javax.swing.JFrame {
             txtDetalleCita.setText("Ningun paciente seleccionado");
             return;
         }
-        //ESTA LANZANDO UNA EXCEPCION CUANDO SE CANCELA UNA CITA
         Paciente paciente = (Paciente) cbxPacientes.getSelectedItem();
-        txtDetalleCita.setText(paciente.getCita().toString());
+        //Se verifica que el paciente no sea nulo
+        if( paciente != null ){
+            txtDetalleCita.setText(paciente.getCita().toString());
+        }
     }//GEN-LAST:event_cbxPacientesActionPerformed
 
 

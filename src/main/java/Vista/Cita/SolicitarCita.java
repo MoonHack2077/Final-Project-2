@@ -64,6 +64,14 @@ public class SolicitarCita extends javax.swing.JFrame {
         cbxMes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mes", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
 
         txtAñoCita.setText("AÑO");
+        txtAñoCita.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtAñoCitaFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtAñoCitaFocusLost(evt);
+            }
+        });
 
         btnSolicitar.setText("SOLICITAR");
         btnSolicitar.addActionListener(new java.awt.event.ActionListener() {
@@ -243,6 +251,27 @@ public class SolicitarCita extends javax.swing.JFrame {
         vistaVolver.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    /**
+     * Metodo para remover el texto del texfield del año, ya que este es solo un indicador
+     * para que el usuario 
+     * @param evt 
+     */
+    private void txtAñoCitaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtAñoCitaFocusGained
+        if( txtAñoCita.getText().equals("AÑO")  ){
+            txtAñoCita.setText("");
+        }
+    }//GEN-LAST:event_txtAñoCitaFocusGained
+
+    /**
+     * Metodo para insertar el indicador de AÑO si este pierde el foco y no habia nada escrito
+     * @param evt 
+     */
+    private void txtAñoCitaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtAñoCitaFocusLost
+        if( txtAñoCita.getText().equals("")  ){
+            txtAñoCita.setText("AÑO");
+        }
+    }//GEN-LAST:event_txtAñoCitaFocusLost
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
