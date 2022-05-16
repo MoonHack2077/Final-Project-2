@@ -22,11 +22,11 @@ public class ControladorDoctor {
      * @return 
      */
     public boolean verificarDisponibilidad(Cita cita){
-        ArrayList<Date> agenda = cita.getDoctor().getAgenda();
+        ArrayList<Cita> agenda = cita.getDoctor().getAgenda();
         String fecha = cita.getFecha().toString();
         
-        for (Date date : agenda) {
-            if( date.toString().equals(fecha) ) return true;
+        for (Cita date : agenda) {
+            if( date.getFecha().toString().equals(fecha) ) return true;
         }
         
         return false;
@@ -38,10 +38,10 @@ public class ControladorDoctor {
      * @return true si pudo eliminarla, de lo contrario false
      */
     public boolean eliminarCitaDeLaAgenda(Cita cita){
-        ArrayList<Date> agenda = cita.getDoctor().getAgenda();
+        ArrayList<Cita> agenda = cita.getDoctor().getAgenda();
         
         for (int i = 0; i < agenda.size(); i++) {
-            if(agenda.get(i).toString().equals(cita.getFecha().toString())){
+            if(agenda.get(i).getFecha().toString().equals(cita.getFecha().toString())){
                 agenda.remove(i);
                 return true;
             }      
@@ -69,12 +69,12 @@ public class ControladorDoctor {
         //Convertimos a string el dia para que sea mas manejable la comparacion
         String diaAux =  String.valueOf(dia.getDate() + dia.getMonth() + dia.getYear());
         
-        ArrayList<Date> agenda = doctor.getAgenda();
+        ArrayList<Cita> agenda = doctor.getAgenda();
         
-        for (Date cita : agenda) {
+        for (Cita cita : agenda) {
             //Ya que las fechas que hay en la agenda, cada una tiene una hora establecida
             //Por lo tanto aunque sea el mismo dia nunca será igual porque cuentan con una hora que se eligió manualmente
-            String citaAux =  String.valueOf(cita.getDate() + cita.getMonth() + cita.getYear());
+            String citaAux =  String.valueOf(cita.getFecha().getDate() + cita.getFecha().getMonth() + cita.getFecha().getYear());
             if( citaAux.equals(diaAux) ){
                 return true;
             }

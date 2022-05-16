@@ -270,8 +270,8 @@ public class ControladorHospital {
     }
     
     /**
-     * Metodo para añadir una cita
-     * @param doctor
+     * Metodo para añadir una cita al array general de las citas y a la agenda del respectivo doctor
+     * @param cita
      * @return true si pudo añadirla, de lo contrario false;
      */
     public boolean añadirCita(Cita cita){
@@ -281,7 +281,7 @@ public class ControladorHospital {
             boolean verificada = controladorDoctor.verificarDisponibilidad(cita);
             if( !verificada ){
                 citas.add(cita);
-                cita.getDoctor().getAgenda().add(cita.getFecha());
+                cita.getDoctor().getAgenda().add(cita);
                 return true;
             }
         }
@@ -301,9 +301,9 @@ public class ControladorHospital {
             for (int i = 0; i < citas.size(); i++) {
                 if(citas.get(i).getPaciente().getDocumento().equals(documento)){
                     if(controladorDoctor.eliminarCitaDeLaAgenda(citas.get(i))){
-                        citas.remove(i);                  
+                        citas.remove(i);
+                        return true;                  
                     }
-                    return true;
                 }
                 
             }

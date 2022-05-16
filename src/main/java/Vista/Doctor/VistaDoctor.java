@@ -54,6 +54,11 @@ public class VistaDoctor extends javax.swing.JFrame {
         });
 
         jButton1.setText("ATENDER CITA");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -120,7 +125,7 @@ public class VistaDoctor extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVolverActionPerformed
 
     /**
-     * Metodo que maneja el evento del boton de bloqear fecha para ejecutar su accion
+     * Metodo que maneja el evento del boton de bloqear fecha para abrir su ventana
      * @param evt 
      */
     private void btnBloquearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBloquearActionPerformed
@@ -128,6 +133,16 @@ public class VistaDoctor extends javax.swing.JFrame {
         bloquear.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnBloquearActionPerformed
+
+    /**
+     * Metodo que maneja el evento del boton de atender cita para abrir su ventana
+     * @param evt 
+     */
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        AtenderCita atender = new AtenderCita(controlador,doctor);
+        atender.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     
 

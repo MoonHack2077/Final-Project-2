@@ -14,7 +14,7 @@ import java.util.Date;
 public class Doctor extends Persona {
     private String especialidad;
     private Date fechaBloqueada;
-    private ArrayList<Date> agenda;
+    private ArrayList<Cita> agenda;
     
     public Doctor(String nombre, String documento, int edad, String especialidad){
         super(nombre, documento, edad);
@@ -39,7 +39,7 @@ public class Doctor extends Persona {
     /**
      * @return the agenda
      */
-    public ArrayList<Date> getAgenda() {
+    public ArrayList<Cita> getAgenda() {
         return agenda;
     }
 

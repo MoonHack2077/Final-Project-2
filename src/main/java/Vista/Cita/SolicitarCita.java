@@ -263,13 +263,13 @@ public class SolicitarCita extends javax.swing.JFrame {
         /*** EXCEPCION ***/
         boolean creada = controlador.añadirCita(cita);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
         if( creada ){
-            JOptionPane.showMessageDialog(null, "Cita asignada al paciente: " + paciente);
+            JOptionPane.showMessageDialog(null, "Cita creada:\n " + cita.toString());
             paciente.setHasCita(true);
             paciente.setCita(cita);
             llenarComboPacientes();
             resetear();
         }else{
-            JOptionPane.showMessageDialog(null, "No se asigno la cita");
+            JOptionPane.showMessageDialog(null, "El doctor " + doctor.getNombre() + " ya tiene una cita asignada a esa hora");
         }
     }//GEN-LAST:event_btnSolicitarActionPerformed
 

@@ -187,7 +187,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         Paciente validado = controlador.buscarPaciente(documento);
         
         if( validado != null ){
-            VistaPaciente paciente = new VistaPaciente(controlador); 
+            VistaPaciente paciente = new VistaPaciente(controlador,validado); 
             paciente.setVisible(true);
             this.dispose();
         }else{

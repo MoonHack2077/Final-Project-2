@@ -5,6 +5,7 @@
 package Vista.Paciente;
 
 import Controlador.ControladorHospital;
+import Modelo.Paciente;
 import Vista.Cita.CancelarCita;
 import Vista.Cita.SolicitarCita;
 import Vista.VistaPrincipal;
@@ -16,13 +17,15 @@ import Vista.VistaPrincipal;
 public class VistaPaciente extends javax.swing.JFrame {
 
     private ControladorHospital controlador;
+    private Paciente paciente;
     /**
      * Creates new form VistaPaciente
      */
-    public VistaPaciente(ControladorHospital controlador) {
+    public VistaPaciente(ControladorHospital controlador, Paciente paciente ) {
         initComponents();
         setLocationRelativeTo(null);
         this.controlador = controlador;
+        this.paciente = paciente;
     }
 
     /**
@@ -62,6 +65,11 @@ public class VistaPaciente extends javax.swing.JFrame {
         jButton3.setText("REGISTRARSE");
 
         jButton4.setText("VER HISTORIAL MÉDICO");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -152,6 +160,16 @@ public class VistaPaciente extends javax.swing.JFrame {
         cancelar.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    /**
+     * Metodo para ver el historial del paciente
+     * @param evt 
+     */
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        VerHistorial historial = new VerHistorial(paciente,this);
+        historial.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton4ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
