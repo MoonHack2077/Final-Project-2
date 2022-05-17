@@ -28,6 +28,15 @@ public class CancelarCita extends javax.swing.JFrame {
         llenarComboPacientes();
     }
 
+    //Este controlador unicamente será llamado  por el paciente
+    public CancelarCita(ControladorHospital controlador, javax.swing.JFrame vistaVolver, Paciente paciente) {
+        initComponents();
+        setLocationRelativeTo(null);
+        this.controlador = controlador;
+        this.vistaVolver = vistaVolver;
+        cbxPacientes.addItem(paciente);
+    }
+        
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

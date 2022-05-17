@@ -21,15 +21,16 @@ public class VistaPaciente extends javax.swing.JFrame {
     /**
      * Creates new form VistaPaciente
      */
-    public VistaPaciente(ControladorHospital controlador, Paciente paciente ) {
+    public VistaPaciente(ControladorHospital controlador, Paciente paciente) {
         initComponents();
         setLocationRelativeTo(null);
         this.controlador = controlador;
         this.paciente = paciente;
         
-        if( paciente.hasCita() ){
-            btnSolicitar.setEnabled(false);
-        }
+        //Condicion util para que dependiendo de que si tiene o no cita tenga habilitadas ciertas opciones
+        if( paciente.hasCita() )btnSolicitar.setEnabled(false);
+        else btnCancelar.setEnabled(false);
+        
     }
 
     /**
@@ -44,13 +45,12 @@ public class VistaPaciente extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         btnSolicitar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
-        btnPagarMulta = new javax.swing.JButton();
         btnHistorial = new javax.swing.JButton();
         btnVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "FOO", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "OPCIONES", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 
         btnSolicitar.setText("SOLICITAR CITA");
         btnSolicitar.addActionListener(new java.awt.event.ActionListener() {
@@ -63,13 +63,6 @@ public class VistaPaciente extends javax.swing.JFrame {
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
-            }
-        });
-
-        btnPagarMulta.setText("PAGAR MULTA");
-        btnPagarMulta.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPagarMultaActionPerformed(evt);
             }
         });
 
@@ -89,8 +82,7 @@ public class VistaPaciente extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnHistorial, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnSolicitar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnPagarMulta, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(56, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -100,11 +92,9 @@ public class VistaPaciente extends javax.swing.JFrame {
                 .addComponent(btnSolicitar)
                 .addGap(36, 36, 36)
                 .addComponent(btnCancelar)
-                .addGap(31, 31, 31)
-                .addComponent(btnPagarMulta)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addGap(39, 39, 39)
                 .addComponent(btnHistorial)
-                .addGap(22, 22, 22))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         btnVolver.setText("Volver");
@@ -130,11 +120,11 @@ public class VistaPaciente extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(20, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnVolver)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29))
+                .addGap(40, 40, 40))
         );
 
         pack();
@@ -145,7 +135,7 @@ public class VistaPaciente extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnSolicitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSolicitarActionPerformed
-        SolicitarCita cita = new SolicitarCita(controlador, this);
+        SolicitarCita cita = new SolicitarCita(controlador, this, paciente);
         cita.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnSolicitarActionPerformed
@@ -165,7 +155,7 @@ public class VistaPaciente extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        CancelarCita cancelar = new CancelarCita(controlador, this);
+        CancelarCita cancelar = new CancelarCita(controlador, this, paciente);
         cancelar.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
@@ -180,19 +170,10 @@ public class VistaPaciente extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnHistorialActionPerformed
 
-    /**
-     * Metodo para ir a la ventana para pagar la multa
-     * @param evt 
-     */
-    private void btnPagarMultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagarMultaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnPagarMultaActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnHistorial;
-    private javax.swing.JButton btnPagarMulta;
     private javax.swing.JButton btnSolicitar;
     private javax.swing.JButton btnVolver;
     private javax.swing.JPanel jPanel1;
