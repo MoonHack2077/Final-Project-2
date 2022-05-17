@@ -193,8 +193,15 @@ public class AtenderCita extends javax.swing.JFrame {
     private void resetearCampos(){
         txtConclusiones.setText("");
         txtTratamientos.setText("");
-        //Se debe tambien resetear el paciente
-        //lblPaciente.setText("");
+        if( doctor.getAgenda().isEmpty() ){
+            lblPaciente.setText("Ya no tienes citas por atenter!!");
+            btnHistorial.setEnabled(false);
+            btnMultar.setEnabled(false);
+            btnConfirmar.setEnabled(false);
+        }else{
+            cita = doctor.getAgenda().get(0);
+            lblPaciente.setText(cita.getPaciente().toString());
+        }
     }
     
     /**
@@ -219,18 +226,15 @@ public class AtenderCita extends javax.swing.JFrame {
         String tratamientos = txtTratamientos.getText();
         String resultados = cita.toString() + 
                 "\n Conclusiones: " + conclusiones + 
-                "\n Tratamientos: " +tratamientos;
+                "\n Tratamientos: " + tratamientos;
           
         boolean eliminada = controlador.eliminarCita(cita.getPaciente().getDocumento());
         if( eliminada ){
-            boolean atendida = controladorDoctor.eliminarCitaDeLaAgenda(cita);
-            if( atendida ){
-                JOptionPane.showMessageDialog(null, "Cita atendida con exito");
-                controladorPaciente.añadirCita(cita, resultados);
-                cita.getPaciente().setCita(null);
-                cita.getPaciente().setHasCita(false);
-                resetearCampos();
-            }      
+            JOptionPane.showMessageDialog(null, "Cita atendida con exito");
+            controladorPaciente.añadirCita(cita, resultados);
+            cita.getPaciente().setCita(null);
+            cita.getPaciente().setHasCita(false);
+            resetearCampos();                  
         }else{
             JOptionPane.showMessageDialog(null, "Ocurrió algún error");
         }
