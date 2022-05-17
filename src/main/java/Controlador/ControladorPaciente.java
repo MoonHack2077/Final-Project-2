@@ -21,6 +21,7 @@ public class ControladorPaciente {
      * @return true si pudo añadirlo, de lo contrario false;
      */
     public boolean añadirCita(Cita cita, String historial){
+        //Aun es bastante mejorable, por ahora es muy simple
         cita.getPaciente().getHistorial().add(historial);
         return true;
     }
@@ -35,12 +36,12 @@ public class ControladorPaciente {
         
         if( historial.isEmpty() ) return "El paciente hasta ahora no ha tenido citas";
         
-        String todoHistorial = "";
+        String historialCompleto = "";
         
-        for (String dato : historial) {
-            todoHistorial += dato + "\n";
+        for (int i = 0; i < historial.size(); i++) {
+            historialCompleto += "CITA " + (i+1) + "\n" + historial.get(i) + "\n\n\n";
         }
         
-        return todoHistorial;
+        return historialCompleto;
     }
 }

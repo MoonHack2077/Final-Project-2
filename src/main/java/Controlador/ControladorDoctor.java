@@ -84,4 +84,11 @@ public class ControladorDoctor {
         doctor.setFechaBloqueada(dia);
         return false;
     }
+    
+    /**
+     * Metodo para ordenar la agenda del doctor para que las citas "tengan sentido"
+     */
+    public void ordenarAgenda(){
+        //Aun esta pendiente pero la idea es buena...
+    }
 }

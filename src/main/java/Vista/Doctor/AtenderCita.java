@@ -19,6 +19,7 @@ import javax.swing.JOptionPane;
 public class AtenderCita extends javax.swing.JFrame {
 
     private ControladorPaciente controladorPaciente;
+    private ControladorDoctor controladorDoctor;
     private ControladorHospital controlador;
     private Doctor doctor;
     private Cita cita;
@@ -30,6 +31,7 @@ public class AtenderCita extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         this.controlador = controlador;
         this.controladorPaciente = new ControladorPaciente();
+        this.controladorDoctor = new ControladorDoctor();
         this.doctor = doctor;
         this.cita = doctor.getAgenda().get(0);
         lblPaciente.setText(this.cita.getPaciente().toString());
@@ -55,6 +57,7 @@ public class AtenderCita extends javax.swing.JFrame {
         btnConfirmar = new javax.swing.JButton();
         lblPaciente = new javax.swing.JLabel();
         btnHistorial = new javax.swing.JButton();
+        btnMultar = new javax.swing.JButton();
         btnVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -89,6 +92,13 @@ public class AtenderCita extends javax.swing.JFrame {
             }
         });
 
+        btnMultar.setText("Multar paciente");
+        btnMultar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMultarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -109,25 +119,29 @@ public class AtenderCita extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addGap(50, 50, 50)
                         .addComponent(lblPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnHistorial)
-                        .addGap(17, 17, 17))))
+                        .addGap(17, 263, Short.MAX_VALUE))))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(305, 305, 305)
                 .addComponent(btnConfirmar)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnHistorial)
+                .addGap(18, 18, 18)
+                .addComponent(btnMultar)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblPaciente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addComponent(btnHistorial))
-                .addGap(29, 29, 29)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnHistorial)
+                    .addComponent(btnMultar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblPaciente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(35, 35, 35)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jLabel2))
@@ -167,12 +181,22 @@ public class AtenderCita extends javax.swing.JFrame {
                 .addComponent(btnVolver)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Metodo para resetear los campos
+     */
+    private void resetearCampos(){
+        txtConclusiones.setText("");
+        txtTratamientos.setText("");
+        //Se debe tambien resetear el paciente
+        //lblPaciente.setText("");
+    }
+    
     /**
      * Metodo que maneja el evento del boton volver para retroceder de ventana
      * @param evt 
@@ -196,9 +220,20 @@ public class AtenderCita extends javax.swing.JFrame {
         String resultados = cita.toString() + 
                 "\n Conclusiones: " + conclusiones + 
                 "\n Tratamientos: " +tratamientos;
-        
-        controladorPaciente.añadirCita(cita, resultados);
-        JOptionPane.showMessageDialog(null, "Cita atendida con exito");
+          
+        boolean eliminada = controlador.eliminarCita(cita.getPaciente().getDocumento());
+        if( eliminada ){
+            boolean atendida = controladorDoctor.eliminarCitaDeLaAgenda(cita);
+            if( atendida ){
+                JOptionPane.showMessageDialog(null, "Cita atendida con exito");
+                controladorPaciente.añadirCita(cita, resultados);
+                cita.getPaciente().setCita(null);
+                cita.getPaciente().setHasCita(false);
+                resetearCampos();
+            }      
+        }else{
+            JOptionPane.showMessageDialog(null, "Ocurrió algún error");
+        }
     }//GEN-LAST:event_btnConfirmarActionPerformed
 
     /**
@@ -211,10 +246,19 @@ public class AtenderCita extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnHistorialActionPerformed
 
+    /**
+     * Metodo que maneja el evento del boton multar paciente para multarlo si no asistió
+     * @param evt 
+     */
+    private void btnMultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMultarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnMultarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnConfirmar;
     private javax.swing.JButton btnHistorial;
+    private javax.swing.JButton btnMultar;
     private javax.swing.JButton btnVolver;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

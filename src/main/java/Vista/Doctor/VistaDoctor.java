@@ -25,6 +25,11 @@ public class VistaDoctor extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.controlador = controlador;
         this.doctor = doctor;
+        
+        //Si el doctor no tiene citas no estará habilitado el botón para atenderlas
+        if( doctor.getAgenda().isEmpty() ){
+            btnAtender.setEnabled(false);
+        }
     }
 
 
@@ -39,7 +44,7 @@ public class VistaDoctor extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         btnBloquear = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnAtender = new javax.swing.JButton();
         btnVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -53,10 +58,10 @@ public class VistaDoctor extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("ATENDER CITA");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnAtender.setText("ATENDER CITA");
+        btnAtender.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnAtenderActionPerformed(evt);
             }
         });
 
@@ -67,7 +72,7 @@ public class VistaDoctor extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAtender, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBloquear, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -75,7 +80,7 @@ public class VistaDoctor extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addComponent(jButton1)
+                .addComponent(btnAtender)
                 .addGap(18, 18, 18)
                 .addComponent(btnBloquear)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -138,18 +143,18 @@ public class VistaDoctor extends javax.swing.JFrame {
      * Metodo que maneja el evento del boton de atender cita para abrir su ventana
      * @param evt 
      */
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnAtenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtenderActionPerformed
         AtenderCita atender = new AtenderCita(controlador,doctor);
         atender.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnAtenderActionPerformed
 
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAtender;
     private javax.swing.JButton btnBloquear;
     private javax.swing.JButton btnVolver;
-    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }
