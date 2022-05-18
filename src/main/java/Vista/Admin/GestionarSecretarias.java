@@ -5,6 +5,9 @@
 package Vista.Admin;
 
 import Controlador.ControladorHospital;
+import Excepciones.Almacenado;
+import Excepciones.MayorDeEdad;
+import Excepciones.NoEncontrado;
 import Modelo.Secretaria;
 import javax.swing.JOptionPane;
 
@@ -208,23 +211,22 @@ public class GestionarSecretarias extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnAñadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirActionPerformed
-       //Obtenemos los datos
-       String nombre = txtNombre.getText();
-       String documento = txtDocumento.getText();
-       int edad = Integer.parseInt(txtEdad.getText());
-       
-       //Creamos la secretaria
-       Secretaria secretaria = new Secretaria(nombre, documento, edad);
-       
-       /*** EXCEPCION ***/
-       boolean añadido = controlador.añadirSecretaria(secretaria);
-       if(añadido){
+       try{
+            //Obtenemos los datos
+           String nombre = txtNombre.getText();
+           String documento = txtDocumento.getText();
+           int edad = Integer.parseInt(txtEdad.getText());
+
+           //Creamos la secretaria
+           Secretaria secretaria = new Secretaria(nombre, documento, edad);
+
+           controlador.añadirSecretaria(secretaria);
            JOptionPane.showMessageDialog(null, "Secretaria con el documento: " + documento + " ha sido añadida");
-            limpiarInputs();
-        }else{
-            JOptionPane.showMessageDialog(null, "No se pudo añadir a la secretaria");
+           limpiarInputs();
+            
+       }catch(MayorDeEdad | Almacenado ex){
+            JOptionPane.showMessageDialog(rootPane, ex.getMessage());
         }
-       
     }//GEN-LAST:event_btnAñadirActionPerformed
     
     /**
@@ -255,43 +257,39 @@ public class GestionarSecretarias extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        //Se obtiene el documento
-        String documento = txtDocumento.getText();
+        try{
+            //Se obtiene el documento
+            String documento = txtDocumento.getText();
 
-        //Verificamos se se elimina el empleado
-        boolean eliminado = controlador.eliminarSecretaria(documento);
-        
-        /*** EXCEPCION ***/
-        if(eliminado){
+            //Verificamos se se elimina el empleado
+            controlador.eliminarSecretaria(documento);
             JOptionPane.showMessageDialog(null, "Secretaria con el documento: " + documento + " ha sido eliminada");
             limpiarInputs();
             setEnabledInputs(false);
-        }else{
-            JOptionPane.showMessageDialog(null, "No se pudo eliminar a la secretaria");
+        }catch(NoEncontrado ex){
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
-        
     }//GEN-LAST:event_btnEliminarActionPerformed
      /**
      * Metodo que maneja el evento del boton de editar secretaria para ejecutar su accion
      * @param evt 
      */
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        //Se obtienen los valores de lso textFields
-        String nombre = txtNombre.getText();
-        String documento = txtDocumento.getText();
-        int edad = Integer.parseInt(txtEdad.getText());
-        
-        //Creamos la secretaria con los nuevos datos
-        Secretaria secretaria = new Secretaria(nombre,documento, edad);
-        
-        /*** EXCEPCION ***/
-        boolean editado = controlador.editarSecretaria(secretaria);
-        if(editado){
+        try{
+            //Se obtienen los valores de lso textFields
+            String nombre = txtNombre.getText();
+            String documento = txtDocumento.getText();
+            int edad = Integer.parseInt(txtEdad.getText());
+
+            //Creamos la secretaria con los nuevos datos
+            Secretaria secretaria = new Secretaria(nombre,documento, edad);
+
+            controlador.editarSecretaria(secretaria);
             JOptionPane.showMessageDialog(null, "Secretaria con el documento: " + documento + " ha sido editado");
             limpiarInputs();
             setEnabledInputs(false);
-        }else{
-            JOptionPane.showMessageDialog(null, "No se pudo editar la información de la secretaria");
+        }catch(MayorDeEdad | NoEncontrado ex){
+            JOptionPane.showMessageDialog(rootPane, ex.getMessage());
         }
     }//GEN-LAST:event_btnEditarActionPerformed
      

@@ -6,12 +6,11 @@ package Vista;
 
 import Controlador.ControladorHospital;
 import Modelo.Doctor;
-import Modelo.Paciente;
 import Modelo.Secretaria;
 import Vista.Admin.VistaAdmin;
 import Vista.Secretaria.VistaSecretaria;
-import Vista.Paciente.VistaPaciente;
 import Vista.Doctor.VistaDoctor;
+import Vista.Paciente.Login;
 import javax.swing.JOptionPane;
 
 /**
@@ -182,17 +181,9 @@ public class VistaPrincipal extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPacienteActionPerformed
-        //Validando si el paciente existe
-        String documento = JOptionPane.showInputDialog("Introduce tu documento para verificar si eres un paciente");
-        Paciente validado = controlador.buscarPaciente(documento);
-        
-        if( validado != null ){
-            VistaPaciente paciente = new VistaPaciente(controlador,validado); 
-            paciente.setVisible(true);
-            this.dispose();
-        }else{
-            JOptionPane.showMessageDialog(null, "Paciente no válido");
-        }
+        Login login = new Login(controlador);
+        login.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnPacienteActionPerformed
 
     /**

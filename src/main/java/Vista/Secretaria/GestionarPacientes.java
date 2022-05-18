@@ -5,6 +5,9 @@
 package Vista.Secretaria;
 
 import Controlador.ControladorHospital;
+import Excepciones.Almacenado;
+import Excepciones.MayorDeEdad;
+import Excepciones.NoEncontrado;
 import Modelo.Paciente;
 import javax.swing.JOptionPane;
 
@@ -25,12 +28,12 @@ public class GestionarPacientes extends javax.swing.JFrame {
         setEnabledInputs(false);
         /*Los botones del sisben y eps se deben manejar así
         * porque el paciente solo puede tener uno de ellos, no ambos
-        * Esto hace que al seleccionar uno se desmarqu el otro
+        * Esto hace que al seleccionar uno se desmarque el otro
         */
         botones.add(rbnSisben);
         botones.add(rbnEps);
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -219,26 +222,23 @@ public class GestionarPacientes extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
+        try{
+            //Obteniendo los datos del paciente
+            String nombre = txtNombre.getText();
+            String documento = txtDocumento.getText();
+            int edad = Integer.parseInt(txtEdad.getText());       
+            boolean hasSisben = rbnSisben.isSelected();
+            boolean hasEps = rbnEps.isSelected();
 
-        
-        //Obteniendo los datos del paciente
-        String nombre = txtNombre.getText();
-        String documento = txtDocumento.getText();
-        int edad = Integer.parseInt(txtEdad.getText());       
-        boolean hasSisben = rbnSisben.isSelected();
-        boolean hasEps = rbnEps.isSelected();
-        
-        //Creamos al paciente
-        Paciente paciente = new Paciente(nombre, documento, edad, hasSisben, hasEps, hasEps);
-        
-        /*** EXCEPCION ****/
-        boolean añadido = controlador.añadirPaciente(paciente);
-        
-        if( añadido ){
+            //Creamos al paciente
+            Paciente paciente = new Paciente(nombre, documento, edad, hasSisben, hasEps, hasEps);
+
+            //Añadiendo al paciente
+            controlador.añadirPaciente(paciente);
             JOptionPane.showMessageDialog(null, "Se añadio el paciente con documento " + documento);
             limpiarInputs();
-        }else{
-            JOptionPane.showMessageDialog(null, "No se pudo añadir al paciente");
+        }catch(MayorDeEdad | Almacenado ex){
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
@@ -257,32 +257,29 @@ public class GestionarPacientes extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        /*Los botones del sisben y eps se deben manejar así
-        * porque el paciente solo puede tener uno de ellos, no ambos
-        * Esto hace que al seleccionar uno se desmarqu el otro
-        */
-        //botones.add(rbnSisben);
-        //botones.add(rbnEps);
-        
-        //Obteniendo los datos del paciente
-        String nombre = txtNombre.getText();
-        String documento = txtDocumento.getText();
-        int edad = Integer.parseInt(txtEdad.getText());       
-        boolean hasSisben = rbnSisben.isSelected();
-        boolean hasEps = rbnEps.isSelected();
-        
-        //Creamos al paciente
-        Paciente paciente = new Paciente(nombre, documento, edad, hasSisben, hasEps, hasEps);
-        
-        /*** EXCEPCION ****/
-        boolean editado = controlador.editarPaciente(paciente);
-        
-        if( editado ){
-            JOptionPane.showMessageDialog(null, "Se editó la información el paciente con documento " + documento);
-            limpiarInputs();
-            setEnabledInputs(false);
-        }else{
-            JOptionPane.showMessageDialog(null, "No se pudo editar la información del paciente");
+        try{
+            //Obteniendo los datos del paciente
+            String nombre = txtNombre.getText();
+            String documento = txtDocumento.getText();
+            int edad = Integer.parseInt(txtEdad.getText());       
+            boolean hasSisben = rbnSisben.isSelected();
+            boolean hasEps = rbnEps.isSelected();
+
+            //Creamos al paciente
+            Paciente paciente = new Paciente(nombre, documento, edad, hasSisben, hasEps, hasEps);
+
+            /*** EXCEPCION ****/
+            boolean editado = controlador.editarPaciente(paciente);
+
+            if( editado ){
+                JOptionPane.showMessageDialog(null, "Se editó la información el paciente con documento " + documento);
+                limpiarInputs();
+                setEnabledInputs(false);
+            }else{
+                JOptionPane.showMessageDialog(null, "No se pudo editar la información del paciente");
+            }
+        }catch(MayorDeEdad | NoEncontrado ex){
+            JOptionPane.showMessageDialog(null, ex.getMessage());      
         }
     }//GEN-LAST:event_btnEditarActionPerformed
 
@@ -291,18 +288,17 @@ public class GestionarPacientes extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        //Obteniendo el documento del paciente
-        String documento = txtDocumento.getText();
-        
-        /*** EXCEPCION ****/
-        boolean eliminado = controlador.eliminarPaciente(documento);
-        
-        if( eliminado ){
+        try{
+            //Obteniendo el documento del paciente
+            String documento = txtDocumento.getText();
+
+            //Se elimina al paciente
+            controlador.eliminarPaciente(documento);
             JOptionPane.showMessageDialog(null, "Se eliminó el paciente con documento " + documento);
             limpiarInputs();
             setEnabledInputs(false);
-        }else{
-            JOptionPane.showMessageDialog(null, "No se pudo eliminar al paciente");
+        }catch(NoEncontrado ex){
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
