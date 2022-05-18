@@ -5,7 +5,6 @@
 package Controlador;
 
 import Excepciones.MayorDeEdad;
-import Excepciones.documento_registrado;
 import Modelo.Cita;
 import Modelo.Doctor;
 import Modelo.Paciente;
@@ -39,7 +38,7 @@ public class ControladorHospital {
      * @param documento
      * @return doctor si lo encuentra, de lo contrario null
      */
-    public Doctor buscarDoctor(String documento)throws documento_registrado{   
+    public Doctor buscarDoctor(String documento){   
         for (Doctor doctor : doctores) {
             if(doctor.getDocumento().equals(documento)) return doctor;
         }
@@ -114,7 +113,7 @@ public class ControladorHospital {
      * @param documento
      * @return secretaria si la encuentra, de lo contrario null
      */
-    public Secretaria buscarSecretaria(String documento)throws documento_registrado{
+    public Secretaria buscarSecretaria(String documento){
     
         for (Secretaria secretaria : secretarias) {
             if(secretaria.getDocumento().equals(documento)) return secretaria;
@@ -189,7 +188,7 @@ public class ControladorHospital {
      * @param documento
      * @return paciente si lo encuentra, de lo contrario null
      */
-    public Paciente buscarPaciente(String documento)throws documento_registrado{
+    public Paciente buscarPaciente(String documento){
     
         for (Paciente paciente : pacientes) {
             if(paciente.getDocumento().equals(documento)) return paciente;
