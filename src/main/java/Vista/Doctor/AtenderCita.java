@@ -9,6 +9,7 @@ import Controlador.ControladorHospital;
 import Controlador.ControladorPaciente;
 import Modelo.Cita;
 import Modelo.Doctor;
+import Modelo.Multa;
 import Vista.Paciente.VerHistorial;
 import javax.swing.JOptionPane;
 
@@ -255,7 +256,19 @@ public class AtenderCita extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnMultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMultarActionPerformed
-        // TODO add your handling code here:
+        //Confirmamos si se desea multar al paciente
+        int confirmacion = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea multar al paciente " + cita.getPaciente().getNombre() + "?");
+        
+        if( confirmacion==0 ){
+            //Creamos la multa y la registramos
+            Multa multa = new Multa(cita.toString(), cita.getPaciente());
+            boolean añadida = controlador.añadirMulta(multa);
+            boolean cancelada = controlador.eliminarCita(cita.getPaciente().getDocumento());
+            if( añadida && cancelada){
+                JOptionPane.showMessageDialog(null, "Se ha multado al paciente: " + cita.getPaciente().getNombre());
+                resetearCampos();
+            }
+        }
     }//GEN-LAST:event_btnMultarActionPerformed
 
 

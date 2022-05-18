@@ -177,7 +177,7 @@ public class SolicitarCita extends javax.swing.JFrame {
         cbxMes.setSelectedItem("Mes");
         cbxHora.setSelectedItem("Hora");
         cbxDoctores.setSelectedItem("Seleccione un doctor");
-        cbxPacientes.setSelectedItem("Seleccione un paciente");
+        llenarComboPacientes();
     }
     
     /**
@@ -276,8 +276,6 @@ public class SolicitarCita extends javax.swing.JFrame {
         if( creada ){
             JOptionPane.showMessageDialog(null, "Cita creada:\n " + cita.toString());
             paciente.setHasCita(true);
-            paciente.setCita(cita);
-            llenarComboPacientes();
             resetear();
         }else{
             JOptionPane.showMessageDialog(null, "El doctor " + doctor.getNombre() + " ya tiene una cita asignada a esa hora");

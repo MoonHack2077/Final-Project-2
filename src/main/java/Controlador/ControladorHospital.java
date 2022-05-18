@@ -7,6 +7,7 @@ package Controlador;
 import Excepciones.MayorDeEdad;
 import Modelo.Cita;
 import Modelo.Doctor;
+import Modelo.Multa;
 import Modelo.Paciente;
 import Modelo.Secretaria;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ public class ControladorHospital {
     private ArrayList<Secretaria> secretarias;
     private ArrayList<Paciente> pacientes;
     private ArrayList<Cita> citas;
+    private ArrayList<Multa> multas;
     
     public ControladorHospital(){
         controladorDoctor = new ControladorDoctor();
@@ -28,6 +30,7 @@ public class ControladorHospital {
         secretarias = new ArrayList<>();
         pacientes = new ArrayList<>();
         citas = new ArrayList<>();
+        multas = new ArrayList<>();
     }
 
     
@@ -255,6 +258,7 @@ public class ControladorHospital {
         return false;
     }
     
+    
     /********* GESTION CITAS *********/
     /**
      * Metodo para buscar una cita registrada por medio del documento del paciente
@@ -281,6 +285,7 @@ public class ControladorHospital {
             boolean verificada = controladorDoctor.verificarDisponibilidad(cita);
             if( !verificada ){
                 citas.add(cita);
+                cita.getPaciente().setCita(cita);
                 cita.getDoctor().getAgenda().add(cita);
                 return true;
             }
@@ -301,6 +306,8 @@ public class ControladorHospital {
             for (int i = 0; i < citas.size(); i++) {
                 if(citas.get(i).getPaciente().getDocumento().equals(documento)){
                     if(controladorDoctor.eliminarCitaDeLaAgenda(citas.get(i))){
+                        citas.get(i).getPaciente().setCita(null);
+                        citas.get(i).getPaciente().setHasCita(false);
                         citas.remove(i);
                         return true;                  
                     }
@@ -311,6 +318,59 @@ public class ControladorHospital {
         return false;
     }
     
+    
+    /*** GESTION DE MULTAS ***/
+    /**
+     * Metodo para buscar una multa registrada por medio del documento del paciente
+     * @param documento
+     * @return multa si la encuentra, de lo contrario null
+     */
+    public Multa buscarMulta(String documento){
+    
+        for (Multa multa : getMultas()) {
+            if(multa.getPaciente().getDocumento().equals(documento)) return multa;
+        }
+        return null;
+    }
+    
+    /**
+     * Metodo para añadir una multa al array general de las multas
+     * @param multa
+     * @return true si pudo añadirla, de lo contrario false;
+     */
+    public boolean añadirMulta(Multa multa){
+        Multa aux = buscarMulta(multa.getPaciente().getDocumento());
+        
+        if(aux == null){
+              multas.add(multa);
+              multa.getPaciente().setMulta(multa);
+              multa.getPaciente().setHasMulta(true);
+              return true;
+            }
+        
+        return false;
+    }
+    
+    /**
+     * Metodo para eliminar una multa almacenada
+     * @param documento
+     * @return true si pudo eliminarla, de lo contrario false
+     */
+    public boolean eliminarMulta(String documento){
+        Multa aux = buscarMulta(documento);
+        
+        if( aux != null ){
+            for (int i = 0; i < getMultas().size(); i++) {
+                if(getMultas().get(i).getPaciente().getDocumento().equals(documento)){
+                    multas.get(i).getPaciente().setMulta(null);
+                    multas.get(i).getPaciente().setHasMulta(false);
+                    multas.remove(i);
+                    return true;                                     
+                }
+            }
+        }
+        return false;
+    }
     
     
     /**
@@ -339,6 +399,13 @@ public class ControladorHospital {
      */
     public ArrayList<Cita> getCitas() {
         return citas;
+    }
+
+    /**
+     * @return the multas
+     */
+    public ArrayList<Multa> getMultas() {
+        return multas;
     }
 
             

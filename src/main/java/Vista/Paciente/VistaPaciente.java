@@ -27,8 +27,12 @@ public class VistaPaciente extends javax.swing.JFrame {
         this.controlador = controlador;
         this.paciente = paciente;
         
-        //Condicion util para que dependiendo de que si tiene o no cita tenga habilitadas ciertas opciones
-        if( paciente.hasCita() )btnSolicitar.setEnabled(false);
+        //Condicion util para saber que opciones habilitar
+        if( paciente.hasMulta() ){
+            btnSolicitar.setEnabled(false);
+            btnCancelar.setEnabled(false);
+        } 
+        else if( paciente.hasCita() ) btnSolicitar.setEnabled(false);
         else btnCancelar.setEnabled(false);
         
     }
