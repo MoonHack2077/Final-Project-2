@@ -20,7 +20,6 @@ import javax.swing.JOptionPane;
 public class AtenderCita extends javax.swing.JFrame {
 
     private ControladorPaciente controladorPaciente;
-    private ControladorDoctor controladorDoctor;
     private ControladorHospital controlador;
     private Doctor doctor;
     private Cita cita;
@@ -32,7 +31,6 @@ public class AtenderCita extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         this.controlador = controlador;
         this.controladorPaciente = new ControladorPaciente();
-        this.controladorDoctor = new ControladorDoctor();
         this.doctor = doctor;
         this.cita = doctor.getAgenda().get(0);
         lblPaciente.setText(this.cita.getPaciente().toString());
@@ -262,6 +260,7 @@ public class AtenderCita extends javax.swing.JFrame {
         if( confirmacion==0 ){
             //Creamos la multa y la registramos
             Multa multa = new Multa(cita.toString(), cita.getPaciente());
+            controladorPaciente.descuentoMulta(multa);
             boolean añadida = controlador.añadirMulta(multa);
             boolean cancelada = controlador.eliminarCita(cita.getPaciente().getDocumento());
             if( añadida && cancelada){

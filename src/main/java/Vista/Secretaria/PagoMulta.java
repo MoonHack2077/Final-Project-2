@@ -304,6 +304,7 @@ public class PagoMulta extends javax.swing.JFrame {
         txtAñoCita.setText("AÑO");
         cbxDia.setSelectedItem("Dia");
         cbxMes.setSelectedItem("Mes");
+        txtTotal.setText("");
         llenarComboMultas();
     }
 
