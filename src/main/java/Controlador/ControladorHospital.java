@@ -5,7 +5,7 @@
 package Controlador;
 
 import Excepciones.MayorDeEdad;
-import Exceptionses.documento_registrado;
+import Excepciones.documento_registrado;
 import Modelo.Cita;
 import Modelo.Doctor;
 import Modelo.Paciente;
