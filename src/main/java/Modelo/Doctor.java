@@ -13,7 +13,8 @@ import java.util.Date;
  */
 public class Doctor extends Persona {
     private String especialidad;
-    private ArrayList<Date> agenda;
+    private Date fechaBloqueada;
+    private ArrayList<Cita> agenda;
     
     public Doctor(String nombre, String documento, int edad, String especialidad){
         super(nombre, documento, edad);
@@ -38,13 +39,27 @@ public class Doctor extends Persona {
     /**
      * @return the agenda
      */
-    public ArrayList<Date> getAgenda() {
+    public ArrayList<Cita> getAgenda() {
         return agenda;
     }
 
     @Override
     public String toString() {
         return getNombre() + " - " + getEspecialidad();
+    }
+
+    /**
+     * @return the fechaBloqueada
+     */
+    public Date getFechaBloqueada() {
+        return fechaBloqueada;
+    }
+
+    /**
+     * @param fechaBloqueada the fechaBloqueada to set
+     */
+    public void setFechaBloqueada(Date fechaBloqueada) {
+        this.fechaBloqueada = fechaBloqueada;
     }
     
     

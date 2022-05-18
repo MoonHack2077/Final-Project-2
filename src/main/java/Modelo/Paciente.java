@@ -15,6 +15,8 @@ public class Paciente extends Persona {
     private boolean hasEps;
     private boolean hasCita;
     private Cita cita;
+    private boolean hasMulta;
+    private Multa multa;
     private ArrayList<String> historial;
     
     public Paciente(String nombre, String documento, int edad, 
@@ -77,11 +79,6 @@ public class Paciente extends Persona {
         return historial;
     }
 
-    @Override
-    public String toString() {
-        return getNombre() + " - " + getDocumento();
-    }
-
     /**
      * @return the cita
      */
@@ -95,6 +92,37 @@ public class Paciente extends Persona {
     public void setCita(Cita cita) {
         this.cita = cita;
     }
+
+    /**
+     * @return the multa
+     */
+    public Multa getMulta() {
+        return multa;
+    }
+
+    /**
+     * @param multa the multa to set
+     */
+    public void setMulta(Multa multa) {
+        this.multa = multa;
+    }
     
+    /**
+     * @return the hasCita
+     */
+    public boolean hasMulta() {
+        return hasMulta;
+    }
+
+    /**
+     * @param hasCita the hasCita to set
+     */
+    public void setHasMulta(boolean hasMulta) {
+        this.hasMulta = hasMulta;
+    }      
     
+    @Override
+    public String toString() {
+        return getNombre() + " - " + getDocumento();
+    }
 }

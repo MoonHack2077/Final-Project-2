@@ -28,6 +28,15 @@ public class CancelarCita extends javax.swing.JFrame {
         llenarComboPacientes();
     }
 
+    //Este controlador unicamente será llamado  por el paciente
+    public CancelarCita(ControladorHospital controlador, javax.swing.JFrame vistaVolver, Paciente paciente) {
+        initComponents();
+        setLocationRelativeTo(null);
+        this.controlador = controlador;
+        this.vistaVolver = vistaVolver;
+        cbxPacientes.addItem(paciente);
+    }
+        
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -135,7 +144,7 @@ public class CancelarCita extends javax.swing.JFrame {
      * Metodo para resetaer la informacion de los campos
      */
     private void resetearCampos(){
-        cbxPacientes.setSelectedItem("Seleccione un paciente");
+        llenarComboPacientes();
         txtDetalleCita.setText("");
     }
     
@@ -171,8 +180,11 @@ public class CancelarCita extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Cita no válida");
             return;
         }
+        
+        //Obtenemos al paciente
         Paciente paciente = (Paciente) cbxPacientes.getSelectedItem();
         
+        //Confirmamos si se desea cancelar la cita
         int confirmacion = JOptionPane.showConfirmDialog(null, "¿Seguro desea cancelar esta cita?");
         
         if( confirmacion==0 ){
@@ -180,10 +192,7 @@ public class CancelarCita extends javax.swing.JFrame {
             boolean cancelada = controlador.eliminarCita(paciente.getDocumento());
             if( cancelada ){
                 JOptionPane.showMessageDialog(null, "Cita cancelada");
-                paciente.setCita(null);
-                paciente.setHasCita(false);
                 resetearCampos();
-                llenarComboPacientes();
             }else{
                 JOptionPane.showMessageDialog(null, "No se pudo cancelar la cita");
             }    
