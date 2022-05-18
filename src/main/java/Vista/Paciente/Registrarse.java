@@ -5,6 +5,8 @@
 package Vista.Paciente;
 
 import Controlador.ControladorHospital;
+import Excepciones.Almacenado;
+import Excepciones.MayorDeEdad;
 import Modelo.Paciente;
 import javax.swing.JOptionPane;
 
@@ -153,25 +155,22 @@ public class Registrarse extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
+        try{
+            //Obteniendo los datos del paciente
+            String nombre = txtNombre.getText();
+            String documento = txtDocumento.getText();
+            int edad = Integer.parseInt(txtEdad.getText());
+            boolean hasSisben = rbnSisben.isSelected();
+            boolean hasEps = rbnEps.isSelected();
 
-        //Obteniendo los datos del paciente
-        String nombre = txtNombre.getText();
-        String documento = txtDocumento.getText();
-        int edad = Integer.parseInt(txtEdad.getText());
-        boolean hasSisben = rbnSisben.isSelected();
-        boolean hasEps = rbnEps.isSelected();
+            //Creamos al paciente
+            Paciente paciente = new Paciente(nombre, documento, edad, hasSisben, hasEps, hasEps);
 
-        //Creamos al paciente
-        Paciente paciente = new Paciente(nombre, documento, edad, hasSisben, hasEps, hasEps);
-
-        /*** EXCEPCION ****/
-        boolean añadido = controlador.añadirPaciente(paciente);
-
-        if( añadido ){
+            controlador.añadirPaciente(paciente);
             JOptionPane.showMessageDialog(null, "Se añadio el paciente con documento " + documento);
             abrirVistaPaciente(paciente);
-        }else{
-            JOptionPane.showMessageDialog(null, "No se pudo añadir al paciente");
+        }catch(MayorDeEdad | Almacenado ex){
+            JOptionPane.showMessageDialog(rootPane, ex.getMessage());
         }
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
