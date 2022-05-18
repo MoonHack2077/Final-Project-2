@@ -5,6 +5,9 @@
 package Vista.Admin;
 
 import Controlador.ControladorHospital;
+import Excepciones.Almacenado;
+import Excepciones.MayorDeEdad;
+import Excepciones.NoEncontrado;
 import Modelo.Doctor;
 import javax.swing.JOptionPane;
 
@@ -229,31 +232,29 @@ public class GestionarDoctores extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnAñadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirActionPerformed
-        //Condicion para verificar que se seleccione una especialidad válida
-        if( cbxEspecialidad.getSelectedIndex()==0 ){
-            JOptionPane.showMessageDialog(null, "Especialidad no válida");
-            return;
-        }
+        try{
+            //Condicion para verificar que se seleccione una especialidad válida
+            if( cbxEspecialidad.getSelectedIndex()==0 ){
+                JOptionPane.showMessageDialog(null, "Especialidad no válida");
+                return;
+            }
 
-        //Se obtienen los valores de los textFields
-        String documento = txtDocumento.getText();
-        int edad = Integer.parseInt(txtEdad.getText());
-        String especialidad = cbxEspecialidad.getSelectedItem().toString();
-        String nombre = txtNombre2.getText();
+            //Se obtienen los valores de los textFields
+            String documento = txtDocumento.getText();
+            int edad = Integer.parseInt(txtEdad.getText());
+            String especialidad = cbxEspecialidad.getSelectedItem().toString();
+            String nombre = txtNombre2.getText();
 
-        //Creamos al doctor con sus respectivos datos
-        Doctor doctor = new Doctor(nombre,documento,edad, especialidad);
-        
-        //Verificamos se se añade el empleado
-        /*** EXCEPCION ***/
-        boolean añadido = controlador.añadirDoctor(doctor);
-        if(añadido){
+            //Creamos al doctor con sus respectivos datos
+            Doctor doctor = new Doctor(nombre,documento,edad, especialidad);
+
+            //Verificamos se se añade el empleado
+            controlador.añadirDoctor(doctor);
             JOptionPane.showMessageDialog(null, "Doctor con el documento: " + documento + " añadido");
             limpiarInputs();
-        }else{
-            JOptionPane.showMessageDialog(null, "No se pudo añadir al doctor");
-        }
-        
+        }catch(MayorDeEdad | Almacenado ex){
+            JOptionPane.showMessageDialog(rootPane, ex.getMessage());
+        }       
     }//GEN-LAST:event_btnAñadirActionPerformed
 
     /**
@@ -282,19 +283,18 @@ public class GestionarDoctores extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        // Se obtiene el documento
-        String documento = txtDocumento.getText();
+        try{
+            // Se obtiene el documento
+            String documento = txtDocumento.getText();
 
-        //Verificamos se se elimina el empleado
-        boolean eliminado = controlador.eliminarDoctor(documento);
-        if(eliminado){
+            //Verificamos se se elimina el empleado
+            controlador.eliminarDoctor(documento);
             JOptionPane.showMessageDialog(null, "Doctor con el documento: " + documento + " eliminado");
             limpiarInputs();
             setEnabledInputs(false);
-        }else{
-            JOptionPane.showMessageDialog(null, "No se pudo eliminar al doctor");
+        }catch(NoEncontrado ex){
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
-        
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     /**
@@ -302,31 +302,30 @@ public class GestionarDoctores extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        //Condicion para verificar que se seleccione una especialidad válida
-        if( cbxEspecialidad.getSelectedIndex()==0 ){
-            JOptionPane.showMessageDialog(null, "Especialidad no válida");
-            return;
-        }
+        try{
+            //Condicion para verificar que se seleccione una especialidad válida
+            if( cbxEspecialidad.getSelectedIndex()==0 ){
+                JOptionPane.showMessageDialog(null, "Especialidad no válida");
+                return;
+            }
 
-        // Se obtienen los valores de lso textFields
-        String documento = txtDocumento.getText();
-        int edad = Integer.parseInt(txtEdad.getText());
-        String especialidad = cbxEspecialidad.getSelectedItem().toString();
-        String nombre = txtNombre2.getText();
-        
-        //Creamos al doctor con la nueva informacion
-        Doctor doctor = new Doctor(nombre,documento,edad, especialidad);
-        
-        //Verificamos si los datos del doctor fueron editados
-        boolean editado = controlador.editarDoctor(doctor);
-        if(editado){
+            // Se obtienen los valores de lso textFields
+            String documento = txtDocumento.getText();
+            int edad = Integer.parseInt(txtEdad.getText());
+            String especialidad = cbxEspecialidad.getSelectedItem().toString();
+            String nombre = txtNombre2.getText();
+
+            //Creamos al doctor con la nueva informacion
+            Doctor doctor = new Doctor(nombre,documento,edad, especialidad);
+
+            //Verificamos si los datos del doctor fueron editados
+            controlador.editarDoctor(doctor);
             JOptionPane.showMessageDialog(null, "Doctor con el documento: " + documento + " editado");
             limpiarInputs();
             setEnabledInputs(false);
-        }else{
-            JOptionPane.showMessageDialog(null, "No se pudo editar la información del doctor");
-        }
-        
+        }catch(MayorDeEdad | NoEncontrado ex){
+            JOptionPane.showMessageDialog(rootPane, ex.getMessage());
+        } 
     }//GEN-LAST:event_btnEditarActionPerformed
 
     /**
