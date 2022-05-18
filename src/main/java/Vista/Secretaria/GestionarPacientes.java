@@ -6,6 +6,7 @@ package Vista.Secretaria;
 
 import Controlador.ControladorHospital;
 import Modelo.Paciente;
+import Vista.Paciente.Login;
 import javax.swing.JOptionPane;
 
 /**
@@ -25,12 +26,12 @@ public class GestionarPacientes extends javax.swing.JFrame {
         setEnabledInputs(false);
         /*Los botones del sisben y eps se deben manejar así
         * porque el paciente solo puede tener uno de ellos, no ambos
-        * Esto hace que al seleccionar uno se desmarqu el otro
+        * Esto hace que al seleccionar uno se desmarque el otro
         */
         botones.add(rbnSisben);
         botones.add(rbnEps);
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

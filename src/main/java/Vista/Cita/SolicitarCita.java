@@ -293,7 +293,6 @@ public class SolicitarCita extends javax.swing.JFrame {
 
     /**
      * Metodo para remover el texto del texfield del año, ya que este es solo un indicador
-     * para que el usuario 
      * @param evt 
      */
     private void txtAñoCitaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtAñoCitaFocusGained

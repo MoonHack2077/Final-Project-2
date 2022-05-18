@@ -7,6 +7,7 @@ package Vista.Secretaria;
 import Controlador.ControladorHospital;
 import Vista.Cita.CancelarCita;
 import Vista.Cita.SolicitarCita;
+import Vista.Paciente.Registrarse;
 import Vista.VistaPrincipal;
 
 /**
