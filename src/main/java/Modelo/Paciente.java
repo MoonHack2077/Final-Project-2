@@ -14,15 +14,13 @@ public class Paciente extends Persona {
     private boolean hasSisben;
     private boolean hasEps;
     private boolean hasCita;
-    private Cita cita;
     private boolean hasMulta;
-    private Multa multa;
-    private ArrayList<String> historial;
+    private ArrayList<Cita> historial;
     
-    public Paciente(String nombre, String documento, int edad, 
-            boolean hasSisben, boolean hasEps, boolean hasCita)
+    public Paciente(String nombre, String documento,String correo, String contraseña, int edad, 
+           String estadoCivil, String telefono, boolean hasSisben, boolean hasEps, boolean hasCita)
     {
-        super(nombre, documento, edad);
+        super(nombre, documento,  correo,  contraseña, telefono, edad, estadoCivil);
         this.hasSisben = hasSisben;
         this.hasEps = hasEps;
         this.hasCita = hasCita;
@@ -75,36 +73,8 @@ public class Paciente extends Persona {
     /**
      * @return the historial
      */
-    public ArrayList<String> getHistorial() {
+    public ArrayList<Cita> getHistorial() {
         return historial;
-    }
-
-    /**
-     * @return the cita
-     */
-    public Cita getCita() {
-        return cita;
-    }
-
-    /**
-     * @param cita the cita to set
-     */
-    public void setCita(Cita cita) {
-        this.cita = cita;
-    }
-
-    /**
-     * @return the multa
-     */
-    public Multa getMulta() {
-        return multa;
-    }
-
-    /**
-     * @param multa the multa to set
-     */
-    public void setMulta(Multa multa) {
-        this.multa = multa;
     }
     
     /**
