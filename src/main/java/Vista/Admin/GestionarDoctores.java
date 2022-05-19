@@ -9,6 +9,7 @@ import Excepciones.Almacenado;
 import Excepciones.MayorDeEdad;
 import Excepciones.NoEncontrado;
 import Modelo.Doctor;
+import Modelo.Validacion;
 import javax.swing.JOptionPane;
 
 /**
@@ -18,6 +19,7 @@ import javax.swing.JOptionPane;
 public class GestionarDoctores extends javax.swing.JFrame {
 
     private ControladorHospital controlador;
+    private Validacion validacion;
     
     /**
      * Creates new form GestionarDoctores
@@ -26,6 +28,7 @@ public class GestionarDoctores extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.controlador = controlador;
+        this.validacion = new Validacion();
         setEnabledInputs(false);
     }
 
@@ -64,6 +67,18 @@ public class GestionarDoctores extends javax.swing.JFrame {
 
         jLabel3.setText("Especialidad");
 
+        txtNombre2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombre2KeyTyped(evt);
+            }
+        });
+
+        txtDocumento.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDocumentoKeyTyped(evt);
+            }
+        });
+
         btnAñadir.setText("Añadir");
         btnAñadir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -93,6 +108,12 @@ public class GestionarDoctores extends javax.swing.JFrame {
         });
 
         jLabel4.setText("Edad:");
+
+        txtEdad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtEdadKeyTyped(evt);
+            }
+        });
 
         btnLimpiar.setText("Limpiar");
         btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
@@ -233,10 +254,10 @@ public class GestionarDoctores extends javax.swing.JFrame {
      */
     private void btnAñadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirActionPerformed
         try{
-            //Condicion para verificar que se seleccione una especialidad válida
-            if( cbxEspecialidad.getSelectedIndex()==0 ){
-                JOptionPane.showMessageDialog(null, "Especialidad no válida");
-                return;
+            //Se validan los campos
+            if( txtDocumento.getText().isBlank() || txtEdad.getText().isBlank()
+                || txtNombre2.getText().isBlank() || cbxEspecialidad.getSelectedIndex()==0  ){
+                JOptionPane.showMessageDialog(null, "Faltan campos por llenar");
             }
 
             //Se obtienen los valores de los textFields
@@ -248,7 +269,7 @@ public class GestionarDoctores extends javax.swing.JFrame {
             //Creamos al doctor con sus respectivos datos
             Doctor doctor = new Doctor(nombre,documento,edad, especialidad);
 
-            //Verificamos se se añade el empleado
+            //Verificamos se se añade el doctor
             controlador.añadirDoctor(doctor);
             JOptionPane.showMessageDialog(null, "Doctor con el documento: " + documento + " añadido");
             limpiarInputs();
@@ -262,6 +283,11 @@ public class GestionarDoctores extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        //Se valida el si hay un documento
+        if( txtDocumento.getText().isBlank() ){
+            JOptionPane.showMessageDialog(null, "Hace falta el documento");
+        }
+
         // Se obtiene el documento
         String documento = txtDocumento.getText();
 
@@ -284,6 +310,9 @@ public class GestionarDoctores extends javax.swing.JFrame {
      */
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         try{
+            if( txtDocumento.getText().isBlank() ){
+                JOptionPane.showMessageDialog(null, "Hace falta el documento");
+            }
             // Se obtiene el documento
             String documento = txtDocumento.getText();
 
@@ -303,10 +332,10 @@ public class GestionarDoctores extends javax.swing.JFrame {
      */
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         try{
-            //Condicion para verificar que se seleccione una especialidad válida
-            if( cbxEspecialidad.getSelectedIndex()==0 ){
-                JOptionPane.showMessageDialog(null, "Especialidad no válida");
-                return;
+            //Se validan los campos
+            if( txtDocumento.getText().isBlank() || txtEdad.getText().isBlank()
+                || txtNombre2.getText().isBlank() || cbxEspecialidad.getSelectedIndex()==0  ){
+                JOptionPane.showMessageDialog(null, "Faltan campos por llenar");
             }
 
             // Se obtienen los valores de lso textFields
@@ -348,6 +377,32 @@ public class GestionarDoctores extends javax.swing.JFrame {
     cbxEspecialidad.setSelectedItem("Seleccione una especialidad");
     txtEdad.setText("");
     }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    //Validando el contenido que digita el usuario
+    
+    /**
+     * Metodo para que el usuario solo digite letras en el textField del nombre
+     * @param evt 
+     */
+    private void txtNombre2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombre2KeyTyped
+        validacion.soloLetras(evt);
+    }//GEN-LAST:event_txtNombre2KeyTyped
+
+    /**
+     * Metodo para que el usuario solo digite numeros en el textField del documento
+     * @param evt 
+     */
+    private void txtDocumentoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDocumentoKeyTyped
+        validacion.soloNumeros(evt);
+    }//GEN-LAST:event_txtDocumentoKeyTyped
+
+    /**
+     * Metodo para que el usuario solo digite numeros en el textField de la edad
+     * @param evt 
+     */
+    private void txtEdadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEdadKeyTyped
+        validacion.soloNumeros(evt);
+    }//GEN-LAST:event_txtEdadKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
