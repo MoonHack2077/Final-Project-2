@@ -18,12 +18,11 @@ public class Paciente extends Persona {
     private ArrayList<Cita> historial;
     
     public Paciente(String nombre, String documento,String correo, String contraseña, int edad, 
-           String estadoCivil, String telefono, boolean hasSisben, boolean hasEps, boolean hasCita)
+           String estadoCivil, String telefono, boolean hasSisben, boolean hasEps)
     {
         super(nombre, documento,  correo,  contraseña, telefono, edad, estadoCivil);
         this.hasSisben = hasSisben;
         this.hasEps = hasEps;
-        this.hasCita = hasCita;
         this.historial = new ArrayList<>();
         this.hasCita = false;
     }

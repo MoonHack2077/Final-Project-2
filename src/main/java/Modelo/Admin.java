@@ -8,17 +8,10 @@ package Modelo;
  *
  * @author USER
  */
-public class Secretaria extends Persona {
-    public Secretaria(String nombre, String documento, String correo, 
+public class Admin extends Persona {
+    public Admin(String nombre, String documento, String correo, 
             String contraseña, String telefono, int edad, String estadoCivil)
     {
         super(nombre, documento,  correo,  contraseña, telefono, edad, estadoCivil);
     }
-
-    @Override
-    public String toString() {
-        return getNombre() + getDocumento();
-    }
-    
-    
 }

@@ -8,9 +8,8 @@ package Excepciones;
  *
  * @author USER
  */
-public class NoEncontrado extends RuntimeException {
-    public NoEncontrado(){
-        super("El usuario NO se encentra almacenado");
+public class MayorDeEdadExcepcion extends RuntimeException {
+    public MayorDeEdadExcepcion(){
+        super("Debe ser mayor de edad");
     }
-    
 }

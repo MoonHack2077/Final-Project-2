@@ -6,8 +6,6 @@ package Vista.Secretaria;
 
 import Controlador.ControladorHospital;
 import Modelo.Multa;
-import Modelo.Paciente;
-import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JOptionPane;
 
@@ -235,20 +233,21 @@ public class PagoMulta extends javax.swing.JFrame {
         
         //Obtenemos el valos a pagar
         double valorTotal = Double.parseDouble(txtTotal.getText());
-        Paciente multaPaciente = (Paciente) cbxMultas.getSelectedItem();
+        Multa multa = (Multa) cbxMultas.getSelectedItem();
         
         //No se si esto se pueda dejar aqui o haya que hacer un controlador para meter esto
-        if( valorTotal != multaPaciente.getMulta().getValorTotal() ){
+        if( valorTotal != multa.getValorTotal() ){
             JOptionPane.showMessageDialog(null, "Valor no válido");
             return;
         }
         
         //Se setea la fecha de pago de la multa
-        multaPaciente.getMulta().setFechaPago(fecha);
-        boolean pagada = controlador.eliminarMulta(multaPaciente.getDocumento());
+        multa.setFechaPago(fecha);
+        boolean pagada = controlador.eliminarMulta(multa.getCita().getPaciente().getDocumento());
         if( pagada ){
             JOptionPane.showMessageDialog(null, "Multa pagada!!");
             resetear();
+            llenarComboMultas();
         }else{
             JOptionPane.showMessageDialog(null, "Ocurrió un error");
         }
@@ -262,22 +261,31 @@ public class PagoMulta extends javax.swing.JFrame {
         //Si el primer elemento esta seleccionado, no es válido
         //por lo tanto se muestra ese aviso
         if( cbxMultas.getSelectedIndex()==0 ) {
-            txtDetalle.setText("Ningun paciente seleccionado");
+            txtDetalle.setText("Ninguna multa seleccionada");
             return;
         }
-        Paciente paciente = (Paciente) cbxMultas.getSelectedItem();
-        //Se verifica que el paciente no sea nulo
-        if( paciente != null ){
-            txtDetalle.setText(paciente.getMulta().toString());
+        Multa multa = (Multa) cbxMultas.getSelectedItem();
+        //Se verifica que la multa no sea nula
+        if( multa != null ){
+            txtDetalle.setText(multa.getCita().toString() + "\n" +
+                   "Valos a pagar: " + multa.getValorTotal());
         }
     }//GEN-LAST:event_cbxMultasActionPerformed
 
+    /**
+     * 
+     * @param evt 
+     */
     private void txtAñoCitaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtAñoCitaFocusGained
         if( txtAñoCita.getText().equals("AÑO")  ){
             txtAñoCita.setText("");
         }
     }//GEN-LAST:event_txtAñoCitaFocusGained
 
+    /**
+     * 
+     * @param evt 
+     */
     private void txtAñoCitaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtAñoCitaFocusLost
         if( txtAñoCita.getText().equals("")  ){
             txtAñoCita.setText("AÑO");
@@ -289,11 +297,10 @@ public class PagoMulta extends javax.swing.JFrame {
      */
     private void llenarComboMultas(){
         cbxMultas.removeAllItems();
-        cbxMultas.addItem("Seleccione un paciente multado");
-        ArrayList<Multa> multas = controlador.getMultas();
-        for (Multa multa : multas) {
-            //Condicion para que el combobox solo se llene con los pacientes que tengan una multa
-            if( multa.getPaciente().hasMulta() ) cbxMultas.addItem(multa.getPaciente());
+        cbxMultas.addItem("Seleccione una multa");
+        
+        for (Multa multa : controlador.getMultas()) {
+            cbxMultas.addItem(multa);
         }
     }
     
@@ -305,7 +312,6 @@ public class PagoMulta extends javax.swing.JFrame {
         cbxDia.setSelectedItem("Dia");
         cbxMes.setSelectedItem("Mes");
         txtTotal.setText("");
-        llenarComboMultas();
     }
 
 

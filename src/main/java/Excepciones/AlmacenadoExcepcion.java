@@ -8,8 +8,8 @@ package Excepciones;
  *
  * @author USER
  */
-public class Almacenado extends RuntimeException {
-    public Almacenado(){
+public class AlmacenadoExcepcion extends RuntimeException {
+    public AlmacenadoExcepcion(){
         super("El usuario ya se encentra almacenado");
     }  
 }

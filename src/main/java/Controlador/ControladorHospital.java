@@ -4,9 +4,10 @@
  */
 package Controlador;
 
-import Excepciones.Almacenado;
-import Excepciones.MayorDeEdad;
-import Excepciones.NoEncontrado;
+import Excepciones.AlmacenadoExcepcion;
+import Excepciones.MayorDeEdadExcepcion;
+import Excepciones.NoEncontradoExcepcion;
+import Modelo.Admin;
 import Modelo.Cita;
 import Modelo.Doctor;
 import Modelo.Multa;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
  */
 public class ControladorHospital {
     private ControladorDoctor controladorDoctor;
+    private Admin[] admins;
     private ArrayList<Doctor> doctores;
     private ArrayList<Secretaria> secretarias;
     private ArrayList<Paciente> pacientes;
@@ -28,6 +30,7 @@ public class ControladorHospital {
     
     public ControladorHospital(){
         controladorDoctor = new ControladorDoctor();
+        admins = new Admin[2];
         doctores = new ArrayList<>();
         secretarias = new ArrayList<>();
         pacientes = new ArrayList<>();
@@ -35,6 +38,19 @@ public class ControladorHospital {
         multas = new ArrayList<>();
     }
 
+    /**
+     * 
+     * @param correo
+     * @param contraseña 
+     */
+    public Admin buscarAdmin(String correo, String contraseña){
+        
+        for (Admin admin : admins) {
+            if( admin.getCorreo().equals(correo) && admin.getContraseña().equals(contraseña) ) return admin;
+        }
+        
+        return null;
+    }
     
     /********* GESTION DOCTORES *********/
     
@@ -55,11 +71,14 @@ public class ControladorHospital {
      * @param doctor
      * @return true si pudo añadirlo, de lo contrario false;
      */
-    public boolean añadirDoctor(Doctor doctor) throws Almacenado,MayorDeEdad{
+    public boolean añadirDoctor(Doctor doctor) throws AlmacenadoExcepcion,MayorDeEdadExcepcion{
+        Secretaria secretaria = buscarSecretaria(doctor.getDocumento());
         Doctor aux = buscarDoctor(doctor.getDocumento());
+        Paciente paciente = buscarPaciente(doctor.getDocumento());
         
-        if( aux != null ) throw  new Almacenado();
-        if( doctor.getEdad() < 18) throw new MayorDeEdad();
+        //Excepciones
+        if( aux != null || secretaria != null || paciente != null  ) throw  new AlmacenadoExcepcion();
+        if( doctor.getEdad() < 18) throw new MayorDeEdadExcepcion();
         
         doctores.add(doctor);
         return true;
@@ -71,9 +90,9 @@ public class ControladorHospital {
      * @param documento
      * @return true si pudo eliminarlo, de lo contrario false
      */
-    public boolean eliminarDoctor(String documento) throws NoEncontrado{
+    public boolean eliminarDoctor(String documento) throws NoEncontradoExcepcion{
         Doctor aux = buscarDoctor(documento);
-        if( aux == null ) throw new NoEncontrado();
+        if( aux == null ) throw new NoEncontradoExcepcion();
         for (int i = 0; i < doctores.size(); i++) {
             if(doctores.get(i).getDocumento().equals(documento)){
                 doctores.remove(i);
@@ -88,12 +107,12 @@ public class ControladorHospital {
      * @param doctor
      * @return true si pudo editarla, de lo contrario false
      */
-    public boolean editarDoctor(Doctor doctor) throws NoEncontrado, MayorDeEdad{
+    public boolean editarDoctor(Doctor doctor) throws NoEncontradoExcepcion, MayorDeEdadExcepcion{
         Doctor aux = buscarDoctor(doctor.getDocumento());
         
         //Excepciones
-        if( aux == null ) throw new NoEncontrado();
-        if( doctor.getEdad() < 18) throw new MayorDeEdad();
+        if( aux == null ) throw new NoEncontradoExcepcion();
+        if( doctor.getEdad() < 18) throw new MayorDeEdadExcepcion();
        
         for(int i=0 ; i<doctores.size(); i++){
             if(doctores.get(i).getDocumento().equals(doctor.getDocumento())){
@@ -127,12 +146,14 @@ public class ControladorHospital {
      * @param secretaria
      * @return true si pudo añadirla, de lo contrario false;
      */
-    public boolean añadirSecretaria(Secretaria secretaria) throws MayorDeEdad, Almacenado{
+    public boolean añadirSecretaria(Secretaria secretaria) throws MayorDeEdadExcepcion, AlmacenadoExcepcion{
         Secretaria aux = buscarSecretaria(secretaria.getDocumento());
+        Doctor doctor = buscarDoctor(secretaria.getDocumento());
+        Paciente paciente = buscarPaciente(secretaria.getDocumento());
         
         //Excepciones
-        if( aux != null ) throw  new Almacenado();
-        if( secretaria.getEdad() < 18) throw new MayorDeEdad();
+        if( aux != null || doctor != null || paciente != null  ) throw  new AlmacenadoExcepcion();
+        if( secretaria.getEdad() < 18) throw new MayorDeEdadExcepcion();
         
         secretarias.add(secretaria);
         return true;
@@ -143,11 +164,11 @@ public class ControladorHospital {
      * @param documento
      * @return true si pudo eliminarla, de lo contrario false
      */
-    public boolean eliminarSecretaria(String documento) throws NoEncontrado{
+    public boolean eliminarSecretaria(String documento) throws NoEncontradoExcepcion{
         Secretaria aux = buscarSecretaria(documento);
         
         //Excepcion
-        if( aux == null ) throw new NoEncontrado();
+        if( aux == null ) throw new NoEncontradoExcepcion();
        
         for (int i = 0; i < secretarias.size(); i++) {
             if(secretarias.get(i).getDocumento().equals(documento)){
@@ -163,12 +184,12 @@ public class ControladorHospital {
      * @param secretaria
      * @return true si pudo editarla, de lo contrario false
      */
-    public boolean editarSecretaria(Secretaria secretaria) throws MayorDeEdad, NoEncontrado{
+    public boolean editarSecretaria(Secretaria secretaria) throws MayorDeEdadExcepcion, NoEncontradoExcepcion{
     Secretaria aux = buscarSecretaria(secretaria.getDocumento());
     
     //Excepciones
-    if( aux == null ) throw new NoEncontrado();
-    if( secretaria.getEdad() < 18) throw new MayorDeEdad();
+    if( aux == null ) throw new NoEncontradoExcepcion();
+    if( secretaria.getEdad() < 18) throw new MayorDeEdadExcepcion();
         
     for(int i=0 ; i<secretarias.size(); i++){
         if(secretarias.get(i).getDocumento().equals(secretaria.getDocumento())){
@@ -204,12 +225,14 @@ public class ControladorHospital {
      * @param paciente
      * @return true si pudo añadirlo, de lo contrario false;
      */
-    public boolean añadirPaciente(Paciente paciente)throws MayorDeEdad, Almacenado{
+    public boolean añadirPaciente(Paciente paciente)throws MayorDeEdadExcepcion, AlmacenadoExcepcion{
+        Secretaria secretaria = buscarSecretaria(paciente.getDocumento());
+        Doctor doctor = buscarDoctor(paciente.getDocumento());
         Paciente aux = buscarPaciente(paciente.getDocumento());
         
         //Excepciones
-        if( aux != null ) throw new Almacenado();
-        if( paciente.getEdad() < 18) throw new MayorDeEdad();
+        if( aux != null || secretaria != null || doctor != null  ) throw  new AlmacenadoExcepcion();
+        if( paciente.getEdad() < 18) throw new MayorDeEdadExcepcion();
         
         pacientes.add(paciente);
         return true;       
@@ -220,11 +243,11 @@ public class ControladorHospital {
      * @param documento
      * @return true si pudo eliminarlo, de lo contrario false
      */
-    public boolean eliminarPaciente(String documento) throws NoEncontrado{
+    public boolean eliminarPaciente(String documento) throws NoEncontradoExcepcion{
         Paciente aux = buscarPaciente(documento);
         
         //Excepcion
-        if( aux == null ) throw new NoEncontrado();
+        if( aux == null ) throw new NoEncontradoExcepcion();
         
         for (int i = 0; i < pacientes.size(); i++) {
             if( pacientes.get(i).getDocumento().equals(documento )){
@@ -240,12 +263,12 @@ public class ControladorHospital {
      * @param paciente
      * @return true si pudo editarla, de lo contrario false
      */
-    public boolean editarPaciente(Paciente paciente) throws NoEncontrado, MayorDeEdad{
+    public boolean editarPaciente(Paciente paciente) throws NoEncontradoExcepcion, MayorDeEdadExcepcion{
         Paciente aux = buscarPaciente(paciente.getDocumento());
         
         //Excepciones
-        if( aux == null ) throw new NoEncontrado();
-        if( paciente.getEdad() < 18) throw new MayorDeEdad();
+        if( aux == null ) throw new NoEncontradoExcepcion();
+        if( paciente.getEdad() < 18) throw new MayorDeEdadExcepcion();
         
         for(int i=0 ; i < pacientes.size(); i++){
             if( pacientes.get(i).getDocumento().equals(paciente.getDocumento() )){
@@ -286,7 +309,6 @@ public class ControladorHospital {
             boolean verificada = controladorDoctor.verificarDisponibilidad(cita);
             if( !verificada ){
                 citas.add(cita);
-                cita.getPaciente().setCita(cita);
                 cita.getDoctor().getAgenda().add(cita);
                 return true;
             }
@@ -307,7 +329,6 @@ public class ControladorHospital {
             for (int i = 0; i < citas.size(); i++) {
                 if(citas.get(i).getPaciente().getDocumento().equals(documento)){
                     if(controladorDoctor.eliminarCitaDeLaAgenda(citas.get(i))){
-                        citas.get(i).getPaciente().setCita(null);
                         citas.get(i).getPaciente().setHasCita(false);
                         citas.remove(i);
                         return true;                  
@@ -329,7 +350,7 @@ public class ControladorHospital {
     public Multa buscarMulta(String documento){
     
         for (Multa multa : getMultas()) {
-            if(multa.getPaciente().getDocumento().equals(documento)) return multa;
+            if(multa.getCita().getPaciente().getDocumento().equals(documento)) return multa;
         }
         return null;
     }
@@ -340,14 +361,13 @@ public class ControladorHospital {
      * @return true si pudo añadirla, de lo contrario false;
      */
     public boolean añadirMulta(Multa multa){
-        Multa aux = buscarMulta(multa.getPaciente().getDocumento());
+        Multa aux = buscarMulta(multa.getCita().getPaciente().getDocumento());
         
         if(aux == null){
               multas.add(multa);
-              multa.getPaciente().setMulta(multa);
-              multa.getPaciente().setHasMulta(true);
+              multa.getCita().getPaciente().setHasMulta(true);
               return true;
-            }
+        }
         
         return false;
     }
@@ -362,9 +382,8 @@ public class ControladorHospital {
         
         if( aux != null ){
             for (int i = 0; i < getMultas().size(); i++) {
-                if(getMultas().get(i).getPaciente().getDocumento().equals(documento)){
-                    multas.get(i).getPaciente().setMulta(null);
-                    multas.get(i).getPaciente().setHasMulta(false);
+                if(getMultas().get(i).getCita().getPaciente().getDocumento().equals(documento)){
+                    multas.get(i).getCita().getPaciente().setHasMulta(false);
                     multas.remove(i);
                     return true;                                     
                 }

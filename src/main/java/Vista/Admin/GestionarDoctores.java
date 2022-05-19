@@ -5,9 +5,9 @@
 package Vista.Admin;
 
 import Controlador.ControladorHospital;
-import Excepciones.Almacenado;
-import Excepciones.MayorDeEdad;
-import Excepciones.NoEncontrado;
+import Excepciones.AlmacenadoExcepcion;
+import Excepciones.MayorDeEdadExcepcion;
+import Excepciones.NoEncontradoExcepcion;
 import Modelo.Doctor;
 import Modelo.Validacion;
 import javax.swing.JOptionPane;
@@ -30,6 +30,7 @@ public class GestionarDoctores extends javax.swing.JFrame {
         this.controlador = controlador;
         this.validacion = new Validacion();
         setEnabledInputs(false);
+        llenarComboDoctores();
     }
 
     /**
@@ -49,7 +50,6 @@ public class GestionarDoctores extends javax.swing.JFrame {
         txtNombre2 = new javax.swing.JTextField();
         txtDocumento = new javax.swing.JTextField();
         btnAñadir = new javax.swing.JButton();
-        btnBuscar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
@@ -67,6 +67,7 @@ public class GestionarDoctores extends javax.swing.JFrame {
         rbnSoltero = new javax.swing.JRadioButton();
         rbnDivorciado = new javax.swing.JRadioButton();
         jLabel8 = new javax.swing.JLabel();
+        cbxDoctores = new javax.swing.JComboBox();
         btnVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -95,13 +96,6 @@ public class GestionarDoctores extends javax.swing.JFrame {
         btnAñadir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAñadirActionPerformed(evt);
-            }
-        });
-
-        btnBuscar.setText("Buscar");
-        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarActionPerformed(evt);
             }
         });
 
@@ -152,6 +146,12 @@ public class GestionarDoctores extends javax.swing.JFrame {
 
         jLabel8.setText("Estado civil:");
 
+        cbxDoctores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxDoctoresActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -184,28 +184,32 @@ public class GestionarDoctores extends javax.swing.JFrame {
                         .addGap(27, 27, 27)
                         .addComponent(btnLimpiar))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnAñadir, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(36, 36, 36)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(btnBuscar)
-                                .addGap(33, 33, 33)
-                                .addComponent(btnEliminar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(btnAñadir, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(36, 36, 36)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(rbnSoltero)
-                                    .addComponent(rbnViudo))
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(rbnDivorciado)
-                                    .addComponent(rbnCasado))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addGap(324, 324, 324)))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(rbnSoltero)
+                                            .addComponent(rbnViudo))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(rbnDivorciado)
+                                            .addComponent(rbnCasado)))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(22, 22, 22)
+                                        .addComponent(btnEliminar)
+                                        .addGap(52, 52, 52)
+                                        .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(13, 13, 13))
+                            .addComponent(jLabel8))
+                        .addGap(49, 49, 49)))
                 .addGap(0, 11, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(77, 77, 77)
+                .addComponent(cbxDoctores, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -255,13 +259,14 @@ public class GestionarDoctores extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(rbnViudo)
                             .addComponent(rbnDivorciado))))
-                .addGap(27, 27, 27)
+                .addGap(18, 18, 18)
+                .addComponent(cbxDoctores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEditar)
                     .addComponent(btnAñadir)
-                    .addComponent(btnBuscar)
                     .addComponent(btnEliminar))
-                .addGap(54, 54, 54))
+                .addContainerGap())
         );
 
         btnVolver.setText("Volver");
@@ -309,6 +314,8 @@ public class GestionarDoctores extends javax.swing.JFrame {
         txtCorreo.setText("");
         txtTelefono.setText("");
         cbxEspecialidad.setSelectedItem("Seleccione una especialidad");
+        cbxDoctores.setSelectedItem("Buscar un doctor");
+        resetearRadios();
     }
     
     /**
@@ -318,6 +325,7 @@ public class GestionarDoctores extends javax.swing.JFrame {
     private void setEnabledInputs(boolean enabled){
         btnEditar.setEnabled(enabled);
         btnEliminar.setEnabled(enabled);
+        btnAñadir.setEnabled(!enabled);
     }
     
     
@@ -333,6 +341,7 @@ public class GestionarDoctores extends javax.swing.JFrame {
             if( txtDocumento.getText().isBlank() || txtEdad.getText().isBlank()
                 || txtNombre2.getText().isBlank() || cbxEspecialidad.getSelectedIndex()==0  ){
                 JOptionPane.showMessageDialog(null, "Faltan campos por llenar");
+                return;
             }
 
             //Se obtienen los valores de los textFields
@@ -345,10 +354,10 @@ public class GestionarDoctores extends javax.swing.JFrame {
             String especialidad = cbxEspecialidad.getSelectedItem().toString();
             String estadoCivil = "";
             
-            if( rbnCasado.isSelected() ) estadoCivil = "Casado";
-            if( rbnSoltero.isSelected() ) estadoCivil = "Soltero";
-            if( rbnDivorciado.isSelected() ) estadoCivil = "Divorciado";
-            if( rbnViudo.isSelected() ) estadoCivil = "Viudo";
+            if( rbnCasado.isSelected() ) estadoCivil = rbnCasado.getText();
+            if( rbnSoltero.isSelected() ) estadoCivil = rbnSoltero.getText();
+            if( rbnDivorciado.isSelected() ) estadoCivil = rbnDivorciado.getText();
+            if( rbnViudo.isSelected() ) estadoCivil = rbnViudo.getText();
             
             //Creamos al doctor con sus respectivos datos
             Doctor doctor = new Doctor(nombre,documento,correo,contraseña,telefono,edad,estadoCivil, especialidad);
@@ -357,36 +366,11 @@ public class GestionarDoctores extends javax.swing.JFrame {
             controlador.añadirDoctor(doctor);
             JOptionPane.showMessageDialog(null, "Doctor con el documento: " + documento + " añadido");
             limpiarInputs();
-        }catch(MayorDeEdad | Almacenado ex){
+            llenarComboDoctores();
+        }catch(MayorDeEdadExcepcion | AlmacenadoExcepcion ex){
             JOptionPane.showMessageDialog(rootPane, ex.getMessage());
         }       
     }//GEN-LAST:event_btnAñadirActionPerformed
-
-    /**
-     * Metodo que maneja el evento del boton de buscar para ejecutar su accion
-     * @param evt 
-     */
-    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        //Se valida el si hay un documento
-        if( txtDocumento.getText().isBlank() ){
-            JOptionPane.showMessageDialog(null, "Hace falta el documento");
-        }
-
-        // Se obtiene el documento
-        String documento = txtDocumento.getText();
-
-        //Verificamos si el empleado fue encontrado
-        Doctor encontrado = controlador.buscarDoctor(documento);
-        if(encontrado != null){
-            txtNombre2.setText(encontrado.getNombre());
-            cbxEspecialidad.setSelectedItem(encontrado.getEspecialidad());
-            txtEdad.setText(String.valueOf(encontrado.getEdad()));
-            setEnabledInputs(true);
-        }else{
-            JOptionPane.showMessageDialog(null, "Doctor no encontrado");
-        }
-        
-    }//GEN-LAST:event_btnBuscarActionPerformed
 
     /**
      * Metodo que maneja el evento del boton de eliminar para ejecutar su accion
@@ -394,18 +378,19 @@ public class GestionarDoctores extends javax.swing.JFrame {
      */
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         try{
-            if( txtDocumento.getText().isBlank() ){
-                JOptionPane.showMessageDialog(null, "Hace falta el documento");
+            if( cbxDoctores.getSelectedIndex()==0 ){
+                JOptionPane.showMessageDialog(null, "No hay un doctor seleccionado");
+                return;
             }
-            // Se obtiene el documento
-            String documento = txtDocumento.getText();
+            Doctor doctor = (Doctor) cbxDoctores.getSelectedItem();
 
             //Verificamos se se elimina el empleado
-            controlador.eliminarDoctor(documento);
-            JOptionPane.showMessageDialog(null, "Doctor con el documento: " + documento + " eliminado");
+            controlador.eliminarDoctor(doctor.getDocumento());
+            JOptionPane.showMessageDialog(null, "Doctor con el documento: " + doctor.getDocumento() + " eliminado");
             limpiarInputs();
+            llenarComboDoctores();
             setEnabledInputs(false);
-        }catch(NoEncontrado ex){
+        }catch(NoEncontradoExcepcion ex){
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
@@ -432,10 +417,10 @@ public class GestionarDoctores extends javax.swing.JFrame {
             String especialidad = cbxEspecialidad.getSelectedItem().toString();
             String estadoCivil = "";
             
-            if( rbnCasado.isSelected() ) estadoCivil = "Casado";
-            if( rbnSoltero.isSelected() ) estadoCivil = "Soltero";
-            if( rbnDivorciado.isSelected() ) estadoCivil = "Divorciado";
-            if( rbnViudo.isSelected() ) estadoCivil = "Viudo";
+            if( rbnCasado.isSelected() ) estadoCivil = rbnCasado.getText();
+            if( rbnSoltero.isSelected() ) estadoCivil = rbnSoltero.getText();
+            if( rbnDivorciado.isSelected() ) estadoCivil = rbnDivorciado.getText();
+            if( rbnViudo.isSelected() ) estadoCivil = rbnViudo.getText();
             
             //Creamos al doctor con sus respectivos datos
             Doctor doctor = new Doctor(nombre,documento,correo,contraseña,telefono,edad,estadoCivil, especialidad);
@@ -444,8 +429,9 @@ public class GestionarDoctores extends javax.swing.JFrame {
             controlador.editarDoctor(doctor);
             JOptionPane.showMessageDialog(null, "Doctor con el documento: " + documento + " editado");
             limpiarInputs();
+            llenarComboDoctores();
             setEnabledInputs(false);
-        }catch(MayorDeEdad | NoEncontrado ex){
+        }catch(MayorDeEdadExcepcion | NoEncontradoExcepcion ex){
             JOptionPane.showMessageDialog(rootPane, ex.getMessage());
         } 
     }//GEN-LAST:event_btnEditarActionPerformed
@@ -465,10 +451,7 @@ public class GestionarDoctores extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
-    txtNombre2.setText("");
-    txtDocumento.setText("");
-    cbxEspecialidad.setSelectedItem("Seleccione una especialidad");
-    txtEdad.setText("");
+        limpiarInputs();
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     //Validando el contenido que digita el usuario
@@ -497,14 +480,77 @@ public class GestionarDoctores extends javax.swing.JFrame {
         validacion.soloNumeros(evt);
     }//GEN-LAST:event_txtEdadKeyTyped
 
+    /**
+     * Metodo para resetera los radio botones del estado civil
+     * @param selected 
+     */
+    private void resetearRadios(){
+        rbnCasado.setSelected(false);
+        rbnDivorciado.setSelected(false);
+        rbnSoltero.setSelected(false);
+        rbnViudo.setSelected(false);
+    }
+    
+    /**
+     * Metodo para llenar elñ combobox de los doctores
+     */
+    private void llenarComboDoctores(){
+        cbxDoctores.removeAllItems();
+        cbxDoctores.addItem("Buscar un doctor");
+        
+        for (Doctor doctor : controlador.getDoctores()) {
+            cbxDoctores.addItem(doctor);
+        }       
+    }
+    
+    /**
+     * Metodo para que cada vez que se seleccione un doctor los campos se llenen con su respeciva informacion
+     * @param evt 
+     */
+    private void cbxDoctoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxDoctoresActionPerformed
+        if( controlador.getDoctores().isEmpty() ) return;
+        //Si el primer elemento esta seleccionado, no es válido
+        if( cbxDoctores.getSelectedIndex()==0 ) {
+            limpiarInputs();
+            setEnabledInputs(false);
+            return;
+        }
+        Doctor doctor = (Doctor) cbxDoctores.getSelectedItem();
+        //Se verifica que la cita no sea nula
+        if( doctor != null ){
+            txtDocumento.setText(doctor.getDocumento());
+            txtEdad.setText(String.valueOf(doctor.getEdad()));
+            txtNombre2.setText(doctor.getNombre());
+            txtContraseña.setText(doctor.getContraseña());
+            txtCorreo.setText(doctor.getCorreo());
+            txtTelefono.setText(doctor.getTelefono());
+            
+            if( doctor.getEstadoCivil().equals("Casado") ){
+                resetearRadios();
+                rbnCasado.setSelected(true);
+            }else if( doctor.getEstadoCivil().equals("Soltero") ){
+                resetearRadios();
+                rbnSoltero.setSelected(true);
+            }else if( doctor.getEstadoCivil().equals("Viudo") ){
+                resetearRadios();
+                rbnViudo.setSelected(true);
+            }if( doctor.getEstadoCivil().equals("Divorciado") ){
+                resetearRadios();
+                rbnDivorciado.setSelected(true);
+            }
+            
+            setEnabledInputs(true);
+        }
+    }//GEN-LAST:event_cbxDoctoresActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAñadir;
-    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnVolver;
+    private javax.swing.JComboBox cbxDoctores;
     private javax.swing.JComboBox<String> cbxEspecialidad;
     private javax.swing.ButtonGroup estadosCiviles;
     private javax.swing.JLabel jLabel1;

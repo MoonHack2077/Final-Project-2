@@ -4,7 +4,7 @@
  */
 package Vista.Paciente;
 
-import Controlador.ControladorPaciente;
+import Modelo.Cita;
 import Modelo.Paciente;
 
 /**
@@ -15,7 +15,6 @@ public class VerHistorial extends javax.swing.JFrame {
 
     private Paciente paciente;
     private javax.swing.JFrame vistaVolver;
-    private ControladorPaciente controlador;
     /**
      * Creates new form VerHistorial
      */
@@ -24,7 +23,6 @@ public class VerHistorial extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         this.paciente = paciente;
         this.vistaVolver = vistaVolver;
-        this.controlador = new ControladorPaciente();
         llenarCampos();
     }
 
@@ -42,6 +40,7 @@ public class VerHistorial extends javax.swing.JFrame {
         txtHistorial = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
         lblPaciente = new javax.swing.JLabel();
+        cbxCitas = new javax.swing.JComboBox();
         btnVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -54,6 +53,12 @@ public class VerHistorial extends javax.swing.JFrame {
 
         jLabel1.setText("Este es tu historial: ");
 
+        cbxCitas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxCitasActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -62,12 +67,14 @@ public class VerHistorial extends javax.swing.JFrame {
                 .addGap(15, 15, 15)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 25, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
-                        .addComponent(lblPaciente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(lblPaciente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbxCitas, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 25, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -76,9 +83,11 @@ public class VerHistorial extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addComponent(lblPaciente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(11, 11, 11)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18))
+                .addGap(29, 29, 29)
+                .addComponent(cbxCitas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(80, 80, 80))
         );
 
         btnVolver.setText("Volver");
@@ -116,9 +125,14 @@ public class VerHistorial extends javax.swing.JFrame {
      * Metodo para llenar el textArea del historial con el historial medico del paciente
      */
     private void llenarCampos(){
-        String historial = controlador.obtenerDatosHistorial(paciente);
+        cbxCitas.removeAllItems();
+        cbxCitas.addItem("Seleccione una cita");
+        
+        for (Cita cita : paciente.getHistorial()) {
+            cbxCitas.addItem(cita);
+        }
+        
         lblPaciente.setText(paciente.getNombre());
-        txtHistorial.setText(historial);
     }
     
     /**
@@ -130,9 +144,33 @@ public class VerHistorial extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnVolverActionPerformed
 
+    /**
+     * Metodo para que cada vez que se seleccione una cita se muestre su detalle
+     * @param evt 
+     */
+    private void cbxCitasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxCitasActionPerformed
+        //Si el primer elemento esta seleccionado, no es válido
+        //por lo tanto se muestra ese aviso
+        if( cbxCitas.getSelectedIndex()==0 ) {
+            txtHistorial.setText("Ninguna cita seleccionada");
+            return;
+        }
+        Cita cita = (Cita) cbxCitas.getSelectedItem();
+        int numeroDeCita = cbxCitas.getSelectedIndex();
+        //Se verifica que la cita no sea nula
+        if( cita != null ){
+            txtHistorial.setText( "CITA " + numeroDeCita +
+                    cita.getFecha().toString() + "\n" +
+                    "Doctor: " + cita.getDoctor().toString() +
+                    "Paciente: " + cita.getPaciente() + "- Documento:" + cita.getPaciente().getDocumento()
+            );
+        }
+    }//GEN-LAST:event_cbxCitasActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnVolver;
+    private javax.swing.JComboBox cbxCitas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;

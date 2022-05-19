@@ -39,7 +39,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         txtCorreo = new javax.swing.JTextField();
         txtContraseña = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        btnEntrar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -65,10 +65,10 @@ public class VistaPrincipal extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Entrar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnEntrar.setText("Entrar");
+        btnEntrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnEntrarActionPerformed(evt);
             }
         });
 
@@ -84,7 +84,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
                         .addComponent(txtContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(60, 60, 60)
-                        .addComponent(jButton1)))
+                        .addComponent(btnEntrar)))
                 .addContainerGap(23, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -95,7 +95,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txtContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26)
-                .addComponent(jButton1)
+                .addComponent(btnEntrar)
                 .addContainerGap(31, Short.MAX_VALUE))
         );
 
@@ -123,11 +123,16 @@ public class VistaPrincipal extends javax.swing.JFrame {
      * Metodo que maneja el evento del boton entrar
      * @param evt 
      */
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
         VistaAdmin admin = new VistaAdmin(controlador);
         admin.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
+        
+        String correo = txtCorreo.getText();
+        String contraseña = txtContraseña.getText();
+        
+        
+    }//GEN-LAST:event_btnEntrarActionPerformed
 
     /**
      * Metodo para remover el indicador del correo
@@ -197,7 +202,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnEntrar;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField txtContraseña;
     private javax.swing.JTextField txtCorreo;

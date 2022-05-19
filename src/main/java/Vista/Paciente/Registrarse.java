@@ -5,9 +5,10 @@
 package Vista.Paciente;
 
 import Controlador.ControladorHospital;
-import Excepciones.Almacenado;
-import Excepciones.MayorDeEdad;
+import Excepciones.AlmacenadoExcepcion;
+import Excepciones.MayorDeEdadExcepcion;
 import Modelo.Paciente;
+import Modelo.Validacion;
 import javax.swing.JOptionPane;
 
 /**
@@ -17,6 +18,7 @@ import javax.swing.JOptionPane;
 public class Registrarse extends javax.swing.JFrame {
 
     private ControladorHospital controlador;
+    private Validacion validacion;
     /**
      * Creates new form Registrarse
      */
@@ -24,6 +26,16 @@ public class Registrarse extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         this.controlador = controlador;
+        this.validacion = new Validacion();
+        //Se añaden los botones de EPS Y SISBEN al radioGroup de salud
+        salud.add(rbnEps);
+        salud.add(rbnSisben);
+        
+        //Se añaden los botones de casado, soltero, viudo y divorciado al radioGroup de estados civiles
+        estadosCiviles.add(rbnCasado);
+        estadosCiviles.add(rbnDivorciado);
+        estadosCiviles.add(rbnSoltero);
+        estadosCiviles.add(rbnViudo);
     }
 
     /**
@@ -35,27 +47,35 @@ public class Registrarse extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        estadosCiviles = new javax.swing.ButtonGroup();
+        salud = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
-        txtNombre = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        txtDocumento = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        txtEdad = new javax.swing.JTextField();
         rbnSisben = new javax.swing.JRadioButton();
         rbnEps = new javax.swing.JRadioButton();
         btnRegistrar = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        txtNombre2 = new javax.swing.JTextField();
+        rbnCasado = new javax.swing.JRadioButton();
+        txtCorreo = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        txtDocumento = new javax.swing.JTextField();
+        rbnViudo = new javax.swing.JRadioButton();
+        jLabel6 = new javax.swing.JLabel();
+        txtEdad = new javax.swing.JTextField();
+        rbnSoltero = new javax.swing.JRadioButton();
+        txtContraseña = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        btnLimpiar = new javax.swing.JButton();
+        txtTelefono = new javax.swing.JTextField();
+        rbnDivorciado = new javax.swing.JRadioButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
         btnVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "REGISTRARSE", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
-
-        jLabel1.setText("Nombre");
-
-        jLabel2.setText("Documento");
-
-        jLabel3.setText("Edad:");
 
         rbnSisben.setText("SISBEN");
 
@@ -68,55 +88,156 @@ public class Registrarse extends javax.swing.JFrame {
             }
         });
 
+        jLabel5.setText("Correo:");
+
+        txtNombre2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombre2KeyTyped(evt);
+            }
+        });
+
+        rbnCasado.setText("Casada");
+
+        jLabel4.setText("Edad:");
+
+        txtDocumento.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDocumentoKeyTyped(evt);
+            }
+        });
+
+        rbnViudo.setText("Viuda");
+
+        jLabel6.setText("Contraseña:");
+
+        txtEdad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtEdadKeyTyped(evt);
+            }
+        });
+
+        rbnSoltero.setText("Soltera");
+
+        jLabel7.setText("Telefono:");
+
+        jLabel1.setText("Nombre:");
+
+        btnLimpiar.setText("Limpiar");
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
+
+        rbnDivorciado.setText("Divorciada");
+
+        jLabel2.setText("Documento: ");
+
+        jLabel8.setText("Estado civil:");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(34, 34, 34)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtNombre)
-                            .addComponent(txtDocumento)
-                            .addComponent(txtEdad, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnRegistrar)
+                        .addGap(28, 28, 28)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel1)
+                                            .addComponent(jLabel2))
+                                        .addGap(30, 30, 30)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(txtDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txtNombre2, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel4)
+                                            .addComponent(jLabel5)
+                                            .addComponent(jLabel6)
+                                            .addComponent(jLabel7))
+                                        .addGap(32, 32, 32)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(txtEdad, javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(txtCorreo)
+                                            .addComponent(txtContraseña)
+                                            .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(27, 27, 27)
+                                .addComponent(btnLimpiar))
+                            .addComponent(jLabel8)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(112, 112, 112)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(rbnSoltero)
+                                    .addComponent(rbnViudo))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(rbnDivorciado)
+                                    .addComponent(rbnCasado)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(rbnSisben)
                                 .addGap(30, 30, 30)
-                                .addComponent(rbnEps)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(26, 26, 26))
+                                .addComponent(rbnEps))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(161, 161, 161)
+                        .addComponent(btnRegistrar)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNombre2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnLimpiar)
                     .addComponent(jLabel1))
+                .addGap(13, 13, 13)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtEdad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(txtEdad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(35, 35, 35)
+                    .addComponent(jLabel5)
+                    .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addComponent(jLabel6))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(txtContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(25, 25, 25)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(rbnCasado)
+                    .addComponent(rbnSoltero))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel8))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(rbnViudo)
+                            .addComponent(rbnDivorciado))))
+                .addGap(37, 37, 37)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(rbnSisben)
                     .addComponent(rbnEps))
-                .addGap(26, 26, 26)
+                .addGap(30, 30, 30)
                 .addComponent(btnRegistrar)
-                .addContainerGap(7, Short.MAX_VALUE))
+                .addGap(27, 27, 27))
         );
 
         btnVolver.setText("Volver");
@@ -133,18 +254,18 @@ public class Registrarse extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnVolver)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(23, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnVolver))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnVolver)
-                .addGap(18, 18, 18)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(20, 20, 20))
         );
 
         pack();
@@ -157,19 +278,28 @@ public class Registrarse extends javax.swing.JFrame {
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         try{
             //Obteniendo los datos del paciente
-            String nombre = txtNombre.getText();
+            String nombre = txtNombre2.getText();
             String documento = txtDocumento.getText();
+            String correo = txtCorreo.getText();
+            String contraseña = txtContraseña.getText();
+            String telefono = txtTelefono.getText();
             int edad = Integer.parseInt(txtEdad.getText());
             boolean hasSisben = rbnSisben.isSelected();
             boolean hasEps = rbnEps.isSelected();
+            String estadoCivil = "";
 
-            //Creamos al paciente
-            Paciente paciente = new Paciente(nombre, documento, edad, hasSisben, hasEps, hasEps);
+            if( rbnCasado.isSelected() ) estadoCivil = "Casado";
+            if( rbnSoltero.isSelected() ) estadoCivil = "Soltero";
+            if( rbnDivorciado.isSelected() ) estadoCivil = "Divorciado";
+            if( rbnViudo.isSelected() ) estadoCivil = "Viudo";
 
+            //Creamos al paciente con sus respectivos datos
+            Paciente paciente = new Paciente(nombre,documento,correo,contraseña,edad,telefono,estadoCivil,hasSisben,hasEps);
+            
             controlador.añadirPaciente(paciente);
             JOptionPane.showMessageDialog(null, "Se añadio el paciente con documento " + documento);
             abrirVistaPaciente(paciente);
-        }catch(MayorDeEdad | Almacenado ex){
+        }catch(MayorDeEdadExcepcion | AlmacenadoExcepcion ex){
             JOptionPane.showMessageDialog(rootPane, ex.getMessage());
         }
     }//GEN-LAST:event_btnRegistrarActionPerformed
@@ -184,6 +314,37 @@ public class Registrarse extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnVolverActionPerformed
 
+    private void txtNombre2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombre2KeyTyped
+        validacion.soloLetras(evt);
+    }//GEN-LAST:event_txtNombre2KeyTyped
+
+    private void txtDocumentoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDocumentoKeyTyped
+        validacion.soloNumeros(evt);
+    }//GEN-LAST:event_txtDocumentoKeyTyped
+
+    private void txtEdadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEdadKeyTyped
+        validacion.soloNumeros(evt);
+    }//GEN-LAST:event_txtEdadKeyTyped
+
+    /**
+     * Metodo para resetaear el contenido de los textFields
+     * @param evt 
+     */
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        txtDocumento.setText("");
+        txtEdad.setText("");
+        txtNombre2.setText("");
+        txtContraseña.setText("");
+        txtCorreo.setText("");
+        txtTelefono.setText("");
+        rbnCasado.setSelected(false);
+        rbnDivorciado.setSelected(false);
+        rbnEps.setSelected(false);
+        rbnSisben.setSelected(false);
+        rbnSoltero.setSelected(false);
+        rbnViudo.setSelected(false);
+    }//GEN-LAST:event_btnLimpiarActionPerformed
+
     /**
      * Metodo para redireccionar al usuario a la ventana con sus opciones
      * @param paciente 
@@ -195,17 +356,30 @@ public class Registrarse extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnRegistrar;
     private javax.swing.JButton btnVolver;
+    private javax.swing.ButtonGroup estadosCiviles;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JRadioButton rbnCasado;
+    private javax.swing.JRadioButton rbnDivorciado;
     private javax.swing.JRadioButton rbnEps;
     private javax.swing.JRadioButton rbnSisben;
+    private javax.swing.JRadioButton rbnSoltero;
+    private javax.swing.JRadioButton rbnViudo;
+    private javax.swing.ButtonGroup salud;
+    private javax.swing.JTextField txtContraseña;
+    private javax.swing.JTextField txtCorreo;
     private javax.swing.JTextField txtDocumento;
     private javax.swing.JTextField txtEdad;
-    private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtNombre2;
+    private javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
 }

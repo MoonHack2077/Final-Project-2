@@ -223,16 +223,12 @@ public class AtenderCita extends javax.swing.JFrame {
         //Obtenemos los datos para anexarlos al historial del paciente
         String conclusiones = txtConclusiones.getText();
         String tratamientos = txtTratamientos.getText();
-        String resultados = cita.toString() + 
-                "\n Conclusiones: " + conclusiones + 
-                "\n Tratamientos: " + tratamientos;
+        cita.setConclusiones("\n Conclusiones: " + conclusiones + 
+                "\n Tratamientos: " + tratamientos);
           
         boolean eliminada = controlador.eliminarCita(cita.getPaciente().getDocumento());
         if( eliminada ){
             JOptionPane.showMessageDialog(null, "Cita atendida con exito");
-            controladorPaciente.añadirCita(cita, resultados);
-            cita.getPaciente().setCita(null);
-            cita.getPaciente().setHasCita(false);
             resetearCampos();                  
         }else{
             JOptionPane.showMessageDialog(null, "Ocurrió algún error");
@@ -259,7 +255,7 @@ public class AtenderCita extends javax.swing.JFrame {
         
         if( confirmacion==0 ){
             //Creamos la multa y la registramos
-            Multa multa = new Multa(cita.toString(), cita.getPaciente());
+            Multa multa = new Multa(cita);
             controladorPaciente.descuentoMulta(multa);
             boolean añadida = controlador.añadirMulta(multa);
             boolean cancelada = controlador.eliminarCita(cita.getPaciente().getDocumento());

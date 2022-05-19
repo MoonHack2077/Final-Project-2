@@ -5,10 +5,12 @@
 package Vista.Admin;
 
 import Controlador.ControladorHospital;
-import Excepciones.Almacenado;
-import Excepciones.MayorDeEdad;
-import Excepciones.NoEncontrado;
+import Excepciones.AlmacenadoExcepcion;
+import Excepciones.MayorDeEdadExcepcion;
+import Excepciones.NoEncontradoExcepcion;
 import Modelo.Secretaria;
+import Modelo.Validacion;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
@@ -18,7 +20,7 @@ import javax.swing.JOptionPane;
 public class GestionarSecretarias extends javax.swing.JFrame {
 
     private ControladorHospital controlador;
-    
+    private Validacion validacion;
     /**
      * Creates new form GestionarSecretarias
      */
@@ -26,7 +28,9 @@ public class GestionarSecretarias extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.controlador = controlador;
+        this.validacion = new Validacion();
         setEnabledInputs(false);
+        llenarComboSecretarias();
    }
     
     /**
@@ -36,6 +40,7 @@ public class GestionarSecretarias extends javax.swing.JFrame {
     private void setEnabledInputs(boolean enabled){
         btnEditar.setEnabled(enabled);
         btnEliminar.setEnabled(enabled);
+        btnAñadir.setEnabled(!enabled);
     }
      
     /**
@@ -44,7 +49,12 @@ public class GestionarSecretarias extends javax.swing.JFrame {
     private void limpiarInputs(){
         txtDocumento.setText("");
         txtEdad.setText("");
-        txtNombre.setText("");
+        txtNombre2.setText("");
+        txtContraseña.setText("");
+        txtCorreo.setText("");
+        txtTelefono.setText("");
+        cbxSecretarias.setSelectedItem("Buscar una secretaria");
+        resetearRadios();
     }
 
     /**
@@ -58,16 +68,27 @@ public class GestionarSecretarias extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        txtNombre = new javax.swing.JTextField();
-        txtDocumento = new javax.swing.JTextField();
-        txtEdad = new javax.swing.JTextField();
-        btnAñadir = new javax.swing.JButton();
-        btnBuscar = new javax.swing.JButton();
-        btnEliminar = new javax.swing.JButton();
-        btnEditar = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
+        rbnDivorciado = new javax.swing.JRadioButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        txtNombre2 = new javax.swing.JTextField();
+        txtCorreo = new javax.swing.JTextField();
+        txtDocumento = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        btnAñadir = new javax.swing.JButton();
+        txtContraseña = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        btnEliminar = new javax.swing.JButton();
+        txtTelefono = new javax.swing.JTextField();
+        btnEditar = new javax.swing.JButton();
+        rbnCasado = new javax.swing.JRadioButton();
+        jLabel4 = new javax.swing.JLabel();
+        rbnViudo = new javax.swing.JRadioButton();
+        txtEdad = new javax.swing.JTextField();
+        rbnSoltero = new javax.swing.JRadioButton();
+        cbxSecretarias = new javax.swing.JComboBox();
         btnVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -76,9 +97,34 @@ public class GestionarSecretarias extends javax.swing.JFrame {
 
         jLabel1.setText("Nombre:");
 
-        jLabel2.setText("Documento:");
+        btnLimpiar.setText("Limpiar");
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
 
-        jLabel3.setText("Edad:");
+        rbnDivorciado.setText("Divorciada");
+
+        jLabel2.setText("Documento: ");
+
+        jLabel8.setText("Estado civil:");
+
+        jLabel5.setText("Correo:");
+
+        txtNombre2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombre2KeyTyped(evt);
+            }
+        });
+
+        txtDocumento.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDocumentoKeyTyped(evt);
+            }
+        });
+
+        jLabel6.setText("Contraseña:");
 
         btnAñadir.setText("Añadir");
         btnAñadir.addActionListener(new java.awt.event.ActionListener() {
@@ -87,12 +133,7 @@ public class GestionarSecretarias extends javax.swing.JFrame {
             }
         });
 
-        btnBuscar.setText("Buscar");
-        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarActionPerformed(evt);
-            }
-        });
+        jLabel7.setText("Telefono:");
 
         btnEliminar.setText("Eliminar");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
@@ -108,10 +149,23 @@ public class GestionarSecretarias extends javax.swing.JFrame {
             }
         });
 
-        btnLimpiar.setText("Limpiar");
-        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+        rbnCasado.setText("Casada");
+
+        jLabel4.setText("Edad:");
+
+        rbnViudo.setText("Viuda");
+
+        txtEdad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtEdadKeyTyped(evt);
+            }
+        });
+
+        rbnSoltero.setText("Soltera");
+
+        cbxSecretarias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLimpiarActionPerformed(evt);
+                cbxSecretariasActionPerformed(evt);
             }
         });
 
@@ -120,56 +174,107 @@ public class GestionarSecretarias extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(43, 43, 43)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel1)
+                                        .addComponent(jLabel2))
+                                    .addGap(30, 30, 30)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(txtDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtNombre2, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel4)
+                                        .addComponent(jLabel5)
+                                        .addComponent(jLabel6)
+                                        .addComponent(jLabel7))
+                                    .addGap(32, 32, 32)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(txtEdad, javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(txtCorreo)
+                                        .addComponent(txtContraseña)
+                                        .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGap(27, 27, 27)
+                            .addComponent(btnLimpiar))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGap(43, 43, 43)
                             .addComponent(btnAñadir, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnEliminar))
-                        .addGap(44, 44, 44)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnBuscar))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel2))
-                        .addGap(28, 28, 28)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
-                                .addComponent(btnLimpiar))
-                            .addComponent(txtEdad, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addGap(18, 18, 18)
+                            .addComponent(btnEliminar)
+                            .addGap(41, 41, 41)
+                            .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLabel8)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addContainerGap()
+                            .addComponent(cbxSecretarias, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                            .addGap(112, 112, 112)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(rbnSoltero)
+                                .addComponent(rbnViudo))
+                            .addGap(18, 18, 18)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(rbnDivorciado)
+                                .addComponent(rbnCasado)))))
+                .addGap(0, 10, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(68, 68, 68)
+                .addGap(28, 28, 28)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnLimpiar))
-                .addGap(22, 22, 22)
+                    .addComponent(txtNombre2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnLimpiar)
+                    .addComponent(jLabel1))
+                .addGap(13, 13, 13)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
-                .addGap(33, 33, 33)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(txtEdad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(40, 40, 40)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnBuscar)
-                    .addComponent(btnAñadir))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtEdad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5)
+                    .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addComponent(jLabel6))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(txtContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(25, 25, 25)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(rbnCasado)
+                    .addComponent(rbnSoltero))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel8))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(rbnViudo)
+                            .addComponent(rbnDivorciado))))
+                .addGap(32, 32, 32)
+                .addComponent(cbxSecretarias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEditar)
-                    .addComponent(btnEliminar))
-                .addContainerGap(48, Short.MAX_VALUE))
+                    .addComponent(btnEliminar)
+                    .addComponent(btnAñadir))
+                .addGap(29, 29, 29))
         );
 
         btnVolver.setText("Volver");
@@ -184,115 +289,30 @@ public class GestionarSecretarias extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(btnVolver))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(47, Short.MAX_VALUE))
+                        .addGap(6, 6, 6)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnVolver))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(11, Short.MAX_VALUE)
+                .addContainerGap()
                 .addComponent(btnVolver)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(47, 47, 47))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
      
-    /**
-     * Metodo que maneja el evento del boton de añadir secretaria para ejecutar su accion
-     * @param evt 
-     */
-    private void btnAñadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirActionPerformed
-       try{
-            //Obtenemos los datos
-           String nombre = txtNombre.getText();
-           String documento = txtDocumento.getText();
-           int edad = Integer.parseInt(txtEdad.getText());
-
-           //Creamos la secretaria
-           Secretaria secretaria = new Secretaria(nombre, documento, edad);
-
-           controlador.añadirSecretaria(secretaria);
-           JOptionPane.showMessageDialog(null, "Secretaria con el documento: " + documento + " ha sido añadida");
-           limpiarInputs();
-            
-       }catch(MayorDeEdad | Almacenado ex){
-            JOptionPane.showMessageDialog(rootPane, ex.getMessage());
-        }
-    }//GEN-LAST:event_btnAñadirActionPerformed
+   
+   
     
-    /**
-     * Metodo que maneja el evento del boton de buscar secretaria para ejecutar su accion
-     * @param evt 
-     */
-    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        //Obtenemos el documento
-        String documento = txtDocumento.getText();
-        
-        //Verificamos si la secretaria fue encontrada
-        Secretaria encontrada = controlador.buscarSecretaria(documento);
-        
-        /*** EXCEPCION ***/
-        if(encontrada != null){
-            txtNombre.setText(encontrada.getNombre());
-            txtDocumento.setText(String.valueOf(documento));
-            txtEdad.setText(String.valueOf(encontrada.getEdad()));
-            setEnabledInputs(true);
-        }else{
-            JOptionPane.showMessageDialog(null, "Secretaria no encontrada");
-        }
-        
-    }//GEN-LAST:event_btnBuscarActionPerformed
-    
-    /**
-     * Metodo que maneja el evento del boton de eliminar secretaria para ejecutar su accion
-     * @param evt 
-     */
-    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        try{
-            //Se obtiene el documento
-            String documento = txtDocumento.getText();
-
-            //Verificamos se se elimina el empleado
-            controlador.eliminarSecretaria(documento);
-            JOptionPane.showMessageDialog(null, "Secretaria con el documento: " + documento + " ha sido eliminada");
-            limpiarInputs();
-            setEnabledInputs(false);
-        }catch(NoEncontrado ex){
-            JOptionPane.showMessageDialog(null, ex.getMessage());
-        }
-    }//GEN-LAST:event_btnEliminarActionPerformed
-     /**
-     * Metodo que maneja el evento del boton de editar secretaria para ejecutar su accion
-     * @param evt 
-     */
-    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        try{
-            //Se obtienen los valores de lso textFields
-            String nombre = txtNombre.getText();
-            String documento = txtDocumento.getText();
-            int edad = Integer.parseInt(txtEdad.getText());
-
-            //Creamos la secretaria con los nuevos datos
-            Secretaria secretaria = new Secretaria(nombre,documento, edad);
-
-            controlador.editarSecretaria(secretaria);
-            JOptionPane.showMessageDialog(null, "Secretaria con el documento: " + documento + " ha sido editado");
-            limpiarInputs();
-            setEnabledInputs(false);
-        }catch(MayorDeEdad | NoEncontrado ex){
-            JOptionPane.showMessageDialog(rootPane, ex.getMessage());
-        }
-    }//GEN-LAST:event_btnEditarActionPerformed
-     
     /**
      * Metodo que maneja el evento del boton de volver a la ventana de administrador 
      * @param evt 
@@ -302,31 +322,229 @@ public class GestionarSecretarias extends javax.swing.JFrame {
         admin.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnVolverActionPerformed
-    
+
     /**
-     * Metodo que maneja el evento del boton de limpiar para resetear los textFields
+     * 
      * @param evt 
      */
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
-      txtNombre.setText("");
-      txtEdad.setText("");
-      txtDocumento.setText("");
+        limpiarInputs();
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
+    /**
+     * 
+     * @param evt 
+     */
+    private void txtNombre2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombre2KeyTyped
+        validacion.soloLetras(evt);
+    }//GEN-LAST:event_txtNombre2KeyTyped
+
+    /**
+     * 
+     * @param evt 
+     */
+    private void txtDocumentoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDocumentoKeyTyped
+        validacion.soloNumeros(evt);
+    }//GEN-LAST:event_txtDocumentoKeyTyped
+
+    /**
+     * 
+     * @param evt 
+     */
+    private void btnAñadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirActionPerformed
+        try{
+            //Se validan los campos
+            if( txtDocumento.getText().isBlank() || txtEdad.getText().isBlank()
+                || txtNombre2.getText().isBlank() ){
+                JOptionPane.showMessageDialog(null, "Faltan campos por llenar");
+                return;
+            }
+
+            //Se obtienen los valores de los textFields
+            String nombre = txtNombre2.getText();
+            String documento = txtDocumento.getText();
+            String correo = txtCorreo.getText();
+            String contraseña = txtContraseña.getText();
+            String telefono = txtTelefono.getText();
+            int edad = Integer.parseInt(txtEdad.getText());
+            String estadoCivil = "";
+
+            if( rbnCasado.isSelected() ) estadoCivil = rbnCasado.getText();
+            if( rbnSoltero.isSelected() ) estadoCivil = rbnSoltero.getText();
+            if( rbnDivorciado.isSelected() ) estadoCivil = rbnDivorciado.getText();
+            if( rbnViudo.isSelected() ) estadoCivil = rbnViudo.getText();
+
+            //Creamos al doctor con sus respectivos datos
+            Secretaria secretaria = new Secretaria(nombre,documento,correo,contraseña,telefono,edad,estadoCivil);
+
+            //Verificamos se se añade el doctor
+            controlador.añadirSecretaria(secretaria);
+            JOptionPane.showMessageDialog(null, "Secretaria con el documento: " + documento + " añadida");
+            limpiarInputs();
+            llenarComboSecretarias();
+        }catch(MayorDeEdadExcepcion | AlmacenadoExcepcion ex){
+            JOptionPane.showMessageDialog(rootPane, ex.getMessage());
+        }
+    }//GEN-LAST:event_btnAñadirActionPerformed
+
+    /**
+     * 
+     * @param evt 
+     */
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        try{
+            if( cbxSecretarias.getSelectedIndex()==0 ){
+                JOptionPane.showMessageDialog(null, "No hay una secretaria seleccionada");
+                return;
+            }
+            Secretaria secretaria = (Secretaria) cbxSecretarias.getSelectedItem();
+
+            //Verificamos se se elimina la secretaria
+            controlador.eliminarSecretaria(secretaria.getDocumento());
+            JOptionPane.showMessageDialog(null, "Secretaria con el documento: " + secretaria.getDocumento() + " eliminado");
+            limpiarInputs();
+            llenarComboSecretarias();
+            setEnabledInputs(false);
+        }catch(NoEncontradoExcepcion ex){
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    /**
+     * 
+     * @param evt 
+     */
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        try{
+            //Se validan los campos
+            if( txtDocumento.getText().isBlank() || txtEdad.getText().isBlank()
+                || txtNombre2.getText().isBlank()  ){
+                JOptionPane.showMessageDialog(null, "Faltan campos por llenar");
+            }
+
+            //Se obtienen los valores de los textFields
+            String nombre = txtNombre2.getText();
+            String documento = txtDocumento.getText();
+            String correo = txtCorreo.getText();
+            String contraseña = txtContraseña.getText();
+            String telefono = txtTelefono.getText();
+            int edad = Integer.parseInt(txtEdad.getText());
+            String estadoCivil = "";
+
+            if( rbnCasado.isSelected() ) estadoCivil = rbnCasado.getText();
+            if( rbnSoltero.isSelected() ) estadoCivil = rbnSoltero.getText();
+            if( rbnDivorciado.isSelected() ) estadoCivil = rbnDivorciado.getText();
+            if( rbnViudo.isSelected() ) estadoCivil = rbnViudo.getText();
+
+            //Creamos al doctor con sus respectivos datos
+            Secretaria secretaria = new Secretaria(nombre,documento,correo,contraseña,telefono,edad,estadoCivil);
+
+            //Verificamos si los datos del doctor fueron editados
+            controlador.editarSecretaria(secretaria);
+            JOptionPane.showMessageDialog(null, "Secretaria con el documento: " + documento + " editada");
+            limpiarInputs();
+            llenarComboSecretarias();
+            setEnabledInputs(false);
+        }catch(MayorDeEdadExcepcion | NoEncontradoExcepcion ex){
+            JOptionPane.showMessageDialog(rootPane, ex.getMessage());
+        }
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    /**
+     * 
+     * @param evt 
+     */
+    private void txtEdadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEdadKeyTyped
+        validacion.soloNumeros(evt);
+    }//GEN-LAST:event_txtEdadKeyTyped
+    
+    /**
+     * Metodo para resetera los radio botones del estado civil
+     * @param selected 
+     */
+    private void resetearRadios(){
+        rbnCasado.setSelected(false);
+        rbnDivorciado.setSelected(false);
+        rbnSoltero.setSelected(false);
+        rbnViudo.setSelected(false);
+    }
+    
+    /**
+     * Metodo para llenar el combobox de las secretarias
+     */
+    private void llenarComboSecretarias(){
+        cbxSecretarias.removeAllItems();
+        cbxSecretarias.addItem("Buscar una secretaria");
+        
+        for (Secretaria secretaria : controlador.getSecretarias()) {
+            cbxSecretarias.addItem(secretaria);
+        }       
+    }
+    
+    /**
+     * Metodo para que cada vez que se seleccione una secretaria los campos se llenen con su respeciva informacion
+     * @param evt 
+     */
+    private void cbxSecretariasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxSecretariasActionPerformed
+        //Si el primer elemento esta seleccionado, no es válido
+        if( cbxSecretarias.getSelectedIndex()==0 ) {
+            limpiarInputs();
+            setEnabledInputs(false);
+            return;
+        }
+        Secretaria secretaria = (Secretaria) cbxSecretarias.getSelectedItem();
+        //Se verifica que la cita no sea nula
+        if( secretaria != null ){
+            txtDocumento.setText(secretaria.getDocumento());
+            txtEdad.setText(String.valueOf(secretaria.getEdad()));
+            txtNombre2.setText(secretaria.getNombre());
+            txtContraseña.setText(secretaria.getContraseña());
+            txtCorreo.setText(secretaria.getCorreo());
+            txtTelefono.setText(secretaria.getTelefono());
+            
+            if( secretaria.getEstadoCivil().equals("Casada") ){
+                resetearRadios();
+                rbnCasado.setSelected(true);
+            }else if( secretaria.getEstadoCivil().equals("Soltera") ){
+                resetearRadios();
+                rbnSoltero.setSelected(true);
+            }else if( secretaria.getEstadoCivil().equals("Viuda") ){
+                resetearRadios();
+                rbnViudo.setSelected(true);
+            }if( secretaria.getEstadoCivil().equals("Divorciada") ){
+                resetearRadios();
+                rbnDivorciado.setSelected(true);
+            }
+            
+            setEnabledInputs(true);
+        }
+    }//GEN-LAST:event_cbxSecretariasActionPerformed
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAñadir;
-    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnVolver;
+    private javax.swing.JComboBox cbxSecretarias;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JRadioButton rbnCasado;
+    private javax.swing.JRadioButton rbnDivorciado;
+    private javax.swing.JRadioButton rbnSoltero;
+    private javax.swing.JRadioButton rbnViudo;
+    private javax.swing.JTextField txtContraseña;
+    private javax.swing.JTextField txtCorreo;
     private javax.swing.JTextField txtDocumento;
     private javax.swing.JTextField txtEdad;
-    private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtNombre2;
+    private javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
 }

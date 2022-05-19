@@ -11,29 +11,13 @@ import java.util.Date;
  * @author USER
  */
 public class Multa {
-    private Paciente paciente;
-    private String detalle;
+    private Cita cita;
     private double valorTotal;
     private Date fechaPago;
     
-    public Multa(String detalle, Paciente paciente){
-        this.paciente = paciente;
-        this.detalle = detalle;
+    public Multa(Cita cita){
+        this.cita = cita;
         this.valorTotal = 1000;
-    }
-
-    /**
-     * @return the detalle
-     */
-    public String getDetalle() {
-        return detalle;
-    }
-
-    /**
-     * @param detalle the detalle to set
-     */
-    public void setDetalle(String detalle) {
-        this.detalle = detalle;
     }
 
     /**
@@ -51,25 +35,6 @@ public class Multa {
     }
 
     /**
-     * @return the paciente
-     */
-    public Paciente getPaciente() {
-        return paciente;
-    }
-
-    /**
-     * @param paciente the paciente to set
-     */
-    public void setPaciente(Paciente paciente) {
-        this.paciente = paciente;
-    }
-      
-    @Override
-    public String toString() {
-        return  detalle + "\n" + "Valor a pagar: " + valorTotal;
-    }
-
-    /**
      * @return the fechaPago
      */
     public Date getFechaPago() {
@@ -82,4 +47,25 @@ public class Multa {
     public void setFechaPago(Date fechaPago) {
         this.fechaPago = fechaPago;
     }
+
+    /**
+     * @return the cita
+     */
+    public Cita getCita() {
+        return cita;
+    }
+
+    /**
+     * @param cita the cita to set
+     */
+    public void setCita(Cita cita) {
+        this.cita = cita;
+    }
+        
+         
+    @Override
+    public String toString() {
+        return  getCita().getPaciente().toString() + "\n" + getValorTotal();
+    }
+
 }

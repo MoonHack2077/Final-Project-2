@@ -5,8 +5,8 @@
 package Vista.Cita;
 
 import Controlador.ControladorHospital;
+import Modelo.Cita;
 import Modelo.Paciente;
-import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
@@ -25,7 +25,7 @@ public class CancelarCita extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         this.controlador = controlador;
         this.vistaVolver = vistaVolver;
-        llenarComboPacientes();
+        llenarComboCitas();
     }
 
     //Este controlador unicamente será llamado  por el paciente
@@ -34,7 +34,7 @@ public class CancelarCita extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         this.controlador = controlador;
         this.vistaVolver = vistaVolver;
-        cbxPacientes.addItem(paciente);
+        cbxCitas.addItem(paciente);
     }
         
     /**
@@ -47,7 +47,7 @@ public class CancelarCita extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        cbxPacientes = new javax.swing.JComboBox();
+        cbxCitas = new javax.swing.JComboBox();
         btnCancelar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -58,9 +58,9 @@ public class CancelarCita extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "CANCELAR CITA", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 
-        cbxPacientes.addActionListener(new java.awt.event.ActionListener() {
+        cbxCitas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbxPacientesActionPerformed(evt);
+                cbxCitasActionPerformed(evt);
             }
         });
 
@@ -88,7 +88,7 @@ public class CancelarCita extends javax.swing.JFrame {
                 .addGap(32, 32, 32)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
-                    .addComponent(cbxPacientes, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbxCitas, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(26, Short.MAX_VALUE))
@@ -97,7 +97,7 @@ public class CancelarCita extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(19, 19, 19)
-                .addComponent(cbxPacientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cbxCitas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
@@ -144,20 +144,19 @@ public class CancelarCita extends javax.swing.JFrame {
      * Metodo para resetaer la informacion de los campos
      */
     private void resetearCampos(){
-        llenarComboPacientes();
+        llenarComboCitas();
         txtDetalleCita.setText("");
     }
     
     /**
      * Metodo que se encarga de llenar el combobox con los pacientes para ser seleccionados
      */
-    private void llenarComboPacientes(){
-        cbxPacientes.removeAllItems();
-        cbxPacientes.addItem("Seleccione un paciente");
-        ArrayList<Paciente> pacientes = controlador.getPacientes();
-        for (Paciente paciente : pacientes) {
-            //Condicion para que el combobox solo se llene con los pacientes que tengan una cita activa
-            if( paciente.hasCita() ) cbxPacientes.addItem(paciente);
+    private void llenarComboCitas(){
+        cbxCitas.removeAllItems();
+        cbxCitas.addItem("Seleccione una cita");
+        
+        for (Cita cita : controlador.getCitas()) {
+            cbxCitas.addItem(cita);
         }
     }
     
@@ -176,20 +175,20 @@ public class CancelarCita extends javax.swing.JFrame {
      */
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         //El primer elemento no es válido
-        if( cbxPacientes.getSelectedIndex()==0 ){
+        if( cbxCitas.getSelectedIndex()==0 ){
             JOptionPane.showMessageDialog(null, "Cita no válida");
             return;
         }
         
         //Obtenemos al paciente
-        Paciente paciente = (Paciente) cbxPacientes.getSelectedItem();
+        Cita cita = (Cita) cbxCitas.getSelectedItem();
         
         //Confirmamos si se desea cancelar la cita
         int confirmacion = JOptionPane.showConfirmDialog(null, "¿Seguro desea cancelar esta cita?");
         
         if( confirmacion==0 ){
             /*** EXCEPCION ***/
-            boolean cancelada = controlador.eliminarCita(paciente.getDocumento());
+            boolean cancelada = controlador.eliminarCita(cita.getPaciente().getDocumento());
             if( cancelada ){
                 JOptionPane.showMessageDialog(null, "Cita cancelada");
                 resetearCampos();
@@ -200,28 +199,28 @@ public class CancelarCita extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
-     * Metodo para que cada vez que se seleccione un paciente se muestre el detalle de su cita
+     * Metodo para que cada vez que se seleccione una cita mostrar su detalle
      * @param evt 
      */
-    private void cbxPacientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxPacientesActionPerformed
+    private void cbxCitasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxCitasActionPerformed
         //Si el primer elemento esta seleccionado, no es válido
         //por lo tanto se muestra ese aviso
-        if( cbxPacientes.getSelectedIndex()==0 ) {
-            txtDetalleCita.setText("Ningun paciente seleccionado");
+        if( cbxCitas.getSelectedIndex()==0 ) {
+            txtDetalleCita.setText("Ninguna cita seleccionada");
             return;
         }
-        Paciente paciente = (Paciente) cbxPacientes.getSelectedItem();
-        //Se verifica que el paciente no sea nulo
-        if( paciente != null ){
-            txtDetalleCita.setText(paciente.getCita().toString());
+        Cita cita = (Cita) cbxCitas.getSelectedItem();
+        //Se verifica que la cita no sea nula
+        if( cita != null ){
+            txtDetalleCita.setText(cita.toString());
         }
-    }//GEN-LAST:event_cbxPacientesActionPerformed
+    }//GEN-LAST:event_cbxCitasActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnVolver;
-    private javax.swing.JComboBox cbxPacientes;
+    private javax.swing.JComboBox cbxCitas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;

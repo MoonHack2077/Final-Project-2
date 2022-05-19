@@ -96,10 +96,8 @@ public class Cita {
 
     @Override
     public String toString() {
-        return "Fecha: " + getFecha().toString() + "\n" +
-               "Doctor: " + getDoctor().getNombre() + "\n" +
-               "Paciente: " + getPaciente().getNombre() + "\n" + 
-               "Motivo: " + getDoctor().getEspecialidad() + "\n";
+        return "Doctor: " + getDoctor().getNombre() + "\n" +
+               "Paciente: " + getPaciente().getNombre();
     }
     
     
