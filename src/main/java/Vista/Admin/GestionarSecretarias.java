@@ -10,7 +10,6 @@ import Excepciones.MayorDeEdadExcepcion;
 import Excepciones.NoEncontradoExcepcion;
 import Modelo.Secretaria;
 import Modelo.Validacion;
-import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
@@ -400,7 +399,7 @@ public class GestionarSecretarias extends javax.swing.JFrame {
             Secretaria secretaria = (Secretaria) cbxSecretarias.getSelectedItem();
 
             //Verificamos se se elimina la secretaria
-            controlador.eliminarSecretaria(secretaria.getDocumento());
+            controlador.eliminarSecretaria(secretaria.getDocumento(), secretaria.getCorreo(), secretaria.getContraseña());
             JOptionPane.showMessageDialog(null, "Secretaria con el documento: " + secretaria.getDocumento() + " eliminado");
             limpiarInputs();
             llenarComboSecretarias();
@@ -420,6 +419,7 @@ public class GestionarSecretarias extends javax.swing.JFrame {
             if( txtDocumento.getText().isBlank() || txtEdad.getText().isBlank()
                 || txtNombre2.getText().isBlank()  ){
                 JOptionPane.showMessageDialog(null, "Faltan campos por llenar");
+                return;
             }
 
             //Se obtienen los valores de los textFields
@@ -486,6 +486,9 @@ public class GestionarSecretarias extends javax.swing.JFrame {
      * @param evt 
      */
     private void cbxSecretariasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxSecretariasActionPerformed
+        //
+        if( controlador.getSecretarias().isEmpty() ) return;
+
         //Si el primer elemento esta seleccionado, no es válido
         if( cbxSecretarias.getSelectedIndex()==0 ) {
             limpiarInputs();

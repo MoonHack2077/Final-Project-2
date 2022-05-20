@@ -113,7 +113,7 @@ public class GestionarPacientes extends javax.swing.JFrame {
 
         jLabel7.setText("Telefono:");
 
-        rbnCasado.setText("Casada");
+        rbnCasado.setText("Casado");
 
         jLabel1.setText("Nombre:");
 
@@ -132,9 +132,9 @@ public class GestionarPacientes extends javax.swing.JFrame {
             }
         });
 
-        rbnDivorciado.setText("Divorciada");
+        rbnDivorciado.setText("Divorciado");
 
-        rbnViudo.setText("Viuda");
+        rbnViudo.setText("Viudo");
 
         jLabel2.setText("Documento: ");
 
@@ -152,7 +152,7 @@ public class GestionarPacientes extends javax.swing.JFrame {
             }
         });
 
-        rbnSoltero.setText("Soltera");
+        rbnSoltero.setText("Soltero");
 
         jLabel5.setText("Correo:");
 
@@ -321,9 +321,10 @@ public class GestionarPacientes extends javax.swing.JFrame {
         txtContraseña.setText("");
         txtCorreo.setText("");
         txtTelefono.setText("");
-        resetearRadios();
         rbnEps.setSelected(false);
         rbnSisben.setSelected(false);
+        cbxPacientes.setSelectedItem("Buscar un paciente");
+        resetearRadios();
     }
     
     /**
@@ -342,6 +343,9 @@ public class GestionarPacientes extends javax.swing.JFrame {
      */
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         try{
+            //Validar campos vacios
+            //no olvidar añadir el return
+            
             //Obteniendo los datos del paciente
             String nombre = txtNombre2.getText();
             String documento = txtDocumento.getText();
@@ -361,7 +365,6 @@ public class GestionarPacientes extends javax.swing.JFrame {
             //Creamos al paciente con sus respectivos datos
             Paciente paciente = new Paciente(nombre,documento,correo,contraseña,edad,telefono,estadoCivil,hasSisben,hasEps);
             
-
             //Añadiendo al paciente
             controlador.añadirPaciente(paciente);
             JOptionPane.showMessageDialog(null, "Se añadio el paciente con documento " + documento);
@@ -388,6 +391,9 @@ public class GestionarPacientes extends javax.swing.JFrame {
      */
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         try{
+            //Validar campos vacios
+            //no olvidar añadir el return
+            
             //Obteniendo los datos del paciente
             String nombre = txtNombre2.getText();
             String documento = txtDocumento.getText();
@@ -430,7 +436,7 @@ public class GestionarPacientes extends javax.swing.JFrame {
             Paciente paciente = (Paciente) cbxPacientes.getSelectedItem();
 
             //Se elimina al paciente
-            controlador.eliminarPaciente(paciente.getDocumento());
+            controlador.eliminarPaciente(paciente.getDocumento(), paciente.getCorreo(), paciente.getContraseña());
             JOptionPane.showMessageDialog(null, "Se eliminó el paciente con documento " + paciente.getDocumento());
             limpiarInputs();
             llenarComboPacientes();
@@ -500,6 +506,9 @@ public class GestionarPacientes extends javax.swing.JFrame {
      * @param evt 
      */
     private void cbxPacientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxPacientesActionPerformed
+        //
+        if( controlador.getPacientes().isEmpty() ) return;
+
         //Si el primer elemento esta seleccionado, no es válido
         if( cbxPacientes.getSelectedIndex()==0 ) {
             limpiarInputs();

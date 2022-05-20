@@ -251,7 +251,7 @@
         </Component>
         <Component class="javax.swing.JRadioButton" name="rbnCasado">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Casada"/>
+            <Property name="text" type="java.lang.String" value="Casado"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel1">
@@ -283,12 +283,12 @@
         </Component>
         <Component class="javax.swing.JRadioButton" name="rbnDivorciado">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Divorciada"/>
+            <Property name="text" type="java.lang.String" value="Divorciado"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JRadioButton" name="rbnViudo">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Viuda"/>
+            <Property name="text" type="java.lang.String" value="Viudo"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">
@@ -323,7 +323,7 @@
         </Component>
         <Component class="javax.swing.JRadioButton" name="rbnSoltero">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Soltera"/>
+            <Property name="text" type="java.lang.String" value="Soltero"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtContrase&#xf1;a">

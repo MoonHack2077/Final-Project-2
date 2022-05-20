@@ -9,6 +9,7 @@ import Excepciones.AlmacenadoExcepcion;
 import Excepciones.MayorDeEdadExcepcion;
 import Modelo.Paciente;
 import Modelo.Validacion;
+import Vista.Login;
 import javax.swing.JOptionPane;
 
 /**

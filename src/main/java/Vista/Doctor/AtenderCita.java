@@ -4,7 +4,6 @@
  */
 package Vista.Doctor;
 
-import Controlador.ControladorDoctor;
 import Controlador.ControladorHospital;
 import Controlador.ControladorPaciente;
 import Modelo.Cita;
@@ -225,7 +224,7 @@ public class AtenderCita extends javax.swing.JFrame {
         String tratamientos = txtTratamientos.getText();
         cita.setConclusiones("\n Conclusiones: " + conclusiones + 
                 "\n Tratamientos: " + tratamientos);
-          
+        cita.getPaciente().getHistorial().add(cita);
         boolean eliminada = controlador.eliminarCita(cita.getPaciente().getDocumento());
         if( eliminada ){
             JOptionPane.showMessageDialog(null, "Cita atendida con exito");

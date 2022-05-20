@@ -385,7 +385,7 @@ public class GestionarDoctores extends javax.swing.JFrame {
             Doctor doctor = (Doctor) cbxDoctores.getSelectedItem();
 
             //Verificamos se se elimina el empleado
-            controlador.eliminarDoctor(doctor.getDocumento());
+            controlador.eliminarDoctor(doctor.getDocumento(), doctor.getCorreo(), doctor.getContraseña());
             JOptionPane.showMessageDialog(null, "Doctor con el documento: " + doctor.getDocumento() + " eliminado");
             limpiarInputs();
             llenarComboDoctores();
@@ -405,6 +405,7 @@ public class GestionarDoctores extends javax.swing.JFrame {
             if( txtDocumento.getText().isBlank() || txtEdad.getText().isBlank()
                 || txtNombre2.getText().isBlank() || cbxEspecialidad.getSelectedIndex()==0  ){
                 JOptionPane.showMessageDialog(null, "Faltan campos por llenar");
+                return;
             }
 
             //Se obtienen los valores de los textFields
@@ -508,6 +509,7 @@ public class GestionarDoctores extends javax.swing.JFrame {
      * @param evt 
      */
     private void cbxDoctoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxDoctoresActionPerformed
+        //
         if( controlador.getDoctores().isEmpty() ) return;
         //Si el primer elemento esta seleccionado, no es válido
         if( cbxDoctores.getSelectedIndex()==0 ) {

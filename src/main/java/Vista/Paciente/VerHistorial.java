@@ -150,7 +150,6 @@ public class VerHistorial extends javax.swing.JFrame {
      */
     private void cbxCitasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxCitasActionPerformed
         //Si el primer elemento esta seleccionado, no es válido
-        //por lo tanto se muestra ese aviso
         if( cbxCitas.getSelectedIndex()==0 ) {
             txtHistorial.setText("Ninguna cita seleccionada");
             return;

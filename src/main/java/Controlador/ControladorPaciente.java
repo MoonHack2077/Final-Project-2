@@ -4,10 +4,7 @@
  */
 package Controlador;
 
-import Modelo.Cita;
 import Modelo.Multa;
-import Modelo.Paciente;
-import java.util.ArrayList;
 
 /**
  *
@@ -21,9 +18,9 @@ public class ControladorPaciente {
      * @param multa 
      */
     public void descuentoMulta(Multa multa){
-        if( multa.getPaciente().hasSisben() ){
+        if( multa.getCita().getPaciente().hasSisben() ){
             double descuento = multa.getValorTotal()*0.25 ;
-            multa.setValorTotal( multa.getValorTotal()-descuento );
+            multa.setValorTotal( multa.getValorTotal() - descuento );
         }
     }
 }

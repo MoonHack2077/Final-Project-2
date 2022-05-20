@@ -5,24 +5,35 @@
 package Vista;
 
 import Controlador.ControladorHospital;
+import Excepciones.NoEncontradoExcepcion;
+import Modelo.Admin;
+import Modelo.Doctor;
+import Modelo.Paciente;
+import Modelo.Secretaria;
 import Vista.Admin.VistaAdmin;
+import Vista.Doctor.VistaDoctor;
+import Vista.Paciente.Registrarse;
+import Vista.Paciente.VistaPaciente;
+import Vista.Secretaria.VistaSecretaria;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author USER
  */
-public class VistaPrincipal extends javax.swing.JFrame {
+public class Login extends javax.swing.JFrame {
     
     private ControladorHospital controlador;
     /**
      * Creates new form VistaPrincipal
      */
-    public VistaPrincipal() {
+    public Login() {
         initComponents();
         this.setLocationRelativeTo(null);
         this.controlador = new ControladorHospital();
+        controlador.añadirAdmin();
     }
-    public VistaPrincipal(ControladorHospital controlador){
+    public Login(ControladorHospital controlador){
         initComponents();
         this.setLocationRelativeTo(null);
         this.controlador = controlador;
@@ -38,8 +49,10 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         txtCorreo = new javax.swing.JTextField();
-        txtContraseña = new javax.swing.JTextField();
         btnEntrar = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        btnRegistrar = new javax.swing.JButton();
+        txtContraseña = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -55,22 +68,23 @@ public class VistaPrincipal extends javax.swing.JFrame {
             }
         });
 
-        txtContraseña.setText("Contraseña");
-        txtContraseña.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtContraseñaFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtContraseñaFocusLost(evt);
-            }
-        });
-
         btnEntrar.setText("Entrar");
         btnEntrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEntrarActionPerformed(evt);
             }
         });
+
+        jLabel1.setText("¿Eres un paciente?");
+
+        btnRegistrar.setText("Registrarse");
+        btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarActionPerformed(evt);
+            }
+        });
+
+        txtContraseña.setText("Contraseña");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -79,13 +93,17 @@ public class VistaPrincipal extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(txtCorreo)
-                        .addComponent(txtContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnRegistrar))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(60, 60, 60)
-                        .addComponent(btnEntrar)))
-                .addContainerGap(23, Short.MAX_VALUE))
+                        .addComponent(btnEntrar))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(txtContraseña, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(txtCorreo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -96,7 +114,11 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 .addComponent(txtContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26)
                 .addComponent(btnEntrar)
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(btnRegistrar))
+                .addGap(29, 29, 29))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -113,7 +135,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         pack();
@@ -124,14 +146,40 @@ public class VistaPrincipal extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
-        VistaAdmin admin = new VistaAdmin(controlador);
-        admin.setVisible(true);
-        this.dispose();
-        
-        String correo = txtCorreo.getText();
-        String contraseña = txtContraseña.getText();
-        
-        
+        try{
+            //Validar que no hayan campos vacios
+            //no olvidar el return
+            
+            //Obtenemos los datos
+            String correo = txtCorreo.getText();
+            String contraseña = txtContraseña.getText();
+            Admin admin = controlador.buscarAdmin(correo, contraseña);
+            Doctor doctor = controlador.buscarDoctor(correo, contraseña);
+            Secretaria secretaria = controlador.buscarSecretaria(correo, contraseña);
+            Paciente paciente = controlador.buscarPaciente(correo, contraseña);
+
+            if( admin != null ){
+                VistaAdmin vistaAdmin = new VistaAdmin(controlador);
+                vistaAdmin.setVisible(true);
+                this.dispose();
+            }else if( doctor != null ){
+                VistaDoctor vistaDoc = new VistaDoctor(controlador, doctor);
+                vistaDoc.setVisible(true);
+                this.dispose();
+            }else if( secretaria != null ){
+                VistaSecretaria vistaSec = new VistaSecretaria(controlador);
+                vistaSec.setVisible(true);
+                this.dispose();
+            }else if( paciente != null ){
+                VistaPaciente vistaPac = new VistaPaciente(controlador, paciente);
+                vistaPac.setVisible(true);
+                this.dispose();
+            }else{
+                throw new NoEncontradoExcepcion();
+            }
+        }catch(NoEncontradoExcepcion ex){
+            JOptionPane.showMessageDialog(rootPane, ex.getMessage());
+        }
     }//GEN-LAST:event_btnEntrarActionPerformed
 
     /**
@@ -151,20 +199,14 @@ public class VistaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_txtCorreoFocusLost
 
     /**
-     * Metodo para remover el indicador de la contraseña
+     * Metodo que envia a la ventana de registrar si el usuario es un paciente
      * @param evt 
      */
-    private void txtContraseñaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtContraseñaFocusGained
-        if( txtContraseña.getText().equals("Contraseña") ) txtContraseña.setText("");
-    }//GEN-LAST:event_txtContraseñaFocusGained
-
-    /**
-     * Metodo para insertar el indicador del contraseña
-     * @param evt 
-     */
-    private void txtContraseñaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtContraseñaFocusLost
-        if( txtContraseña.getText().equals("") ) txtContraseña.setText("Contraseña");
-    }//GEN-LAST:event_txtContraseñaFocusLost
+    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
+        Registrarse registrarse = new Registrarse(controlador);
+        registrarse.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnRegistrarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -183,28 +225,31 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VistaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VistaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VistaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VistaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VistaPrincipal().setVisible(true);
+                new Login().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEntrar;
+    private javax.swing.JButton btnRegistrar;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField txtContraseña;
+    private javax.swing.JPasswordField txtContraseña;
     private javax.swing.JTextField txtCorreo;
     // End of variables declaration//GEN-END:variables
 }

@@ -6,7 +6,7 @@ package Vista.Doctor;
 
 import Controlador.ControladorHospital;
 import Modelo.Doctor;
-import Vista.VistaPrincipal;
+import Vista.Login;
 
 /**
  *
@@ -124,7 +124,7 @@ public class VistaDoctor extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-        VistaPrincipal main = new VistaPrincipal(controlador);
+        Login main = new Login(controlador);
         main.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnVolverActionPerformed

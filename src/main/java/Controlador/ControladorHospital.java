@@ -39,9 +39,10 @@ public class ControladorHospital {
     }
 
     /**
-     * 
+     * Metodo para buscar un admin
      * @param correo
      * @param contraseña 
+     * @return admin si lo encuentra, de lo contrario null
      */
     public Admin buscarAdmin(String correo, String contraseña){
         
@@ -52,16 +53,58 @@ public class ControladorHospital {
         return null;
     }
     
-    /********* GESTION DOCTORES *********/
+    /**
+     * Metodo para buscar un admin
+     * @param documento
+     * @return admin si lo encuentra, de lo contrario null
+     */
+    public Admin buscarAdmin(String documento,String correo, String contraseña){
+        
+        for (Admin admin : admins) {
+            if( admin.getDocumento().equals(documento) || admin.getCorreo().equals(correo) 
+                    || admin.getContraseña().equals(contraseña) ) return admin;
+        }
+        
+        return null;
+    }
     
+    /**
+     * Metodo para añadir los admins
+     * @return
+     * @throws NoEncontradoExcepcion 
+     */
+    public void añadirAdmin(){
+        Admin juan = new Admin("Juan Manuel Arenas Rincon", "1234567890", "juan@gmail.com", "soyeladmin1", "3000000000", 20, "Soltero");
+        Admin bryan = new Admin("Bryan Alejandro Benavides", "987654321", "bryan@gmail.com", "soyeladmin2", "4000000000", 20, "Casado");
+        
+        admins[0] = juan;    
+        admins[1] = bryan;
+    }
+    
+    /********* GESTION DOCTORES *********/
     /**
      * Metodo para buscar un doctor registrado por medio del documento
      * @param documento
      * @return doctor si lo encuentra, de lo contrario null
      */
-    public Doctor buscarDoctor(String documento){   
+    public Doctor buscarDoctor(String correo, String contraseña){   
         for (Doctor doctor : doctores) {
-            if(doctor.getDocumento().equals(documento)) return doctor;
+            if(doctor.getCorreo().equals(correo) && doctor.getContraseña().equals(contraseña)) return doctor;
+        }
+        return null;
+    }
+    
+    /**
+     * Metodo para buscar un doctor registrado por medio del documento, correo y contraseña
+     * @param documento
+     * @param correo
+     * @param contraseña
+     * @return doctor si lo encuentra, de lo contrario null
+     */
+    public Doctor buscarDoctor(String documento, String correo, String contraseña){   
+        for (Doctor doctor : doctores) {
+            if(doctor.getDocumento().equals(documento) || doctor.getCorreo().equals(correo)
+                    || doctor.getContraseña().equals(contraseña)) return doctor;
         }
         return null;
     }
@@ -72,12 +115,13 @@ public class ControladorHospital {
      * @return true si pudo añadirlo, de lo contrario false;
      */
     public boolean añadirDoctor(Doctor doctor) throws AlmacenadoExcepcion,MayorDeEdadExcepcion{
-        Secretaria secretaria = buscarSecretaria(doctor.getDocumento());
-        Doctor aux = buscarDoctor(doctor.getDocumento());
-        Paciente paciente = buscarPaciente(doctor.getDocumento());
+        Secretaria secretaria = buscarSecretaria(doctor.getDocumento(), doctor.getCorreo(), doctor.getContraseña());
+        Doctor aux = buscarDoctor(doctor.getDocumento(), doctor.getCorreo(), doctor.getContraseña());
+        Paciente paciente = buscarPaciente(doctor.getDocumento(), doctor.getCorreo(), doctor.getContraseña());
+        Admin admin = buscarAdmin(doctor.getDocumento(),doctor.getCorreo(), doctor.getContraseña());
         
         //Excepciones
-        if( aux != null || secretaria != null || paciente != null  ) throw  new AlmacenadoExcepcion();
+        if( aux != null || secretaria != null || paciente != null  || admin != null) throw  new AlmacenadoExcepcion();
         if( doctor.getEdad() < 18) throw new MayorDeEdadExcepcion();
         
         doctores.add(doctor);
@@ -88,27 +132,29 @@ public class ControladorHospital {
     /**
      * Metodo para eliminar un doctor almacenado
      * @param documento
+     * @param correo
+     * @param contraseña
      * @return true si pudo eliminarlo, de lo contrario false
+     * @throws NoEncontradoExcepcion 
      */
-    public boolean eliminarDoctor(String documento) throws NoEncontradoExcepcion{
-        Doctor aux = buscarDoctor(documento);
+    public boolean eliminarDoctor(String documento,String correo, String contraseña) throws NoEncontradoExcepcion{
+        Doctor aux = buscarDoctor(documento,correo,contraseña);
         if( aux == null ) throw new NoEncontradoExcepcion();
         for (int i = 0; i < doctores.size(); i++) {
             if(doctores.get(i).getDocumento().equals(documento)){
                 doctores.remove(i);
-                return true;
             }
         }
-        return false;
+        return true;
     }
     
     /**
      * Metodo para editar la informacion de un doctor
      * @param doctor
-     * @return true si pudo editarla, de lo contrario false
+     * @return true si pudo editarlo, de lo contrario false
      */
     public boolean editarDoctor(Doctor doctor) throws NoEncontradoExcepcion, MayorDeEdadExcepcion{
-        Doctor aux = buscarDoctor(doctor.getDocumento());
+        Doctor aux = buscarDoctor(doctor.getDocumento(), doctor.getCorreo(), doctor.getContraseña());
         
         //Excepciones
         if( aux == null ) throw new NoEncontradoExcepcion();
@@ -119,6 +165,11 @@ public class ControladorHospital {
                 //Inyectando los nuevos valores
                 doctores.get(i).setNombre(doctor.getNombre());
                 doctores.get(i).setEdad(doctor.getEdad());
+                doctores.get(i).setContraseña(doctor.getContraseña());
+                doctores.get(i).setCorreo(doctor.getCorreo());
+                doctores.get(i).setEstadoCivil(doctor.getEstadoCivil());
+                doctores.get(i).setEspecialidad(doctor.getEspecialidad());
+                doctores.get(i).setTelefono(doctor.getTelefono());
             }
         }
         
@@ -129,14 +180,26 @@ public class ControladorHospital {
     /********* GESTION SECRETARIAS *********/
     
     /**
+     * Metodo para buscar un doctor registrado por medio del documento
+     * @param documento
+     * @return doctor si lo encuentra, de lo contrario null
+     */
+    public Secretaria buscarSecretaria(String correo, String contraseña){   
+        for (Secretaria secretaria : secretarias) {
+            if(secretaria.getCorreo().equals(correo) && secretaria.getContraseña().equals(contraseña)) return secretaria;
+        }
+        return null;
+    }
+    /**
      * Metodo para buscar una secretaria registrada por medio del documento
      * @param documento
      * @return secretaria si la encuentra, de lo contrario null
      */
-    public Secretaria buscarSecretaria(String documento){
+    public Secretaria buscarSecretaria(String documento, String correo, String contraseña){
     
         for (Secretaria secretaria : secretarias) {
-            if(secretaria.getDocumento().equals(documento)) return secretaria;
+            if(secretaria.getDocumento().equals(documento) || secretaria.getCorreo().equals(correo)
+                    || secretaria.getContraseña().equals(contraseña)) return secretaria;
         }
         return null;
     }
@@ -147,12 +210,15 @@ public class ControladorHospital {
      * @return true si pudo añadirla, de lo contrario false;
      */
     public boolean añadirSecretaria(Secretaria secretaria) throws MayorDeEdadExcepcion, AlmacenadoExcepcion{
-        Secretaria aux = buscarSecretaria(secretaria.getDocumento());
-        Doctor doctor = buscarDoctor(secretaria.getDocumento());
-        Paciente paciente = buscarPaciente(secretaria.getDocumento());
+        Secretaria aux = buscarSecretaria(secretaria.getDocumento(),secretaria.getCorreo(), secretaria.getContraseña());
+        Doctor doctor = buscarDoctor(secretaria.getDocumento(),secretaria.getCorreo(), secretaria.getContraseña());
+        Paciente paciente = buscarPaciente(secretaria.getDocumento(),secretaria.getCorreo(), secretaria.getContraseña());
+        Admin admin2 = buscarAdmin(secretaria.getDocumento(),secretaria.getCorreo(), secretaria.getContraseña());
         
         //Excepciones
-        if( aux != null || doctor != null || paciente != null  ) throw  new AlmacenadoExcepcion();
+        if( aux != null || doctor != null || paciente != null  || admin2 != null ){
+            throw  new AlmacenadoExcepcion();
+        }
         if( secretaria.getEdad() < 18) throw new MayorDeEdadExcepcion();
         
         secretarias.add(secretaria);
@@ -164,8 +230,8 @@ public class ControladorHospital {
      * @param documento
      * @return true si pudo eliminarla, de lo contrario false
      */
-    public boolean eliminarSecretaria(String documento) throws NoEncontradoExcepcion{
-        Secretaria aux = buscarSecretaria(documento);
+    public boolean eliminarSecretaria(String documento,String correo, String contraseña) throws NoEncontradoExcepcion{
+        Secretaria aux = buscarSecretaria(documento,correo,contraseña);
         
         //Excepcion
         if( aux == null ) throw new NoEncontradoExcepcion();
@@ -185,7 +251,7 @@ public class ControladorHospital {
      * @return true si pudo editarla, de lo contrario false
      */
     public boolean editarSecretaria(Secretaria secretaria) throws MayorDeEdadExcepcion, NoEncontradoExcepcion{
-    Secretaria aux = buscarSecretaria(secretaria.getDocumento());
+    Secretaria aux = buscarSecretaria(secretaria.getDocumento(), secretaria.getCorreo(), secretaria.getContraseña());
     
     //Excepciones
     if( aux == null ) throw new NoEncontradoExcepcion();
@@ -196,6 +262,11 @@ public class ControladorHospital {
             //Inyectando los nuevos valores
             secretarias.get(i).setNombre(secretaria.getNombre());
             secretarias.get(i).setEdad(secretaria.getEdad());
+            secretarias.get(i).setNombre(secretaria.getNombre());
+            secretarias.get(i).setContraseña(secretaria.getContraseña());
+            secretarias.get(i).setCorreo(secretaria.getCorreo());
+            secretarias.get(i).setEstadoCivil(secretaria.getEstadoCivil());
+            secretarias.get(i).setTelefono(secretaria.getTelefono());
             return true;
         }
     }
@@ -208,14 +279,27 @@ public class ControladorHospital {
      
     /********* GESTION PACIENTES *********/
     /**
+     * Metodo para buscar un doctor registrado por medio del documento
+     * @param documento
+     * @return doctor si lo encuentra, de lo contrario null
+     */
+    public Paciente buscarPaciente(String correo, String contraseña){   
+        for (Paciente paciente : pacientes) {
+            if(paciente.getCorreo().equals(correo) && paciente.getContraseña().equals(contraseña)) return paciente;
+        }
+        return null;
+    }
+    
+    /**
      * Metodo para buscar un paciente registrado por medio del documento
      * @param documento
      * @return paciente si lo encuentra, de lo contrario null
      */
-    public Paciente buscarPaciente(String documento){
+    public Paciente buscarPaciente(String documento, String correo, String contraseña){
     
         for (Paciente paciente : pacientes) {
-            if(paciente.getDocumento().equals(documento)) return paciente;
+            if(paciente.getDocumento().equals(documento) || paciente.getCorreo().equals(correo)
+                    || paciente.getContraseña().equals(contraseña)) return paciente;
         }
         return null;
     }
@@ -226,12 +310,13 @@ public class ControladorHospital {
      * @return true si pudo añadirlo, de lo contrario false;
      */
     public boolean añadirPaciente(Paciente paciente)throws MayorDeEdadExcepcion, AlmacenadoExcepcion{
-        Secretaria secretaria = buscarSecretaria(paciente.getDocumento());
-        Doctor doctor = buscarDoctor(paciente.getDocumento());
-        Paciente aux = buscarPaciente(paciente.getDocumento());
+        Secretaria secretaria = buscarSecretaria(paciente.getDocumento(),paciente.getCorreo(), paciente.getContraseña());
+        Doctor doctor = buscarDoctor(paciente.getDocumento(),paciente.getCorreo(), paciente.getContraseña());
+        Paciente aux = buscarPaciente(paciente.getDocumento(),paciente.getCorreo(), paciente.getContraseña());
+        Admin admin = buscarAdmin(paciente.getDocumento(),paciente.getCorreo(), paciente.getContraseña());
         
         //Excepciones
-        if( aux != null || secretaria != null || doctor != null  ) throw  new AlmacenadoExcepcion();
+        if( aux != null || secretaria != null || doctor != null || admin != null )throw  new AlmacenadoExcepcion();       
         if( paciente.getEdad() < 18) throw new MayorDeEdadExcepcion();
         
         pacientes.add(paciente);
@@ -243,8 +328,8 @@ public class ControladorHospital {
      * @param documento
      * @return true si pudo eliminarlo, de lo contrario false
      */
-    public boolean eliminarPaciente(String documento) throws NoEncontradoExcepcion{
-        Paciente aux = buscarPaciente(documento);
+    public boolean eliminarPaciente(String documento,String correo, String contraseña) throws NoEncontradoExcepcion{
+        Paciente aux = buscarPaciente(documento,correo,contraseña);
         
         //Excepcion
         if( aux == null ) throw new NoEncontradoExcepcion();
@@ -264,7 +349,7 @@ public class ControladorHospital {
      * @return true si pudo editarla, de lo contrario false
      */
     public boolean editarPaciente(Paciente paciente) throws NoEncontradoExcepcion, MayorDeEdadExcepcion{
-        Paciente aux = buscarPaciente(paciente.getDocumento());
+        Paciente aux = buscarPaciente(paciente.getDocumento(), paciente.getCorreo(), paciente.getContraseña());
         
         //Excepciones
         if( aux == null ) throw new NoEncontradoExcepcion();
@@ -275,11 +360,16 @@ public class ControladorHospital {
                 //Inyectando los nuevos valores
                 pacientes.get(i).setNombre(paciente.getNombre());
                 pacientes.get(i).setEdad(paciente.getEdad());
-                return true;
+                pacientes.get(i).setContraseña(paciente.getContraseña());
+                pacientes.get(i).setCorreo(paciente.getCorreo());
+                pacientes.get(i).setEstadoCivil(paciente.getEstadoCivil());
+                pacientes.get(i).setTelefono(paciente.getTelefono());
+                pacientes.get(i).setHasEps(paciente.hasEps());
+                pacientes.get(i).setHasSisben(paciente.hasSisben());
             }
         }
                
-        return false;
+        return true;
     }
     
     
