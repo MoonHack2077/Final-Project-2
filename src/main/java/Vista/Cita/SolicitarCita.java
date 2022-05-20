@@ -186,8 +186,8 @@ public class SolicitarCita extends javax.swing.JFrame {
     private void llenarComboDoctores(){
         cbxDoctores.removeAllItems();
         cbxDoctores.addItem("Seleccione un doctor");
-        ArrayList<Doctor> doctores = controlador.getDoctores();
-        for (Doctor doctor : doctores) {
+        
+        for (Doctor doctor : controlador.getDoctores()) {
             cbxDoctores.addItem(doctor);
         }
     }
@@ -198,9 +198,9 @@ public class SolicitarCita extends javax.swing.JFrame {
     private void llenarComboPacientes(){
         cbxPacientes.removeAllItems();
         cbxPacientes.addItem("Seleccione un paciente");
-        ArrayList<Paciente> pacientes = controlador.getPacientes();
-        for (Paciente paciente : pacientes) {
-            //Condicion para que el combobox solo se llene con los pacientes que no tengan una cita activa
+        
+        for (Paciente paciente : controlador.getPacientes()) {
+            //Condicion para que el combobox solo se llene con los pacientes que no tengan una cita
             if( !paciente.hasCita() ) cbxPacientes.addItem(paciente);
         }
     }
@@ -274,8 +274,9 @@ public class SolicitarCita extends javax.swing.JFrame {
         /*** EXCEPCION ***/
         boolean creada = controlador.añadirCita(cita);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
         if( creada ){
-            JOptionPane.showMessageDialog(null, "Cita creada:\n " + cita.toString());
-            paciente.setHasCita(true);
+            JOptionPane.showMessageDialog(null, "Cita creada:\n " + 
+                    cita.getFecha().toLocaleString() + "\n" +
+                    cita.toString());            
             resetear();
         }else{
             JOptionPane.showMessageDialog(null, "El doctor " + doctor.getNombre() + " ya tiene una cita asignada a esa hora");

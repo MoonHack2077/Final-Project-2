@@ -400,6 +400,7 @@ public class ControladorHospital {
             if( !verificada ){
                 citas.add(cita);
                 cita.getDoctor().getAgenda().add(cita);
+                cita.getPaciente().setHasCita(true);
                 return true;
             }
         }

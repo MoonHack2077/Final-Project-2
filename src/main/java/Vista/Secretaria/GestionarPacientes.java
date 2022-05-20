@@ -11,6 +11,7 @@ import Excepciones.NoEncontradoExcepcion;
 import Modelo.Paciente;
 import Modelo.Validacion;
 import javax.swing.JOptionPane;
+import javax.swing.JRadioButton;
 
 /**
  *
@@ -321,10 +322,9 @@ public class GestionarPacientes extends javax.swing.JFrame {
         txtContraseña.setText("");
         txtCorreo.setText("");
         txtTelefono.setText("");
-        rbnEps.setSelected(false);
-        rbnSisben.setSelected(false);
         cbxPacientes.setSelectedItem("Buscar un paciente");
-        resetearRadios();
+        salud.clearSelection();
+        estadosCiviles.clearSelection();
     }
     
     /**
@@ -478,16 +478,6 @@ public class GestionarPacientes extends javax.swing.JFrame {
         validacion.soloNumeros(evt);
     }//GEN-LAST:event_txtEdadKeyTyped
 
-    /**
-     * Metodo para resetera los radio botones del estado civil
-     * @param selected 
-     */
-    private void resetearRadios(){
-        rbnCasado.setSelected(false);
-        rbnDivorciado.setSelected(false);
-        rbnSoltero.setSelected(false);
-        rbnViudo.setSelected(false);
-    }
     
     /**
      * Metodo para llenar el combobox de los pacientes
@@ -499,6 +489,15 @@ public class GestionarPacientes extends javax.swing.JFrame {
         for (Paciente paciente : controlador.getPacientes()) {
             cbxPacientes.addItem(paciente);
         }       
+    }
+    
+    /**
+     * Metodo para que solo se seleccione uno de los radioButtons de los estados civiles
+     * @param btn 
+     */
+    private void resetearRadioButtons(JRadioButton btn){
+       estadosCiviles.clearSelection();
+       btn.setSelected(true);
     }
     
     /**
@@ -528,17 +527,13 @@ public class GestionarPacientes extends javax.swing.JFrame {
             rbnSisben.setSelected(paciente.hasSisben());
             
             if( paciente.getEstadoCivil().equals("Casado") ){
-                resetearRadios();
-                rbnCasado.setSelected(true);
+                resetearRadioButtons(rbnCasado);
             }else if( paciente.getEstadoCivil().equals("Soltero") ){
-                resetearRadios();
-                rbnSoltero.setSelected(true);
+                resetearRadioButtons(rbnSoltero);
             }else if( paciente.getEstadoCivil().equals("Viudo") ){
-                resetearRadios();
-                rbnViudo.setSelected(true);
+                resetearRadioButtons(rbnViudo);
             }if( paciente.getEstadoCivil().equals("Divorciado") ){
-                resetearRadios();
-                rbnDivorciado.setSelected(true);
+                resetearRadioButtons(rbnDivorciado);
             }
             
             setEnabledInputs(true);

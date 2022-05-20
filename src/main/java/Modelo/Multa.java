@@ -65,7 +65,7 @@ public class Multa {
          
     @Override
     public String toString() {
-        return  getCita().getPaciente().toString() + "\n" + getValorTotal();
+        return  getCita().getPaciente().toString() + " - Total:" + getValorTotal();
     }
 
 }

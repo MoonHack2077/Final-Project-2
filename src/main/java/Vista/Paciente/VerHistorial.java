@@ -158,10 +158,11 @@ public class VerHistorial extends javax.swing.JFrame {
         int numeroDeCita = cbxCitas.getSelectedIndex();
         //Se verifica que la cita no sea nula
         if( cita != null ){
-            txtHistorial.setText( "CITA " + numeroDeCita +
+            txtHistorial.setText( "CITA " + numeroDeCita + "\n" +
                     cita.getFecha().toString() + "\n" +
-                    "Doctor: " + cita.getDoctor().toString() +
-                    "Paciente: " + cita.getPaciente() + "- Documento:" + cita.getPaciente().getDocumento()
+                    "Doctor: " + cita.getDoctor().toString() + "\n" +
+                    "Paciente: " + cita.getPaciente() + "- Documento:" + cita.getPaciente().getDocumento() + "\n\n" +
+                    "Conclusiones" + cita.getConclusiones()
             );
         }
     }//GEN-LAST:event_cbxCitasActionPerformed

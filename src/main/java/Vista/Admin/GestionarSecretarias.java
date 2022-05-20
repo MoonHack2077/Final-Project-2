@@ -11,6 +11,7 @@ import Excepciones.NoEncontradoExcepcion;
 import Modelo.Secretaria;
 import Modelo.Validacion;
 import javax.swing.JOptionPane;
+import javax.swing.JRadioButton;
 
 /**
  *
@@ -30,6 +31,12 @@ public class GestionarSecretarias extends javax.swing.JFrame {
         this.validacion = new Validacion();
         setEnabledInputs(false);
         llenarComboSecretarias();
+        
+        //Se añaden los botones de casado, soltero, viudo y divorciado al radioGroup de estados civiles
+        estadosCiviles.add(rbnCasado);
+        estadosCiviles.add(rbnDivorciado);
+        estadosCiviles.add(rbnSoltero);
+        estadosCiviles.add(rbnViudo);
    }
     
     /**
@@ -53,7 +60,7 @@ public class GestionarSecretarias extends javax.swing.JFrame {
         txtCorreo.setText("");
         txtTelefono.setText("");
         cbxSecretarias.setSelectedItem("Buscar una secretaria");
-        resetearRadios();
+        estadosCiviles.clearSelection();
     }
 
     /**
@@ -65,6 +72,7 @@ public class GestionarSecretarias extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        estadosCiviles = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         btnLimpiar = new javax.swing.JButton();
@@ -482,6 +490,15 @@ public class GestionarSecretarias extends javax.swing.JFrame {
     }
     
     /**
+     * Metodo para que solo se seleccione uno de los radioButtons de los estados civiles
+     * @param btn 
+     */
+    private void resetearRadioButtons(JRadioButton btn){
+       estadosCiviles.clearSelection();
+       btn.setSelected(true);
+    }
+    
+    /**
      * Metodo para que cada vez que se seleccione una secretaria los campos se llenen con su respeciva informacion
      * @param evt 
      */
@@ -506,17 +523,13 @@ public class GestionarSecretarias extends javax.swing.JFrame {
             txtTelefono.setText(secretaria.getTelefono());
             
             if( secretaria.getEstadoCivil().equals("Casada") ){
-                resetearRadios();
-                rbnCasado.setSelected(true);
+                resetearRadioButtons(rbnCasado);
             }else if( secretaria.getEstadoCivil().equals("Soltera") ){
-                resetearRadios();
-                rbnSoltero.setSelected(true);
+                resetearRadioButtons(rbnSoltero);
             }else if( secretaria.getEstadoCivil().equals("Viuda") ){
-                resetearRadios();
-                rbnViudo.setSelected(true);
+                resetearRadioButtons(rbnViudo);
             }if( secretaria.getEstadoCivil().equals("Divorciada") ){
-                resetearRadios();
-                rbnDivorciado.setSelected(true);
+                resetearRadioButtons(rbnDivorciado);
             }
             
             setEnabledInputs(true);
@@ -531,6 +544,7 @@ public class GestionarSecretarias extends javax.swing.JFrame {
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnVolver;
     private javax.swing.JComboBox cbxSecretarias;
+    private javax.swing.ButtonGroup estadosCiviles;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;

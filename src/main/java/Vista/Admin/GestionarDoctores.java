@@ -11,6 +11,7 @@ import Excepciones.NoEncontradoExcepcion;
 import Modelo.Doctor;
 import Modelo.Validacion;
 import javax.swing.JOptionPane;
+import javax.swing.JRadioButton;
 
 /**
  *
@@ -31,6 +32,12 @@ public class GestionarDoctores extends javax.swing.JFrame {
         this.validacion = new Validacion();
         setEnabledInputs(false);
         llenarComboDoctores();
+        
+        //Se añaden los botones de casado, soltero, viudo y divorciado al radioGroup de estados civiles
+        estadosCiviles.add(rbnCasado);
+        estadosCiviles.add(rbnDivorciado);
+        estadosCiviles.add(rbnSoltero);
+        estadosCiviles.add(rbnViudo);
     }
 
     /**
@@ -315,7 +322,7 @@ public class GestionarDoctores extends javax.swing.JFrame {
         txtTelefono.setText("");
         cbxEspecialidad.setSelectedItem("Seleccione una especialidad");
         cbxDoctores.setSelectedItem("Buscar un doctor");
-        resetearRadios();
+        estadosCiviles.clearSelection();
     }
     
     /**
@@ -480,18 +487,7 @@ public class GestionarDoctores extends javax.swing.JFrame {
     private void txtEdadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEdadKeyTyped
         validacion.soloNumeros(evt);
     }//GEN-LAST:event_txtEdadKeyTyped
-
-    /**
-     * Metodo para resetera los radio botones del estado civil
-     * @param selected 
-     */
-    private void resetearRadios(){
-        rbnCasado.setSelected(false);
-        rbnDivorciado.setSelected(false);
-        rbnSoltero.setSelected(false);
-        rbnViudo.setSelected(false);
-    }
-    
+  
     /**
      * Metodo para llenar elñ combobox de los doctores
      */
@@ -502,6 +498,15 @@ public class GestionarDoctores extends javax.swing.JFrame {
         for (Doctor doctor : controlador.getDoctores()) {
             cbxDoctores.addItem(doctor);
         }       
+    }
+    
+    /**
+     * Metodo para que solo se seleccione uno de los radioButtons de los estados civiles
+     * @param btn 
+     */
+    private void resetearRadioButtons(JRadioButton btn){
+       estadosCiviles.clearSelection();
+       btn.setSelected(true);
     }
     
     /**
@@ -526,19 +531,16 @@ public class GestionarDoctores extends javax.swing.JFrame {
             txtContraseña.setText(doctor.getContraseña());
             txtCorreo.setText(doctor.getCorreo());
             txtTelefono.setText(doctor.getTelefono());
+            cbxEspecialidad.setSelectedItem(doctor.getEspecialidad());
             
             if( doctor.getEstadoCivil().equals("Casado") ){
-                resetearRadios();
-                rbnCasado.setSelected(true);
+                resetearRadioButtons(rbnCasado);
             }else if( doctor.getEstadoCivil().equals("Soltero") ){
-                resetearRadios();
-                rbnSoltero.setSelected(true);
+                resetearRadioButtons(rbnSoltero);
             }else if( doctor.getEstadoCivil().equals("Viudo") ){
-                resetearRadios();
-                rbnViudo.setSelected(true);
+                resetearRadioButtons(rbnViudo);
             }if( doctor.getEstadoCivil().equals("Divorciado") ){
-                resetearRadios();
-                rbnDivorciado.setSelected(true);
+                resetearRadioButtons(rbnDivorciado);
             }
             
             setEnabledInputs(true);

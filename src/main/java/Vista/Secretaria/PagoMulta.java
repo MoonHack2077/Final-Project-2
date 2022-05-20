@@ -267,7 +267,9 @@ public class PagoMulta extends javax.swing.JFrame {
         Multa multa = (Multa) cbxMultas.getSelectedItem();
         //Se verifica que la multa no sea nula
         if( multa != null ){
-            txtDetalle.setText(multa.getCita().toString() + "\n" +
+            txtDetalle.setText(multa.getCita().getFecha().toString() + "\n" +
+                    "Doctor: " + multa.getCita().getDoctor().toString() + "\n" +
+                    "Paciente: " + multa.getCita().getPaciente() + "- Documento:" + multa.getCita().getPaciente().getDocumento() + "\n\n"+
                    "Valos a pagar: " + multa.getValorTotal());
         }
     }//GEN-LAST:event_cbxMultasActionPerformed

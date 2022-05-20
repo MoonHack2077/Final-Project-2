@@ -28,6 +28,7 @@ public class Registrarse extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         this.controlador = controlador;
         this.validacion = new Validacion();
+        
         //Se añaden los botones de EPS Y SISBEN al radioGroup de salud
         salud.add(rbnEps);
         salud.add(rbnSisben);
@@ -97,7 +98,7 @@ public class Registrarse extends javax.swing.JFrame {
             }
         });
 
-        rbnCasado.setText("Casada");
+        rbnCasado.setText("Casado");
 
         jLabel4.setText("Edad:");
 
@@ -107,7 +108,7 @@ public class Registrarse extends javax.swing.JFrame {
             }
         });
 
-        rbnViudo.setText("Viuda");
+        rbnViudo.setText("Viudo");
 
         jLabel6.setText("Contraseña:");
 
@@ -117,7 +118,7 @@ public class Registrarse extends javax.swing.JFrame {
             }
         });
 
-        rbnSoltero.setText("Soltera");
+        rbnSoltero.setText("Soltero");
 
         jLabel7.setText("Telefono:");
 
@@ -130,7 +131,7 @@ public class Registrarse extends javax.swing.JFrame {
             }
         });
 
-        rbnDivorciado.setText("Divorciada");
+        rbnDivorciado.setText("Divorciado");
 
         jLabel2.setText("Documento: ");
 
@@ -289,10 +290,10 @@ public class Registrarse extends javax.swing.JFrame {
             boolean hasEps = rbnEps.isSelected();
             String estadoCivil = "";
 
-            if( rbnCasado.isSelected() ) estadoCivil = "Casado";
-            if( rbnSoltero.isSelected() ) estadoCivil = "Soltero";
-            if( rbnDivorciado.isSelected() ) estadoCivil = "Divorciado";
-            if( rbnViudo.isSelected() ) estadoCivil = "Viudo";
+            if( rbnCasado.isSelected() ) estadoCivil = rbnCasado.getText();
+            if( rbnSoltero.isSelected() ) estadoCivil = rbnSoltero.getText();
+            if( rbnDivorciado.isSelected() ) estadoCivil = rbnDivorciado.getText();
+            if( rbnViudo.isSelected() ) estadoCivil = rbnViudo.getText();
 
             //Creamos al paciente con sus respectivos datos
             Paciente paciente = new Paciente(nombre,documento,correo,contraseña,edad,telefono,estadoCivil,hasSisben,hasEps);
@@ -338,12 +339,8 @@ public class Registrarse extends javax.swing.JFrame {
         txtContraseña.setText("");
         txtCorreo.setText("");
         txtTelefono.setText("");
-        rbnCasado.setSelected(false);
-        rbnDivorciado.setSelected(false);
-        rbnEps.setSelected(false);
-        rbnSisben.setSelected(false);
-        rbnSoltero.setSelected(false);
-        rbnViudo.setSelected(false);
+        salud.clearSelection();
+        estadosCiviles.clearSelection();
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     /**

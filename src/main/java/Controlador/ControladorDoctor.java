@@ -22,11 +22,10 @@ public class ControladorDoctor {
      * @return 
      */
     public boolean verificarDisponibilidad(Cita cita){
-        ArrayList<Cita> agenda = cita.getDoctor().getAgenda();
-        String fecha = cita.getFecha().toString();
+        Date fecha = cita.getFecha();
         
-        for (Cita date : agenda) {
-            if( date.getFecha().toString().equals(fecha) ) return true;
+        for (Cita date : cita.getDoctor().getAgenda()) {
+            if( date.getFecha().compareTo(fecha)==0 ) return true;
         }
         
         return false;
@@ -41,7 +40,7 @@ public class ControladorDoctor {
         ArrayList<Cita> agenda = cita.getDoctor().getAgenda();
         
         for (int i = 0; i < agenda.size(); i++) {
-            if(agenda.get(i).getFecha().toString().equals(cita.getFecha().toString())){
+            if(agenda.get(i).getFecha().compareTo(cita.getFecha())==0){
                 agenda.remove(i);
                 return true;
             }      
@@ -58,7 +57,7 @@ public class ControladorDoctor {
      */
     public boolean validarFechaBloqueada(Doctor doctor, Date fecha){       
         return doctor.getFechaBloqueada() != null && 
-               (doctor.getFechaBloqueada().toString().equals(fecha.toString())); 
+               (doctor.getFechaBloqueada().compareTo(fecha)==0); 
     }
     
     /**
@@ -88,7 +87,10 @@ public class ControladorDoctor {
     /**
      * Metodo para ordenar la agenda del doctor para que las citas "tengan sentido"
      */
-    public void ordenarAgenda(){
-        //Aun esta pendiente pero la idea es buena...
+    public void ordenarAgenda(Doctor doctor){
+        ArrayList<Cita> agenda = doctor.getAgenda();
+        
+        //Se planea usar  los metodos after y before de las fechas
+        //agenda.sort();
     }
 }

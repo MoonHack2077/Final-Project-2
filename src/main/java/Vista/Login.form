@@ -125,9 +125,6 @@
           </Events>
         </Component>
         <Component class="javax.swing.JPasswordField" name="txtContrase&#xf1;a">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Contrase&#xf1;a"/>
-          </Properties>
         </Component>
       </SubComponents>
     </Container>
