@@ -406,8 +406,7 @@ public class GestionarSecretarias extends javax.swing.JFrame {
             }
             Secretaria secretaria = (Secretaria) cbxSecretarias.getSelectedItem();
 
-            //Verificamos se se elimina la secretaria
-            controlador.eliminarSecretaria(secretaria.getDocumento(), secretaria.getCorreo(), secretaria.getContraseña());
+            controlador.eliminarSecretaria(secretaria.getDocumento(), secretaria.getCorreo(), secretaria.getContraseña(),secretaria.getTelefono());
             JOptionPane.showMessageDialog(null, "Secretaria con el documento: " + secretaria.getDocumento() + " eliminado");
             limpiarInputs();
             llenarComboSecretarias();

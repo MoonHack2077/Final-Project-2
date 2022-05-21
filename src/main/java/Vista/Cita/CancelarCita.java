@@ -34,7 +34,9 @@ public class CancelarCita extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         this.controlador = controlador;
         this.vistaVolver = vistaVolver;
-        cbxCitas.addItem(paciente);
+        
+        Cita cita = controlador.buscarCita(paciente.getDocumento());
+        cbxCitas.addItem(cita);
     }
         
     /**
@@ -175,7 +177,7 @@ public class CancelarCita extends javax.swing.JFrame {
      */
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         //El primer elemento no es válido
-        if( cbxCitas.getSelectedIndex()==0 ){
+        if( cbxCitas.getSelectedItem().equals("Seleccione una cita")){
             JOptionPane.showMessageDialog(null, "Cita no válida");
             return;
         }
@@ -205,14 +207,16 @@ public class CancelarCita extends javax.swing.JFrame {
     private void cbxCitasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxCitasActionPerformed
         //Si el primer elemento esta seleccionado, no es válido
         //por lo tanto se muestra ese aviso
-        if( cbxCitas.getSelectedIndex()==0 ) {
+        if( cbxCitas.getSelectedItem() != null && cbxCitas.getSelectedItem().equals("Seleccione una cita")) {
             txtDetalleCita.setText("Ninguna cita seleccionada");
             return;
         }
         Cita cita = (Cita) cbxCitas.getSelectedItem();
         //Se verifica que la cita no sea nula
         if( cita != null ){
-            txtDetalleCita.setText(cita.toString());
+            txtDetalleCita.setText("Cita creada:\n " + 
+                    cita.getFecha().toLocaleString() + "\n" +
+                    cita.toString());
         }
     }//GEN-LAST:event_cbxCitasActionPerformed
 

@@ -17,7 +17,7 @@ public class Secretaria extends Persona {
 
     @Override
     public String toString() {
-        return getNombre() + getDocumento();
+        return "Nombre: " + getNombre() + " - Documento:" + getDocumento();
     }
     
     

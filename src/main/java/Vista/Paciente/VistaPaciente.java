@@ -32,7 +32,8 @@ public class VistaPaciente extends javax.swing.JFrame {
             btnSolicitar.setEnabled(false);
             btnCancelar.setEnabled(false);
         } 
-        else if( paciente.hasCita() ) btnSolicitar.setEnabled(false);
+        
+        if( paciente.hasCita() ) btnSolicitar.setEnabled(false);
         else btnCancelar.setEnabled(false);
         
     }

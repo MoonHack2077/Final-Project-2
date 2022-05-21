@@ -58,11 +58,13 @@ public class ControladorHospital {
      * @param documento
      * @return admin si lo encuentra, de lo contrario null
      */
-    public Admin buscarAdmin(String documento,String correo, String contraseña){
+    public Admin buscarAdmin(String documento,String correo, String contraseña, String telefono){
         
         for (Admin admin : admins) {
-            if( admin.getDocumento().equals(documento) || admin.getCorreo().equals(correo) 
-                    || admin.getContraseña().equals(contraseña) ) return admin;
+            if( admin.getDocumento().equals(documento) 
+                    || admin.getCorreo().equals(correo) 
+                    || admin.getContraseña().equals(contraseña) 
+                    || admin.getTelefono().equals(telefono) ) return admin;
         }
         
         return null;
@@ -101,10 +103,12 @@ public class ControladorHospital {
      * @param contraseña
      * @return doctor si lo encuentra, de lo contrario null
      */
-    public Doctor buscarDoctor(String documento, String correo, String contraseña){   
+    public Doctor buscarDoctor(String documento, String correo, String contraseña, String telefono){   
         for (Doctor doctor : doctores) {
-            if(doctor.getDocumento().equals(documento) || doctor.getCorreo().equals(correo)
-                    || doctor.getContraseña().equals(contraseña)) return doctor;
+            if(doctor.getDocumento().equals(documento) 
+                    || doctor.getCorreo().equals(correo)
+                    || doctor.getContraseña().equals(contraseña)
+                    || doctor.getTelefono().equals(telefono)) return doctor;
         }
         return null;
     }
@@ -115,10 +119,10 @@ public class ControladorHospital {
      * @return true si pudo añadirlo, de lo contrario false;
      */
     public boolean añadirDoctor(Doctor doctor) throws AlmacenadoExcepcion,MayorDeEdadExcepcion{
-        Secretaria secretaria = buscarSecretaria(doctor.getDocumento(), doctor.getCorreo(), doctor.getContraseña());
-        Doctor aux = buscarDoctor(doctor.getDocumento(), doctor.getCorreo(), doctor.getContraseña());
-        Paciente paciente = buscarPaciente(doctor.getDocumento(), doctor.getCorreo(), doctor.getContraseña());
-        Admin admin = buscarAdmin(doctor.getDocumento(),doctor.getCorreo(), doctor.getContraseña());
+        Secretaria secretaria = buscarSecretaria(doctor.getDocumento(), doctor.getCorreo(), doctor.getContraseña(),doctor.getTelefono());
+        Doctor aux = buscarDoctor(doctor.getDocumento(), doctor.getCorreo(), doctor.getContraseña(),doctor.getTelefono());
+        Paciente paciente = buscarPaciente(doctor.getDocumento(), doctor.getCorreo(), doctor.getContraseña(),doctor.getTelefono());
+        Admin admin = buscarAdmin(doctor.getDocumento(),doctor.getCorreo(), doctor.getContraseña(),doctor.getTelefono());
         
         //Excepciones
         if( aux != null || secretaria != null || paciente != null  || admin != null) throw  new AlmacenadoExcepcion();
@@ -137,8 +141,8 @@ public class ControladorHospital {
      * @return true si pudo eliminarlo, de lo contrario false
      * @throws NoEncontradoExcepcion 
      */
-    public boolean eliminarDoctor(String documento,String correo, String contraseña) throws NoEncontradoExcepcion{
-        Doctor aux = buscarDoctor(documento,correo,contraseña);
+    public boolean eliminarDoctor(String documento,String correo, String contraseña, String telefono) throws NoEncontradoExcepcion{
+        Doctor aux = buscarDoctor(documento,correo,contraseña,telefono);
         if( aux == null ) throw new NoEncontradoExcepcion();
         for (int i = 0; i < doctores.size(); i++) {
             if(doctores.get(i).getDocumento().equals(documento)){
@@ -154,7 +158,7 @@ public class ControladorHospital {
      * @return true si pudo editarlo, de lo contrario false
      */
     public boolean editarDoctor(Doctor doctor) throws NoEncontradoExcepcion, MayorDeEdadExcepcion{
-        Doctor aux = buscarDoctor(doctor.getDocumento(), doctor.getCorreo(), doctor.getContraseña());
+        Doctor aux = buscarDoctor(doctor.getDocumento(), doctor.getCorreo(), doctor.getContraseña(), doctor.getTelefono());
         
         //Excepciones
         if( aux == null ) throw new NoEncontradoExcepcion();
@@ -195,11 +199,13 @@ public class ControladorHospital {
      * @param documento
      * @return secretaria si la encuentra, de lo contrario null
      */
-    public Secretaria buscarSecretaria(String documento, String correo, String contraseña){
+    public Secretaria buscarSecretaria(String documento, String correo, String contraseña, String telefono){
     
         for (Secretaria secretaria : secretarias) {
-            if(secretaria.getDocumento().equals(documento) || secretaria.getCorreo().equals(correo)
-                    || secretaria.getContraseña().equals(contraseña)) return secretaria;
+            if(secretaria.getDocumento().equals(documento) 
+                    || secretaria.getCorreo().equals(correo)
+                    || secretaria.getContraseña().equals(contraseña)
+                    || secretaria.getTelefono().equals(telefono)) return secretaria;
         }
         return null;
     }
@@ -210,10 +216,10 @@ public class ControladorHospital {
      * @return true si pudo añadirla, de lo contrario false;
      */
     public boolean añadirSecretaria(Secretaria secretaria) throws MayorDeEdadExcepcion, AlmacenadoExcepcion{
-        Secretaria aux = buscarSecretaria(secretaria.getDocumento(),secretaria.getCorreo(), secretaria.getContraseña());
-        Doctor doctor = buscarDoctor(secretaria.getDocumento(),secretaria.getCorreo(), secretaria.getContraseña());
-        Paciente paciente = buscarPaciente(secretaria.getDocumento(),secretaria.getCorreo(), secretaria.getContraseña());
-        Admin admin2 = buscarAdmin(secretaria.getDocumento(),secretaria.getCorreo(), secretaria.getContraseña());
+        Secretaria aux = buscarSecretaria(secretaria.getDocumento(),secretaria.getCorreo(), secretaria.getContraseña(), secretaria.getTelefono());
+        Doctor doctor = buscarDoctor(secretaria.getDocumento(),secretaria.getCorreo(), secretaria.getContraseña(), secretaria.getTelefono());
+        Paciente paciente = buscarPaciente(secretaria.getDocumento(),secretaria.getCorreo(), secretaria.getContraseña(), secretaria.getTelefono());
+        Admin admin2 = buscarAdmin(secretaria.getDocumento(),secretaria.getCorreo(), secretaria.getContraseña(), secretaria.getTelefono());
         
         //Excepciones
         if( aux != null || doctor != null || paciente != null  || admin2 != null ){
@@ -230,8 +236,8 @@ public class ControladorHospital {
      * @param documento
      * @return true si pudo eliminarla, de lo contrario false
      */
-    public boolean eliminarSecretaria(String documento,String correo, String contraseña) throws NoEncontradoExcepcion{
-        Secretaria aux = buscarSecretaria(documento,correo,contraseña);
+    public boolean eliminarSecretaria(String documento,String correo, String contraseña,String telefono) throws NoEncontradoExcepcion{
+        Secretaria aux = buscarSecretaria(documento,correo,contraseña,telefono);
         
         //Excepcion
         if( aux == null ) throw new NoEncontradoExcepcion();
@@ -251,7 +257,7 @@ public class ControladorHospital {
      * @return true si pudo editarla, de lo contrario false
      */
     public boolean editarSecretaria(Secretaria secretaria) throws MayorDeEdadExcepcion, NoEncontradoExcepcion{
-    Secretaria aux = buscarSecretaria(secretaria.getDocumento(), secretaria.getCorreo(), secretaria.getContraseña());
+    Secretaria aux = buscarSecretaria(secretaria.getDocumento(), secretaria.getCorreo(), secretaria.getContraseña(), secretaria.getTelefono());
     
     //Excepciones
     if( aux == null ) throw new NoEncontradoExcepcion();
@@ -295,11 +301,13 @@ public class ControladorHospital {
      * @param documento
      * @return paciente si lo encuentra, de lo contrario null
      */
-    public Paciente buscarPaciente(String documento, String correo, String contraseña){
+    public Paciente buscarPaciente(String documento, String correo, String contraseña, String telefono){
     
         for (Paciente paciente : pacientes) {
-            if(paciente.getDocumento().equals(documento) || paciente.getCorreo().equals(correo)
-                    || paciente.getContraseña().equals(contraseña)) return paciente;
+            if(paciente.getDocumento().equals(documento) 
+                    || paciente.getCorreo().equals(correo)
+                    || paciente.getContraseña().equals(contraseña)
+                    || paciente.getTelefono().equals(telefono)) return paciente;
         }
         return null;
     }
@@ -310,10 +318,10 @@ public class ControladorHospital {
      * @return true si pudo añadirlo, de lo contrario false;
      */
     public boolean añadirPaciente(Paciente paciente)throws MayorDeEdadExcepcion, AlmacenadoExcepcion{
-        Secretaria secretaria = buscarSecretaria(paciente.getDocumento(),paciente.getCorreo(), paciente.getContraseña());
-        Doctor doctor = buscarDoctor(paciente.getDocumento(),paciente.getCorreo(), paciente.getContraseña());
-        Paciente aux = buscarPaciente(paciente.getDocumento(),paciente.getCorreo(), paciente.getContraseña());
-        Admin admin = buscarAdmin(paciente.getDocumento(),paciente.getCorreo(), paciente.getContraseña());
+        Secretaria secretaria = buscarSecretaria(paciente.getDocumento(),paciente.getCorreo(), paciente.getContraseña(), paciente.getTelefono());
+        Doctor doctor = buscarDoctor(paciente.getDocumento(),paciente.getCorreo(), paciente.getContraseña(), paciente.getTelefono());
+        Paciente aux = buscarPaciente(paciente.getDocumento(),paciente.getCorreo(), paciente.getContraseña(), paciente.getTelefono());
+        Admin admin = buscarAdmin(paciente.getDocumento(),paciente.getCorreo(), paciente.getContraseña(), paciente.getTelefono());
         
         //Excepciones
         if( aux != null || secretaria != null || doctor != null || admin != null )throw  new AlmacenadoExcepcion();       
@@ -328,8 +336,8 @@ public class ControladorHospital {
      * @param documento
      * @return true si pudo eliminarlo, de lo contrario false
      */
-    public boolean eliminarPaciente(String documento,String correo, String contraseña) throws NoEncontradoExcepcion{
-        Paciente aux = buscarPaciente(documento,correo,contraseña);
+    public boolean eliminarPaciente(String documento,String correo, String contraseña, String telefono) throws NoEncontradoExcepcion{
+        Paciente aux = buscarPaciente(documento,correo,contraseña,telefono);
         
         //Excepcion
         if( aux == null ) throw new NoEncontradoExcepcion();
@@ -349,7 +357,7 @@ public class ControladorHospital {
      * @return true si pudo editarla, de lo contrario false
      */
     public boolean editarPaciente(Paciente paciente) throws NoEncontradoExcepcion, MayorDeEdadExcepcion{
-        Paciente aux = buscarPaciente(paciente.getDocumento(), paciente.getCorreo(), paciente.getContraseña());
+        Paciente aux = buscarPaciente(paciente.getDocumento(), paciente.getCorreo(), paciente.getContraseña(), paciente.getTelefono());
         
         //Excepciones
         if( aux == null ) throw new NoEncontradoExcepcion();

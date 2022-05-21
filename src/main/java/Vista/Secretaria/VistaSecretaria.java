@@ -7,7 +7,6 @@ package Vista.Secretaria;
 import Controlador.ControladorHospital;
 import Vista.Cita.CancelarCita;
 import Vista.Cita.SolicitarCita;
-import Vista.Paciente.Registrarse;
 import Vista.Login;
 
 /**
@@ -25,6 +24,10 @@ public class VistaSecretaria extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         this.controlador = controlador;
+        
+        if( controlador.getDoctores().isEmpty() || controlador.getPacientes().isEmpty() ) btnAgregarCita.setEnabled(false);
+        if( controlador.getCitas().isEmpty() ) btnCancelarCita.setEnabled(false);
+        if( controlador.getMultas().isEmpty() ) btnPagoMulta.setEnabled(false);
     }
 
     /**
@@ -40,7 +43,7 @@ public class VistaSecretaria extends javax.swing.JFrame {
         btnAgregarCita = new javax.swing.JButton();
         btnCancelarCita = new javax.swing.JButton();
         btGestionarPac = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnPagoMulta = new javax.swing.JButton();
         btnVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -68,10 +71,10 @@ public class VistaSecretaria extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText(" PAGO  MULTA");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnPagoMulta.setText(" PAGO  MULTA");
+        btnPagoMulta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnPagoMultaActionPerformed(evt);
             }
         });
 
@@ -88,7 +91,7 @@ public class VistaSecretaria extends javax.swing.JFrame {
                             .addComponent(btnCancelarCita, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btGestionarPac))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnPagoMulta, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -101,7 +104,7 @@ public class VistaSecretaria extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(btGestionarPac)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1)
+                .addComponent(btnPagoMulta)
                 .addContainerGap(10, Short.MAX_VALUE))
         );
 
@@ -182,19 +185,19 @@ public class VistaSecretaria extends javax.swing.JFrame {
      * Metodo para ir a la ventana de pago de las multas
      * @param evt 
      */
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnPagoMultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagoMultaActionPerformed
         PagoMulta pago = new PagoMulta(controlador);
         pago.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnPagoMultaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btGestionarPac;
     private javax.swing.JButton btnAgregarCita;
     private javax.swing.JButton btnCancelarCita;
+    private javax.swing.JButton btnPagoMulta;
     private javax.swing.JButton btnVolver;
-    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

@@ -296,7 +296,7 @@ public class Registrarse extends javax.swing.JFrame {
             if( rbnViudo.isSelected() ) estadoCivil = rbnViudo.getText();
 
             //Creamos al paciente con sus respectivos datos
-            Paciente paciente = new Paciente(nombre,documento,correo,contraseña,edad,telefono,estadoCivil,hasSisben,hasEps);
+            Paciente paciente = new Paciente(nombre,documento,correo,contraseña,edad,estadoCivil,telefono,hasSisben,hasEps);
             
             controlador.añadirPaciente(paciente);
             JOptionPane.showMessageDialog(null, "Se añadio el paciente con documento " + documento);
@@ -316,14 +316,26 @@ public class Registrarse extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnVolverActionPerformed
 
+    /**
+     * 
+     * @param evt 
+     */
     private void txtNombre2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombre2KeyTyped
         validacion.soloLetras(evt);
     }//GEN-LAST:event_txtNombre2KeyTyped
 
+    /**
+     * 
+     * @param evt 
+     */
     private void txtDocumentoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDocumentoKeyTyped
         validacion.soloNumeros(evt);
     }//GEN-LAST:event_txtDocumentoKeyTyped
 
+    /**
+     * 
+     * @param evt 
+     */
     private void txtEdadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEdadKeyTyped
         validacion.soloNumeros(evt);
     }//GEN-LAST:event_txtEdadKeyTyped

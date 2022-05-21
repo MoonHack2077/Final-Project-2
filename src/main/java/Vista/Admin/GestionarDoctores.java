@@ -392,7 +392,7 @@ public class GestionarDoctores extends javax.swing.JFrame {
             Doctor doctor = (Doctor) cbxDoctores.getSelectedItem();
 
             //Verificamos se se elimina el empleado
-            controlador.eliminarDoctor(doctor.getDocumento(), doctor.getCorreo(), doctor.getContraseña());
+            controlador.eliminarDoctor(doctor.getDocumento(), doctor.getCorreo(), doctor.getContraseña(), doctor.getTelefono());
             JOptionPane.showMessageDialog(null, "Doctor con el documento: " + doctor.getDocumento() + " eliminado");
             limpiarInputs();
             llenarComboDoctores();

@@ -436,7 +436,7 @@ public class GestionarPacientes extends javax.swing.JFrame {
             Paciente paciente = (Paciente) cbxPacientes.getSelectedItem();
 
             //Se elimina al paciente
-            controlador.eliminarPaciente(paciente.getDocumento(), paciente.getCorreo(), paciente.getContraseña());
+            controlador.eliminarPaciente(paciente.getDocumento(), paciente.getCorreo(), paciente.getContraseña(),paciente.getTelefono());
             JOptionPane.showMessageDialog(null, "Se eliminó el paciente con documento " + paciente.getDocumento());
             limpiarInputs();
             llenarComboPacientes();
