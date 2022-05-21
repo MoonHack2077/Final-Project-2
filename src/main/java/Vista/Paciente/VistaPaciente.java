@@ -16,15 +16,13 @@ import Vista.Login;
  */
 public class VistaPaciente extends javax.swing.JFrame {
 
-    private ControladorHospital controlador;
     private Paciente paciente;
     /**
      * Creates new form VistaPaciente
      */
-    public VistaPaciente(ControladorHospital controlador, Paciente paciente) {
+    public VistaPaciente(Paciente paciente) {
         initComponents();
         setLocationRelativeTo(null);
-        this.controlador = controlador;
         this.paciente = paciente;
         
         //Condicion util para saber que opciones habilitar
@@ -140,7 +138,7 @@ public class VistaPaciente extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnSolicitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSolicitarActionPerformed
-        SolicitarCita cita = new SolicitarCita(controlador, this, paciente);
+        SolicitarCita cita = new SolicitarCita(this, paciente);
         cita.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnSolicitarActionPerformed
@@ -150,7 +148,7 @@ public class VistaPaciente extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-        Login main = new Login(controlador);
+        Login main = new Login();
         main.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnVolverActionPerformed
@@ -160,7 +158,7 @@ public class VistaPaciente extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        CancelarCita cancelar = new CancelarCita(controlador, this, paciente);
+        CancelarCita cancelar = new CancelarCita(this, paciente);
         cancelar.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed

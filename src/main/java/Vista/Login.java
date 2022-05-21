@@ -5,6 +5,7 @@
 package Vista;
 
 import Controlador.ControladorHospital;
+import Controlador.ControladorLogin;
 import Excepciones.NoEncontradoExcepcion;
 import Modelo.Admin;
 import Modelo.Doctor;
@@ -23,17 +24,18 @@ import javax.swing.JOptionPane;
  */
 public class Login extends javax.swing.JFrame {
     
-    private ControladorHospital controlador;
+    private ControladorLogin controlador;
+    
     /**
      * Creates new form VistaPrincipal
      */
     public Login() {
         initComponents();
         this.setLocationRelativeTo(null);
-        this.controlador = new ControladorHospital();
+        this.controlador = new ControladorLogin();
         controlador.añadirAdmin();
     }
-    public Login(ControladorHospital controlador){
+    public Login(ControladorLogin controlador){
         initComponents();
         this.setLocationRelativeTo(null);
         this.controlador = controlador;
@@ -161,19 +163,19 @@ public class Login extends javax.swing.JFrame {
             Paciente paciente = controlador.buscarPaciente(correo, contraseña);
 
             if( admin != null ){
-                VistaAdmin vistaAdmin = new VistaAdmin(controlador);
+                VistaAdmin vistaAdmin = new VistaAdmin();
                 vistaAdmin.setVisible(true);
                 this.dispose();
             }else if( doctor != null ){
-                VistaDoctor vistaDoc = new VistaDoctor(controlador, doctor);
+                VistaDoctor vistaDoc = new VistaDoctor(doctor);
                 vistaDoc.setVisible(true);
                 this.dispose();
             }else if( secretaria != null ){
-                VistaSecretaria vistaSec = new VistaSecretaria(controlador);
+                VistaSecretaria vistaSec = new VistaSecretaria();
                 vistaSec.setVisible(true);
                 this.dispose();
             }else if( paciente != null ){
-                VistaPaciente vistaPac = new VistaPaciente(controlador, paciente);
+                VistaPaciente vistaPac = new VistaPaciente(paciente);
                 vistaPac.setVisible(true);
                 this.dispose();
             }else{

@@ -4,7 +4,6 @@
  */
 package Vista.Admin;
 
-import Controlador.ControladorHospital;
 import Vista.Login;
 
 /**
@@ -13,12 +12,10 @@ import Vista.Login;
  */
 public class VistaAdmin extends javax.swing.JFrame {
 
-    private ControladorHospital controlador;
     
-    public VistaAdmin(ControladorHospital controlador) {
+    public VistaAdmin() {
         initComponents();
         this.setLocationRelativeTo(null);
-        this.controlador = controlador;
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -114,7 +111,7 @@ public class VistaAdmin extends javax.swing.JFrame {
      * @param evt 
      */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        GestionarDoctores doctores = new GestionarDoctores(controlador); //En el contructor hay que pasarle el controlador
+        GestionarDoctores doctores = new GestionarDoctores();
         doctores.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -124,7 +121,7 @@ public class VistaAdmin extends javax.swing.JFrame {
      * @param evt 
      */
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        GestionarSecretarias secretarias = new GestionarSecretarias(controlador); 
+        GestionarSecretarias secretarias = new GestionarSecretarias(); 
         secretarias.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -134,7 +131,7 @@ public class VistaAdmin extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-        Login main = new Login(controlador);
+        Login main = new Login();
         main.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnVolverActionPerformed

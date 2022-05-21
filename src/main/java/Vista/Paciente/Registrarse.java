@@ -4,7 +4,6 @@
  */
 package Vista.Paciente;
 
-import Controlador.ControladorHospital;
 import Excepciones.AlmacenadoExcepcion;
 import Excepciones.MayorDeEdadExcepcion;
 import Modelo.Paciente;
@@ -18,15 +17,13 @@ import javax.swing.JOptionPane;
  */
 public class Registrarse extends javax.swing.JFrame {
 
-    private ControladorHospital controlador;
     private Validacion validacion;
     /**
      * Creates new form Registrarse
      */
-    public Registrarse(ControladorHospital controlador) {
+    public Registrarse() {
         initComponents();
         setLocationRelativeTo(null);
-        this.controlador = controlador;
         this.validacion = new Validacion();
         
         //Se añaden los botones de EPS Y SISBEN al radioGroup de salud
@@ -311,7 +308,7 @@ public class Registrarse extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-        Login login = new Login(controlador);
+        Login login = new Login();
         login.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnVolverActionPerformed
@@ -360,7 +357,7 @@ public class Registrarse extends javax.swing.JFrame {
      * @param paciente 
      */
     private void abrirVistaPaciente(Paciente paciente){
-        VistaPaciente vista = new VistaPaciente(controlador, paciente);
+        VistaPaciente vista = new VistaPaciente(paciente);
         vista.setVisible(true);
         this.dispose();   
     }

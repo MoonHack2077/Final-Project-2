@@ -4,7 +4,6 @@
  */
 package Vista.Admin;
 
-import Controlador.ControladorHospital;
 import Excepciones.AlmacenadoExcepcion;
 import Excepciones.MayorDeEdadExcepcion;
 import Excepciones.NoEncontradoExcepcion;
@@ -19,15 +18,13 @@ import javax.swing.JRadioButton;
  */
 public class GestionarSecretarias extends javax.swing.JFrame {
 
-    private ControladorHospital controlador;
     private Validacion validacion;
     /**
      * Creates new form GestionarSecretarias
      */
-    public GestionarSecretarias(ControladorHospital controlador) {
+    public GestionarSecretarias() {
         initComponents();
         this.setLocationRelativeTo(null);
-        this.controlador = controlador;
         this.validacion = new Validacion();
         setEnabledInputs(false);
         llenarComboSecretarias();
@@ -325,7 +322,7 @@ public class GestionarSecretarias extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-        VistaAdmin admin = new VistaAdmin(controlador);
+        VistaAdmin admin = new VistaAdmin();
         admin.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnVolverActionPerformed

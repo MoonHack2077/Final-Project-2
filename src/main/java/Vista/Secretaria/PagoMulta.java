@@ -4,8 +4,8 @@
  */
 package Vista.Secretaria;
 
-import Controlador.ControladorHospital;
 import Modelo.Multa;
+import Singleton.Singleton;
 import java.util.Date;
 import javax.swing.JOptionPane;
 
@@ -15,14 +15,13 @@ import javax.swing.JOptionPane;
  */
 public class PagoMulta extends javax.swing.JFrame {
 
-    private ControladorHospital controlador;
+    private Singleton controlador;
     /**
      * Creates new form PagoMulta
      */
-    public PagoMulta(ControladorHospital controlador) {
+    public PagoMulta() {
         initComponents();
         setLocationRelativeTo(null);
-        this.controlador = controlador;
         llenarComboMultas();
     }
 
@@ -187,7 +186,7 @@ public class PagoMulta extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-        VistaSecretaria secre = new VistaSecretaria(controlador);
+        VistaSecretaria secre = new VistaSecretaria();
         secre.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnVolverActionPerformed

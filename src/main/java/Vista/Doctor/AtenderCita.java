@@ -19,16 +19,14 @@ import javax.swing.JOptionPane;
 public class AtenderCita extends javax.swing.JFrame {
 
     private ControladorPaciente controladorPaciente;
-    private ControladorHospital controlador;
     private Doctor doctor;
     private Cita cita;
     /**
      * Creates new form AtenderCita
      */
-    public AtenderCita( ControladorHospital controlador, Doctor doctor) {
+    public AtenderCita( Doctor doctor) {
         initComponents();
         setLocationRelativeTo(null);
-        this.controlador = controlador;
         this.controladorPaciente = new ControladorPaciente();
         this.doctor = doctor;
         this.cita = doctor.getAgenda().get(0);
@@ -207,7 +205,7 @@ public class AtenderCita extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-        VistaDoctor vistaDoctor = new VistaDoctor(controlador, this.doctor);
+        VistaDoctor vistaDoctor = new VistaDoctor(this.doctor);
         vistaDoctor.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnVolverActionPerformed

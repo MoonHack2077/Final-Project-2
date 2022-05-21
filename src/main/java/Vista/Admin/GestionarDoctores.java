@@ -4,7 +4,6 @@
  */
 package Vista.Admin;
 
-import Controlador.ControladorHospital;
 import Excepciones.AlmacenadoExcepcion;
 import Excepciones.MayorDeEdadExcepcion;
 import Excepciones.NoEncontradoExcepcion;
@@ -19,16 +18,14 @@ import javax.swing.JRadioButton;
  */
 public class GestionarDoctores extends javax.swing.JFrame {
 
-    private ControladorHospital controlador;
     private Validacion validacion;
     
     /**
      * Creates new form GestionarDoctores
      */
-    public GestionarDoctores(ControladorHospital controlador) {
+    public GestionarDoctores() {
         initComponents();
         this.setLocationRelativeTo(null);
-        this.controlador = controlador;
         this.validacion = new Validacion();
         setEnabledInputs(false);
         llenarComboDoctores();

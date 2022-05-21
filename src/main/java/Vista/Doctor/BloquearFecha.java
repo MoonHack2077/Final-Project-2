@@ -4,8 +4,6 @@
  */
 package Vista.Doctor;
 
-import Controlador.ControladorDoctor;
-import Controlador.ControladorHospital;
 import Modelo.Doctor;
 import java.util.Date;
 import javax.swing.JOptionPane;
@@ -16,19 +14,15 @@ import javax.swing.JOptionPane;
  */
 public class BloquearFecha extends javax.swing.JFrame {
 
-    private ControladorDoctor controladorDoctor;
-    private ControladorHospital controlador;
     private Doctor doctor;
     
     /**
      * Creates new form BloqeuarFecha
      */
-    public BloquearFecha(ControladorHospital controlador,Doctor doctor) {
+    public BloquearFecha(Doctor doctor) {
         initComponents();
         setLocationRelativeTo(null);
         this.doctor = doctor;
-        this.controlador = controlador;
-        this.controladorDoctor = new ControladorDoctor();
     }
 
     /**
@@ -224,7 +218,7 @@ public class BloquearFecha extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-        VistaDoctor vistaDoctor = new VistaDoctor(controlador, this.doctor);
+        VistaDoctor vistaDoctor = new VistaDoctor(this.doctor);
         vistaDoctor.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnVolverActionPerformed

@@ -4,7 +4,6 @@
  */
 package Vista.Cita;
 
-import Controlador.ControladorHospital;
 import Modelo.Cita;
 import Modelo.Paciente;
 import javax.swing.JOptionPane;
@@ -15,28 +14,25 @@ import javax.swing.JOptionPane;
  */
 public class CancelarCita extends javax.swing.JFrame {
 
-    private ControladorHospital controlador;
     private javax.swing.JFrame vistaVolver;
     /**
      * Creates new form CancelarCita
      */
-    public CancelarCita(ControladorHospital controlador, javax.swing.JFrame vistaVolver) {
+    public CancelarCita( javax.swing.JFrame vistaVolver) {
         initComponents();
         setLocationRelativeTo(null);
-        this.controlador = controlador;
         this.vistaVolver = vistaVolver;
         llenarComboCitas();
     }
 
     //Este controlador unicamente será llamado  por el paciente
-    public CancelarCita(ControladorHospital controlador, javax.swing.JFrame vistaVolver, Paciente paciente) {
+    public CancelarCita(javax.swing.JFrame vistaVolver, Paciente paciente) {
         initComponents();
         setLocationRelativeTo(null);
-        this.controlador = controlador;
         this.vistaVolver = vistaVolver;
         
-        Cita cita = controlador.buscarCita(paciente.getDocumento());
-        cbxCitas.addItem(cita);
+        //Cita cita = controlador.buscarCita(paciente.getDocumento());
+        //cbxCitas.addItem(cita);
     }
         
     /**

@@ -4,7 +4,6 @@
  */
 package Vista.Secretaria;
 
-import Controlador.ControladorHospital;
 import Excepciones.AlmacenadoExcepcion;
 import Excepciones.MayorDeEdadExcepcion;
 import Excepciones.NoEncontradoExcepcion;
@@ -19,15 +18,13 @@ import javax.swing.JRadioButton;
  */
 public class GestionarPacientes extends javax.swing.JFrame {
 
-    private ControladorHospital controlador;
     private Validacion validacion;
     /**
      * Creates new form GestionarPacientes
      */
-    public GestionarPacientes(ControladorHospital controlador) {
+    public GestionarPacientes() {
         initComponents();
         setLocationRelativeTo(null);
-        this.controlador = controlador;
         this.validacion = new Validacion();
         setEnabledInputs(false);
         llenarComboPacientes();
@@ -380,7 +377,7 @@ public class GestionarPacientes extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-        VistaSecretaria secre = new VistaSecretaria(controlador);
+        VistaSecretaria secre = new VistaSecretaria();
         secre.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnVolverActionPerformed

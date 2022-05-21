@@ -4,7 +4,7 @@
  */
 package Vista.Secretaria;
 
-import Controlador.ControladorHospital;
+import Singleton.Singleton;
 import Vista.Cita.CancelarCita;
 import Vista.Cita.SolicitarCita;
 import Vista.Login;
@@ -15,15 +15,14 @@ import Vista.Login;
  */
 public class VistaSecretaria extends javax.swing.JFrame {
 
-    private ControladorHospital controlador;
+    private Singleton controlador;
     
     /**
      * Creates new form VistaSecretaria
      */
-    public VistaSecretaria(ControladorHospital controlador) {
+    public VistaSecretaria() {
         initComponents();
         setLocationRelativeTo(null);
-        this.controlador = controlador;
         
         if( controlador.getDoctores().isEmpty() || controlador.getPacientes().isEmpty() ) btnAgregarCita.setEnabled(false);
         if( controlador.getCitas().isEmpty() ) btnCancelarCita.setEnabled(false);
@@ -146,7 +145,7 @@ public class VistaSecretaria extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnAgregarCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarCitaActionPerformed
-        SolicitarCita cita = new SolicitarCita(controlador, this);
+        SolicitarCita cita = new SolicitarCita(this);
         cita.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnAgregarCitaActionPerformed
@@ -156,7 +155,7 @@ public class VistaSecretaria extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-        Login main = new Login(controlador);
+        Login main = new Login();
         main.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnVolverActionPerformed
@@ -166,7 +165,7 @@ public class VistaSecretaria extends javax.swing.JFrame {
      * @param evt 
      */
     private void btGestionarPacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btGestionarPacActionPerformed
-        GestionarPacientes pacientes = new GestionarPacientes(controlador);
+        GestionarPacientes pacientes = new GestionarPacientes();
         pacientes.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btGestionarPacActionPerformed
@@ -176,7 +175,7 @@ public class VistaSecretaria extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnCancelarCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarCitaActionPerformed
-        CancelarCita cancelar = new CancelarCita(controlador, this);
+        CancelarCita cancelar = new CancelarCita(this);
         cancelar.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCancelarCitaActionPerformed
@@ -186,7 +185,7 @@ public class VistaSecretaria extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnPagoMultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagoMultaActionPerformed
-        PagoMulta pago = new PagoMulta(controlador);
+        PagoMulta pago = new PagoMulta();
         pago.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnPagoMultaActionPerformed

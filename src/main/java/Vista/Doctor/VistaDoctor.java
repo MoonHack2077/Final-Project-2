@@ -4,7 +4,6 @@
  */
 package Vista.Doctor;
 
-import Controlador.ControladorHospital;
 import Modelo.Doctor;
 import Vista.Login;
 
@@ -14,16 +13,14 @@ import Vista.Login;
  */
 public class VistaDoctor extends javax.swing.JFrame {
 
-    private ControladorHospital controlador;
     private Doctor doctor;
     
     /**
      * Creates new form VistaDoctor
      */
-    public VistaDoctor(ControladorHospital controlador,Doctor doctor) {
+    public VistaDoctor(Doctor doctor) {
         initComponents();
         this.setLocationRelativeTo(null);
-        this.controlador = controlador;
         this.doctor = doctor;
         
         //Si el doctor no tiene citas no estará habilitado el botón para atenderlas
@@ -124,7 +121,7 @@ public class VistaDoctor extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-        Login main = new Login(controlador);
+        Login main = new Login();
         main.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnVolverActionPerformed
@@ -134,7 +131,7 @@ public class VistaDoctor extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnBloquearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBloquearActionPerformed
-        BloquearFecha bloquear = new BloquearFecha(controlador,doctor);
+        BloquearFecha bloquear = new BloquearFecha(doctor);
         bloquear.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnBloquearActionPerformed
@@ -144,7 +141,7 @@ public class VistaDoctor extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnAtenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtenderActionPerformed
-        AtenderCita atender = new AtenderCita(controlador,doctor);
+        AtenderCita atender = new AtenderCita(doctor);
         atender.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnAtenderActionPerformed
