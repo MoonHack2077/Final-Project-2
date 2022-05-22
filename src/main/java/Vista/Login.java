@@ -160,20 +160,16 @@ public class Login extends javax.swing.JFrame {
 
             if( admin != null ){
                 VistaAdmin vistaAdmin = new VistaAdmin();
-                vistaAdmin.setVisible(true);
-                this.dispose();
+                cambiarVentana(vistaAdmin);
             }else if( doctor != null ){
                 VistaDoctor vistaDoc = new VistaDoctor(doctor);
-                vistaDoc.setVisible(true);
-                this.dispose();
+                cambiarVentana(vistaDoc);
             }else if( secretaria != null ){
                 VistaSecretaria vistaSec = new VistaSecretaria();
-                vistaSec.setVisible(true);
-                this.dispose();
+                cambiarVentana(vistaSec);
             }else if( paciente != null ){
                 VistaPaciente vistaPac = new VistaPaciente(paciente);
-                vistaPac.setVisible(true);
-                this.dispose();
+                cambiarVentana(vistaPac);
             }else{
                 throw new NoEncontradoExcepcion();
             }
@@ -183,13 +179,21 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEntrarActionPerformed
 
     /**
+     * 
+     * @param ventana 
+     */
+    private void cambiarVentana(javax.swing.JFrame ventana){
+        ventana.setVisible(true);
+        this.dispose();
+    }
+    
+    /**
      * Metodo que envia a la ventana de registrar si el usuario es un paciente
      * @param evt 
      */
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         Registrarse registrarse = new Registrarse();
-        registrarse.setVisible(true);
-        this.dispose();
+        cambiarVentana(registrarse);
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     /**

@@ -4,12 +4,10 @@
  */
 package Vista.Cita;
 
-import Controlador.ControladorCita;
-import Controlador.ControladorDoctor;
+import Controlador.ControladorSolicitarCita;
 import Modelo.Cita;
 import Modelo.Doctor;
 import Modelo.Paciente;
-import Singleton.Singleton;
 import Vista.Paciente.VistaPaciente;
 import java.util.Date;
 import javax.swing.JOptionPane;
@@ -20,9 +18,7 @@ import javax.swing.JOptionPane;
  */
 public class SolicitarCita extends javax.swing.JFrame {
 
-    private Singleton controlador;
-    private ControladorDoctor controladorDoctor;
-    private ControladorCita controladorCita;
+    private ControladorSolicitarCita controlador;
     private javax.swing.JFrame vistaVolver;
     
     /**
@@ -31,9 +27,7 @@ public class SolicitarCita extends javax.swing.JFrame {
     public SolicitarCita(javax.swing.JFrame vistaVolver) {
         initComponents();
         setLocationRelativeTo(null);
-        controlador = Singleton.getINSTANCIA();
-        controladorCita = new ControladorCita();
-        controladorDoctor = new ControladorDoctor();
+        controlador = new ControladorSolicitarCita();
         this.vistaVolver = vistaVolver;
         llenarComboDoctores();
         llenarComboPacientes();
@@ -43,9 +37,7 @@ public class SolicitarCita extends javax.swing.JFrame {
     public SolicitarCita(VistaPaciente vistaVolver, Paciente paciente) {
         initComponents();
         setLocationRelativeTo(null);
-        controlador = Singleton.getINSTANCIA();
-        controladorCita = new ControladorCita();
-        controladorDoctor = new ControladorDoctor();
+        controlador = new ControladorSolicitarCita();
         this.vistaVolver = vistaVolver;
         llenarComboDoctores();
         cbxPacientes.addItem(paciente);
@@ -259,7 +251,7 @@ public class SolicitarCita extends javax.swing.JFrame {
         Date fechaAux = new Date(año, mes-1, dia);
        
         //Validamos si la fecha elegida no es la misma que la fecha que ha bloqueado el doctor
-        boolean validar = controladorDoctor.validarFechaBloqueada(doctor, fechaAux);
+        boolean validar = controlador.validarFechaBloqueada(doctor, fechaAux);
         if( validar ){            
             JOptionPane.showMessageDialog(null, "El doctor " + doctor.getNombre() + " ha bloqueado ese dia para tener citas\n Por favor seleccione otro");
             return;
@@ -281,7 +273,7 @@ public class SolicitarCita extends javax.swing.JFrame {
         Cita cita = new Cita( paciente,doctor,fecha );
         
         /*** EXCEPCION ***/
-        boolean creada = controladorCita.añadirCita(cita);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+        boolean creada = controlador.añadirCita(cita);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
         if( creada ){
             JOptionPane.showMessageDialog(null, "Cita creada:\n " + 
                     cita.getFecha().toLocaleString() + "\n" +

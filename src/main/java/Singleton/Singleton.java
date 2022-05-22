@@ -31,6 +31,12 @@ public class Singleton{
     private ArrayList<Cita> citas;
     private ArrayList<Multa> multas;
     
+    private String txtDoctores = "doctores.txt";
+    private String txtSecretarias = "secretarias.txt";
+    private String txtPacientes = "pacientes.txt";
+    private String txtCitas = "citas.txt";
+    private String txtMultas = "multas.txt";
+    
     private Singleton() {
         admins = new Admin[2];
         doctores = leerDoctores();
@@ -45,7 +51,7 @@ public class Singleton{
      */
     public void escribirDoctores(){
         try{
-            FileOutputStream archivo = new FileOutputStream("doctores.txt");
+            FileOutputStream archivo = new FileOutputStream(txtDoctores);
             ObjectOutputStream escritor = new ObjectOutputStream(archivo);
             escritor.writeObject(doctores);
         }catch(FileNotFoundException ex){
@@ -62,7 +68,7 @@ public class Singleton{
     public ArrayList<Doctor> leerDoctores(){
     
         try{
-            FileInputStream archivo = new FileInputStream("doctores.txt");
+            FileInputStream archivo = new FileInputStream(txtDoctores);
             ObjectInputStream lector = new ObjectInputStream(archivo);
             return (ArrayList<Doctor>) lector.readObject();
         }catch(IOException | ClassNotFoundException ex){
@@ -77,7 +83,7 @@ public class Singleton{
      */
     public void escribirSecretarias(){
         try{
-            FileOutputStream archivo = new FileOutputStream("secretarias.txt");
+            FileOutputStream archivo = new FileOutputStream(txtSecretarias);
             ObjectOutputStream escritor = new ObjectOutputStream(archivo);
             escritor.writeObject(secretarias);
         }catch(FileNotFoundException ex){
@@ -94,7 +100,7 @@ public class Singleton{
     public ArrayList<Secretaria> leerSecretarias(){
     
         try{
-            FileInputStream archivo = new FileInputStream("secretarias.txt");
+            FileInputStream archivo = new FileInputStream(txtSecretarias);
             ObjectInputStream lector = new ObjectInputStream(archivo);
             return (ArrayList<Secretaria>) lector.readObject();
         }catch(IOException | ClassNotFoundException ex){
@@ -110,7 +116,7 @@ public class Singleton{
      */
     public void escribirPacientes(){
         try{
-            FileOutputStream archivo = new FileOutputStream("pacientes.txt");
+            FileOutputStream archivo = new FileOutputStream(txtPacientes);
             ObjectOutputStream escritor = new ObjectOutputStream(archivo);
             escritor.writeObject(pacientes);
         }catch(FileNotFoundException ex){
@@ -127,7 +133,7 @@ public class Singleton{
     public ArrayList<Paciente> leerPacientes(){
     
         try{
-            FileInputStream archivo = new FileInputStream("pacientes.txt");
+            FileInputStream archivo = new FileInputStream(txtPacientes);
             ObjectInputStream lector = new ObjectInputStream(archivo);
             return (ArrayList<Paciente>) lector.readObject();
         }catch(IOException | ClassNotFoundException ex){
@@ -141,9 +147,9 @@ public class Singleton{
     /**
      * Metodo para escribir las citas
      */
-    public void escribirCita(){
+    public void escribirCitas(){
         try{
-            FileOutputStream archivo = new FileOutputStream("doctores.txt");
+            FileOutputStream archivo = new FileOutputStream(txtCitas);
             ObjectOutputStream escritor = new ObjectOutputStream(archivo);
             escritor.writeObject(citas);
         }catch(FileNotFoundException ex){
@@ -160,7 +166,7 @@ public class Singleton{
     public ArrayList<Cita> leerCitas(){
     
         try{
-            FileInputStream archivo = new FileInputStream("citas.txt");
+            FileInputStream archivo = new FileInputStream(txtCitas);
             ObjectInputStream lector = new ObjectInputStream(archivo);
             return (ArrayList<Cita>) lector.readObject();
         }catch(IOException | ClassNotFoundException ex){
@@ -173,9 +179,9 @@ public class Singleton{
     /**
      * Metodo para escribir las multas
      */
-    public void escribirMulta(){
+    public void escribirMultas(){
         try{
-            FileOutputStream archivo = new FileOutputStream("multas.txt");
+            FileOutputStream archivo = new FileOutputStream(txtMultas);
             ObjectOutputStream escritor = new ObjectOutputStream(archivo);
             escritor.writeObject(multas);
         }catch(FileNotFoundException ex){
@@ -192,7 +198,7 @@ public class Singleton{
     public ArrayList<Multa> leerMultas(){
     
         try{
-            FileInputStream archivo = new FileInputStream("multas.txt");
+            FileInputStream archivo = new FileInputStream(txtMultas);
             ObjectInputStream lector = new ObjectInputStream(archivo);
             return (ArrayList<Multa>) lector.readObject();
         }catch(IOException | ClassNotFoundException ex){

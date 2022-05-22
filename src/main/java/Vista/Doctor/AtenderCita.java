@@ -4,9 +4,8 @@
  */
 package Vista.Doctor;
 
-import Controlador.ControladorCita;
-import Controlador.ControladorMulta;
-import Controlador.ControladorPaciente;
+import Controlador.ControladorCancelarCita;
+import Controlador.ControladorRegistrarMulta;
 import Modelo.Cita;
 import Modelo.Doctor;
 import Modelo.Multa;
@@ -19,9 +18,8 @@ import javax.swing.JOptionPane;
  */
 public class AtenderCita extends javax.swing.JFrame {
 
-    private ControladorPaciente controladorPaciente;
-    private ControladorCita controladorCita;
-    private ControladorMulta controladorMulta;
+    private ControladorCancelarCita controladorCita;
+    private ControladorRegistrarMulta controladorMulta;
     private Doctor doctor;
     private Cita cita;
     /**
@@ -30,9 +28,8 @@ public class AtenderCita extends javax.swing.JFrame {
     public AtenderCita( Doctor doctor) {
         initComponents();
         setLocationRelativeTo(null);
-        this.controladorPaciente = new ControladorPaciente();
-        this.controladorCita = new ControladorCita();
-        this.controladorMulta = new ControladorMulta();
+        this.controladorCita = new ControladorCancelarCita();
+        this.controladorMulta = new ControladorRegistrarMulta();
         this.doctor = doctor;
         this.cita = doctor.getAgenda().get(0);
         lblPaciente.setText(this.cita.getPaciente().toString());
@@ -258,7 +255,7 @@ public class AtenderCita extends javax.swing.JFrame {
         if( confirmacion==0 ){
             //Creamos la multa y la registramos
             Multa multa = new Multa(cita);
-            controladorPaciente.descuentoMulta(multa);
+            controladorMulta.descuentoMulta(multa);
             boolean añadida = controladorMulta.añadirMulta(multa);
             boolean cancelada = controladorCita.eliminarCita(cita.getPaciente().getDocumento());
             if( añadida && cancelada){

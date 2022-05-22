@@ -104,6 +104,15 @@ public class VistaAdmin extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * 
+     * @param ventana 
+     */
+    private void cambiarVentana(javax.swing.JFrame ventana){
+        ventana.setVisible(true);
+        this.dispose();
+    }
+    
     /****** EVENTOS DE BOTONES ******/
     
     /**
@@ -112,8 +121,7 @@ public class VistaAdmin extends javax.swing.JFrame {
      */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         GestionarDoctores doctores = new GestionarDoctores();
-        doctores.setVisible(true);
-        this.dispose();
+        cambiarVentana(doctores);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -121,9 +129,8 @@ public class VistaAdmin extends javax.swing.JFrame {
      * @param evt 
      */
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        GestionarSecretarias secretarias = new GestionarSecretarias(); 
-        secretarias.setVisible(true);
-        this.dispose();
+        GestionarSecretarias secretarias = new GestionarSecretarias();
+        cambiarVentana(secretarias);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
@@ -132,8 +139,7 @@ public class VistaAdmin extends javax.swing.JFrame {
      */
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
         Login main = new Login();
-        main.setVisible(true);
-        this.dispose();
+        cambiarVentana(main);
     }//GEN-LAST:event_btnVolverActionPerformed
 
 

@@ -208,15 +208,11 @@ public class GestionarDoctores extends javax.swing.JFrame {
                                         .addGap(22, 22, 22)
                                         .addComponent(btnEliminar)
                                         .addGap(52, 52, 52)
-                                        .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(13, 13, 13))
-                            .addComponent(jLabel8))
-                        .addGap(49, 49, 49)))
+                                        .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jLabel8)
+                            .addComponent(cbxDoctores, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(62, 62, 62)))
                 .addGap(0, 11, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(77, 77, 77)
-                .addComponent(cbxDoctores, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -539,7 +535,7 @@ public class GestionarDoctores extends javax.swing.JFrame {
                 resetearRadioButtons(rbnSoltero);
             }else if( doctor.getEstadoCivil().equals("Viudo") ){
                 resetearRadioButtons(rbnViudo);
-            }if( doctor.getEstadoCivil().equals("Divorciado") ){
+            }else if( doctor.getEstadoCivil().equals("Divorciado") ){
                 resetearRadioButtons(rbnDivorciado);
             }
             

@@ -133,13 +133,21 @@ public class VistaPaciente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     /**
+     * 
+     * @param ventana 
+     */
+    private void cambiarVentana(javax.swing.JFrame ventana){
+        ventana.setVisible(true);
+        this.dispose();
+    }
+    
+    /**
      * Metodo que maneja el evento del boton solicitar cita para abrir su ventana
      * @param evt 
      */
     private void btnSolicitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSolicitarActionPerformed
         SolicitarCita cita = new SolicitarCita(this, paciente);
-        cita.setVisible(true);
-        this.dispose();
+        cambiarVentana(cita);
     }//GEN-LAST:event_btnSolicitarActionPerformed
 
     /**
@@ -148,8 +156,7 @@ public class VistaPaciente extends javax.swing.JFrame {
      */
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
         Login main = new Login();
-        main.setVisible(true);
-        this.dispose();
+        cambiarVentana(main);
     }//GEN-LAST:event_btnVolverActionPerformed
 
     /**
@@ -158,8 +165,7 @@ public class VistaPaciente extends javax.swing.JFrame {
      */
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         CancelarCita cancelar = new CancelarCita(this, paciente);
-        cancelar.setVisible(true);
-        this.dispose();
+        cambiarVentana(cancelar);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
@@ -168,8 +174,7 @@ public class VistaPaciente extends javax.swing.JFrame {
      */
     private void btnHistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistorialActionPerformed
         VerHistorial historial = new VerHistorial(paciente,this);
-        historial.setVisible(true);
-        this.dispose();
+        cambiarVentana(historial);
     }//GEN-LAST:event_btnHistorialActionPerformed
 
 

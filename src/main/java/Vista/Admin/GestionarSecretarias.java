@@ -21,6 +21,7 @@ public class GestionarSecretarias extends javax.swing.JFrame {
 
     private ControladorSecretaria controlador;
     private Validacion validacion;
+    
     /**
      * Creates new form GestionarSecretarias
      */
@@ -464,16 +465,6 @@ public class GestionarSecretarias extends javax.swing.JFrame {
         validacion.soloNumeros(evt);
     }//GEN-LAST:event_txtEdadKeyTyped
     
-    /**
-     * Metodo para resetera los radio botones del estado civil
-     * @param selected 
-     */
-    private void resetearRadios(){
-        rbnCasado.setSelected(false);
-        rbnDivorciado.setSelected(false);
-        rbnSoltero.setSelected(false);
-        rbnViudo.setSelected(false);
-    }
     
     /**
      * Metodo para llenar el combobox de las secretarias

@@ -12,13 +12,12 @@ import java.util.ArrayList;
  *
  * @author USER
  */
-public class ControladorCita {
-    private ArrayList<Cita> citas;
-    private ControladorDoctor controladorDoctor;
+public class ControladorCancelarCita {
     
-    public ControladorCita(){
+    private ArrayList<Cita> citas;
+
+    public ControladorCancelarCita() {
         citas = Singleton.getINSTANCIA().getCitas();
-        controladorDoctor = new ControladorDoctor();
     }
     
     /**
@@ -33,29 +32,28 @@ public class ControladorCita {
         }
         return null;
     }
-    
-    /**
-     * Metodo para añadir una cita al array general de las citas y a la agenda del respectivo doctor
-     * @param cita
-     * @return true si pudo añadirla, de lo contrario false;
-     */
-    public boolean añadirCita(Cita cita){
-        Cita aux = buscarCita(cita.getPaciente().getDocumento());
+
         
-        if(aux == null){
-            boolean verificada = controladorDoctor.verificarDisponibilidad(cita);
-            if( !verificada ){
-                getCitas().add(cita);
-                cita.getDoctor().getAgenda().add(cita);
-                cita.getPaciente().setHasCita(true);
-            }
+    /**
+     * Metodo para eliminar una cita de la agenda
+     * @param cita
+     * @return true si pudo eliminarla, de lo contrario false
+     */
+    public boolean eliminarCitaDeLaAgenda(Cita cita){
+        ArrayList<Cita> agenda = cita.getDoctor().getAgenda();
+        
+        for (int i = 0; i < agenda.size(); i++) {
+            if(agenda.get(i).getFecha().compareTo(cita.getFecha())==0){
+                agenda.remove(i);
+                Singleton.getINSTANCIA().escribirDoctores();
+                return true;
+            }      
         }
         
-        Singleton.getINSTANCIA().escribirCita();
-        return true;
+        return false;
     }
     
-    /**
+        /**
      * Metodo para eliminar una cita almacenada
      * @param documento
      * @return true si pudo eliminarla, de lo contrario false
@@ -66,10 +64,10 @@ public class ControladorCita {
         if( aux != null ){
             for (int i = 0; i < getCitas().size(); i++) {
                 if(getCitas().get(i).getPaciente().getDocumento().equals(documento)){
-                    if(controladorDoctor.eliminarCitaDeLaAgenda(getCitas().get(i))){
+                    if(eliminarCitaDeLaAgenda(getCitas().get(i))){
                         getCitas().get(i).getPaciente().setHasCita(false);
                         getCitas().remove(i);
-                        Singleton.getINSTANCIA().escribirCita();
+                        Singleton.getINSTANCIA().escribirCitas();
                         return true;                  
                     }
                 }
@@ -79,7 +77,8 @@ public class ControladorCita {
         
         return false;
     }
-
+    
+    
     /**
      * @return the citas
      */

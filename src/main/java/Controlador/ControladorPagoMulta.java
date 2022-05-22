@@ -12,11 +12,10 @@ import java.util.ArrayList;
  *
  * @author USER
  */
-public class ControladorMulta {
+public class ControladorPagoMulta {
+     private ArrayList<Multa> multas;
     
-    private ArrayList<Multa> multas;
-    
-    public ControladorMulta() {
+    public ControladorPagoMulta() {
         multas = Singleton.getINSTANCIA().getMultas();
     }
 
@@ -31,23 +30,6 @@ public class ControladorMulta {
             if(multa.getCita().getPaciente().getDocumento().equals(documento)) return multa;
         }
         return null;
-    }
-    
-    /**
-     * Metodo para añadir una multa al array general de las multas
-     * @param multa
-     * @return true si pudo añadirla, de lo contrario false;
-     */
-    public boolean añadirMulta(Multa multa){
-        Multa aux = buscarMulta(multa.getCita().getPaciente().getDocumento());
-        
-        if(aux == null){
-              multas.add(multa);
-              multa.getCita().getPaciente().setHasMulta(true);
-              return true;
-        }
-        
-        return false;
     }
     
     /**
@@ -77,5 +59,4 @@ public class ControladorMulta {
     public ArrayList<Multa> getMultas() {
         return multas;
     }
-    
 }

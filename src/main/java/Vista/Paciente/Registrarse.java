@@ -20,6 +20,7 @@ public class Registrarse extends javax.swing.JFrame {
 
     private ControladorPaciente controlador;
     private Validacion validacion;
+    
     /**
      * Creates new form Registrarse
      */

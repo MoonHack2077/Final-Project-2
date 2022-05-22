@@ -97,52 +97,7 @@ public class ControladorDoctor {
         return true;
     }
     
-    
-    /**
-     * Metodo para conocer la disponibiidad del doctor
-     * @param cita
-     * @return 
-     */
-    public boolean verificarDisponibilidad(Cita cita){
-        Date fecha = cita.getFecha();
-        
-        for (Cita date : cita.getDoctor().getAgenda()) {
-            if( date.getFecha().compareTo(fecha)==0 ) return true;
-        }
-        
-        return false;
-    }
-    
-    /**
-     * Metodo para eliminar una cita de la agenda
-     * @param cita
-     * @return true si pudo eliminarla, de lo contrario false
-     */
-    public boolean eliminarCitaDeLaAgenda(Cita cita){
-        ArrayList<Cita> agenda = cita.getDoctor().getAgenda();
-        
-        for (int i = 0; i < agenda.size(); i++) {
-            if(agenda.get(i).getFecha().compareTo(cita.getFecha())==0){
-                agenda.remove(i);
-                return true;
-            }      
-        }
-        
-        Singleton.getINSTANCIA().escribirDoctores();
-        return false;
-    }
-    
-    /**
-     * Metodo para validar que la fecha elegida para una cita no sea la misma que la que el doctor bloqueó
-     * @param doctor
-     * @param fecha
-     * @return true si la fecha elegida es la misma, de lo contrario false
-     */
-    public boolean validarFechaBloqueada(Doctor doctor, Date fecha){       
-        return doctor.getFechaBloqueada() != null && 
-               (doctor.getFechaBloqueada().compareTo(fecha)==0); 
-    }
-    
+
     /**
      * Metodo para que el doctor pueda bloquear una fecha
      * @return true si la fecha dada coincide con alguna cita agendada, de lo contrario false

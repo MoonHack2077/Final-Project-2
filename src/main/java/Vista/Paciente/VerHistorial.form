@@ -69,7 +69,7 @@
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jScrollPane1" min="-2" pref="351" max="-2" attributes="0"/>
-                              <Component id="cbxCitas" min="-2" pref="190" max="-2" attributes="0"/>
+                              <Component id="cbxCitas" min="-2" pref="300" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="0" pref="25" max="32767" attributes="0"/>
                       </Group>

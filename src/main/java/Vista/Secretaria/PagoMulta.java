@@ -4,7 +4,7 @@
  */
 package Vista.Secretaria;
 
-import Controlador.ControladorMulta;
+import Controlador.ControladorPagoMulta;
 import Modelo.Multa;
 import java.util.Date;
 import javax.swing.JOptionPane;
@@ -15,14 +15,14 @@ import javax.swing.JOptionPane;
  */
 public class PagoMulta extends javax.swing.JFrame {
 
-    private ControladorMulta controlador;
+    private ControladorPagoMulta controlador;
     /**
      * Creates new form PagoMulta
      */
     public PagoMulta() {
         initComponents();
         setLocationRelativeTo(null);
-        controlador = new ControladorMulta();
+        controlador = new ControladorPagoMulta();
         llenarComboMultas();
     }
 
@@ -268,8 +268,8 @@ public class PagoMulta extends javax.swing.JFrame {
         //Se verifica que la multa no sea nula
         if( multa != null ){
             txtDetalle.setText(multa.getCita().getFecha().toString() + "\n" +
-                    "Doctor: " + multa.getCita().getDoctor().toString() + "\n" +
-                    "Paciente: " + multa.getCita().getPaciente() + "- Documento:" + multa.getCita().getPaciente().getDocumento() + "\n\n"+
+                    "Doctor: " + multa.getCita().getDoctor() + "\n" +
+                    "Paciente: " + multa.getCita().getPaciente() + "\n\n"+
                    "Valos a pagar: " + multa.getValorTotal());
         }
     }//GEN-LAST:event_cbxMultasActionPerformed
