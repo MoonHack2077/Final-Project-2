@@ -4,6 +4,8 @@
  */
 package Vista.Cita;
 
+import Controlador.ControladorCita;
+import Controlador.ControladorDoctor;
 import Modelo.Cita;
 import Modelo.Doctor;
 import Modelo.Paciente;
@@ -19,6 +21,8 @@ import javax.swing.JOptionPane;
 public class SolicitarCita extends javax.swing.JFrame {
 
     private Singleton controlador;
+    private ControladorDoctor controladorDoctor;
+    private ControladorCita controladorCita;
     private javax.swing.JFrame vistaVolver;
     
     /**
@@ -28,6 +32,8 @@ public class SolicitarCita extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         controlador = Singleton.getINSTANCIA();
+        controladorCita = new ControladorCita();
+        controladorDoctor = new ControladorDoctor();
         this.vistaVolver = vistaVolver;
         llenarComboDoctores();
         llenarComboPacientes();
@@ -37,6 +43,10 @@ public class SolicitarCita extends javax.swing.JFrame {
     public SolicitarCita(VistaPaciente vistaVolver, Paciente paciente) {
         initComponents();
         setLocationRelativeTo(null);
+        controlador = Singleton.getINSTANCIA();
+        controladorCita = new ControladorCita();
+        controladorDoctor = new ControladorDoctor();
+        this.vistaVolver = vistaVolver;
         llenarComboDoctores();
         cbxPacientes.addItem(paciente);
     }
@@ -271,7 +281,7 @@ public class SolicitarCita extends javax.swing.JFrame {
         Cita cita = new Cita( paciente,doctor,fecha );
         
         /*** EXCEPCION ***/
-        boolean creada = controlador.añadirCita(cita);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+        boolean creada = controladorCita.añadirCita(cita);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
         if( creada ){
             JOptionPane.showMessageDialog(null, "Cita creada:\n " + 
                     cita.getFecha().toLocaleString() + "\n" +

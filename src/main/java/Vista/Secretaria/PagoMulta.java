@@ -4,8 +4,8 @@
  */
 package Vista.Secretaria;
 
+import Controlador.ControladorMulta;
 import Modelo.Multa;
-import Singleton.Singleton;
 import java.util.Date;
 import javax.swing.JOptionPane;
 
@@ -15,13 +15,14 @@ import javax.swing.JOptionPane;
  */
 public class PagoMulta extends javax.swing.JFrame {
 
-    private Singleton controlador;
+    private ControladorMulta controlador;
     /**
      * Creates new form PagoMulta
      */
     public PagoMulta() {
         initComponents();
         setLocationRelativeTo(null);
+        controlador = new ControladorMulta();
         llenarComboMultas();
     }
 

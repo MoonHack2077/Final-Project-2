@@ -4,6 +4,7 @@
  */
 package Vista.Doctor;
 
+import Controlador.ControladorDoctor;
 import Modelo.Doctor;
 import java.util.Date;
 import javax.swing.JOptionPane;
@@ -14,6 +15,7 @@ import javax.swing.JOptionPane;
  */
 public class BloquearFecha extends javax.swing.JFrame {
 
+    private ControladorDoctor controladorDoctor;
     private Doctor doctor;
     
     /**
@@ -22,6 +24,7 @@ public class BloquearFecha extends javax.swing.JFrame {
     public BloquearFecha(Doctor doctor) {
         initComponents();
         setLocationRelativeTo(null);
+        this.controladorDoctor = new ControladorDoctor();
         this.doctor = doctor;
     }
 

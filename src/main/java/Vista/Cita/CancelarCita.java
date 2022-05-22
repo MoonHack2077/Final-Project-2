@@ -4,6 +4,7 @@
  */
 package Vista.Cita;
 
+import Controlador.ControladorCita;
 import Modelo.Cita;
 import Modelo.Paciente;
 import javax.swing.JOptionPane;
@@ -14,6 +15,7 @@ import javax.swing.JOptionPane;
  */
 public class CancelarCita extends javax.swing.JFrame {
 
+    private ControladorCita controlador;
     private javax.swing.JFrame vistaVolver;
     /**
      * Creates new form CancelarCita
@@ -21,6 +23,7 @@ public class CancelarCita extends javax.swing.JFrame {
     public CancelarCita( javax.swing.JFrame vistaVolver) {
         initComponents();
         setLocationRelativeTo(null);
+        controlador = new ControladorCita();
         this.vistaVolver = vistaVolver;
         llenarComboCitas();
     }
@@ -30,6 +33,7 @@ public class CancelarCita extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         this.vistaVolver = vistaVolver;
+        controlador = new ControladorCita();
         
         //Cita cita = controlador.buscarCita(paciente.getDocumento());
         //cbxCitas.addItem(cita);

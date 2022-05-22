@@ -128,6 +128,7 @@ public class ControladorDoctor {
             }      
         }
         
+        Singleton.getINSTANCIA().escribirDoctores();
         return false;
     }
     
@@ -163,6 +164,7 @@ public class ControladorDoctor {
         
         //Una vez verificado que el dia no coincida, seteamos la fecha
         doctor.setFechaBloqueada(dia);
+        Singleton.getINSTANCIA().escribirDoctores();
         return false;
     }
     

@@ -4,7 +4,6 @@
  */
 package Vista.Paciente;
 
-import Controlador.ControladorHospital;
 import Modelo.Paciente;
 import Vista.Cita.CancelarCita;
 import Vista.Cita.SolicitarCita;
