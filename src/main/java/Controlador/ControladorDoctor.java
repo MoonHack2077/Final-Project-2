@@ -4,8 +4,11 @@
  */
 package Controlador;
 
+import Excepciones.MayorDeEdadExcepcion;
+import Excepciones.NoEncontradoExcepcion;
 import Modelo.Cita;
 import Modelo.Doctor;
+import Singleton.Singleton;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -14,7 +17,86 @@ import java.util.Date;
  * @author USER
  */
 public class ControladorDoctor {
-    public ControladorDoctor(){}
+    private ArrayList<Doctor> doctores;
+    private ControladorBusqueda controladorBusqueda;
+    
+    public ControladorDoctor(){
+        doctores = Singleton.getINSTANCIA().getDoctores();
+        controladorBusqueda = new ControladorBusqueda();
+    }
+    
+    /**
+     * 
+     * @param doctor
+     * @return
+     * @throws MayorDeEdadExcepcion 
+     */
+    public boolean añadirDoctor(Doctor doctor)throws MayorDeEdadExcepcion{
+        controladorBusqueda.buscarSecretaria(doctor.getDocumento(),doctor.getCorreo(), doctor.getContraseña(), doctor.getTelefono());
+        controladorBusqueda.buscarDoctor(doctor.getDocumento(),doctor.getCorreo(), doctor.getContraseña(), doctor.getTelefono());
+        controladorBusqueda.buscarPaciente(doctor.getDocumento(),doctor.getCorreo(), doctor.getContraseña(), doctor.getTelefono());
+        controladorBusqueda.buscarAdmin(doctor.getDocumento(),doctor.getCorreo(), doctor.getContraseña(), doctor.getTelefono());
+        
+        //Excepciones    
+        if( doctor.getEdad() < 18) throw new MayorDeEdadExcepcion();
+        
+        doctores.add(doctor);
+        Singleton.getINSTANCIA().escribirDoctores();
+        return true;       
+    }
+    
+    /**
+     * 
+     * @param documento
+     * @return
+     * @throws NoEncontradoExcepcion 
+     */
+    public boolean eliminarDoctor(String documento) throws NoEncontradoExcepcion{
+        Doctor aux = controladorBusqueda.buscarDoctor(documento);
+        
+        //Excepcion
+        if( aux == null ) throw new NoEncontradoExcepcion();
+        
+        for (int i = 0; i < doctores.size(); i++) {
+            if( doctores.get(i).getDocumento().equals(documento )){
+                doctores.remove(i);
+            }
+        }
+        
+        Singleton.getINSTANCIA().escribirDoctores();
+        return true;
+    }
+    
+    /**
+     * 
+     * @param doctor
+     * @return
+     * @throws NoEncontradoExcepcion
+     * @throws MayorDeEdadExcepcion 
+     */
+    public boolean editarDoctor(Doctor doctor) throws NoEncontradoExcepcion, MayorDeEdadExcepcion{
+        Doctor aux = controladorBusqueda.buscarDoctor(doctor.getDocumento());
+        
+        //Excepciones
+        if( aux == null ) throw new NoEncontradoExcepcion();
+        if( doctor.getEdad() < 18) throw new MayorDeEdadExcepcion();
+        
+        for(int i=0 ; i < doctores.size(); i++){
+            if( doctores.get(i).getDocumento().equals(doctor.getDocumento() )){
+                //Inyectando los nuevos valores
+                doctores.get(i).setNombre(doctor.getNombre());
+                doctores.get(i).setEdad(doctor.getEdad());
+                doctores.get(i).setContraseña(doctor.getContraseña());
+                doctores.get(i).setCorreo(doctor.getCorreo());
+                doctores.get(i).setEstadoCivil(doctor.getEstadoCivil());
+                doctores.get(i).setTelefono(doctor.getTelefono());
+            }
+        }
+        
+        Singleton.getINSTANCIA().escribirDoctores();
+        return true;
+    }
+    
     
     /**
      * Metodo para conocer la disponibiidad del doctor
@@ -92,5 +174,12 @@ public class ControladorDoctor {
         
         //Se planea usar  los metodos after y before de las fechas
         //agenda.sort();
+    }
+
+    /**
+     * @return the doctores
+     */
+    public ArrayList<Doctor> getDoctores() {
+        return doctores;
     }
 }

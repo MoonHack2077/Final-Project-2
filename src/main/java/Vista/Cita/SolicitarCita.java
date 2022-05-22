@@ -4,10 +4,10 @@
  */
 package Vista.Cita;
 
-import Controlador.ControladorDoctor;
 import Modelo.Cita;
 import Modelo.Doctor;
 import Modelo.Paciente;
+import Singleton.Singleton;
 import Vista.Paciente.VistaPaciente;
 import java.util.Date;
 import javax.swing.JOptionPane;
@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
  */
 public class SolicitarCita extends javax.swing.JFrame {
 
+    private Singleton controlador;
     private javax.swing.JFrame vistaVolver;
     
     /**
@@ -26,6 +27,7 @@ public class SolicitarCita extends javax.swing.JFrame {
     public SolicitarCita(javax.swing.JFrame vistaVolver) {
         initComponents();
         setLocationRelativeTo(null);
+        controlador = Singleton.getINSTANCIA();
         this.vistaVolver = vistaVolver;
         llenarComboDoctores();
         llenarComboPacientes();

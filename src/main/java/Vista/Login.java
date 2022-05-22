@@ -4,7 +4,6 @@
  */
 package Vista;
 
-import Controlador.ControladorHospital;
 import Controlador.ControladorLogin;
 import Excepciones.NoEncontradoExcepcion;
 import Modelo.Admin;
@@ -34,11 +33,6 @@ public class Login extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.controlador = new ControladorLogin();
         controlador.añadirAdmin();
-    }
-    public Login(ControladorLogin controlador){
-        initComponents();
-        this.setLocationRelativeTo(null);
-        this.controlador = controlador;
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -157,6 +151,8 @@ public class Login extends javax.swing.JFrame {
             //Obtenemos los datos
             String correo = txtCorreo.getText();
             String contraseña = txtContraseña.getText();
+            
+            //Buscamos entre todos los usuarios la coincidencia
             Admin admin = controlador.buscarAdmin(correo, contraseña);
             Doctor doctor = controlador.buscarDoctor(correo, contraseña);
             Secretaria secretaria = controlador.buscarSecretaria(correo, contraseña);
@@ -191,7 +187,7 @@ public class Login extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-        Registrarse registrarse = new Registrarse(controlador);
+        Registrarse registrarse = new Registrarse();
         registrarse.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnRegistrarActionPerformed

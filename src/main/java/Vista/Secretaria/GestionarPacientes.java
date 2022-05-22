@@ -4,6 +4,7 @@
  */
 package Vista.Secretaria;
 
+import Controlador.ControladorPaciente;
 import Excepciones.AlmacenadoExcepcion;
 import Excepciones.MayorDeEdadExcepcion;
 import Excepciones.NoEncontradoExcepcion;
@@ -18,6 +19,7 @@ import javax.swing.JRadioButton;
  */
 public class GestionarPacientes extends javax.swing.JFrame {
 
+    private ControladorPaciente controlador;
     private Validacion validacion;
     /**
      * Creates new form GestionarPacientes
@@ -25,6 +27,7 @@ public class GestionarPacientes extends javax.swing.JFrame {
     public GestionarPacientes() {
         initComponents();
         setLocationRelativeTo(null);
+        this.controlador = new ControladorPaciente();
         this.validacion = new Validacion();
         setEnabledInputs(false);
         llenarComboPacientes();
@@ -433,7 +436,7 @@ public class GestionarPacientes extends javax.swing.JFrame {
             Paciente paciente = (Paciente) cbxPacientes.getSelectedItem();
 
             //Se elimina al paciente
-            controlador.eliminarPaciente(paciente.getDocumento(), paciente.getCorreo(), paciente.getContraseña(),paciente.getTelefono());
+            controlador.eliminarPaciente(paciente.getDocumento());
             JOptionPane.showMessageDialog(null, "Se eliminó el paciente con documento " + paciente.getDocumento());
             limpiarInputs();
             llenarComboPacientes();

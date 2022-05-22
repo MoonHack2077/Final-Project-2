@@ -4,6 +4,7 @@
  */
 package Vista.Paciente;
 
+import Controlador.ControladorPaciente;
 import Excepciones.AlmacenadoExcepcion;
 import Excepciones.MayorDeEdadExcepcion;
 import Modelo.Paciente;
@@ -17,6 +18,7 @@ import javax.swing.JOptionPane;
  */
 public class Registrarse extends javax.swing.JFrame {
 
+    private ControladorPaciente controlador;
     private Validacion validacion;
     /**
      * Creates new form Registrarse
@@ -24,6 +26,7 @@ public class Registrarse extends javax.swing.JFrame {
     public Registrarse() {
         initComponents();
         setLocationRelativeTo(null);
+        this.controlador = new ControladorPaciente();
         this.validacion = new Validacion();
         
         //Se añaden los botones de EPS Y SISBEN al radioGroup de salud

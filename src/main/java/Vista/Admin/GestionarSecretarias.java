@@ -4,6 +4,7 @@
  */
 package Vista.Admin;
 
+import Controlador.ControladorSecretaria;
 import Excepciones.AlmacenadoExcepcion;
 import Excepciones.MayorDeEdadExcepcion;
 import Excepciones.NoEncontradoExcepcion;
@@ -18,6 +19,7 @@ import javax.swing.JRadioButton;
  */
 public class GestionarSecretarias extends javax.swing.JFrame {
 
+    private ControladorSecretaria controlador;
     private Validacion validacion;
     /**
      * Creates new form GestionarSecretarias
@@ -25,6 +27,7 @@ public class GestionarSecretarias extends javax.swing.JFrame {
     public GestionarSecretarias() {
         initComponents();
         this.setLocationRelativeTo(null);
+        this.controlador = new ControladorSecretaria();
         this.validacion = new Validacion();
         setEnabledInputs(false);
         llenarComboSecretarias();
@@ -403,7 +406,7 @@ public class GestionarSecretarias extends javax.swing.JFrame {
             }
             Secretaria secretaria = (Secretaria) cbxSecretarias.getSelectedItem();
 
-            controlador.eliminarSecretaria(secretaria.getDocumento(), secretaria.getCorreo(), secretaria.getContraseña(),secretaria.getTelefono());
+            controlador.eliminarSecretaria(secretaria.getDocumento());
             JOptionPane.showMessageDialog(null, "Secretaria con el documento: " + secretaria.getDocumento() + " eliminado");
             limpiarInputs();
             llenarComboSecretarias();

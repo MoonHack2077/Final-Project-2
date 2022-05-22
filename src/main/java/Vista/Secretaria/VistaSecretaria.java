@@ -23,6 +23,7 @@ public class VistaSecretaria extends javax.swing.JFrame {
     public VistaSecretaria() {
         initComponents();
         setLocationRelativeTo(null);
+        controlador = Singleton.getINSTANCIA(); 
         
         if( controlador.getDoctores().isEmpty() || controlador.getPacientes().isEmpty() ) btnAgregarCita.setEnabled(false);
         if( controlador.getCitas().isEmpty() ) btnCancelarCita.setEnabled(false);

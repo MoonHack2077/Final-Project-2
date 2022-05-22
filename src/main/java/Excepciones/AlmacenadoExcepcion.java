@@ -9,7 +9,7 @@ package Excepciones;
  * @author USER
  */
 public class AlmacenadoExcepcion extends RuntimeException {
-    public AlmacenadoExcepcion(){
-        super("El usuario ya se encentra almacenado");
+    public AlmacenadoExcepcion(String cosa){
+        super( cosa + " ya se encentra almacenado");
     }  
 }

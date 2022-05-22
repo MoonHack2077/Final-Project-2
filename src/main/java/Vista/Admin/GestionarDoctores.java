@@ -4,6 +4,7 @@
  */
 package Vista.Admin;
 
+import Controlador.ControladorDoctor;
 import Excepciones.AlmacenadoExcepcion;
 import Excepciones.MayorDeEdadExcepcion;
 import Excepciones.NoEncontradoExcepcion;
@@ -18,6 +19,7 @@ import javax.swing.JRadioButton;
  */
 public class GestionarDoctores extends javax.swing.JFrame {
 
+    private ControladorDoctor controlador;
     private Validacion validacion;
     
     /**
@@ -26,6 +28,7 @@ public class GestionarDoctores extends javax.swing.JFrame {
     public GestionarDoctores() {
         initComponents();
         this.setLocationRelativeTo(null);
+        this.controlador = new ControladorDoctor();
         this.validacion = new Validacion();
         setEnabledInputs(false);
         llenarComboDoctores();
@@ -389,7 +392,7 @@ public class GestionarDoctores extends javax.swing.JFrame {
             Doctor doctor = (Doctor) cbxDoctores.getSelectedItem();
 
             //Verificamos se se elimina el empleado
-            controlador.eliminarDoctor(doctor.getDocumento(), doctor.getCorreo(), doctor.getContraseña(), doctor.getTelefono());
+            controlador.eliminarDoctor(doctor.getDocumento());
             JOptionPane.showMessageDialog(null, "Doctor con el documento: " + doctor.getDocumento() + " eliminado");
             limpiarInputs();
             llenarComboDoctores();
@@ -446,7 +449,7 @@ public class GestionarDoctores extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-        VistaAdmin admin = new VistaAdmin(controlador);
+        VistaAdmin admin = new VistaAdmin();
         admin.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnVolverActionPerformed
