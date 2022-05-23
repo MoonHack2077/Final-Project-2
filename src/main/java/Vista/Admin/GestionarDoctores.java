@@ -466,6 +466,7 @@ public class GestionarDoctores extends javax.swing.JFrame {
      */
     private void txtNombre2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombre2KeyTyped
         validacion.soloLetras(evt);
+
     }//GEN-LAST:event_txtNombre2KeyTyped
 
     /**

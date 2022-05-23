@@ -145,9 +145,6 @@ public class Login extends javax.swing.JFrame {
      */
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
         try{
-            //Validar que no hayan campos vacios
-            //no olvidar el return
-            
             //Obtenemos los datos
             String correo = txtCorreo.getText();
             String contraseña = txtContraseña.getText();

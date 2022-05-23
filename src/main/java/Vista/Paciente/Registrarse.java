@@ -132,6 +132,12 @@ public class Registrarse extends javax.swing.JFrame {
             }
         });
 
+        txtTelefono.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTelefonoKeyTyped(evt);
+            }
+        });
+
         rbnDivorciado.setText("Divorciado");
 
         jLabel2.setText("Documento: ");
@@ -280,6 +286,16 @@ public class Registrarse extends javax.swing.JFrame {
      */
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         try{
+            // se validan los campos
+            if(
+               txtNombre2.getText().isBlank() ||  txtDocumento.getText().isBlank() 
+                    || txtEdad.getText().isBlank() || txtCorreo.getText().isBlank() 
+                    || txtContraseña.getText().isBlank() || txtTelefono.getText().isBlank()
+             ){
+                JOptionPane.showMessageDialog(null, "Faltan campos por llenar");
+                return;
+            }
+
             //Obteniendo los datos del paciente
             String nombre = txtNombre2.getText();
             String documento = txtDocumento.getText();
@@ -316,9 +332,9 @@ public class Registrarse extends javax.swing.JFrame {
         login.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnVolverActionPerformed
-
+   
     /**
-     * 
+     * Metodo para que el usuario solo digite letras en el textField del nombre
      * @param evt 
      */
     private void txtNombre2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombre2KeyTyped
@@ -326,7 +342,7 @@ public class Registrarse extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNombre2KeyTyped
 
     /**
-     * 
+     * Metodo para que el usuario solo digite numeros en el textField del documento
      * @param evt 
      */
     private void txtDocumentoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDocumentoKeyTyped
@@ -334,7 +350,7 @@ public class Registrarse extends javax.swing.JFrame {
     }//GEN-LAST:event_txtDocumentoKeyTyped
 
     /**
-     * 
+     * Metodo para que el usuario solo digite numeros en el textField de la edad
      * @param evt 
      */
     private void txtEdadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEdadKeyTyped
@@ -355,6 +371,14 @@ public class Registrarse extends javax.swing.JFrame {
         salud.clearSelection();
         estadosCiviles.clearSelection();
     }//GEN-LAST:event_btnLimpiarActionPerformed
+    
+    /**
+     * Metodo para que el usuario solo digite numeros en el textField del telefono
+     * @param evt 
+     */
+    private void txtTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyTyped
+        validacion.soloNumeros(evt);
+    }//GEN-LAST:event_txtTelefonoKeyTyped
 
     /**
      * Metodo para redireccionar al usuario a la ventana con sus opciones

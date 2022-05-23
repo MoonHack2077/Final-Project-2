@@ -6,9 +6,9 @@ package Vista.Secretaria;
 
 import Controlador.ControladorPagoMulta;
 import Modelo.Multa;
+import Modelo.Validacion;
 import java.util.Date;
 import javax.swing.JOptionPane;
-
 /**
  *
  * @author USER
@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 public class PagoMulta extends javax.swing.JFrame {
 
     private ControladorPagoMulta controlador;
+    private Validacion validacion;
     /**
      * Creates new form PagoMulta
      */
@@ -23,6 +24,7 @@ public class PagoMulta extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         controlador = new ControladorPagoMulta();
+        this.validacion = new Validacion();
         llenarComboMultas();
     }
 
@@ -70,13 +72,29 @@ public class PagoMulta extends javax.swing.JFrame {
             }
         });
 
+        txtTotal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTotalActionPerformed(evt);
+            }
+        });
+
         jLabel1.setText("Ingrese el total a pagar");
 
         jLabel3.setText("Ingrese la fecha del pago:");
 
         cbxDia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dia", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
+        cbxDia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxDiaActionPerformed(evt);
+            }
+        });
 
         cbxMes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mes", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
+        cbxMes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxMesActionPerformed(evt);
+            }
+        });
 
         txtAñoCita.setText("AÑO");
         txtAñoCita.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -85,6 +103,16 @@ public class PagoMulta extends javax.swing.JFrame {
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtAñoCitaFocusLost(evt);
+            }
+        });
+        txtAñoCita.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtAñoCitaActionPerformed(evt);
+            }
+        });
+        txtAñoCita.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtAñoCitaKeyTyped(evt);
             }
         });
 
@@ -199,7 +227,7 @@ public class PagoMulta extends javax.swing.JFrame {
     private void btnPagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagarActionPerformed
         //Validacion necesaria por si en algun combobox se selecciona un elemento que no corresponde 
         if( cbxDia.getSelectedIndex() == 0 || cbxMes.getSelectedIndex() == 0  || 
-                txtAñoCita.getText().equals("AÑO"))
+                txtAñoCita.getText().equals("AÑO") || txtAñoCita.getText().isBlank() )
         {
             JOptionPane.showMessageDialog(null, "Faltan campos por seleccionar");
             return;
@@ -293,6 +321,38 @@ public class PagoMulta extends javax.swing.JFrame {
             txtAñoCita.setText("AÑO");
         }
     }//GEN-LAST:event_txtAñoCitaFocusLost
+     
+     /**
+     * Metodo para que el usuario solo digite numeros en el textField años citas
+     * @param evt 
+     */
+    private void txtAñoCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAñoCitaActionPerformed
+        // TODO add your handling code here:
+    
+    }//GEN-LAST:event_txtAñoCitaActionPerformed
+    /**
+     * Metodo para que el usuario solo digite numeros en el textField total
+     * @param evt 
+     */
+    private void txtTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTotalActionPerformed
+      
+    }//GEN-LAST:event_txtTotalActionPerformed
+
+    private void cbxMesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxMesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbxMesActionPerformed
+
+    private void cbxDiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxDiaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbxDiaActionPerformed
+    
+    /**
+     * Metodo para que el usuario solo digite numeros en el textField del año cita
+     * @param evt 
+     */
+    private void txtAñoCitaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAñoCitaKeyTyped
+        validacion.soloNumeros(evt);
+    }//GEN-LAST:event_txtAñoCitaKeyTyped
 
     /**
      * Metodo que se encarga de llenar el combobox con los pacientes para ser seleccionados

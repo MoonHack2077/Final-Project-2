@@ -146,7 +146,7 @@ public class VistaPaciente extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnSolicitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSolicitarActionPerformed
-        SolicitarCita cita = new SolicitarCita(this, paciente);
+        Solicitar cita = new Solicitar(paciente);
         cambiarVentana(cita);
     }//GEN-LAST:event_btnSolicitarActionPerformed
 
@@ -164,7 +164,7 @@ public class VistaPaciente extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        CancelarCita cancelar = new CancelarCita(this, paciente);
+        Cancelar cancelar = new Cancelar(paciente);
         cambiarVentana(cancelar);
     }//GEN-LAST:event_btnCancelarActionPerformed
 

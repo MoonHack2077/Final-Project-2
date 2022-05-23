@@ -27,25 +27,25 @@ public class VistaAdmin extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnDoctores = new javax.swing.JButton();
+        btnSecretarias = new javax.swing.JButton();
         btnVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "OPCIONES DE ADMINISTRADOR", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 
-        jButton1.setText("GESTIONAR DOCTORES");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnDoctores.setText("GESTIONAR DOCTORES");
+        btnDoctores.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnDoctoresActionPerformed(evt);
             }
         });
 
-        jButton2.setText("GESTIONAR SECRETARIAS");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnSecretarias.setText("GESTIONAR SECRETARIAS");
+        btnSecretarias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnSecretariasActionPerformed(evt);
             }
         });
 
@@ -56,17 +56,17 @@ public class VistaAdmin extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2))
+                    .addComponent(btnDoctores, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSecretarias))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addComponent(jButton1)
+                .addComponent(btnDoctores)
                 .addGap(32, 32, 32)
-                .addComponent(jButton2)
+                .addComponent(btnSecretarias)
                 .addContainerGap(21, Short.MAX_VALUE))
         );
 
@@ -119,19 +119,19 @@ public class VistaAdmin extends javax.swing.JFrame {
      * Metodo que maneja el evento del boton de Gestionar doctores para abrir su respectiva ventana
      * @param evt 
      */
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnDoctoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoctoresActionPerformed
         GestionarDoctores doctores = new GestionarDoctores();
         cambiarVentana(doctores);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnDoctoresActionPerformed
 
     /**
      * Metodo que maneja el evento del boton de Gestionar secretarias para abrir su respectiva ventana
      * @param evt 
      */
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnSecretariasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSecretariasActionPerformed
         GestionarSecretarias secretarias = new GestionarSecretarias();
         cambiarVentana(secretarias);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnSecretariasActionPerformed
 
     /**
      * Metodo que maneja el evento del boton de volver para retroceder a la ventana principal
@@ -144,9 +144,9 @@ public class VistaAdmin extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnDoctores;
+    private javax.swing.JButton btnSecretarias;
     private javax.swing.JButton btnVolver;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

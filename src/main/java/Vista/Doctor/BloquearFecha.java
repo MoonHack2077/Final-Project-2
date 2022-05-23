@@ -6,8 +6,10 @@ package Vista.Doctor;
 
 import Controlador.ControladorDoctor;
 import Modelo.Doctor;
+import Modelo.Validacion;
 import java.util.Date;
 import javax.swing.JOptionPane;
+
 
 /**
  *
@@ -17,6 +19,7 @@ public class BloquearFecha extends javax.swing.JFrame {
 
     private ControladorDoctor controladorDoctor;
     private Doctor doctor;
+    private Validacion validacion;
     
     /**
      * Creates new form BloqeuarFecha
@@ -26,6 +29,7 @@ public class BloquearFecha extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         this.controladorDoctor = new ControladorDoctor();
         this.doctor = doctor;
+        this.validacion = new Validacion();
     }
 
     /**
@@ -69,6 +73,11 @@ public class BloquearFecha extends javax.swing.JFrame {
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtAñoCitaFocusLost(evt);
+            }
+        });
+        txtAñoCita.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtAñoCitaKeyTyped(evt);
             }
         });
 
@@ -225,6 +234,14 @@ public class BloquearFecha extends javax.swing.JFrame {
         vistaDoctor.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnVolverActionPerformed
+
+   /**
+     * Metodo para que el usuario solo digite numeros en el textField del Año
+     * @param evt 
+     */
+    private void txtAñoCitaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAñoCitaKeyTyped
+      validacion.soloNumeros(evt);
+    }//GEN-LAST:event_txtAñoCitaKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
