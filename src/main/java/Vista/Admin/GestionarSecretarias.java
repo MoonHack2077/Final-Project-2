@@ -331,7 +331,7 @@ public class GestionarSecretarias extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     /**
-     * 
+     * Metodo para que el usuario solo digite letras en el textField del nombre
      * @param evt 
      */
     private void txtNombre2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombre2KeyTyped
@@ -339,7 +339,7 @@ public class GestionarSecretarias extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNombre2KeyTyped
 
     /**
-     * 
+     * Metodo para que el usuario solo digite numeros en el textField del documento
      * @param evt 
      */
     private void txtDocumentoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDocumentoKeyTyped
@@ -347,7 +347,7 @@ public class GestionarSecretarias extends javax.swing.JFrame {
     }//GEN-LAST:event_txtDocumentoKeyTyped
 
     /**
-     * 
+     * Metodo que maneja el evento del boton de añadir para ejecutar su accion
      * @param evt 
      */
     private void btnAñadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirActionPerformed
@@ -387,7 +387,7 @@ public class GestionarSecretarias extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAñadirActionPerformed
 
     /**
-     * 
+     * Metodo que maneja el evento del boton de eliminar para ejecutar su accion
      * @param evt 
      */
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
@@ -410,7 +410,7 @@ public class GestionarSecretarias extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     /**
-     * 
+     * Metodo que maneja el evento del boton de editar para ejecutar su accion
      * @param evt 
      */
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
@@ -451,7 +451,7 @@ public class GestionarSecretarias extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEditarActionPerformed
 
     /**
-     * 
+     * Metodo para que el usuario solo digite numeros en el textField del edad
      * @param evt 
      */
     private void txtEdadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEdadKeyTyped

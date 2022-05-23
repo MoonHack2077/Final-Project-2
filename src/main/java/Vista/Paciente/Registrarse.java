@@ -24,6 +24,8 @@ public class Registrarse extends javax.swing.JFrame {
      * Creates new form Registrarse
      */
     public Registrarse(ControladorHospital controlador) {
+        
+        
         initComponents();
         setLocationRelativeTo(null);
         this.controlador = controlador;
@@ -91,6 +93,11 @@ public class Registrarse extends javax.swing.JFrame {
 
         jLabel5.setText("Correo:");
 
+        txtNombre2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNombre2ActionPerformed(evt);
+            }
+        });
         txtNombre2.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtNombre2KeyTyped(evt);
@@ -99,8 +106,19 @@ public class Registrarse extends javax.swing.JFrame {
 
         rbnCasado.setText("Casada");
 
+        txtCorreo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCorreoActionPerformed(evt);
+            }
+        });
+
         jLabel4.setText("Edad:");
 
+        txtDocumento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDocumentoActionPerformed(evt);
+            }
+        });
         txtDocumento.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtDocumentoKeyTyped(evt);
@@ -111,6 +129,11 @@ public class Registrarse extends javax.swing.JFrame {
 
         jLabel6.setText("Contraseña:");
 
+        txtEdad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtEdadActionPerformed(evt);
+            }
+        });
         txtEdad.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtEdadKeyTyped(evt);
@@ -127,6 +150,17 @@ public class Registrarse extends javax.swing.JFrame {
         btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLimpiarActionPerformed(evt);
+            }
+        });
+
+        txtTelefono.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTelefonoActionPerformed(evt);
+            }
+        });
+        txtTelefono.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTelefonoKeyTyped(evt);
             }
         });
 
@@ -278,6 +312,14 @@ public class Registrarse extends javax.swing.JFrame {
      */
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         try{
+            // se validan los campos
+            if(
+               txtNombre2.getText().isBlank() ||  txtDocumento.getText().isBlank() || txtEdad.getText().isBlank()
+               || txtCorreo.getText.isBlank() || txtContraseña.getText().isBlank() || txtTelefono.getText().isBlank()
+             ){
+                return;
+            }
+
             //Obteniendo los datos del paciente
             String nombre = txtNombre2.getText();
             String documento = txtDocumento.getText();
@@ -314,15 +356,25 @@ public class Registrarse extends javax.swing.JFrame {
         login.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnVolverActionPerformed
-
+    
+    /**
+     * Metodo para que el usuario solo digite letras en el textField del nombre
+     * @param evt 
+     */
     private void txtNombre2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombre2KeyTyped
         validacion.soloLetras(evt);
     }//GEN-LAST:event_txtNombre2KeyTyped
-
+    /**
+     * Metodo para que el usuario solo digite numeros en el textField del documento
+     * @param evt 
+     */
     private void txtDocumentoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDocumentoKeyTyped
         validacion.soloNumeros(evt);
     }//GEN-LAST:event_txtDocumentoKeyTyped
-
+    /**
+     * Metodo para que el usuario solo digite numeros en el textField de la edad
+     * @param evt 
+     */
     private void txtEdadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEdadKeyTyped
         validacion.soloNumeros(evt);
     }//GEN-LAST:event_txtEdadKeyTyped
@@ -345,6 +397,34 @@ public class Registrarse extends javax.swing.JFrame {
         rbnSoltero.setSelected(false);
         rbnViudo.setSelected(false);
     }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void txtCorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCorreoActionPerformed
+        
+    }//GEN-LAST:event_txtCorreoActionPerformed
+
+    private void txtTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelefonoActionPerformed
+       
+    }//GEN-LAST:event_txtTelefonoActionPerformed
+
+    private void txtNombre2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombre2ActionPerformed
+      
+    }//GEN-LAST:event_txtNombre2ActionPerformed
+
+    private void txtDocumentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDocumentoActionPerformed
+      
+    }//GEN-LAST:event_txtDocumentoActionPerformed
+
+    private void txtEdadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEdadActionPerformed
+        
+    }//GEN-LAST:event_txtEdadActionPerformed
+    
+    /**
+     * Metodo para que el usuario solo digite numeros en el textField del telefono
+     * @param evt 
+     */
+    private void txtTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyTyped
+        validacion.soloNumeros(evt);
+    }//GEN-LAST:event_txtTelefonoKeyTyped
 
     /**
      * Metodo para redireccionar al usuario a la ventana con sus opciones

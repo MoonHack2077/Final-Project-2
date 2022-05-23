@@ -384,7 +384,7 @@ public class GestionarDoctores extends javax.swing.JFrame {
             }
             Doctor doctor = (Doctor) cbxDoctores.getSelectedItem();
 
-            //Verificamos se se elimina el empleado
+            //Verificamos si se elimina el empleado
             controlador.eliminarDoctor(doctor.getDocumento(), doctor.getCorreo(), doctor.getContraseña());
             JOptionPane.showMessageDialog(null, "Doctor con el documento: " + doctor.getDocumento() + " eliminado");
             limpiarInputs();
@@ -463,6 +463,7 @@ public class GestionarDoctores extends javax.swing.JFrame {
      */
     private void txtNombre2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombre2KeyTyped
         validacion.soloLetras(evt);
+
     }//GEN-LAST:event_txtNombre2KeyTyped
 
     /**

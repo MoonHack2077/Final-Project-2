@@ -7,8 +7,10 @@ package Vista.Doctor;
 import Controlador.ControladorDoctor;
 import Controlador.ControladorHospital;
 import Modelo.Doctor;
+import Modelo.Validacion;
 import java.util.Date;
 import javax.swing.JOptionPane;
+
 
 /**
  *
@@ -19,6 +21,7 @@ public class BloquearFecha extends javax.swing.JFrame {
     private ControladorDoctor controladorDoctor;
     private ControladorHospital controlador;
     private Doctor doctor;
+    private Validacion validacion;
     
     /**
      * Creates new form BloqeuarFecha
@@ -29,6 +32,7 @@ public class BloquearFecha extends javax.swing.JFrame {
         this.doctor = doctor;
         this.controlador = controlador;
         this.controladorDoctor = new ControladorDoctor();
+        this.validacion = new Validacion();
     }
 
     /**
@@ -72,6 +76,16 @@ public class BloquearFecha extends javax.swing.JFrame {
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtAñoCitaFocusLost(evt);
+            }
+        });
+        txtAñoCita.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtAñoCitaActionPerformed(evt);
+            }
+        });
+        txtAñoCita.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtAñoCitaKeyTyped(evt);
             }
         });
 
@@ -228,6 +242,20 @@ public class BloquearFecha extends javax.swing.JFrame {
         vistaDoctor.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnVolverActionPerformed
+    /**
+     * Metodo que permite al usuario digitar solo numeros en el Textfield de AñoCita
+     * @param evt 
+     */
+    private void txtAñoCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAñoCitaActionPerformed
+   
+    }//GEN-LAST:event_txtAñoCitaActionPerformed
+    /**
+     * Metodo para que el usuario solo digite numeros en el textField del Año
+     * @param evt 
+     */
+    private void txtAñoCitaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAñoCitaKeyTyped
+      validacion.soloNumeros(evt);
+    }//GEN-LAST:event_txtAñoCitaKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

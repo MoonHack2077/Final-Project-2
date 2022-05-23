@@ -105,6 +105,11 @@ public class GestionarPacientes extends javax.swing.JFrame {
             }
         });
 
+        txtNombre2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNombre2ActionPerformed(evt);
+            }
+        });
         txtNombre2.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtNombre2KeyTyped(evt);
@@ -125,6 +130,12 @@ public class GestionarPacientes extends javax.swing.JFrame {
         });
 
         jLabel4.setText("Edad:");
+
+        txtTelefono.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTelefonoKeyTyped(evt);
+            }
+        });
 
         txtDocumento.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -343,9 +354,15 @@ public class GestionarPacientes extends javax.swing.JFrame {
      */
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         try{
-            //Validar campos vacios
-            //no olvidar añadir el return
-            
+         //Se validan los campos
+            if(
+                txtNombre2.getText().isBlank() || txtDocumento.getText().isBlank() || txtEdad.getText().isBlank() 
+                        || txtCorreo.getText().isBlank() || txtContraseña.getText().isBlank() 
+                        ||  txtTelefono.getText().isBlank()){
+                      JOptionPane.showMessageDialog(null, "Faltan campos por llenar");
+                
+                        return;
+            }
             //Obteniendo los datos del paciente
             String nombre = txtNombre2.getText();
             String documento = txtDocumento.getText();
@@ -391,9 +408,15 @@ public class GestionarPacientes extends javax.swing.JFrame {
      */
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         try{
-            //Validar campos vacios
-            //no olvidar añadir el return
-            
+             //Se validan los campos
+               if(
+                     txtNombre2.getText().isBlank() || txtDocumento.getText().isBlank() || txtEdad.getText().isBlank() 
+                     || txtCorreo.getText().isBlank() || txtContraseña.getText().isBlank() 
+                     ||  txtTelefono.getText().isBlank()){
+                     JOptionPane.showMessageDialog(null, "Faltan campos por llenar");
+                
+                        return;
+            }
             //Obteniendo los datos del paciente
             String nombre = txtNombre2.getText();
             String documento = txtDocumento.getText();
@@ -446,8 +469,9 @@ public class GestionarPacientes extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
-    /**
-     * 
+   /**
+     * Metodo para que el usuario solo digite letras en el textField del nombre
+     *
      * @param evt 
      */
     private void txtNombre2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombre2KeyTyped
@@ -455,7 +479,7 @@ public class GestionarPacientes extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNombre2KeyTyped
 
     /**
-     * 
+     * Limpiar campos
      * @param evt 
      */
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
@@ -463,7 +487,7 @@ public class GestionarPacientes extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     /**
-     * 
+     * Metodo para que el usuario solo digite numeros en el textField del Documento
      * @param evt 
      */
     private void txtDocumentoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDocumentoKeyTyped
@@ -471,7 +495,7 @@ public class GestionarPacientes extends javax.swing.JFrame {
     }//GEN-LAST:event_txtDocumentoKeyTyped
 
     /**
-     * 
+     * Metodo para que el usuario solo digite numeros en el textField del edad
      * @param evt 
      */
     private void txtEdadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEdadKeyTyped
@@ -544,6 +568,17 @@ public class GestionarPacientes extends javax.swing.JFrame {
             setEnabledInputs(true);
         }
     }//GEN-LAST:event_cbxPacientesActionPerformed
+
+    private void txtNombre2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombre2ActionPerformed
+   
+    }//GEN-LAST:event_txtNombre2ActionPerformed
+     /**
+     * Metodo para que el usuario solo digite numeros en el textField de telefono
+     * @param evt 
+     */
+    private void txtTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyTyped
+        validacion.soloNumeros(evt);
+    }//GEN-LAST:event_txtTelefonoKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

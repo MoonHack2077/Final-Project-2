@@ -4,6 +4,8 @@
  */
 package Modelo;
 
+
+
 /**
  *
  * @author USER
@@ -40,4 +42,6 @@ public class Validacion {
         //El 127 corresponde a la tecla de eliminar y esa si debe permitirse en los textFields
         if( (caractera != 127) && (caracter<'0' || caracter>'9') ) evt.consume();
     }
+
+   
 }
