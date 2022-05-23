@@ -4,17 +4,30 @@
  */
 package Vista.Paciente;
 
+import Controlador.ControladorCancelarCita;
+import Modelo.Cita;
+import Modelo.Paciente;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author USER
  */
 public class Cancelar extends javax.swing.JFrame {
 
+
+    private Paciente paciente;
+    private ControladorCancelarCita controlador; 
+    
     /**
      * Creates new form Cancelar
      */
-    public Cancelar() {
+    public Cancelar(Paciente paciente) {
         initComponents();
+        controlador = new ControladorCancelarCita();
+        Cita cita = controlador.buscarCita(paciente.getDocumento());
+        this.paciente = paciente;
+        cbxCitas.addItem(cita);
     }
 
     /**
@@ -37,12 +50,6 @@ public class Cancelar extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "CANCELAR CITA", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
-
-        cbxCitas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbxCitasActionPerformed(evt);
-            }
-        });
 
         btnCancelar.setText("CANCELAR CITA");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -120,29 +127,7 @@ public class Cancelar extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cbxCitasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxCitasActionPerformed
-        //Si el primer elemento esta seleccionado, no es válido
-        //por lo tanto se muestra ese aviso
-        if( cbxCitas.getSelectedItem() != null && cbxCitas.getSelectedItem().equals("Seleccione una cita")) {
-            txtDetalleCita.setText("Ninguna cita seleccionada");
-            return;
-        }
-        Cita cita = (Cita) cbxCitas.getSelectedItem();
-        //Se verifica que la cita no sea nula
-        if( cita != null ){
-            txtDetalleCita.setText("Cita creada:\n " +
-                cita.getFecha().toLocaleString() + "\n" +
-                cita.toString());
-        }
-    }//GEN-LAST:event_cbxCitasActionPerformed
-
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        //El primer elemento no es válido
-        if( cbxCitas.getSelectedItem().equals("Seleccione una cita")){
-            JOptionPane.showMessageDialog(null, "Cita no válida");
-            return;
-        }
-
         //Obtenemos al paciente
         Cita cita = (Cita) cbxCitas.getSelectedItem();
 
@@ -154,52 +139,22 @@ public class Cancelar extends javax.swing.JFrame {
             boolean cancelada = controlador.eliminarCita(cita.getPaciente().getDocumento());
             if( cancelada ){
                 JOptionPane.showMessageDialog(null, "Cita cancelada");
-                resetearCampos();
             }else{
                 JOptionPane.showMessageDialog(null, "No se pudo cancelar la cita");
             }
         }
     }//GEN-LAST:event_btnCancelarActionPerformed
 
+    /**
+     * 
+     * @param evt 
+     */
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-        vistaVolver.setVisible(true);
+        VistaPaciente vista = new VistaPaciente(paciente);
+        vista.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnVolverActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Cancelar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Cancelar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Cancelar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Cancelar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Cancelar().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;

@@ -5,8 +5,6 @@
 package Vista.Secretaria;
 
 import Singleton.Singleton;
-import Vista.Cita.CancelarCita;
-import Vista.Cita.SolicitarCita;
 import Vista.Login;
 
 /**
@@ -158,7 +156,7 @@ public class VistaSecretaria extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnAgregarCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarCitaActionPerformed
-        SolicitarCita cita = new SolicitarCita(this);
+        AgendarCita cita = new AgendarCita();
         cambiarVentana(cita);
     }//GEN-LAST:event_btnAgregarCitaActionPerformed
 
@@ -185,7 +183,7 @@ public class VistaSecretaria extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnCancelarCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarCitaActionPerformed
-        CancelarCita cancelar = new CancelarCita(this);
+        CancelarCita cancelar = new CancelarCita();
         cambiarVentana(cancelar);
     }//GEN-LAST:event_btnCancelarCitaActionPerformed
 

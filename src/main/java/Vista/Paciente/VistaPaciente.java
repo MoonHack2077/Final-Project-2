@@ -5,8 +5,8 @@
 package Vista.Paciente;
 
 import Modelo.Paciente;
-import Vista.Cita.CancelarCita;
-import Vista.Cita.SolicitarCita;
+import Vista.Secretaria.CancelarCita;
+import Vista.Secretaria.AgendarCita;
 import Vista.Login;
 
 /**

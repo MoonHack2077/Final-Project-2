@@ -2,12 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package Vista.Cita;
+package Vista.Secretaria;
 
 import Controlador.ControladorCancelarCita;
 import Modelo.Cita;
-import Modelo.Paciente;
-import Vista.Secretaria.VistaSecretaria;
 import javax.swing.JOptionPane;
 
 /**
@@ -20,7 +18,7 @@ public class CancelarCita extends javax.swing.JFrame {
     /**
      * Creates new form CancelarCita
      */
-    public CancelarCita( javax.swing.JFrame vistaVolver) {
+    public CancelarCita() {
         initComponents();
         setLocationRelativeTo(null);
         controlador = new ControladorCancelarCita();

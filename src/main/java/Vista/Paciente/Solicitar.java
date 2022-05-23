@@ -30,6 +30,7 @@ public class Solicitar extends javax.swing.JFrame {
         controlador = new ControladorSolicitarCita();
         this.paciente = paciente;
         this.validacion = new Validacion();
+        cbxPacientes.addItem(this.paciente);
     }
 
     /**
@@ -163,33 +164,53 @@ public class Solicitar extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * 
+     * @param evt 
+     */
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
         VistaPaciente vista = new VistaPaciente(paciente);
         vista.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnVolverActionPerformed
 
+    /**
+     * 
+     * @param evt 
+     */
     private void txtAñoCitaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtAñoCitaFocusGained
         if( txtAñoCita.getText().equals("AÑO")  ){
             txtAñoCita.setText("");
         }
     }//GEN-LAST:event_txtAñoCitaFocusGained
 
+    /**
+     * 
+     * @param evt 
+     */
     private void txtAñoCitaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtAñoCitaFocusLost
         if( txtAñoCita.getText().equals("")  ){
             txtAñoCita.setText("AÑO");
         }
     }//GEN-LAST:event_txtAñoCitaFocusLost
 
+    /**
+     * 
+     * @param evt 
+     */
     private void txtAñoCitaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAñoCitaKeyTyped
         validacion.soloNumeros(evt);
     }//GEN-LAST:event_txtAñoCitaKeyTyped
 
+    /**
+     * 
+     * @param evt 
+     */
     private void btnSolicitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSolicitarActionPerformed
         //Validacion necesaria por si en algun combobox se selecciona un elemento que no corresponde
         if( cbxDia.getSelectedIndex() == 0 || cbxHora.getSelectedIndex() == 0 ||
-            cbxMes.getSelectedIndex() == 0 || cbxPacientes.getSelectedItem().equals("Seleccione un paciente")||
-            cbxDoctores.getSelectedIndex() == 0 || txtAñoCita.getText().equals("AÑO"))
+            cbxMes.getSelectedIndex() == 0 || cbxDoctores.getSelectedIndex() == 0 
+                || txtAñoCita.getText().equals("AÑO"))
         {
             JOptionPane.showMessageDialog(null, "Faltan campos por seleccionar");
             return;
@@ -197,7 +218,7 @@ public class Solicitar extends javax.swing.JFrame {
 
         //Obteniendo al doctor y al paciente
         Doctor doctor = (Doctor) cbxDoctores.getSelectedItem();
-        Paciente paciente = (Paciente) cbxPacientes.getSelectedItem();
+        Paciente pacienteSolicitante = (Paciente) cbxPacientes.getSelectedItem();
 
         //Parseamos los datos para crear la fecha
         int dia = Integer.parseInt(cbxDia.getSelectedItem().toString());
@@ -245,7 +266,7 @@ public class Solicitar extends javax.swing.JFrame {
         //Creamos la fecha de la cita
         Date fecha = new Date(año, mes-1, dia, hora, minuto);
         //Creamos la cita
-        Cita cita = new Cita( paciente,doctor,fecha );
+        Cita cita = new Cita( pacienteSolicitante,doctor,fecha );
 
         /*** EXCEPCION ***/
         boolean creada = controlador.añadirCita(cita);

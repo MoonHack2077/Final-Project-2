@@ -2,13 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package Vista.Cita;
+package Vista.Secretaria;
 
 import Controlador.ControladorSolicitarCita;
 import Modelo.Cita;
 import Modelo.Doctor;
 import Modelo.Paciente;
-import Vista.Paciente.VistaPaciente;
 import Modelo.Validacion;
 import Vista.Secretaria.VistaSecretaria;
 import java.util.Date;
@@ -18,14 +17,14 @@ import javax.swing.JOptionPane;
  *
  * @author USER
  */
-public class SolicitarCita extends javax.swing.JFrame {
+public class AgendarCita extends javax.swing.JFrame {
 
     private ControladorSolicitarCita controlador;
     private Validacion validacion;
     /**
      * Creates new form GestionarCita
      */
-    public SolicitarCita() {
+    public AgendarCita() {
         initComponents();
         setLocationRelativeTo(null);
         controlador = new ControladorSolicitarCita();
@@ -56,7 +55,7 @@ public class SolicitarCita extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "SOLICITAR CITA", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "AGENDAR CITA", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 
         jLabel3.setText("Ingrese la fecha de la cita:");
 
@@ -84,7 +83,7 @@ public class SolicitarCita extends javax.swing.JFrame {
             }
         });
 
-        btnSolicitar.setText("SOLICITAR CITA");
+        btnSolicitar.setText("AGENDAR CITA");
         btnSolicitar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSolicitarActionPerformed(evt);
@@ -214,7 +213,7 @@ public class SolicitarCita extends javax.swing.JFrame {
     private void btnSolicitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSolicitarActionPerformed
         //Validacion necesaria por si en algun combobox se selecciona un elemento que no corresponde 
         if( cbxDia.getSelectedIndex() == 0 || cbxHora.getSelectedIndex() == 0 ||
-            cbxMes.getSelectedIndex() == 0 || cbxPacientes.getSelectedItem().equals("Seleccione un paciente")|| 
+            cbxMes.getSelectedIndex() == 0 || cbxPacientes.getSelectedIndex() == 0 || 
             cbxDoctores.getSelectedIndex() == 0 || txtAñoCita.getText().equals("AÑO"))
         {
             JOptionPane.showMessageDialog(null, "Faltan campos por seleccionar");
