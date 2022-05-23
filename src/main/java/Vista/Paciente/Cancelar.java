@@ -2,32 +2,21 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package Vista.Cita;
-
-import Controlador.ControladorCancelarCita;
-import Modelo.Cita;
-import Modelo.Paciente;
-import Vista.Secretaria.VistaSecretaria;
-import javax.swing.JOptionPane;
+package Vista.Paciente;
 
 /**
  *
  * @author USER
  */
-public class CancelarCita extends javax.swing.JFrame {
+public class Cancelar extends javax.swing.JFrame {
 
-    private ControladorCancelarCita controlador;
     /**
-     * Creates new form CancelarCita
+     * Creates new form Cancelar
      */
-    public CancelarCita( javax.swing.JFrame vistaVolver) {
+    public Cancelar() {
         initComponents();
-        setLocationRelativeTo(null);
-        controlador = new ControladorCancelarCita();
-        llenarComboCitas();
     }
 
-        
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -116,7 +105,7 @@ public class CancelarCita extends javax.swing.JFrame {
                         .addGap(6, 6, 6)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btnVolver))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -125,75 +114,12 @@ public class CancelarCita extends javax.swing.JFrame {
                 .addComponent(btnVolver)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * Metodo para resetaer la informacion de los campos
-     */
-    private void resetearCampos(){
-        llenarComboCitas();
-        txtDetalleCita.setText("");
-    }
-    
-    /**
-     * Metodo que se encarga de llenar el combobox con los pacientes para ser seleccionados
-     */
-    private void llenarComboCitas(){
-        cbxCitas.removeAllItems();
-        cbxCitas.addItem("Seleccione una cita");
-        
-        for (Cita cita : controlador.getCitas()) {
-            cbxCitas.addItem(cita);
-        }
-    }
-    
-    /**
-     * Metodo que maneja el evento del boton volver para ejecutar su acción
-     * @param evt 
-     */
-    private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-        VistaSecretaria vista = new VistaSecretaria();
-        vista.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnVolverActionPerformed
-
-    /**
-     * Metodo que maneja el evento del boton cancelar para cancelar la cita
-     * @param evt 
-     */
-    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        //El primer elemento no es válido
-        if( cbxCitas.getSelectedItem().equals("Seleccione una cita")){
-            JOptionPane.showMessageDialog(null, "Cita no válida");
-            return;
-        }
-        
-        //Obtenemos al paciente
-        Cita cita = (Cita) cbxCitas.getSelectedItem();
-        
-        //Confirmamos si se desea cancelar la cita
-        int confirmacion = JOptionPane.showConfirmDialog(null, "¿Seguro desea cancelar esta cita?");
-        
-        if( confirmacion==0 ){
-            /*** EXCEPCION ***/
-            boolean cancelada = controlador.eliminarCita(cita.getPaciente().getDocumento());
-            if( cancelada ){
-                JOptionPane.showMessageDialog(null, "Cita cancelada");
-                resetearCampos();
-            }else{
-                JOptionPane.showMessageDialog(null, "No se pudo cancelar la cita");
-            }    
-        }
-    }//GEN-LAST:event_btnCancelarActionPerformed
-
-    /**
-     * Metodo para que cada vez que se seleccione una cita mostrar su detalle
-     * @param evt 
-     */
     private void cbxCitasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxCitasActionPerformed
         //Si el primer elemento esta seleccionado, no es válido
         //por lo tanto se muestra ese aviso
@@ -204,12 +130,76 @@ public class CancelarCita extends javax.swing.JFrame {
         Cita cita = (Cita) cbxCitas.getSelectedItem();
         //Se verifica que la cita no sea nula
         if( cita != null ){
-            txtDetalleCita.setText("Cita creada:\n " + 
-                    cita.getFecha().toLocaleString() + "\n" +
-                    cita.toString());
+            txtDetalleCita.setText("Cita creada:\n " +
+                cita.getFecha().toLocaleString() + "\n" +
+                cita.toString());
         }
     }//GEN-LAST:event_cbxCitasActionPerformed
 
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        //El primer elemento no es válido
+        if( cbxCitas.getSelectedItem().equals("Seleccione una cita")){
+            JOptionPane.showMessageDialog(null, "Cita no válida");
+            return;
+        }
+
+        //Obtenemos al paciente
+        Cita cita = (Cita) cbxCitas.getSelectedItem();
+
+        //Confirmamos si se desea cancelar la cita
+        int confirmacion = JOptionPane.showConfirmDialog(null, "¿Seguro desea cancelar esta cita?");
+
+        if( confirmacion==0 ){
+            /*** EXCEPCION ***/
+            boolean cancelada = controlador.eliminarCita(cita.getPaciente().getDocumento());
+            if( cancelada ){
+                JOptionPane.showMessageDialog(null, "Cita cancelada");
+                resetearCampos();
+            }else{
+                JOptionPane.showMessageDialog(null, "No se pudo cancelar la cita");
+            }
+        }
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
+        vistaVolver.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnVolverActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(Cancelar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(Cancelar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(Cancelar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Cancelar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new Cancelar().setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
