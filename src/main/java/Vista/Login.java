@@ -145,6 +145,13 @@ public class Login extends javax.swing.JFrame {
      */
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
         try{
+            //Se validan los campos
+            if( txtCorreo.getText().isBlank() || txtContraseña.getText().isBlank() )
+            {
+              JOptionPane.showMessageDialog(null, "Faltan campos por llenar");
+              return;
+            }
+            
             //Obtenemos los datos
             String correo = txtCorreo.getText();
             String contraseña = txtContraseña.getText();
@@ -176,7 +183,7 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEntrarActionPerformed
 
     /**
-     * 
+     * Metodo para la redireccion de pantalla
      * @param ventana 
      */
     private void cambiarVentana(javax.swing.JFrame ventana){

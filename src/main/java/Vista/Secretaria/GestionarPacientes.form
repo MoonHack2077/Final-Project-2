@@ -4,8 +4,6 @@
   <NonVisualComponents>
     <Component class="javax.swing.ButtonGroup" name="salud">
     </Component>
-    <Component class="javax.swing.ButtonGroup" name="estadosCiviles">
-    </Component>
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
@@ -102,23 +100,13 @@
                                   <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                                   <Component id="btnLimpiar" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="jLabel8" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="112" pref="112" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="rbnSoltero" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="rbnViudo" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="rbnDivorciado" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="rbnCasado" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="rbnSisben" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-                                  <Component id="rbnEps" min="-2" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="rbnEps" min="-2" max="-2" attributes="0"/>
+                                      <Component id="cbxEstados" min="-2" pref="196" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
                           </Group>
                       </Group>
@@ -130,7 +118,6 @@
                           <Component id="btnEditar" min="-2" pref="78" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
               </Group>
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="32767" attributes="0"/>
@@ -178,25 +165,9 @@
                       <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="txtTelefono" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="rbnCasado" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="rbnSoltero" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="rbnViudo" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="rbnDivorciado" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                  </Group>
                   <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
+                  <Component id="cbxEstados" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="rbnSisben" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="rbnEps" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -241,18 +212,12 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txtNombre2">
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtNombre2ActionPerformed"/>
             <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtNombre2KeyTyped"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel7">
           <Properties>
             <Property name="text" type="java.lang.String" value="Telefono:"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JRadioButton" name="rbnCasado">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Casado"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel1">
@@ -285,16 +250,6 @@
             <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtDocumentoKeyTyped"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JRadioButton" name="rbnDivorciado">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Divorciado"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JRadioButton" name="rbnViudo">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Viudo"/>
-          </Properties>
-        </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
             <Property name="text" type="java.lang.String" value="Documento: "/>
@@ -310,11 +265,6 @@
             <Property name="text" type="java.lang.String" value="Contrase&#xf1;a:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel8">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Estado civil:"/>
-          </Properties>
-        </Component>
         <Component class="javax.swing.JRadioButton" name="rbnEps">
           <Properties>
             <Property name="text" type="java.lang.String" value="EPS"/>
@@ -324,11 +274,6 @@
           <Events>
             <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtEdadKeyTyped"/>
           </Events>
-        </Component>
-        <Component class="javax.swing.JRadioButton" name="rbnSoltero">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Soltero"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtContrase&#xf1;a">
         </Component>
@@ -348,6 +293,22 @@
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value=""/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="cbxEstados">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="5">
+                <StringItem index="0" value="Seleccione su estado civil"/>
+                <StringItem index="1" value="Casado"/>
+                <StringItem index="2" value="Soltero"/>
+                <StringItem index="3" value="Viudo"/>
+                <StringItem index="4" value="Divorciado"/>
+              </StringArray>
+            </Property>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
         </Component>
       </SubComponents>

@@ -35,12 +35,6 @@ public class GestionarPacientes extends javax.swing.JFrame {
         //Se añaden los botones de EPS Y SISBEN al radioGroup de salud
         salud.add(rbnEps);
         salud.add(rbnSisben);
-        
-        //Se añaden los botones de casado, soltero, viudo y divorciado al radioGroup de estados civiles
-        estadosCiviles.add(rbnCasado);
-        estadosCiviles.add(rbnDivorciado);
-        estadosCiviles.add(rbnSoltero);
-        estadosCiviles.add(rbnViudo);
     }
     
     /**
@@ -53,32 +47,27 @@ public class GestionarPacientes extends javax.swing.JFrame {
     private void initComponents() {
 
         salud = new javax.swing.ButtonGroup();
-        estadosCiviles = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         btnRegistrar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         txtNombre2 = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        rbnCasado = new javax.swing.JRadioButton();
         jLabel1 = new javax.swing.JLabel();
         txtCorreo = new javax.swing.JTextField();
         btnLimpiar = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         txtTelefono = new javax.swing.JTextField();
         txtDocumento = new javax.swing.JTextField();
-        rbnDivorciado = new javax.swing.JRadioButton();
-        rbnViudo = new javax.swing.JRadioButton();
         jLabel2 = new javax.swing.JLabel();
         rbnSisben = new javax.swing.JRadioButton();
         jLabel6 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
         rbnEps = new javax.swing.JRadioButton();
         txtEdad = new javax.swing.JTextField();
-        rbnSoltero = new javax.swing.JRadioButton();
         txtContraseña = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         cbxPacientes = new javax.swing.JComboBox();
+        cbxEstados = new javax.swing.JComboBox<>();
         btnVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -106,11 +95,6 @@ public class GestionarPacientes extends javax.swing.JFrame {
             }
         });
 
-        txtNombre2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNombre2ActionPerformed(evt);
-            }
-        });
         txtNombre2.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtNombre2KeyTyped(evt);
@@ -118,8 +102,6 @@ public class GestionarPacientes extends javax.swing.JFrame {
         });
 
         jLabel7.setText("Telefono:");
-
-        rbnCasado.setText("Casado");
 
         jLabel1.setText("Nombre:");
 
@@ -144,17 +126,11 @@ public class GestionarPacientes extends javax.swing.JFrame {
             }
         });
 
-        rbnDivorciado.setText("Divorciado");
-
-        rbnViudo.setText("Viudo");
-
         jLabel2.setText("Documento: ");
 
         rbnSisben.setText("SISBEN");
 
         jLabel6.setText("Contraseña:");
-
-        jLabel8.setText("Estado civil:");
 
         rbnEps.setText("EPS");
 
@@ -164,8 +140,6 @@ public class GestionarPacientes extends javax.swing.JFrame {
             }
         });
 
-        rbnSoltero.setText("Soltero");
-
         jLabel5.setText("Correo:");
 
         cbxPacientes.addActionListener(new java.awt.event.ActionListener() {
@@ -173,6 +147,8 @@ public class GestionarPacientes extends javax.swing.JFrame {
                 cbxPacientesActionPerformed(evt);
             }
         });
+
+        cbxEstados.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione su estado civil", "Casado", "Soltero", "Viudo", "Divorciado" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -208,27 +184,18 @@ public class GestionarPacientes extends javax.swing.JFrame {
                                             .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                 .addGap(27, 27, 27)
                                 .addComponent(btnLimpiar))
-                            .addComponent(jLabel8)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(112, 112, 112)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(rbnSoltero)
-                                    .addComponent(rbnViudo))
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(rbnDivorciado)
-                                    .addComponent(rbnCasado)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(rbnSisben)
                                 .addGap(30, 30, 30)
-                                .addComponent(rbnEps))))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(rbnEps)
+                                    .addComponent(cbxEstados, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnRegistrar)
                         .addGap(32, 32, 32)
                         .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(34, 34, 34)
-                        .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(cbxPacientes, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -265,20 +232,9 @@ public class GestionarPacientes extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rbnCasado)
-                    .addComponent(rbnSoltero))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel8))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(rbnViudo)
-                            .addComponent(rbnDivorciado))))
                 .addGap(37, 37, 37)
+                .addComponent(cbxEstados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(48, 48, 48)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(rbnSisben)
                     .addComponent(rbnEps))
@@ -335,7 +291,7 @@ public class GestionarPacientes extends javax.swing.JFrame {
         txtTelefono.setText("");
         cbxPacientes.setSelectedItem("Buscar un paciente");
         salud.clearSelection();
-        estadosCiviles.clearSelection();
+        cbxEstados.setSelectedItem("Seleccione su estado civil");
     }
     
     /**
@@ -354,11 +310,12 @@ public class GestionarPacientes extends javax.swing.JFrame {
      */
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         try{
-         //Se validan los campos
+            //Se validan los campos
             if(
                 txtNombre2.getText().isBlank() || txtDocumento.getText().isBlank() 
                 || txtEdad.getText().isBlank() || txtCorreo.getText().isBlank() 
-                || txtContraseña.getText().isBlank() ||  txtTelefono.getText().isBlank())
+                || txtContraseña.getText().isBlank() ||  txtTelefono.getText().isBlank()
+                || cbxEstados.getSelectedIndex() == 0 || ( !rbnSisben.isSelected() && !rbnEps.isSelected() ) )
             {
                 JOptionPane.showMessageDialog(null, "Faltan campos por llenar");
                 return;
@@ -372,12 +329,7 @@ public class GestionarPacientes extends javax.swing.JFrame {
             int edad = Integer.parseInt(txtEdad.getText());
             boolean hasSisben = rbnSisben.isSelected();
             boolean hasEps = rbnEps.isSelected();
-            String estadoCivil = "";
-
-            if( rbnCasado.isSelected() ) estadoCivil = rbnCasado.getText();
-            if( rbnSoltero.isSelected() ) estadoCivil = rbnSoltero.getText();
-            if( rbnDivorciado.isSelected() ) estadoCivil = rbnDivorciado.getText();
-            if( rbnViudo.isSelected() ) estadoCivil = rbnViudo.getText();
+            String estadoCivil = cbxEstados.getSelectedItem().toString();
 
             //Creamos al paciente con sus respectivos datos
             Paciente paciente = new Paciente(nombre,documento,correo,contraseña,edad,telefono,estadoCivil,hasSisben,hasEps);
@@ -409,13 +361,13 @@ public class GestionarPacientes extends javax.swing.JFrame {
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         try{
              //Se validan los campos
-               if(
-                     txtNombre2.getText().isBlank() || txtDocumento.getText().isBlank() || txtEdad.getText().isBlank() 
-                     || txtCorreo.getText().isBlank() || txtContraseña.getText().isBlank() 
-                     ||  txtTelefono.getText().isBlank()){
-                     JOptionPane.showMessageDialog(null, "Faltan campos por llenar");
-                
-                        return;
+            if( txtNombre2.getText().isBlank() || txtDocumento.getText().isBlank() 
+                || txtEdad.getText().isBlank() || txtCorreo.getText().isBlank() 
+                || txtContraseña.getText().isBlank() ||  txtTelefono.getText().isBlank()
+                || cbxEstados.getSelectedIndex() == 0 || ( !rbnSisben.isSelected() && !rbnEps.isSelected() )    )
+            {
+                JOptionPane.showMessageDialog(null, "Faltan campos por llenar");
+                return;
             }
             //Obteniendo los datos del paciente
             String nombre = txtNombre2.getText();
@@ -426,12 +378,7 @@ public class GestionarPacientes extends javax.swing.JFrame {
             int edad = Integer.parseInt(txtEdad.getText());
             boolean hasSisben = rbnSisben.isSelected();
             boolean hasEps = rbnEps.isSelected();
-            String estadoCivil = "";
-
-            if( rbnCasado.isSelected() ) estadoCivil = rbnCasado.getText();
-            if( rbnSoltero.isSelected() ) estadoCivil = rbnSoltero.getText();
-            if( rbnDivorciado.isSelected() ) estadoCivil = rbnDivorciado.getText();
-            if( rbnViudo.isSelected() ) estadoCivil = rbnViudo.getText();
+            String estadoCivil = cbxEstados.getSelectedItem().toString();
 
             //Creamos al paciente con sus respectivos datos
             Paciente paciente = new Paciente(nombre,documento,correo,contraseña,edad,telefono,estadoCivil,hasSisben,hasEps);
@@ -471,7 +418,6 @@ public class GestionarPacientes extends javax.swing.JFrame {
 
    /**
      * Metodo para que el usuario solo digite letras en el textField del nombre
-     *
      * @param evt 
      */
     private void txtNombre2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombre2KeyTyped
@@ -514,22 +460,14 @@ public class GestionarPacientes extends javax.swing.JFrame {
             cbxPacientes.addItem(paciente);
         }       
     }
-    
-    /**
-     * Metodo para que solo se seleccione uno de los radioButtons de los estados civiles
-     * @param btn 
-     */
-    private void resetearRadioButtons(JRadioButton btn){
-       estadosCiviles.clearSelection();
-       btn.setSelected(true);
-    }
+
     
     /**
      * Metodo para que cada vez que se seleccione un paciente los campos se llenen con su respeciva informacion
      * @param evt 
      */
     private void cbxPacientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxPacientesActionPerformed
-        //
+        
         if( controlador.getPacientes().isEmpty() ) return;
 
         //Si el primer elemento esta seleccionado, no es válido
@@ -549,24 +487,11 @@ public class GestionarPacientes extends javax.swing.JFrame {
             txtTelefono.setText(paciente.getTelefono());
             rbnEps.setSelected(paciente.hasEps());
             rbnSisben.setSelected(paciente.hasSisben());
-            
-            if( paciente.getEstadoCivil().equals("Casado") ){
-                resetearRadioButtons(rbnCasado);
-            }else if( paciente.getEstadoCivil().equals("Soltero") ){
-                resetearRadioButtons(rbnSoltero);
-            }else if( paciente.getEstadoCivil().equals("Viudo") ){
-                resetearRadioButtons(rbnViudo);
-            }if( paciente.getEstadoCivil().equals("Divorciado") ){
-                resetearRadioButtons(rbnDivorciado);
-            }
+            cbxEstados.setSelectedItem(paciente.getEstadoCivil());
             
             setEnabledInputs(true);
         }
     }//GEN-LAST:event_cbxPacientesActionPerformed
-
-    private void txtNombre2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombre2ActionPerformed
-   
-    }//GEN-LAST:event_txtNombre2ActionPerformed
      /**
      * Metodo para que el usuario solo digite numeros en el textField de telefono
      * @param evt 
@@ -582,22 +507,17 @@ public class GestionarPacientes extends javax.swing.JFrame {
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnRegistrar;
     private javax.swing.JButton btnVolver;
+    private javax.swing.JComboBox<String> cbxEstados;
     private javax.swing.JComboBox cbxPacientes;
-    private javax.swing.ButtonGroup estadosCiviles;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JRadioButton rbnCasado;
-    private javax.swing.JRadioButton rbnDivorciado;
     private javax.swing.JRadioButton rbnEps;
     private javax.swing.JRadioButton rbnSisben;
-    private javax.swing.JRadioButton rbnSoltero;
-    private javax.swing.JRadioButton rbnViudo;
     private javax.swing.ButtonGroup salud;
     private javax.swing.JTextField txtContraseña;
     private javax.swing.JTextField txtCorreo;
