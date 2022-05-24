@@ -161,7 +161,7 @@ public class VerHistorial extends javax.swing.JFrame {
             txtHistorial.setText( "CITA " + numeroDeCita + "\n" +
                     cita.getFecha().toString() + "\n" +
                     "Doctor: " + cita.getDoctor().toString() + "\n" +
-                    "Paciente: " + cita.getPaciente() + "- Documento:" + cita.getPaciente().getDocumento() + "\n\n" +
+                    "Paciente: " + cita.getPaciente() + "\n\n" +
                     "Conclusiones" + cita.getConclusiones()
             );
         }

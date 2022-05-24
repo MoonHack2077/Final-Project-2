@@ -28,6 +28,7 @@ public class ControladorRegistrarMulta {
     public boolean añadirMulta(Multa multa){
         multas.add(multa);
         multa.getCita().getPaciente().setHasMulta(true);
+        Singleton.getINSTANCIA().escribirMultas();
         return true;
     }
     

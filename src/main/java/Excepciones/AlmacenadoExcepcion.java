@@ -10,6 +10,6 @@ package Excepciones;
  */
 public class AlmacenadoExcepcion extends RuntimeException {
     public AlmacenadoExcepcion(String cosa){
-        super( cosa + " ya se encentra almacenado");
+        super( cosa + " ya se encuentra almacenado");
     }  
 }

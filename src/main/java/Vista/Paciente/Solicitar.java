@@ -27,10 +27,12 @@ public class Solicitar extends javax.swing.JFrame {
      */
     public Solicitar(Paciente paciente) {
         initComponents();
+        setLocationRelativeTo(null);
         controlador = new ControladorSolicitarCita();
         this.paciente = paciente;
         this.validacion = new Validacion();
         cbxPacientes.addItem(this.paciente);
+        llenarComboDoctores();
     }
 
     /**
@@ -202,6 +204,18 @@ public class Solicitar extends javax.swing.JFrame {
         validacion.soloNumeros(evt);
     }//GEN-LAST:event_txtAñoCitaKeyTyped
 
+    /**
+     * Metodo que se encarga de llenar el combobox con los doctres y su especialidad para ser seleccionados
+     */
+    private void llenarComboDoctores(){
+        cbxDoctores.removeAllItems();
+        cbxDoctores.addItem("Seleccione un doctor");
+        
+        for (Doctor doctor : controlador.getDoctores()) {
+            cbxDoctores.addItem(doctor);
+        }
+    }
+    
     /**
      * 
      * @param evt 

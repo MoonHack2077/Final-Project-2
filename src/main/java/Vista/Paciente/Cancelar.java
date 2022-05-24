@@ -24,6 +24,7 @@ public class Cancelar extends javax.swing.JFrame {
      */
     public Cancelar(Paciente paciente) {
         initComponents();
+        setLocationRelativeTo(null);
         controlador = new ControladorCancelarCita();
         Cita cita = controlador.buscarCita(paciente.getDocumento());
         this.paciente = paciente;

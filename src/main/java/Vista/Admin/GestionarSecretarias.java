@@ -362,7 +362,8 @@ public class GestionarSecretarias extends javax.swing.JFrame {
         try{
             //Se validan los campos
             if( txtDocumento.getText().isBlank() || txtEdad.getText().isBlank()
-                || txtNombre2.getText().isBlank() ){
+                || txtNombre2.getText().isBlank() || txtCorreo.getText().isBlank() 
+                || txtContraseña.getText().isBlank() || txtTelefono.getText().isBlank() ){
                 JOptionPane.showMessageDialog(null, "Faltan campos por llenar");
                 return;
             }
@@ -492,7 +493,7 @@ public class GestionarSecretarias extends javax.swing.JFrame {
      * @param evt 
      */
     private void cbxSecretariasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxSecretariasActionPerformed
-        //
+      
         if( controlador.getSecretarias().isEmpty() ) return;
 
         //Si el primer elemento esta seleccionado, no es válido

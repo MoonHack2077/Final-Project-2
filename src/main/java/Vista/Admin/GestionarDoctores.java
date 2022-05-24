@@ -342,7 +342,9 @@ public class GestionarDoctores extends javax.swing.JFrame {
         try{
             //Se validan los campos
             if( txtDocumento.getText().isBlank() || txtEdad.getText().isBlank()
-                || txtNombre2.getText().isBlank() || cbxEspecialidad.getSelectedIndex()==0  ){
+                || txtNombre2.getText().isBlank() || cbxEspecialidad.getSelectedIndex()==0  
+                || txtContraseña.getText().isBlank() || txtCorreo.getText().isBlank() 
+                || txtTelefono.getText().isBlank() ){
                 JOptionPane.showMessageDialog(null, "Faltan campos por llenar");
                 return;
             }

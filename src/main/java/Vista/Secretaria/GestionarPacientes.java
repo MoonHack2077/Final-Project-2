@@ -356,12 +356,12 @@ public class GestionarPacientes extends javax.swing.JFrame {
         try{
          //Se validan los campos
             if(
-                txtNombre2.getText().isBlank() || txtDocumento.getText().isBlank() || txtEdad.getText().isBlank() 
-                        || txtCorreo.getText().isBlank() || txtContraseña.getText().isBlank() 
-                        ||  txtTelefono.getText().isBlank()){
-                      JOptionPane.showMessageDialog(null, "Faltan campos por llenar");
-                
-                        return;
+                txtNombre2.getText().isBlank() || txtDocumento.getText().isBlank() 
+                || txtEdad.getText().isBlank() || txtCorreo.getText().isBlank() 
+                || txtContraseña.getText().isBlank() ||  txtTelefono.getText().isBlank())
+            {
+                JOptionPane.showMessageDialog(null, "Faltan campos por llenar");
+                return;
             }
             //Obteniendo los datos del paciente
             String nombre = txtNombre2.getText();
