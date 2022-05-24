@@ -8,7 +8,6 @@ package Controlador;
 import Excepciones.AlmacenadoExcepcion;
 import Excepciones.MayorDeEdadExcepcion;
 import Excepciones.NoEncontradoExcepcion;
-import Modelo.Multa;
 import Modelo.Paciente;
 import Singleton.Singleton;
 import java.util.ArrayList;

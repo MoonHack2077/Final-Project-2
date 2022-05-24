@@ -11,7 +11,6 @@ import Excepciones.NoEncontradoExcepcion;
 import Modelo.Paciente;
 import Modelo.Validacion;
 import javax.swing.JOptionPane;
-import javax.swing.JRadioButton;
 
 /**
  *
@@ -332,7 +331,7 @@ public class GestionarPacientes extends javax.swing.JFrame {
             String estadoCivil = cbxEstados.getSelectedItem().toString();
 
             //Creamos al paciente con sus respectivos datos
-            Paciente paciente = new Paciente(nombre,documento,correo,contraseña,edad,telefono,estadoCivil,hasSisben,hasEps);
+            Paciente paciente = new Paciente(nombre,documento,correo,contraseña,edad,estadoCivil,telefono,hasSisben,hasEps);
             
             //Añadiendo al paciente
             controlador.añadirPaciente(paciente);
@@ -381,7 +380,7 @@ public class GestionarPacientes extends javax.swing.JFrame {
             String estadoCivil = cbxEstados.getSelectedItem().toString();
 
             //Creamos al paciente con sus respectivos datos
-            Paciente paciente = new Paciente(nombre,documento,correo,contraseña,edad,telefono,estadoCivil,hasSisben,hasEps);
+            Paciente paciente = new Paciente(nombre,documento,correo,contraseña,edad,estadoCivil,telefono,hasSisben,hasEps);
             
             controlador.editarPaciente(paciente);
             JOptionPane.showMessageDialog(null, "Se editó la información el paciente con documento " + documento);
@@ -492,7 +491,8 @@ public class GestionarPacientes extends javax.swing.JFrame {
             setEnabledInputs(true);
         }
     }//GEN-LAST:event_cbxPacientesActionPerformed
-     /**
+     
+    /**
      * Metodo para que el usuario solo digite numeros en el textField de telefono
      * @param evt 
      */
