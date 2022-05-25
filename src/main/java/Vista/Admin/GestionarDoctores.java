@@ -302,7 +302,8 @@ public class GestionarDoctores extends javax.swing.JFrame {
             if( txtDocumento.getText().isBlank() || txtEdad.getText().isBlank()
                 || txtNombre2.getText().isBlank() || cbxEspecialidad.getSelectedIndex()==0  
                 || txtContraseña.getText().isBlank() || txtCorreo.getText().isBlank() 
-                || txtTelefono.getText().isBlank() || cbxEstados.getSelectedIndex() == 0 ){
+                || txtTelefono.getText().isBlank() || cbxEstados.getSelectedIndex() == 0 
+            ){
                 JOptionPane.showMessageDialog(null, "Faltan campos por llenar");
                 return;
             }
@@ -475,8 +476,7 @@ public class GestionarDoctores extends javax.swing.JFrame {
             txtTelefono.setText(doctor.getTelefono());
             cbxEspecialidad.setSelectedItem(doctor.getEspecialidad());
             cbxEstados.setSelectedItem(doctor.getEstadoCivil());
-            
-            
+                      
             setEnabledInputs(true);
         }
     }//GEN-LAST:event_cbxDoctoresActionPerformed

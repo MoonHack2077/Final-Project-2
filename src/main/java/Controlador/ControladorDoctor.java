@@ -26,9 +26,9 @@ public class ControladorDoctor {
     }
     
     /**
-     * 
+     * Metodo para añadir un doctor
      * @param doctor
-     * @return
+     * @return true si lo pudo añadir
      * @throws MayorDeEdadExcepcion 
      */
     public boolean añadirDoctor(Doctor doctor)throws MayorDeEdadExcepcion{
@@ -46,9 +46,9 @@ public class ControladorDoctor {
     }
     
     /**
-     * 
+     * Metodo para eliminar un doctor
      * @param documento
-     * @return
+     * @return true si lo elimina
      * @throws NoEncontradoExcepcion 
      */
     public boolean eliminarDoctor(String documento) throws NoEncontradoExcepcion{
@@ -60,17 +60,17 @@ public class ControladorDoctor {
         for (int i = 0; i < doctores.size(); i++) {
             if( doctores.get(i).getDocumento().equals(documento )){
                 doctores.remove(i);
+                Singleton.getINSTANCIA().escribirDoctores();
             }
         }
         
-        Singleton.getINSTANCIA().escribirDoctores();
         return true;
     }
     
     /**
-     * 
+     * Metodo para editar la informacion de un doctor
      * @param doctor
-     * @return
+     * @ true si la pudo editar
      * @throws NoEncontradoExcepcion
      * @throws MayorDeEdadExcepcion 
      */
@@ -90,10 +90,10 @@ public class ControladorDoctor {
                 doctores.get(i).setCorreo(doctor.getCorreo());
                 doctores.get(i).setEstadoCivil(doctor.getEstadoCivil());
                 doctores.get(i).setTelefono(doctor.getTelefono());
+                Singleton.getINSTANCIA().escribirDoctores();
             }
         }
         
-        Singleton.getINSTANCIA().escribirDoctores();
         return true;
     }
     
@@ -128,9 +128,20 @@ public class ControladorDoctor {
      */
     public void ordenarAgenda(Doctor doctor){
         ArrayList<Cita> agenda = doctor.getAgenda();
+        Cita aux = null;
         
-        //Se planea usar  los metodos after y before de las fechas
-        //agenda.sort();
+        //agenda.s
+        /*
+        for (int i = 0; i < agenda.size(); i++) {
+            for (int j = i+1; j < agenda.size(); j++) {
+                if( agenda.get(j).getFecha().after(agenda.get(j+1).getFecha()) ){
+                    aux = agenda.get(j);
+                    agenda.get(j) = agenda.get(j+1);
+                    agenda.get(j+1) = aux;
+                }
+            }
+        }
+        */
     }
 
     /**

@@ -29,6 +29,7 @@ public class Cancelar extends javax.swing.JFrame {
         Cita cita = controlador.buscarCita(paciente.getDocumento());
         this.paciente = paciente;
         cbxCitas.addItem(cita);
+        txtDetalleCita.setText(cita.toString());
     }
 
     /**
@@ -128,6 +129,10 @@ public class Cancelar extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Metodo para cancelar la cita seleccionada
+     * @param evt 
+     */
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         //Obtenemos al paciente
         Cita cita = (Cita) cbxCitas.getSelectedItem();
@@ -147,7 +152,7 @@ public class Cancelar extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
-     * 
+     * Metodo para retroceder de ventana
      * @param evt 
      */
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed

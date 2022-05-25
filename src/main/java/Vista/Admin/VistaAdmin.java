@@ -105,7 +105,7 @@ public class VistaAdmin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     /**
-     * 
+     * Metodo para cambiar de ventana
      * @param ventana 
      */
     private void cambiarVentana(javax.swing.JFrame ventana){

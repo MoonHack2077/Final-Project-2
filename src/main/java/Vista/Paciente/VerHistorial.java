@@ -162,7 +162,7 @@ public class VerHistorial extends javax.swing.JFrame {
                     cita.getFecha().toString() + "\n" +
                     "Doctor: " + cita.getDoctor().toString() + "\n" +
                     "Paciente: " + cita.getPaciente() + "\n\n" +
-                    "Conclusiones" + cita.getConclusiones()
+                    cita.getConclusiones()
             );
         }
     }//GEN-LAST:event_cbxCitasActionPerformed

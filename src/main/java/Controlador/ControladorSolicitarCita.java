@@ -65,9 +65,10 @@ public class ControladorSolicitarCita {
             cita.getDoctor().getAgenda().add(cita);
             cita.getPaciente().setHasCita(true);
             Singleton.getINSTANCIA().escribirCitas();
+            return true;
         }
                 
-        return true;
+        return false;
     }
 
     /**

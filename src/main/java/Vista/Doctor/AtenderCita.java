@@ -217,14 +217,27 @@ public class AtenderCita extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
-        //VALIDAR QUE NO ESTEN VACIOS LOS CAMPOS
-
+        //Validando los campos
+        if( txtConclusiones.getText().isBlank() ){
+            JOptionPane.showMessageDialog(null, "Faltan las conclusiones");
+            return;
+        }
+        
+        if( txtTratamientos.getText().isBlank()  ){
+            JOptionPane.showMessageDialog(null, "Faltan los tratamientos");
+            return;
+        }
+        
+        
         //Obtenemos los datos para anexarlos al historial del paciente
         String conclusiones = txtConclusiones.getText();
         String tratamientos = txtTratamientos.getText();
         cita.setConclusiones("\n Conclusiones: " + conclusiones + 
                 "\n Tratamientos: " + tratamientos);
+        
+        //Se añade la cita al historal del paciente
         cita.getPaciente().getHistorial().add(cita);
+        
         boolean eliminada = controladorCita.eliminarCita(cita.getPaciente().getDocumento());
         if( eliminada ){
             JOptionPane.showMessageDialog(null, "Cita atendida con exito");

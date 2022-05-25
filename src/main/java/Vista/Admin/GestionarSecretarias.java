@@ -340,8 +340,8 @@ public class GestionarSecretarias extends javax.swing.JFrame {
             if( txtDocumento.getText().isBlank() || txtEdad.getText().isBlank()
                 || txtNombre2.getText().isBlank() || txtCorreo.getText().isBlank() 
                 || txtContraseña.getText().isBlank() || txtTelefono.getText().isBlank()
-                || txtAñosExp.getText().isBlank() || cbxEstados.getSelectedIndex() == 0)
-            {
+                || txtAñosExp.getText().isBlank() || cbxEstados.getSelectedIndex() == 0
+            ){
                 JOptionPane.showMessageDialog(null, "Faltan campos por llenar");
                 return;
             }
@@ -401,8 +401,8 @@ public class GestionarSecretarias extends javax.swing.JFrame {
             if( txtDocumento.getText().isBlank() || txtEdad.getText().isBlank()
                 || txtNombre2.getText().isBlank() || txtContraseña.getText().isBlank() 
                 || txtCorreo.getText().isBlank() || txtTelefono.getText().isBlank()
-                || txtAñosExp.getText().isBlank()  || cbxEstados.getSelectedIndex() == 0)
-            {
+                || txtAñosExp.getText().isBlank()  || cbxEstados.getSelectedIndex() == 0
+            ){
                 JOptionPane.showMessageDialog(null, "Faltan campos por llenar");
                 return;
             }

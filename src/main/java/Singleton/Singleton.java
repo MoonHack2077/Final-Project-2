@@ -23,7 +23,9 @@ import java.util.ArrayList;
  * @author USER
  */
 public class Singleton{
+    
     private static Singleton INSTANCIA = new Singleton();
+    
     private Admin[] admins;
     private ArrayList<Doctor> doctores;
     private ArrayList<Secretaria> secretarias;
@@ -63,7 +65,7 @@ public class Singleton{
 
     /**
      * Metodo para leer los doctores
-     * @return 
+     * @return ArrayList
      */
     public ArrayList<Doctor> leerDoctores(){
     
@@ -95,7 +97,7 @@ public class Singleton{
 
     /**
      * Metodo para leer las secretarias
-     * @return 
+     * @return ArrayList
      */
     public ArrayList<Secretaria> leerSecretarias(){
     
@@ -128,7 +130,7 @@ public class Singleton{
 
     /**
      * Metodo para leer los pacientes
-     * @return 
+     * @return ArrayList
      */
     public ArrayList<Paciente> leerPacientes(){
     
@@ -161,7 +163,7 @@ public class Singleton{
 
     /**
      * Metodo para leer las citas
-     * @return 
+     * @return ArrayList
      */
     public ArrayList<Cita> leerCitas(){
     
@@ -193,7 +195,7 @@ public class Singleton{
 
     /**
      * Metodo para leer las multas
-     * @return 
+     * @return ArrayList
      */
     public ArrayList<Multa> leerMultas(){
     

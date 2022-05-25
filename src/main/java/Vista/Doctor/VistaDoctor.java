@@ -117,13 +117,21 @@ public class VistaDoctor extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     /**
+     * Metodo para la redireccion de pantalla
+     * @param ventana 
+     */
+    private void cambiarVentana(javax.swing.JFrame ventana){
+        ventana.setVisible(true);
+        this.dispose();
+    }
+    
+    /**
      * Metodo que maneja el evento del boton de volver para retroceder a la ventana principal
      * @param evt 
      */
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
         Login main = new Login();
-        main.setVisible(true);
-        this.dispose();
+        cambiarVentana(main);
     }//GEN-LAST:event_btnVolverActionPerformed
 
     /**
@@ -132,8 +140,7 @@ public class VistaDoctor extends javax.swing.JFrame {
      */
     private void btnBloquearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBloquearActionPerformed
         BloquearFecha bloquear = new BloquearFecha(doctor);
-        bloquear.setVisible(true);
-        this.dispose();
+        cambiarVentana(bloquear);
     }//GEN-LAST:event_btnBloquearActionPerformed
 
     /**
@@ -142,8 +149,7 @@ public class VistaDoctor extends javax.swing.JFrame {
      */
     private void btnAtenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtenderActionPerformed
         AtenderCita atender = new AtenderCita(doctor);
-        atender.setVisible(true);
-        this.dispose();
+        cambiarVentana(atender);
     }//GEN-LAST:event_btnAtenderActionPerformed
 
     

@@ -69,8 +69,8 @@ public class ControladorLogin {
         return null;
     }
     
-        /**
-     * Metodo para buscar un doctor registrado por medio del documento
+    /**
+     * Metodo para buscar una secretaria registrada por medio del documento
      * @param documento
      * @return doctor si lo encuentra, de lo contrario null
      */
@@ -82,7 +82,7 @@ public class ControladorLogin {
     }
     
      /**
-     * Metodo para buscar un doctor registrado por medio del documento
+     * Metodo para buscar un paciente registrado por medio del documento
      * @param documento
      * @return doctor si lo encuentra, de lo contrario null
      */

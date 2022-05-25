@@ -53,7 +53,7 @@ public class ControladorCancelarCita {
         return false;
     }
     
-        /**
+    /**
      * Metodo para eliminar una cita almacenada
      * @param documento
      * @return true si pudo eliminarla, de lo contrario false

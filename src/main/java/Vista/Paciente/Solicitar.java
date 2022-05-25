@@ -177,7 +177,7 @@ public class Solicitar extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVolverActionPerformed
 
     /**
-     * 
+     * Metodo para remover el texto del texfield del año, ya que este es solo un indicador
      * @param evt 
      */
     private void txtAñoCitaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtAñoCitaFocusGained
@@ -187,7 +187,7 @@ public class Solicitar extends javax.swing.JFrame {
     }//GEN-LAST:event_txtAñoCitaFocusGained
 
     /**
-     * 
+     * Metodo para insertar el indicador de AÑO si este pierde el foco y no habia nada escrito
      * @param evt 
      */
     private void txtAñoCitaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtAñoCitaFocusLost
@@ -197,7 +197,7 @@ public class Solicitar extends javax.swing.JFrame {
     }//GEN-LAST:event_txtAñoCitaFocusLost
 
     /**
-     * 
+     * Metodo para que en el textField de AÑO solo se digiten numeros
      * @param evt 
      */
     private void txtAñoCitaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAñoCitaKeyTyped
@@ -217,14 +217,14 @@ public class Solicitar extends javax.swing.JFrame {
     }
     
     /**
-     * 
+     * Metodo que maneja el evento del botón solicitar cita 
      * @param evt 
      */
     private void btnSolicitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSolicitarActionPerformed
         //Validacion necesaria por si en algun combobox se selecciona un elemento que no corresponde
         if( cbxDia.getSelectedIndex() == 0 || cbxHora.getSelectedIndex() == 0 ||
             cbxMes.getSelectedIndex() == 0 || cbxDoctores.getSelectedIndex() == 0 
-                || txtAñoCita.getText().equals("AÑO"))
+            || txtAñoCita.getText().equals("AÑO") || txtAñoCita.getText().isBlank() )
         {
             JOptionPane.showMessageDialog(null, "Faltan campos por seleccionar");
             return;
@@ -282,12 +282,13 @@ public class Solicitar extends javax.swing.JFrame {
         //Creamos la cita
         Cita cita = new Cita( pacienteSolicitante,doctor,fecha );
 
-        /*** EXCEPCION ***/
+        
         boolean creada = controlador.añadirCita(cita);
         if( creada ){
             JOptionPane.showMessageDialog(null, "Cita creada:\n " +
                 cita.getFecha().toLocaleString() + "\n" +
                 cita.toString());
+            btnSolicitar.setEnabled(false);
         }else{
             JOptionPane.showMessageDialog(null, "El doctor " + doctor.getNombre() + " ya tiene una cita asignada a esa hora");
         }

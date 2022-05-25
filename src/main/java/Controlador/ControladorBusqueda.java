@@ -32,7 +32,7 @@ public class ControladorBusqueda {
     
     
     /**
-     * 
+     * Metodo para buscar coincidencias en los datos irrepetibles en los administradores
      * @param documento
      * @param correo
      * @param contraseña
@@ -66,7 +66,7 @@ public class ControladorBusqueda {
     }
     
     /**
-     * 
+     * Metodo para buscar coincidencias en los datos irrepetibles en los doctores
      * @param documento
      * @param correo
      * @param contraseña
@@ -98,7 +98,7 @@ public class ControladorBusqueda {
     }
     
     /**
-     * 
+     * Metodo para buscar coincidencias en los datos irrepetibles en las secretarias
      * @param documento
      * @param correo
      * @param contraseña
@@ -131,7 +131,7 @@ public class ControladorBusqueda {
     }
     
     /**
-     * 
+     * Metodo para buscar coincidencias en los datos irrepetibles en los pacientes
      * @param documento
      * @param correo
      * @param contraseña

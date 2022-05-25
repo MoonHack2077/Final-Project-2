@@ -58,10 +58,10 @@ public class ControladorPaciente {
         for (int i = 0; i < getPacientes().size(); i++) {
             if( getPacientes().get(i).getDocumento().equals(documento )){
                 getPacientes().remove(i);
+                Singleton.getINSTANCIA().escribirPacientes();
             }
         }
         
-        Singleton.getINSTANCIA().escribirPacientes();
         return true;
     }
     
@@ -88,10 +88,10 @@ public class ControladorPaciente {
                 getPacientes().get(i).setTelefono(paciente.getTelefono());
                 getPacientes().get(i).setHasEps(paciente.hasEps());
                 getPacientes().get(i).setHasSisben(paciente.hasSisben());
+                Singleton.getINSTANCIA().escribirPacientes();
             }
         }
-        
-        Singleton.getINSTANCIA().escribirPacientes();       
+         
         return true;
     }
 
