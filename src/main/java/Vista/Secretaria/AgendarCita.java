@@ -9,6 +9,7 @@ import Modelo.Cita;
 import Modelo.Doctor;
 import Modelo.Paciente;
 import Modelo.Validacion;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JOptionPane;
 
@@ -28,7 +29,7 @@ public class AgendarCita extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         controlador = new ControladorSolicitarCita();
         this.validacion = new Validacion();
-        llenarComboDoctores();
+        llenarComboDoctores("");
         llenarComboPacientes();
     }
     
@@ -50,6 +51,7 @@ public class AgendarCita extends javax.swing.JFrame {
         txtAñoCita = new javax.swing.JTextField();
         btnSolicitar = new javax.swing.JButton();
         cbxHora = new javax.swing.JComboBox<>();
+        cbxEspecialidad = new javax.swing.JComboBox<>();
         btnVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -71,11 +73,6 @@ public class AgendarCita extends javax.swing.JFrame {
                 txtAñoCitaFocusLost(evt);
             }
         });
-        txtAñoCita.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtAñoCitaActionPerformed(evt);
-            }
-        });
         txtAñoCita.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtAñoCitaKeyTyped(evt);
@@ -91,13 +88,21 @@ public class AgendarCita extends javax.swing.JFrame {
 
         cbxHora.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hora", "7:00 AM", "7:20 AM", "7:40 AM", "8:00 AM", "8:20 AM", "8:40 AM", "9:00 AM", "9:20 AM", "9:40 AM", "10:00 AM", "10:20 AM", "10:40 AM", "11:00 AM", "11:20 AM", "11:40 AM", "1:00 PM", "1:20 PM", "1:40 PM", "2:00 PM", "2:20 PM", "2:40 PM", "3:00 PM", "3:20 PM", "3:40 PM", "4:00 PM", "4:20 PM", "4:40 PM", "5:00 PM", "5:20 PM", "5:40 PM" }));
 
+        cbxEspecialidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione una especialidad", "Medicina General", "Dermatologia", "Odontologia", "Pediatria", "Cardiología", "Urologia", "Gastroenterología", "Anatomía", "Ortopedia", "Oftalmología", "Oncología" }));
+        cbxEspecialidad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxEspecialidadActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(cbxDoctores, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbxEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addGap(85, 85, 85)
@@ -110,15 +115,18 @@ public class AgendarCita extends javax.swing.JFrame {
                                 .addComponent(cbxHora, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addGap(36, 36, 36)
-                            .addComponent(cbxPacientes, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(cbxPacientes, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(cbxDoctores, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(51, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(24, Short.MAX_VALUE)
+                .addGap(30, 30, 30)
+                .addComponent(cbxEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
                 .addComponent(cbxDoctores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                 .addComponent(cbxPacientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32)
                 .addComponent(jLabel3)
@@ -147,21 +155,22 @@ public class AgendarCita extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
+                        .addGap(24, 24, 24)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnVolver))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnVolver)))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addComponent(btnVolver)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(30, 30, 30))
         );
 
@@ -178,17 +187,39 @@ public class AgendarCita extends javax.swing.JFrame {
         cbxHora.setSelectedItem("Hora");
         cbxDoctores.setSelectedItem("Seleccione un doctor");
         llenarComboPacientes();
+        llenarComboDoctores("");
+        cbxEspecialidad.setSelectedItem("Seleccione una especialidad");
     }
     
     /**
      * Metodo que se encarga de llenar el combobox con los doctres y su especialidad para ser seleccionados
      */
-    private void llenarComboDoctores(){
+    private void llenarComboDoctores(String especialidad){
         cbxDoctores.removeAllItems();
+        
+        
+        if( especialidad.equals("") ){
+            cbxDoctores.addItem("Ninguna especialidad seleccionada");
+            btnSolicitar.setEnabled(false);
+            return;
+        }
+        
+        ArrayList<Doctor> doctores = new ArrayList<>();
+        
+        for (Doctor doctor : controlador.getDoctores()) {
+            if( doctor.getEspecialidad().equals(especialidad) ) doctores.add(doctor);
+        }
+        
+        if( doctores.isEmpty() ){
+            cbxDoctores.addItem("No hay doctores con esa especialidad");
+            btnSolicitar.setEnabled(false);
+            return;
+        }
+        
         cbxDoctores.addItem("Seleccione un doctor");
         
         for (Doctor doctor : controlador.getDoctores()) {
-            cbxDoctores.addItem(doctor);
+            if( doctor.getEspecialidad().equals(especialidad) ) cbxDoctores.addItem(doctor);
         }
     }
     
@@ -313,14 +344,8 @@ public class AgendarCita extends javax.swing.JFrame {
             txtAñoCita.setText("AÑO");
         }
     }//GEN-LAST:event_txtAñoCitaFocusLost
-    /**
-     * Metodo para que el usuario solo pueda digitar numeros en el Textfield de AñoCita
-     * @param evt 
-     */
-    private void txtAñoCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAñoCitaActionPerformed
-    
-    }//GEN-LAST:event_txtAñoCitaActionPerformed
-    /**
+
+   /**
      * Metodo para que el usuario solo digite numeros en el textField del Año
      * @param evt 
      */
@@ -328,12 +353,26 @@ public class AgendarCita extends javax.swing.JFrame {
        validacion.soloNumeros(evt);
     }//GEN-LAST:event_txtAñoCitaKeyTyped
 
+    private void cbxEspecialidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxEspecialidadActionPerformed
+        //Si el primer elemento esta seleccionado, no es válido
+        if( cbxEspecialidad.getSelectedIndex()==0 ) {
+            btnSolicitar.setEnabled(false);
+            llenarComboDoctores("");
+            return;
+        }
+
+        llenarComboDoctores(cbxEspecialidad.getSelectedItem().toString());
+        btnSolicitar.setEnabled(true);
+
+    }//GEN-LAST:event_cbxEspecialidadActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSolicitar;
     private javax.swing.JButton btnVolver;
     private javax.swing.JComboBox<String> cbxDia;
     private javax.swing.JComboBox cbxDoctores;
+    private javax.swing.JComboBox<String> cbxEspecialidad;
     private javax.swing.JComboBox<String> cbxHora;
     private javax.swing.JComboBox<String> cbxMes;
     private javax.swing.JComboBox cbxPacientes;

@@ -9,6 +9,7 @@ import Modelo.Cita;
 import Modelo.Doctor;
 import Modelo.Paciente;
 import Modelo.Validacion;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JOptionPane;
 
@@ -32,7 +33,8 @@ public class Solicitar extends javax.swing.JFrame {
         this.paciente = paciente;
         this.validacion = new Validacion();
         cbxPacientes.addItem(this.paciente);
-        llenarComboDoctores();
+        btnSolicitar.setEnabled(false);
+        llenarComboDoctores("");
     }
 
     /**
@@ -54,6 +56,7 @@ public class Solicitar extends javax.swing.JFrame {
         txtAñoCita = new javax.swing.JTextField();
         btnSolicitar = new javax.swing.JButton();
         cbxHora = new javax.swing.JComboBox<>();
+        cbxEspecialidad = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -96,6 +99,13 @@ public class Solicitar extends javax.swing.JFrame {
 
         cbxHora.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hora", "7:00 AM", "7:20 AM", "7:40 AM", "8:00 AM", "8:20 AM", "8:40 AM", "9:00 AM", "9:20 AM", "9:40 AM", "10:00 AM", "10:20 AM", "10:40 AM", "11:00 AM", "11:20 AM", "11:40 AM", "1:00 PM", "1:20 PM", "1:40 PM", "2:00 PM", "2:20 PM", "2:40 PM", "3:00 PM", "3:20 PM", "3:40 PM", "4:00 PM", "4:20 PM", "4:40 PM", "5:00 PM", "5:20 PM", "5:40 PM" }));
 
+        cbxEspecialidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione una especialidad", "Medicina General", "Dermatologia", "Odontologia", "Pediatria", "Cardiología", "Urologia", "Gastroenterología", "Anatomía", "Ortopedia", "Oftalmología", "Oncología" }));
+        cbxEspecialidad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxEspecialidadActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -115,17 +125,20 @@ public class Solicitar extends javax.swing.JFrame {
                         .addGap(57, 57, 57)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(cbxDoctores, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cbxPacientes, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(cbxPacientes, 0, 201, Short.MAX_VALUE)
+                            .addComponent(cbxEspecialidad, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(73, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(24, Short.MAX_VALUE)
+                .addGap(34, 34, 34)
+                .addComponent(cbxEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(41, 41, 41)
                 .addComponent(cbxDoctores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(33, 33, 33)
                 .addComponent(cbxPacientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(cbxDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -160,7 +173,7 @@ public class Solicitar extends javax.swing.JFrame {
                 .addComponent(btnVolver)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         pack();
@@ -207,12 +220,32 @@ public class Solicitar extends javax.swing.JFrame {
     /**
      * Metodo que se encarga de llenar el combobox con los doctres y su especialidad para ser seleccionados
      */
-    private void llenarComboDoctores(){
+    private void llenarComboDoctores(String especialidad){
         cbxDoctores.removeAllItems();
+        
+        
+        if( especialidad.equals("") ){
+            cbxDoctores.addItem("Ninguna especialidad seleccionada");
+            btnSolicitar.setEnabled(false);
+            return;
+        }
+        
+        ArrayList<Doctor> doctores = new ArrayList<>();
+        
+        for (Doctor doctor : controlador.getDoctores()) {
+            if( doctor.getEspecialidad().equals(especialidad) ) doctores.add(doctor);
+        }
+        
+        if( doctores.isEmpty() ){
+            cbxDoctores.addItem("No hay doctores con esa especialidad");
+            btnSolicitar.setEnabled(false);
+            return;
+        }
+        
         cbxDoctores.addItem("Seleccione un doctor");
         
         for (Doctor doctor : controlador.getDoctores()) {
-            cbxDoctores.addItem(doctor);
+            if( doctor.getEspecialidad().equals(especialidad) ) cbxDoctores.addItem(doctor);
         }
     }
     
@@ -294,12 +327,30 @@ public class Solicitar extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnSolicitarActionPerformed
 
+    /**
+     * 
+     * @param evt 
+     */
+    private void cbxEspecialidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxEspecialidadActionPerformed
+        //Si el primer elemento esta seleccionado, no es válido
+        if( cbxEspecialidad.getSelectedIndex()==0 ) {
+            btnSolicitar.setEnabled(false);
+            llenarComboDoctores("");
+            return;
+        }
+        
+        llenarComboDoctores(cbxEspecialidad.getSelectedItem().toString());
+        btnSolicitar.setEnabled(true);
+        
+    }//GEN-LAST:event_cbxEspecialidadActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSolicitar;
     private javax.swing.JButton btnVolver;
     private javax.swing.JComboBox<String> cbxDia;
     private javax.swing.JComboBox cbxDoctores;
+    private javax.swing.JComboBox<String> cbxEspecialidad;
     private javax.swing.JComboBox<String> cbxHora;
     private javax.swing.JComboBox<String> cbxMes;
     private javax.swing.JComboBox cbxPacientes;

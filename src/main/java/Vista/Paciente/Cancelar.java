@@ -29,7 +29,12 @@ public class Cancelar extends javax.swing.JFrame {
         Cita cita = controlador.buscarCita(paciente.getDocumento());
         this.paciente = paciente;
         cbxCitas.addItem(cita);
-        txtDetalleCita.setText(cita.toString());
+        
+        txtDetalleCita.setText(
+                cita.getFecha().toString() + "\n\n" + 
+                cita.toString() + "\n\n" + 
+                "Motivo: " + cita.getDoctor().getEspecialidad()
+        );
     }
 
     /**
@@ -156,7 +161,7 @@ public class Cancelar extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-        VistaPaciente vista = new VistaPaciente(paciente);
+        VistaPaciente vista = new VistaPaciente(this.paciente);
         vista.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnVolverActionPerformed

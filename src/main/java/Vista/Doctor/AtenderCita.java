@@ -237,6 +237,7 @@ public class AtenderCita extends javax.swing.JFrame {
         
         //Se añade la cita al historal del paciente
         cita.getPaciente().getHistorial().add(cita);
+        Singleton.Singleton.getINSTANCIA().escribirPacientes();
         
         boolean eliminada = controladorCita.eliminarCita(cita.getPaciente().getDocumento());
         if( eliminada ){
