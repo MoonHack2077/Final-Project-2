@@ -190,7 +190,7 @@ public class Solicitar extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     /**
-     * 
+     * Metodo para volver a la ventana de las opciones para el paciente
      * @param evt 
      */
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
@@ -260,6 +260,7 @@ public class Solicitar extends javax.swing.JFrame {
             return;
         }
         
+        btnSolicitar.setEnabled(true);
         //Si llega hasta aqui significa que si hay doctores con esa especialidad
         //Por lo tanto procedemos a añadirlos
         cbxDoctores.addItem("Seleccione un doctor");

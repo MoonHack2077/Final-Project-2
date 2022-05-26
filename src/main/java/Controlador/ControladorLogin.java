@@ -35,8 +35,8 @@ public class ControladorLogin {
      * @throws NoEncontradoExcepcion 
      */
     public void añadirAdmin(){
-        Admin juan = new Admin("Juan Manuel Arenas Rincon", "1234567890", "juan@gmail.com", "soyeladmin1", "3000000000", 20, "Soltero");
-        Admin bryan = new Admin("Bryan Alejandro Benavides", "9876543210", "bryan@gmail.com", "soyeladmin2", "4000000000", 20, "Casado");
+        Admin juan = new Admin("Juan Manuel Arenas Rincon", "1234567890", "juan@mihospital.co", "soyeladmin1", "3000000000", 20, "Soltero");
+        Admin bryan = new Admin("Bryan Alejandro Benavides", "9876543210", "bryan@mihospital.co", "soyeladmin2", "4000000000", 20, "Casado");
         
         admins[0] = juan;    
         admins[1] = bryan;

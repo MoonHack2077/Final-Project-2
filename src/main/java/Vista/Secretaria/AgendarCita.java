@@ -230,6 +230,8 @@ public class AgendarCita extends javax.swing.JFrame {
             return;
         }
         
+        btnSolicitar.setEnabled(true);
+        
         //Si llega hasta aqui significa que si hay doctores con esa especialidad
         //Por lo tanto procedemos a añadirlos
         cbxDoctores.addItem("Seleccione un doctor");

@@ -37,7 +37,6 @@ public class ControladorBusqueda {
      * @param correo
      * @param contraseña
      * @param telefono
-     * @return
      * @throws AlmacenadoExcepcion 
      */
     public void buscarAdmin(String documento,String correo, String contraseña, String telefono) throws AlmacenadoExcepcion{
@@ -71,7 +70,6 @@ public class ControladorBusqueda {
      * @param correo
      * @param contraseña
      * @param telefono
-     * @return
      * @throws AlmacenadoExcepcion 
      */
     public void buscarDoctor(String documento, String correo, String contraseña, String telefono) throws AlmacenadoExcepcion{   
@@ -103,7 +101,6 @@ public class ControladorBusqueda {
      * @param correo
      * @param contraseña
      * @param telefono
-     * @return
      * @throws AlmacenadoExcepcion 
      */
     public void buscarSecretaria(String documento, String correo, String contraseña, String telefono)throws AlmacenadoExcepcion{
@@ -136,7 +133,6 @@ public class ControladorBusqueda {
      * @param correo
      * @param contraseña
      * @param telefono
-     * @return
      * @throws AlmacenadoExcepcion 
      */
     public void buscarPaciente(String documento, String correo, String contraseña, String telefono)throws AlmacenadoExcepcion{

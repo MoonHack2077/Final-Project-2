@@ -112,7 +112,7 @@
         </Container>
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Este es tu historial: "/>
+            <Property name="text" type="java.lang.String" value="Historial de: "/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lblPaciente">

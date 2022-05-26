@@ -51,7 +51,7 @@ public class VerHistorial extends javax.swing.JFrame {
         txtHistorial.setRows(5);
         jScrollPane1.setViewportView(txtHistorial);
 
-        jLabel1.setText("Este es tu historial: ");
+        jLabel1.setText("Historial de: ");
 
         cbxCitas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -158,7 +158,7 @@ public class VerHistorial extends javax.swing.JFrame {
         int numeroDeCita = cbxCitas.getSelectedIndex();
         //Se verifica que la cita no sea nula
         if( cita != null ){
-            txtHistorial.setText( "\tCITA " + numeroDeCita + "\n" +
+            txtHistorial.setText( "\t\tCITA " + numeroDeCita + "\n" +
                     cita.getFecha().toString() + "\n" +
                     "Doctor: " + cita.getDoctor().toString() + "\n" +
                     "Paciente: " + cita.getPaciente() + "\n\n" +

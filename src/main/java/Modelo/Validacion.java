@@ -32,7 +32,7 @@ public class Validacion {
                      
         //El 127 corresponde a la tecla de eliminar, y esa si debe permitirse en los textFields
         //El 32 corresponde a la tecla espacio, y esa debe permitirse en el textField
-        if( ( caractera != 127) || (caractera != 32 ) 
+        if( ( caractera != 127) && (caractera != 32 ) 
               && (caracter<'a' || caracter>'z') && (caracter<'A' || caracter>'Z') ) 
         {
             evt.consume();
@@ -73,7 +73,7 @@ public class Validacion {
      * @throws SinLaTerminacionCorrectaExcepcion 
      */
     public void verificarLaTerminacionCorrecta(String correo) throws SinLaTerminacionCorrectaExcepcion {      
-       if( !correo.contains("@mihospital.co") ){
+       if( !correo.endsWith("@mihospital.co") ){
            throw new SinLaTerminacionCorrectaExcepcion();
        }       
     }
