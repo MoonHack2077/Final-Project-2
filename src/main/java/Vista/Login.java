@@ -178,7 +178,7 @@ public class Login extends javax.swing.JFrame {
                 throw new NoEncontradoExcepcion();
             }
         }catch(NoEncontradoExcepcion ex){
-            JOptionPane.showMessageDialog(rootPane, ex.getMessage());
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }//GEN-LAST:event_btnEntrarActionPerformed
 

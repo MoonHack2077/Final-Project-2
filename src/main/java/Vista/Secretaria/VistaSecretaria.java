@@ -143,7 +143,7 @@ public class VistaSecretaria extends javax.swing.JFrame {
 
     
     /**
-     * 
+     * Metodo para cambiar de ventana
      * @param ventana 
      */
     private void cambiarVentana(javax.swing.JFrame ventana){

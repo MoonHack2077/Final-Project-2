@@ -5,6 +5,7 @@
 package Vista.Secretaria;
 
 import Controlador.ControladorPagoMulta;
+import Excepciones.DatoDigitadoExcepcion;
 import Modelo.Multa;
 import Modelo.Validacion;
 import java.util.Date;
@@ -49,6 +50,7 @@ public class PagoMulta extends javax.swing.JFrame {
         cbxMes = new javax.swing.JComboBox<>();
         txtAñoCita = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
+        lblValidacion = new javax.swing.JLabel();
         btnVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -72,9 +74,9 @@ public class PagoMulta extends javax.swing.JFrame {
             }
         });
 
-        txtTotal.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTotalActionPerformed(evt);
+        txtTotal.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTotalKeyTyped(evt);
             }
         });
 
@@ -83,18 +85,8 @@ public class PagoMulta extends javax.swing.JFrame {
         jLabel3.setText("Ingrese la fecha del pago:");
 
         cbxDia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dia", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
-        cbxDia.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbxDiaActionPerformed(evt);
-            }
-        });
 
         cbxMes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mes", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
-        cbxMes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbxMesActionPerformed(evt);
-            }
-        });
 
         txtAñoCita.setText("AÑO");
         txtAñoCita.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -105,11 +97,6 @@ public class PagoMulta extends javax.swing.JFrame {
                 txtAñoCitaFocusLost(evt);
             }
         });
-        txtAñoCita.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtAñoCitaActionPerformed(evt);
-            }
-        });
         txtAñoCita.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtAñoCitaKeyTyped(evt);
@@ -118,24 +105,28 @@ public class PagoMulta extends javax.swing.JFrame {
 
         jLabel2.setText("Detalle de la multa:");
 
+        lblValidacion.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        lblValidacion.setForeground(new java.awt.Color(255, 0, 0));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(123, 123, 123)
+                .addComponent(btnPagar)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(95, 95, 95)
-                        .addComponent(btnPagar))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(6, 6, 6)
                                 .addComponent(jLabel2))
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)
-                                .addComponent(cbxMultas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(jScrollPane1)
+                                .addComponent(cbxMultas, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(55, 55, 55)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -147,8 +138,11 @@ public class PagoMulta extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addGap(18, 18, 18)
-                                .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(36, 36, 36))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblValidacion, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -171,9 +165,11 @@ public class PagoMulta extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
-                .addGap(18, 18, 18)
+                .addGap(27, 27, 27)
                 .addComponent(btnPagar)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addComponent(lblValidacion, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(19, 19, 19))
         );
 
         btnVolver.setText("Volver");
@@ -188,23 +184,20 @@ public class PagoMulta extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(14, 14, 14)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addComponent(btnVolver))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(43, 43, 43)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(50, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnVolver))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(15, 15, 15)
+                .addGap(9, 9, 9)
                 .addComponent(btnVolver)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         pack();
@@ -225,7 +218,7 @@ public class PagoMulta extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnPagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagarActionPerformed
-        //Validacion necesaria por si en algun combobox se selecciona un elemento que no corresponde 
+        //Validamos los campos
         if( cbxDia.getSelectedIndex() == 0 || cbxMes.getSelectedIndex() == 0  || 
                 txtAñoCita.getText().equals("AÑO") || txtAñoCita.getText().isBlank() )
         {
@@ -303,7 +296,7 @@ public class PagoMulta extends javax.swing.JFrame {
     }//GEN-LAST:event_cbxMultasActionPerformed
 
     /**
-     * 
+     * Metodo para remover el texto del texfield del año, ya que este es solo un indicador
      * @param evt 
      */
     private void txtAñoCitaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtAñoCitaFocusGained
@@ -313,7 +306,7 @@ public class PagoMulta extends javax.swing.JFrame {
     }//GEN-LAST:event_txtAñoCitaFocusGained
 
     /**
-     * 
+     * Metodo para insertar el indicador de AÑO si este pierde el foco y no habia nada escrito
      * @param evt 
      */
     private void txtAñoCitaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtAñoCitaFocusLost
@@ -322,37 +315,32 @@ public class PagoMulta extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtAñoCitaFocusLost
      
-     /**
-     * Metodo para que el usuario solo digite numeros en el textField años citas
-     * @param evt 
-     */
-    private void txtAñoCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAñoCitaActionPerformed
-        // TODO add your handling code here:
-    
-    }//GEN-LAST:event_txtAñoCitaActionPerformed
+   
     /**
-     * Metodo para que el usuario solo digite numeros en el textField total
-     * @param evt 
-     */
-    private void txtTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTotalActionPerformed
-      
-    }//GEN-LAST:event_txtTotalActionPerformed
-
-    private void cbxMesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxMesActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cbxMesActionPerformed
-
-    private void cbxDiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxDiaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cbxDiaActionPerformed
-    
-    /**
-     * Metodo para que el usuario solo digite numeros en el textField del año cita
+     * Metodo para que el usuario solo digite numeros en el textField del año del pago
      * @param evt 
      */
     private void txtAñoCitaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAñoCitaKeyTyped
-        validacion.soloNumeros(evt);
+        try{
+              lblValidacion.setText("");
+              validacion.validarSoloNumeros(evt);
+          }catch( DatoDigitadoExcepcion ex ){
+              lblValidacion.setText(ex.getMessage());
+          }
     }//GEN-LAST:event_txtAñoCitaKeyTyped
+
+    /**
+     * Metodo para que el usuario solo digite numeros en el textField del total a pagar
+     * @param evt 
+     */
+    private void txtTotalKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTotalKeyTyped
+        try{
+              lblValidacion.setText("");
+              validacion.validarSoloNumeros(evt);
+          }catch( DatoDigitadoExcepcion ex ){
+              lblValidacion.setText(ex.getMessage());
+          }
+    }//GEN-LAST:event_txtTotalKeyTyped
 
     /**
      * Metodo que se encarga de llenar el combobox con los pacientes para ser seleccionados
@@ -388,6 +376,7 @@ public class PagoMulta extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblValidacion;
     private javax.swing.JTextField txtAñoCita;
     private javax.swing.JTextArea txtDetalle;
     private javax.swing.JTextField txtTotal;

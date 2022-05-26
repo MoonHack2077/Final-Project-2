@@ -145,8 +145,7 @@ public class Cancelar extends javax.swing.JFrame {
         //Confirmamos si se desea cancelar la cita
         int confirmacion = JOptionPane.showConfirmDialog(null, "¿Seguro desea cancelar esta cita?");
 
-        if( confirmacion==0 ){
-            /*** EXCEPCION ***/
+        if( confirmacion==0 ){            
             boolean cancelada = controlador.eliminarCita(cita.getPaciente().getDocumento());
             if( cancelada ){
                 JOptionPane.showMessageDialog(null, "Cita cancelada");

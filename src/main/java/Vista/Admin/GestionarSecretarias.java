@@ -6,8 +6,14 @@ package Vista.Admin;
 
 import Controlador.ControladorSecretaria;
 import Excepciones.AlmacenadoExcepcion;
+import Excepciones.ContraseñaInseguraExcepcion;
+import Excepciones.CorreoInvalidoExcepcion;
+import Excepciones.DatoDigitadoExcepcion;
 import Excepciones.MayorDeEdadExcepcion;
+import Excepciones.NoCuentaConExpExcepcion;
 import Excepciones.NoEncontradoExcepcion;
+import Excepciones.SinLaTerminacionCorrectaExcepcion;
+import Excepciones.TelefonoCortoExcepcion;
 import Modelo.Secretaria;
 import Modelo.Validacion;
 import javax.swing.JOptionPane;
@@ -87,6 +93,7 @@ public class GestionarSecretarias extends javax.swing.JFrame {
         cbxEstados = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         txtAñosExp = new javax.swing.JTextField();
+        lblValidacion = new javax.swing.JLabel();
         btnVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -136,6 +143,12 @@ public class GestionarSecretarias extends javax.swing.JFrame {
             }
         });
 
+        txtTelefono.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTelefonoKeyTyped(evt);
+            }
+        });
+
         btnEditar.setText("Editar");
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -166,6 +179,9 @@ public class GestionarSecretarias extends javax.swing.JFrame {
                 txtAñosExpKeyTyped(evt);
             }
         });
+
+        lblValidacion.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        lblValidacion.setForeground(new java.awt.Color(255, 0, 0));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -214,6 +230,10 @@ public class GestionarSecretarias extends javax.swing.JFrame {
                                 .addGap(41, 41, 41)
                                 .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(0, 10, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addComponent(lblValidacion, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -254,12 +274,14 @@ public class GestionarSecretarias extends javax.swing.JFrame {
                 .addComponent(cbxEstados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(cbxSecretarias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEditar)
                     .addComponent(btnEliminar)
                     .addComponent(btnAñadir))
-                .addGap(29, 29, 29))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addComponent(lblValidacion, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         btnVolver.setText("Volver");
@@ -319,7 +341,12 @@ public class GestionarSecretarias extends javax.swing.JFrame {
      * @param evt 
      */
     private void txtNombre2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombre2KeyTyped
-        validacion.soloLetras(evt);
+        try{
+            lblValidacion.setText("");
+            validacion.validarSoloLetras(evt);
+        }catch( DatoDigitadoExcepcion ex ){
+            lblValidacion.setText(ex.getMessage());
+        }
     }//GEN-LAST:event_txtNombre2KeyTyped
 
     /**
@@ -327,7 +354,12 @@ public class GestionarSecretarias extends javax.swing.JFrame {
      * @param evt 
      */
     private void txtDocumentoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDocumentoKeyTyped
-        validacion.soloNumeros(evt);
+        try{
+            lblValidacion.setText("");
+            validacion.validarSoloNumeros(evt);
+        }catch( DatoDigitadoExcepcion ex ){
+            lblValidacion.setText(ex.getMessage());
+        }
     }//GEN-LAST:event_txtDocumentoKeyTyped
 
     /**
@@ -345,6 +377,13 @@ public class GestionarSecretarias extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Faltan campos por llenar");
                 return;
             }
+            
+            //Hacemos mas validaciones
+            validacion.verificarArroba(txtCorreo.getText());
+            validacion.verificarLaTerminacionCorrecta(txtCorreo.getText());
+            validacion.validarTelefono(txtTelefono.getText());
+            validacion.validarContraseña(txtContraseña.getText());
+            validacion.validarAñosExp(Integer.parseInt(txtAñosExp.getText()));
 
             //Se obtienen los valores de los textFields
             String nombre = txtNombre2.getText();
@@ -364,8 +403,11 @@ public class GestionarSecretarias extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Secretaria con el documento: " + documento + " añadida");
             limpiarInputs();
             llenarComboSecretarias();
-        }catch(MayorDeEdadExcepcion | AlmacenadoExcepcion ex){
-            JOptionPane.showMessageDialog(rootPane, ex.getMessage());
+        }catch(MayorDeEdadExcepcion | AlmacenadoExcepcion | TelefonoCortoExcepcion
+                | ContraseñaInseguraExcepcion | SinLaTerminacionCorrectaExcepcion
+                | CorreoInvalidoExcepcion | NoCuentaConExpExcepcion ex)
+        {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }//GEN-LAST:event_btnAñadirActionPerformed
 
@@ -406,6 +448,13 @@ public class GestionarSecretarias extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Faltan campos por llenar");
                 return;
             }
+            
+            //Hacemos mas validaciones
+            validacion.verificarArroba(txtCorreo.getText());
+            validacion.verificarLaTerminacionCorrecta(txtCorreo.getText());
+            validacion.validarTelefono(txtTelefono.getText());
+            validacion.validarContraseña(txtContraseña.getText());
+            validacion.validarAñosExp(Integer.parseInt(txtAñosExp.getText()));
 
             //Se obtienen los valores de los textFields
             String nombre = txtNombre2.getText();
@@ -426,8 +475,11 @@ public class GestionarSecretarias extends javax.swing.JFrame {
             limpiarInputs();
             llenarComboSecretarias();
             setEnabledInputs(false);
-        }catch(MayorDeEdadExcepcion | NoEncontradoExcepcion ex){
-            JOptionPane.showMessageDialog(rootPane, ex.getMessage());
+        }catch(MayorDeEdadExcepcion | AlmacenadoExcepcion | TelefonoCortoExcepcion
+                | ContraseñaInseguraExcepcion | SinLaTerminacionCorrectaExcepcion
+                | CorreoInvalidoExcepcion | NoCuentaConExpExcepcion ex)
+        {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }//GEN-LAST:event_btnEditarActionPerformed
 
@@ -436,7 +488,12 @@ public class GestionarSecretarias extends javax.swing.JFrame {
      * @param evt 
      */
     private void txtEdadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEdadKeyTyped
-        validacion.soloNumeros(evt);
+        try{
+            lblValidacion.setText("");
+            validacion.validarSoloNumeros(evt);
+        }catch( DatoDigitadoExcepcion ex ){
+            lblValidacion.setText(ex.getMessage());
+        }
     }//GEN-LAST:event_txtEdadKeyTyped
     
     
@@ -487,8 +544,26 @@ public class GestionarSecretarias extends javax.swing.JFrame {
      * @param evt 
      */
     private void txtAñosExpKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAñosExpKeyTyped
-        validacion.soloNumeros(evt);
+        try{
+            lblValidacion.setText("");
+            validacion.validarSoloNumeros(evt);
+        }catch( DatoDigitadoExcepcion ex ){
+            lblValidacion.setText(ex.getMessage());
+        }
     }//GEN-LAST:event_txtAñosExpKeyTyped
+
+    /**
+     * Metodo para que en el textField del telefono solo se puedan ingresar numeros
+     * @param evt 
+     */
+    private void txtTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyTyped
+        try{
+            lblValidacion.setText("");
+            validacion.validarSoloNumeros(evt);
+        }catch( DatoDigitadoExcepcion ex ){
+            lblValidacion.setText(ex.getMessage());
+        }
+    }//GEN-LAST:event_txtTelefonoKeyTyped
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -507,6 +582,7 @@ public class GestionarSecretarias extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lblValidacion;
     private javax.swing.JTextField txtAñosExp;
     private javax.swing.JTextField txtContraseña;
     private javax.swing.JTextField txtCorreo;

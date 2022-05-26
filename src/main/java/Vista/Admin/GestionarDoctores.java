@@ -6,8 +6,13 @@ package Vista.Admin;
 
 import Controlador.ControladorDoctor;
 import Excepciones.AlmacenadoExcepcion;
+import Excepciones.ContraseñaInseguraExcepcion;
+import Excepciones.CorreoInvalidoExcepcion;
+import Excepciones.DatoDigitadoExcepcion;
 import Excepciones.MayorDeEdadExcepcion;
 import Excepciones.NoEncontradoExcepcion;
+import Excepciones.SinLaTerminacionCorrectaExcepcion;
+import Excepciones.TelefonoCortoExcepcion;
 import Modelo.Doctor;
 import Modelo.Validacion;
 import javax.swing.JOptionPane;
@@ -63,6 +68,7 @@ public class GestionarDoctores extends javax.swing.JFrame {
         txtTelefono = new javax.swing.JTextField();
         cbxDoctores = new javax.swing.JComboBox();
         cbxEstados = new javax.swing.JComboBox<>();
+        lblValidacion = new javax.swing.JLabel();
         btnVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -131,6 +137,12 @@ public class GestionarDoctores extends javax.swing.JFrame {
 
         jLabel7.setText("Telefono:");
 
+        txtTelefono.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTelefonoKeyTyped(evt);
+            }
+        });
+
         cbxDoctores.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbxDoctoresActionPerformed(evt);
@@ -139,49 +151,56 @@ public class GestionarDoctores extends javax.swing.JFrame {
 
         cbxEstados.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione su estado civil", "Casado", "Soltero", "Viudo", "Divorciado" }));
 
+        lblValidacion.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        lblValidacion.setForeground(new java.awt.Color(255, 0, 0));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel7))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel7))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(txtDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtNombre2, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(28, 28, 28)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtEdad, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(cbxEspecialidad, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(txtCorreo)
-                                    .addComponent(txtContraseña)
-                                    .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cbxEstados, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                        .addGap(27, 27, 27)
-                        .addComponent(btnLimpiar))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtNombre2, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtEdad, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(cbxEspecialidad, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtCorreo)
+                            .addComponent(txtContraseña)
+                            .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbxEstados, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGap(27, 27, 27)
+                .addComponent(btnLimpiar)
+                .addGap(0, 11, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(77, 77, 77)
+                        .addComponent(cbxDoctores, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblValidacion, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(btnAñadir, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(58, 58, 58)
                                 .addComponent(btnEliminar)
                                 .addGap(52, 52, 52)
-                                .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(cbxDoctores, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(62, 62, 62)))
-                .addGap(0, 11, Short.MAX_VALUE))
+                                .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -220,14 +239,16 @@ public class GestionarDoctores extends javax.swing.JFrame {
                     .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
                 .addComponent(cbxEstados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(cbxDoctores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
+                .addGap(27, 27, 27)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEditar)
                     .addComponent(btnAñadir)
                     .addComponent(btnEliminar))
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addComponent(lblValidacion, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(15, 15, 15))
         );
 
         btnVolver.setText("Volver");
@@ -242,23 +263,22 @@ public class GestionarDoctores extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(btnVolver))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(22, Short.MAX_VALUE))
+                        .addGap(6, 6, 6)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnVolver))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(btnVolver)
-                .addGap(18, 18, 18)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -308,6 +328,12 @@ public class GestionarDoctores extends javax.swing.JFrame {
                 return;
             }
 
+            //Hacemos mas validaciones
+            validacion.verificarArroba(txtCorreo.getText());
+            validacion.verificarLaTerminacionCorrecta(txtCorreo.getText());
+            validacion.validarTelefono(txtTelefono.getText());
+            validacion.validarContraseña(txtContraseña.getText());
+            
             //Se obtienen los valores de los textFields
             String nombre = txtNombre2.getText();
             String documento = txtDocumento.getText();
@@ -321,13 +347,15 @@ public class GestionarDoctores extends javax.swing.JFrame {
             //Creamos al doctor con sus respectivos datos
             Doctor doctor = new Doctor(nombre,documento,correo,contraseña,telefono,edad,estadoCivil, especialidad);
 
-            //Verificamos se se añade el doctor
+            //Se añade al doctor
             controlador.añadirDoctor(doctor);
             JOptionPane.showMessageDialog(null, "Doctor con el documento: " + documento + " añadido");
             limpiarInputs();
             llenarComboDoctores();
-        }catch(MayorDeEdadExcepcion | AlmacenadoExcepcion ex){
-            JOptionPane.showMessageDialog(rootPane, ex.getMessage());
+        }catch(MayorDeEdadExcepcion | AlmacenadoExcepcion | TelefonoCortoExcepcion
+                | ContraseñaInseguraExcepcion | SinLaTerminacionCorrectaExcepcion
+                | CorreoInvalidoExcepcion ex){
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }       
     }//GEN-LAST:event_btnAñadirActionPerformed
 
@@ -343,7 +371,7 @@ public class GestionarDoctores extends javax.swing.JFrame {
             }
             Doctor doctor = (Doctor) cbxDoctores.getSelectedItem();
 
-            //Verificamos se se elimina el empleado
+            //Se elimina el empleado
             controlador.eliminarDoctor(doctor.getDocumento());
             JOptionPane.showMessageDialog(null, "Doctor con el documento: " + doctor.getDocumento() + " eliminado");
             limpiarInputs();
@@ -364,11 +392,17 @@ public class GestionarDoctores extends javax.swing.JFrame {
             if( txtDocumento.getText().isBlank() || txtEdad.getText().isBlank()
                 || txtNombre2.getText().isBlank() || cbxEspecialidad.getSelectedIndex()==0  
                 || txtContraseña.getText().isBlank() || txtCorreo.getText().isBlank() 
-                || txtTelefono.getText().isBlank() || cbxEstados.getSelectedIndex() == 0  )
-            {
+                || txtTelefono.getText().isBlank() || cbxEstados.getSelectedIndex() == 0  
+            ){
                 JOptionPane.showMessageDialog(null, "Faltan campos por llenar");
                 return;
             }
+            
+            //Hacemos mas validaciones
+            validacion.verificarArroba(txtCorreo.getText());
+            validacion.verificarLaTerminacionCorrecta(txtCorreo.getText());
+            validacion.validarTelefono(txtTelefono.getText());
+            validacion.validarContraseña(txtContraseña.getText());
 
             //Se obtienen los valores de los textFields
             String nombre = txtNombre2.getText();
@@ -383,14 +417,17 @@ public class GestionarDoctores extends javax.swing.JFrame {
             //Creamos al doctor con sus respectivos datos
             Doctor doctor = new Doctor(nombre,documento,correo,contraseña,telefono,edad,estadoCivil, especialidad);
 
-            //Verificamos si los datos del doctor fueron editados
+            //VSe editan los datos del doctor
             controlador.editarDoctor(doctor);
             JOptionPane.showMessageDialog(null, "Doctor con el documento: " + documento + " editado");
             limpiarInputs();
             llenarComboDoctores();
             setEnabledInputs(false);
-        }catch(MayorDeEdadExcepcion | NoEncontradoExcepcion ex){
-            JOptionPane.showMessageDialog(rootPane, ex.getMessage());
+        }catch(MayorDeEdadExcepcion | AlmacenadoExcepcion | TelefonoCortoExcepcion
+                | ContraseñaInseguraExcepcion | SinLaTerminacionCorrectaExcepcion
+                | CorreoInvalidoExcepcion ex)
+        {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         } 
     }//GEN-LAST:event_btnEditarActionPerformed
 
@@ -419,8 +456,12 @@ public class GestionarDoctores extends javax.swing.JFrame {
      * @param evt 
      */
     private void txtNombre2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombre2KeyTyped
-        validacion.soloLetras(evt);
-
+        try{
+            lblValidacion.setText("");
+            validacion.validarSoloLetras(evt);
+        }catch( DatoDigitadoExcepcion ex ){
+            lblValidacion.setText(ex.getMessage());
+        }
     }//GEN-LAST:event_txtNombre2KeyTyped
 
     /**
@@ -428,7 +469,12 @@ public class GestionarDoctores extends javax.swing.JFrame {
      * @param evt 
      */
     private void txtDocumentoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDocumentoKeyTyped
-        validacion.soloNumeros(evt);
+        try{
+            lblValidacion.setText("");
+            validacion.validarSoloNumeros(evt);
+        }catch( DatoDigitadoExcepcion ex ){
+            lblValidacion.setText(ex.getMessage());
+        }
     }//GEN-LAST:event_txtDocumentoKeyTyped
 
     /**
@@ -436,11 +482,16 @@ public class GestionarDoctores extends javax.swing.JFrame {
      * @param evt 
      */
     private void txtEdadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEdadKeyTyped
-        validacion.soloNumeros(evt);
+        try{
+            lblValidacion.setText("");
+            validacion.validarSoloNumeros(evt);
+        }catch( DatoDigitadoExcepcion ex ){
+            lblValidacion.setText(ex.getMessage());
+        }
     }//GEN-LAST:event_txtEdadKeyTyped
   
     /**
-     * Metodo para llenar elñ combobox de los doctores
+     * Metodo para llenar el combobox de los doctores
      */
     private void llenarComboDoctores(){
         cbxDoctores.removeAllItems();
@@ -481,6 +532,19 @@ public class GestionarDoctores extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_cbxDoctoresActionPerformed
 
+    /**
+     * Metodo para que en el textfield del telefono unicamente se digiten numeros
+     * @param evt 
+     */
+    private void txtTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyTyped
+        try{
+            lblValidacion.setText("");
+            validacion.validarSoloNumeros(evt);
+        }catch( DatoDigitadoExcepcion ex ){
+            lblValidacion.setText(ex.getMessage());
+        }
+    }//GEN-LAST:event_txtTelefonoKeyTyped
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAñadir;
@@ -499,6 +563,7 @@ public class GestionarDoctores extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lblValidacion;
     private javax.swing.JTextField txtContraseña;
     private javax.swing.JTextField txtCorreo;
     private javax.swing.JTextField txtDocumento;

@@ -6,7 +6,12 @@ package Vista.Paciente;
 
 import Controlador.ControladorPaciente;
 import Excepciones.AlmacenadoExcepcion;
+import Excepciones.ContraseñaInseguraExcepcion;
+import Excepciones.CorreoInvalidoExcepcion;
+import Excepciones.DatoDigitadoExcepcion;
 import Excepciones.MayorDeEdadExcepcion;
+import Excepciones.SinLaTerminacionCorrectaExcepcion;
+import Excepciones.TelefonoCortoExcepcion;
 import Modelo.Paciente;
 import Modelo.Validacion;
 import Vista.Login;
@@ -64,6 +69,7 @@ public class Registrarse extends javax.swing.JFrame {
         txtTelefono = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         cbxEstados = new javax.swing.JComboBox<>();
+        lblValidacion = new javax.swing.JLabel();
         btnVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -126,10 +132,19 @@ public class Registrarse extends javax.swing.JFrame {
 
         cbxEstados.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione su estado civil", "Casado", "Soltero", "Viudo", "Divorciado" }));
 
+        lblValidacion.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        lblValidacion.setForeground(new java.awt.Color(255, 0, 0));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(rbnSisben)
+                .addGap(30, 30, 30)
+                .addComponent(rbnEps)
+                .addGap(136, 136, 136))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -160,14 +175,11 @@ public class Registrarse extends javax.swing.JFrame {
                         .addComponent(btnLimpiar))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(161, 161, 161)
-                        .addComponent(btnRegistrar)))
+                        .addComponent(btnRegistrar))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(46, 46, 46)
+                        .addComponent(lblValidacion, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(rbnSisben)
-                .addGap(30, 30, 30)
-                .addComponent(rbnEps)
-                .addGap(136, 136, 136))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -208,7 +220,9 @@ public class Registrarse extends javax.swing.JFrame {
                     .addComponent(rbnEps))
                 .addGap(38, 38, 38)
                 .addComponent(btnRegistrar)
-                .addGap(53, 53, 53))
+                .addGap(18, 18, 18)
+                .addComponent(lblValidacion, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16))
         );
 
         btnVolver.setText("Volver");
@@ -259,6 +273,12 @@ public class Registrarse extends javax.swing.JFrame {
                 return;
             }
 
+            //Hacemos mas validaciones
+            validacion.verificarArroba(txtCorreo.getText());
+            validacion.verificarLaTerminacionCorrecta(txtCorreo.getText());
+            validacion.validarTelefono(txtTelefono.getText());
+            validacion.validarContraseña(txtContraseña.getText());
+            
             //Obteniendo los datos del paciente
             String nombre = txtNombre2.getText();
             String documento = txtDocumento.getText();
@@ -276,8 +296,10 @@ public class Registrarse extends javax.swing.JFrame {
             controlador.añadirPaciente(paciente);
             JOptionPane.showMessageDialog(null, "Se añadio el paciente con documento " + documento);
             abrirVistaPaciente(paciente);
-        }catch(MayorDeEdadExcepcion | AlmacenadoExcepcion ex){
-            JOptionPane.showMessageDialog(rootPane, ex.getMessage());
+        }catch(MayorDeEdadExcepcion | AlmacenadoExcepcion | TelefonoCortoExcepcion
+                | ContraseñaInseguraExcepcion | SinLaTerminacionCorrectaExcepcion
+                | CorreoInvalidoExcepcion ex){
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
@@ -296,7 +318,12 @@ public class Registrarse extends javax.swing.JFrame {
      * @param evt 
      */
     private void txtNombre2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombre2KeyTyped
-        validacion.soloLetras(evt);
+        try{
+            lblValidacion.setText("");
+            validacion.validarSoloLetras(evt);
+        }catch( DatoDigitadoExcepcion ex ){
+            lblValidacion.setText(ex.getMessage());
+        }
     }//GEN-LAST:event_txtNombre2KeyTyped
 
     /**
@@ -304,7 +331,12 @@ public class Registrarse extends javax.swing.JFrame {
      * @param evt 
      */
     private void txtDocumentoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDocumentoKeyTyped
-        validacion.soloNumeros(evt);
+        try{
+            lblValidacion.setText("");
+            validacion.validarSoloNumeros(evt);
+        }catch( DatoDigitadoExcepcion ex ){
+            lblValidacion.setText(ex.getMessage());
+        }
     }//GEN-LAST:event_txtDocumentoKeyTyped
 
     /**
@@ -312,7 +344,12 @@ public class Registrarse extends javax.swing.JFrame {
      * @param evt 
      */
     private void txtEdadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEdadKeyTyped
-        validacion.soloNumeros(evt);
+        try{
+            lblValidacion.setText("");
+            validacion.validarSoloNumeros(evt);
+        }catch( DatoDigitadoExcepcion ex ){
+            lblValidacion.setText(ex.getMessage());
+        }
     }//GEN-LAST:event_txtEdadKeyTyped
 
     /**
@@ -335,7 +372,12 @@ public class Registrarse extends javax.swing.JFrame {
      * @param evt 
      */
     private void txtTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyTyped
-        validacion.soloNumeros(evt);
+        try{
+            lblValidacion.setText("");
+            validacion.validarSoloNumeros(evt);
+        }catch( DatoDigitadoExcepcion ex ){
+            lblValidacion.setText(ex.getMessage());
+        }
     }//GEN-LAST:event_txtTelefonoKeyTyped
 
     /**
@@ -361,6 +403,7 @@ public class Registrarse extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lblValidacion;
     private javax.swing.JRadioButton rbnEps;
     private javax.swing.JRadioButton rbnSisben;
     private javax.swing.ButtonGroup salud;
