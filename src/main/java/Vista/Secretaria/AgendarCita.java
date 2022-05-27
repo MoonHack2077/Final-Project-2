@@ -6,14 +6,12 @@ package Vista.Secretaria;
 
 import Controlador.ControladorSolicitarCita;
 import Excepciones.CoincideConFechaBloqueadaExcepcion;
-import Excepciones.DatoDigitadoExcepcion;
 import Excepciones.DiaNoDisponibleExcepcion;
 import Excepciones.EspecialidadNoEncontradaExcepcion;
 import Modelo.Cita;
 import Modelo.Doctor;
 import Modelo.Paciente;
 import Modelo.Validacion;
-import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JOptionPane;
 
@@ -24,7 +22,6 @@ import javax.swing.JOptionPane;
 public class AgendarCita extends javax.swing.JFrame {
 
     private ControladorSolicitarCita controlador;
-    private Validacion validacion;
     /**
      * Creates new form GestionarCita
      */
@@ -32,7 +29,6 @@ public class AgendarCita extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         controlador = new ControladorSolicitarCita();
-        this.validacion = new Validacion();
         llenarComboPacientes();
     }
     
@@ -49,13 +45,11 @@ public class AgendarCita extends javax.swing.JFrame {
         cbxDoctores = new javax.swing.JComboBox();
         cbxPacientes = new javax.swing.JComboBox();
         jLabel3 = new javax.swing.JLabel();
-        cbxDia = new javax.swing.JComboBox<>();
-        cbxMes = new javax.swing.JComboBox<>();
-        txtAñoCita = new javax.swing.JTextField();
         btnSolicitar = new javax.swing.JButton();
         cbxHora = new javax.swing.JComboBox<>();
         cbxEspecialidad = new javax.swing.JComboBox<>();
         lblValidacion = new javax.swing.JLabel();
+        dateChooser = new com.toedter.calendar.JDateChooser();
         btnVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -63,25 +57,6 @@ public class AgendarCita extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "AGENDAR CITA", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 
         jLabel3.setText("Ingrese la fecha de la cita:");
-
-        cbxDia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dia", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
-
-        cbxMes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mes", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
-
-        txtAñoCita.setText("AÑO");
-        txtAñoCita.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtAñoCitaFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtAñoCitaFocusLost(evt);
-            }
-        });
-        txtAñoCita.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtAñoCitaKeyTyped(evt);
-            }
-        });
 
         btnSolicitar.setText("AGENDAR CITA");
         btnSolicitar.addActionListener(new java.awt.event.ActionListener() {
@@ -106,53 +81,45 @@ public class AgendarCita extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(89, 89, 89)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(cbxDoctores, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cbxPacientes, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cbxEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(12, 12, 12))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cbxHora, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(dateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnSolicitar, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(cbxEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGap(49, 49, 49)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(txtAñoCita, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(cbxDia, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(cbxMes, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(cbxHora, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addComponent(cbxPacientes, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(cbxDoctores, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnSolicitar, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(90, 90, 90))
-                    .addComponent(lblValidacion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(lblValidacion, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(cbxEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(cbxDoctores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addComponent(cbxPacientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(cbxDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cbxHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cbxDoctores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(cbxMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtAñoCita, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(42, 42, 42)
+                .addComponent(cbxPacientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(36, 36, 36)
+                .addComponent(jLabel3)
+                .addGap(18, 18, 18)
+                .addComponent(dateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(39, 39, 39)
+                .addComponent(cbxHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(113, 113, 113)
                 .addComponent(btnSolicitar)
-                .addGap(40, 40, 40)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblValidacion, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -195,9 +162,6 @@ public class AgendarCita extends javax.swing.JFrame {
      * Metodo que resetea los campos
      */
     private void resetear(){
-        txtAñoCita.setText("AÑO");
-        cbxDia.setSelectedItem("Dia");
-        cbxMes.setSelectedItem("Mes");
         cbxHora.setSelectedItem("Hora");
         cbxDoctores.setSelectedItem("Seleccione un doctor");
         llenarComboPacientes();
@@ -251,9 +215,7 @@ public class AgendarCita extends javax.swing.JFrame {
     private void btnSolicitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSolicitarActionPerformed
         try{
             //Validamos los campos 
-            if( cbxDia.getSelectedIndex() == 0 || cbxHora.getSelectedIndex() == 0 ||
-                cbxMes.getSelectedIndex() == 0 || cbxDoctores.getSelectedIndex() == 0 
-                || txtAñoCita.getText().equals("AÑO") || txtAñoCita.getText().isBlank() )
+            if( cbxHora.getSelectedIndex() == 0 || cbxDoctores.getSelectedIndex() == 0 )
             {
                 JOptionPane.showMessageDialog(null, "Faltan campos por seleccionar");
                 return;
@@ -263,31 +225,8 @@ public class AgendarCita extends javax.swing.JFrame {
             Doctor doctor = (Doctor) cbxDoctores.getSelectedItem();
             Paciente pacienteSolicitante = (Paciente) cbxPacientes.getSelectedItem();
 
-            //Parseamos los datos para crear la fecha
-            int dia = Integer.parseInt(cbxDia.getSelectedItem().toString());
-            int mes = Integer.parseInt(cbxMes.getSelectedItem().toString());
-            int año = Integer.parseInt(txtAñoCita.getText());
-
-            //En caso de que el mes sea 2 (febrero), validar si los dias y el año corresponden
-            if( mes == 2 && dia >= 30 ){
-                JOptionPane.showMessageDialog(null, "Febrero no tiene esa cantidad de dias");
-                return;
-            }
-
-            //En caso de que el mes sea 2 (febrero), validar si es un año bisiesto
-            if( mes == 2 && dia == 29 && año % 4 != 0 ){
-                JOptionPane.showMessageDialog(null, "Febrero no tiene esa cantidad de dias");
-                return;
-            }
-
-            // los meses 4, 6, 9 y 11 solo tienen 30 dias
-            if( (mes == 4 || mes == 6 || mes == 9 || mes == 11 ) && ( dia == 31 ) ){
-                JOptionPane.showMessageDialog(null, "El mes seleccionado no tiene esa cantidad de dias");
-                return;
-            }
-
             //Creamos la fecha para compararla con la fecha bloqueada
-            Date fechaAux = new Date(año, mes-1, dia);
+            Date fechaAux = dateChooser.getDate();
 
             //Validamos si la fecha elegida no es la misma que la fecha que ha bloqueado el doctor
             controlador.validarFechaBloqueada(doctor, fechaAux);
@@ -303,7 +242,9 @@ public class AgendarCita extends javax.swing.JFrame {
             int minuto = Integer.parseInt(horas[1].split(" ")[0]);
 
             //Creamos la fecha de la cita
-            Date fecha = new Date(año, mes-1, dia, hora, minuto);
+            Date fecha = dateChooser.getDate();
+            fecha.setHours(hora);
+            fecha.setMinutes(minuto);
             //Creamos la cita
             Cita cita = new Cita( pacienteSolicitante,doctor,fecha );
 
@@ -317,6 +258,7 @@ public class AgendarCita extends javax.swing.JFrame {
                 cita.toString() + "\nMotivo: " + cita.getDoctor().getEspecialidad()
             );
             btnSolicitar.setEnabled(false);
+            resetear();
         }catch(DiaNoDisponibleExcepcion | CoincideConFechaBloqueadaExcepcion ex){
             JOptionPane.showMessageDialog(null,ex.getMessage());
         }
@@ -333,39 +275,6 @@ public class AgendarCita extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVolverActionPerformed
 
     /**
-     * Metodo para remover el texto del texfield del año, ya que este es solo un indicador
-     * @param evt 
-     */
-    private void txtAñoCitaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtAñoCitaFocusGained
-        if( txtAñoCita.getText().equals("AÑO")  ){
-            txtAñoCita.setText("");
-        }
-    }//GEN-LAST:event_txtAñoCitaFocusGained
-
-    /**
-     * Metodo para insertar el indicador de AÑO si este pierde el foco y no habia nada escrito
-     * @param evt 
-     */
-    private void txtAñoCitaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtAñoCitaFocusLost
-        if( txtAñoCita.getText().equals("")  ){
-            txtAñoCita.setText("AÑO");
-        }
-    }//GEN-LAST:event_txtAñoCitaFocusLost
-
-   /**
-     * Metodo para que el usuario solo digite numeros en el textField del Año
-     * @param evt 
-     */
-    private void txtAñoCitaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAñoCitaKeyTyped
-       try{
-              lblValidacion.setText("");
-              validacion.validarSoloNumeros(evt);
-          }catch( DatoDigitadoExcepcion ex ){
-              lblValidacion.setText(ex.getMessage());
-          }
-    }//GEN-LAST:event_txtAñoCitaKeyTyped
-
-    /**
      * Metodo para que cada vez que cambie el item seleccionado se muestren los doctores con esa especialidad
      * @param evt 
      */
@@ -377,15 +286,13 @@ public class AgendarCita extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSolicitar;
     private javax.swing.JButton btnVolver;
-    private javax.swing.JComboBox<String> cbxDia;
     private javax.swing.JComboBox cbxDoctores;
     private javax.swing.JComboBox<String> cbxEspecialidad;
     private javax.swing.JComboBox<String> cbxHora;
-    private javax.swing.JComboBox<String> cbxMes;
     private javax.swing.JComboBox cbxPacientes;
+    private com.toedter.calendar.JDateChooser dateChooser;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblValidacion;
-    private javax.swing.JTextField txtAñoCita;
     // End of variables declaration//GEN-END:variables
 }
