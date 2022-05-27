@@ -11,7 +11,6 @@ import Excepciones.EspecialidadNoEncontradaExcepcion;
 import Modelo.Cita;
 import Modelo.Doctor;
 import Modelo.Paciente;
-import Modelo.Validacion;
 import java.util.Date;
 import javax.swing.JOptionPane;
 
@@ -30,6 +29,7 @@ public class AgendarCita extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         controlador = new ControladorSolicitarCita();
         llenarComboPacientes();
+        llenarComboDoctores("");
     }
     
     /**
@@ -226,10 +226,11 @@ public class AgendarCita extends javax.swing.JFrame {
             Paciente pacienteSolicitante = (Paciente) cbxPacientes.getSelectedItem();
 
             //Creamos la fecha para compararla con la fecha bloqueada
-            Date fechaAux = dateChooser.getDate();
-
+            Date fecha = dateChooser.getDate();
+            System.out.println(fecha);
+            
             //Validamos si la fecha elegida no es la misma que la fecha que ha bloqueado el doctor
-            controlador.validarFechaBloqueada(doctor, fechaAux);
+            controlador.validarFechaBloqueada(doctor, fecha);
             
             //El combobox de la hora viene en este formato: hora:minuto
             //Por lo tanto se le hace un split a la hora seleccionada y así optenemos ambos por separado
@@ -242,9 +243,10 @@ public class AgendarCita extends javax.swing.JFrame {
             int minuto = Integer.parseInt(horas[1].split(" ")[0]);
 
             //Creamos la fecha de la cita
-            Date fecha = dateChooser.getDate();
             fecha.setHours(hora);
             fecha.setMinutes(minuto);
+            fecha.setSeconds(0);
+            
             //Creamos la cita
             Cita cita = new Cita( pacienteSolicitante,doctor,fecha );
 

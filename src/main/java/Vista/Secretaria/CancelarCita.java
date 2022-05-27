@@ -202,9 +202,11 @@ public class CancelarCita extends javax.swing.JFrame {
         Cita cita = (Cita) cbxCitas.getSelectedItem();
         //Se verifica que la cita no sea nula
         if( cita != null ){
-            txtDetalleCita.setText("Cita creada:\n " + 
+            txtDetalleCita.setText( 
                     cita.getFecha().toLocaleString() + "\n" +
-                    cita.toString());
+                    cita.toString() + 
+                    "\nMotivo:" + cita.getDoctor().getEspecialidad() 
+            );
         }
     }//GEN-LAST:event_cbxCitasActionPerformed
 

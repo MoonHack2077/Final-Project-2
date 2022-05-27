@@ -50,9 +50,13 @@ public class ControladorSolicitarCita {
       * @throws CoincideConFechaBloqueadaExcepcion 
       */
     public void validarFechaBloqueada(Doctor doctor, Date fecha)throws CoincideConFechaBloqueadaExcepcion{       
-        if( doctor.getFechaBloqueada() != null && 
-               (doctor.getFechaBloqueada().compareTo(fecha)==0)){
-            throw new CoincideConFechaBloqueadaExcepcion(doctor);
+        String fechaAux =  String.valueOf(fecha.getDate() + fecha.getMonth() + fecha.getYear());
+        if( doctor.getFechaBloqueada() != null)
+        {   
+            String fechaDoc = String.valueOf(doctor.getFechaBloqueada().getDate() + doctor.getFechaBloqueada().getMonth() + doctor.getFechaBloqueada().getYear());
+            if( fechaDoc.equals(fechaAux) ){
+                throw new CoincideConFechaBloqueadaExcepcion(doctor);
+            }
         } 
     }
     

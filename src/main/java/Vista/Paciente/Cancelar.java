@@ -30,11 +30,11 @@ public class Cancelar extends javax.swing.JFrame {
         this.paciente = paciente;
         cbxCitas.addItem(cita);
         
-        txtDetalleCita.setText(
-                cita.getFecha().toString() + "\n\n" + 
-                cita.toString() + "\n\n" + 
-                "Motivo: " + cita.getDoctor().getEspecialidad()
-        );
+        txtDetalleCita.setText( 
+                    cita.getFecha().toLocaleString() + "\n" +
+                    cita.toString() + 
+                    "\nMotivo:" + cita.getDoctor().getEspecialidad() 
+            );
     }
 
     /**
