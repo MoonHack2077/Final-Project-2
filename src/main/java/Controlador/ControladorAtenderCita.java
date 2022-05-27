@@ -25,12 +25,13 @@ public class ControladorAtenderCita {
      * @param tratamientos 
      */
     public void confirmarAtencion(Cita cita, String conclusiones, String tratamientos){
-        cita.setConclusiones("\n Conclusiones: " + conclusiones + 
-                "\n Tratamientos: " + tratamientos);
+        cita.setConclusiones(conclusiones );
+        cita.setTratamientos(tratamientos);
         
         //Se añade la cita al historal del paciente
         cita.getPaciente().getHistorial().add(cita);
         Singleton.Singleton.getINSTANCIA().escribirPacientes();
+        Singleton.Singleton.getINSTANCIA().escribirCitas();
     }
 
     /**

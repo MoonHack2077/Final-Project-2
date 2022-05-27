@@ -210,7 +210,6 @@ public class Solicitar extends javax.swing.JFrame {
 
             //Creamos la fecha para compararla con la fecha bloqueada
             Date fecha = dateChooser.getDate();
-            System.out.println(fecha);
 
             //Validamos si la fecha elegida no es la misma que la fecha que ha bloqueado el doctor
             controlador.validarFechaBloqueada(doctor, fecha);

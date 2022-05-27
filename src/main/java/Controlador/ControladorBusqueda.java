@@ -5,7 +5,7 @@
 package Controlador;
 
 import Excepciones.AlmacenadoExcepcion;
-import Modelo.Admin;
+import Modelo.Persona;
 import Modelo.Doctor;
 import Modelo.Paciente;
 import Modelo.Secretaria;
@@ -18,7 +18,7 @@ import java.util.ArrayList;
  */
 public class ControladorBusqueda {
 
-    private Admin[] admins;
+    private Persona[] admins;
     private ArrayList<Doctor> doctores;
     private ArrayList<Secretaria> secretarias;
     private ArrayList<Paciente> pacientes;
@@ -41,7 +41,7 @@ public class ControladorBusqueda {
      */
     public void buscarAdmin(String documento,String correo, String contraseña, String telefono) throws AlmacenadoExcepcion{
         
-        for (Admin admin : getAdmins()) {
+        for (Persona admin : getAdmins()) {
             if( admin.getDocumento().equals(documento) ) throw new AlmacenadoExcepcion("El docmuento");
             if( admin.getCorreo().equals(correo) ) throw new AlmacenadoExcepcion("El correo");
             if(admin.getContraseña().equals(contraseña)) throw new AlmacenadoExcepcion("La contraseña"); 
@@ -55,9 +55,9 @@ public class ControladorBusqueda {
      * @param documento
      * @return admin si lo encuentra, de lo contrario null
      */
-    public Admin buscarAdmin(String documento){
+    public Persona buscarAdmin(String documento){
         
-        for (Admin admin : getAdmins()) {
+        for (Persona admin : getAdmins()) {
             if( admin.getDocumento().equals(documento) ) return admin;
         }
         
@@ -162,7 +162,7 @@ public class ControladorBusqueda {
     /**
      * @return the admins
      */
-    public Admin[] getAdmins() {
+    public Persona[] getAdmins() {
         return admins;
     }
 

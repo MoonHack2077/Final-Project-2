@@ -15,6 +15,7 @@ public class Cita {
     private Doctor doctor;
     private Date fecha;
     private String conclusiones;
+    private String tratamientos;
 
     public Cita(Paciente paciente, Doctor doctor, Date fecha){
         this.paciente = paciente;
@@ -82,6 +83,20 @@ public class Cita {
     public String toString() {
         return "Doctor: " + getDoctor().getNombre() + " - " +
                "Paciente: " + getPaciente().getNombre();
+    }
+
+    /**
+     * @return the tratamientos
+     */
+    public String getTratamientos() {
+        return tratamientos;
+    }
+
+    /**
+     * @param tratamientos the tratamientos to set
+     */
+    public void setTratamientos(String tratamientos) {
+        this.tratamientos = tratamientos;
     }
        
 }

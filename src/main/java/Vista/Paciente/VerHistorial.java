@@ -37,19 +37,31 @@ public class VerHistorial extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        txtHistorial = new javax.swing.JTextArea();
+        txtConclusiones = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
         lblPaciente = new javax.swing.JLabel();
         cbxCitas = new javax.swing.JComboBox();
+        jLabel2 = new javax.swing.JLabel();
+        lblNumeroCita = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        lblDoctor = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txtTratamientos = new javax.swing.JTextArea();
+        jLabel6 = new javax.swing.JLabel();
+        lblMotivo = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        lblFecha = new javax.swing.JLabel();
         btnVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("HISTORIAL"));
 
-        txtHistorial.setColumns(20);
-        txtHistorial.setRows(5);
-        jScrollPane1.setViewportView(txtHistorial);
+        txtConclusiones.setColumns(20);
+        txtConclusiones.setRows(5);
+        jScrollPane1.setViewportView(txtConclusiones);
 
         jLabel1.setText("Historial de: ");
 
@@ -58,6 +70,22 @@ public class VerHistorial extends javax.swing.JFrame {
                 cbxCitasActionPerformed(evt);
             }
         });
+
+        jLabel2.setText("Numero de la cita:");
+
+        jLabel3.setText("Doctor:");
+
+        jLabel4.setText("Conclusiones:");
+
+        jLabel5.setText("Tratamientos:");
+
+        txtTratamientos.setColumns(20);
+        txtTratamientos.setRows(5);
+        jScrollPane2.setViewportView(txtTratamientos);
+
+        jLabel6.setText("Motivo:");
+
+        jLabel7.setText("Fecha:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -71,23 +99,68 @@ public class VerHistorial extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(lblPaciente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbxCitas, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel4)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 351, Short.MAX_VALUE)
+                            .addComponent(cbxCitas, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addGap(76, 76, 76)
+                                .addComponent(lblMotivo, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane2)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGap(18, 18, 18))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                            .addComponent(jLabel3)
+                                            .addGap(88, 88, 88)))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel7)
+                                        .addGap(90, 90, 90)))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblNumeroCita, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lblDoctor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lblFecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addGap(0, 25, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblPaciente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(29, 29, 29)
+                .addGap(26, 26, 26)
                 .addComponent(cbxCitas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(80, 80, 80))
+                .addGap(29, 29, 29)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(lblNumeroCita, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel7)
+                    .addComponent(lblFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(lblDoctor, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(lblMotivo, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(14, 14, 14))
         );
 
         btnVolver.setText("Volver");
@@ -115,7 +188,7 @@ public class VerHistorial extends javax.swing.JFrame {
                 .addComponent(btnVolver)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         pack();
@@ -151,19 +224,24 @@ public class VerHistorial extends javax.swing.JFrame {
     private void cbxCitasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxCitasActionPerformed
         //Si el primer elemento esta seleccionado, no es válido
         if( cbxCitas.getSelectedIndex()==0 ) {
-            txtHistorial.setText("Ninguna cita seleccionada");
+            lblNumeroCita.setText( "Ninguna cita seleccionada" );
+            lblFecha.setText( "Ninguna cita seleccionada" );
+            lblDoctor.setText( "Ninguna cita seleccionada" );
+            lblMotivo.setText( "Ninguna cita seleccionada" );
+            txtConclusiones.setText( "Ninguna cita seleccionada" );
+            txtTratamientos.setText( "Ninguna cita seleccionada" );
             return;
         }
         Cita cita = (Cita) cbxCitas.getSelectedItem();
-        int numeroDeCita = cbxCitas.getSelectedIndex();
+        String numeroDeCita = String.valueOf(cbxCitas.getSelectedIndex());
         //Se verifica que la cita no sea nula
         if( cita != null ){
-            txtHistorial.setText( "\tCITA " + numeroDeCita + "\n" +
-                    cita.getFecha().toString() + "\n" +
-                    "Doctor: " + cita.getDoctor().toString() + "\n" +
-                    "Paciente: " + cita.getPaciente() + "\n\n" +
-                    cita.getConclusiones()
-            );
+            lblNumeroCita.setText( numeroDeCita );
+            lblFecha.setText( cita.getFecha().toGMTString() );
+            lblDoctor.setText( cita.getDoctor().getNombre() );
+            lblMotivo.setText( cita.getDoctor().getEspecialidad() );
+            txtConclusiones.setText( cita.getConclusiones() );
+            txtTratamientos.setText( cita.getTratamientos() );
         }
     }//GEN-LAST:event_cbxCitasActionPerformed
 
@@ -172,9 +250,21 @@ public class VerHistorial extends javax.swing.JFrame {
     private javax.swing.JButton btnVolver;
     private javax.swing.JComboBox cbxCitas;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lblDoctor;
+    private javax.swing.JLabel lblFecha;
+    private javax.swing.JLabel lblMotivo;
+    private javax.swing.JLabel lblNumeroCita;
     private javax.swing.JLabel lblPaciente;
-    private javax.swing.JTextArea txtHistorial;
+    private javax.swing.JTextArea txtConclusiones;
+    private javax.swing.JTextArea txtTratamientos;
     // End of variables declaration//GEN-END:variables
 }

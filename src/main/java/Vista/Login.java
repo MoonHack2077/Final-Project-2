@@ -6,7 +6,7 @@ package Vista;
 
 import Controlador.ControladorLogin;
 import Excepciones.NoEncontradoExcepcion;
-import Modelo.Admin;
+import Modelo.Persona;
 import Modelo.Doctor;
 import Modelo.Paciente;
 import Modelo.Secretaria;
@@ -157,7 +157,7 @@ public class Login extends javax.swing.JFrame {
             String contraseña = txtContraseña.getText();
             
             //Buscamos entre todos los usuarios la coincidencia
-            Admin admin = controlador.buscarAdmin(correo, contraseña);
+            Persona admin = controlador.buscarAdmin(correo, contraseña);
             Doctor doctor = controlador.buscarDoctor(correo, contraseña);
             Secretaria secretaria = controlador.buscarSecretaria(correo, contraseña);
             Paciente paciente = controlador.buscarPaciente(correo, contraseña);

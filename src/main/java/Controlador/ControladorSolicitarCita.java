@@ -70,7 +70,11 @@ public class ControladorSolicitarCita {
         getCitas().add(cita);
         cita.getDoctor().getAgenda().add(cita);
         cita.getPaciente().setHasCita(true);
+        
+        //Escribimos para almacenar los datos
         Singleton.getINSTANCIA().escribirCitas();
+        Singleton.getINSTANCIA().escribirPacientes();
+        Singleton.getINSTANCIA().escribirDoctores();
         return true;
     }
     

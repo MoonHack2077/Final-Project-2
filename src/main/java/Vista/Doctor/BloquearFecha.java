@@ -4,10 +4,9 @@
  */
 package Vista.Doctor;
 
-import Controlador.ControladorDoctor;
+import Controlador.ControladotBloquearDia;
 import Excepciones.NoSePuedeBloquearFechaExcepcion;
 import Modelo.Doctor;
-import Modelo.Validacion;
 import java.util.Date;
 import javax.swing.JOptionPane;
 
@@ -18,7 +17,7 @@ import javax.swing.JOptionPane;
  */
 public class BloquearFecha extends javax.swing.JFrame {
 
-    private ControladorDoctor controladorDoctor;
+    private ControladotBloquearDia controlador;
     private Doctor doctor;
     
     /**
@@ -27,7 +26,7 @@ public class BloquearFecha extends javax.swing.JFrame {
     public BloquearFecha(Doctor doctor) {
         initComponents();
         setLocationRelativeTo(null);
-        this.controladorDoctor = new ControladorDoctor();
+        this.controlador = new ControladotBloquearDia();
         this.doctor = doctor;
     }
 
@@ -128,12 +127,10 @@ public class BloquearFecha extends javax.swing.JFrame {
         try{ 
             //Obtenemos la fecha
             Date fecha = dateChooser.getDate();
-            System.out.println(fecha);
             
             //Se verifica que el doctor no tenga cita ese dia
-            controladorDoctor.bloquearFecha(doctor,fecha);     
-            JOptionPane.showMessageDialog(null, "La fecha " + fecha.toString() + "\n Ha sido bloqueada exitosamente!!");
-            
+            controlador.bloquearFecha(doctor,fecha);     
+            JOptionPane.showMessageDialog(null, "La fecha " + fecha.toString() + "\n Ha sido bloqueada exitosamente!!");            
         }catch(NoSePuedeBloquearFechaExcepcion ex){
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }    

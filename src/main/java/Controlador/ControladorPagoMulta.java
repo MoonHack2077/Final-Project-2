@@ -44,8 +44,9 @@ public class ControladorPagoMulta {
             for (int i = 0; i < getMultas().size(); i++) {
                 if(getMultas().get(i).getCita().getPaciente().getDocumento().equals(documento)){
                     multas.get(i).getCita().getPaciente().setHasMulta(false);
-                    Singleton.getINSTANCIA().escribirMultas();
                     multas.remove(i);
+                    Singleton.getINSTANCIA().escribirMultas();
+                    Singleton.getINSTANCIA().escribirPacientes();
                     return true;                                     
                 }
             }

@@ -4,7 +4,7 @@
  */
 package Controlador;
 
-import Modelo.Admin;
+import Modelo.Persona;
 import Modelo.Doctor;
 import Modelo.Paciente;
 import Modelo.Secretaria;
@@ -17,7 +17,7 @@ import java.util.ArrayList;
  */
 public class ControladorLogin {
 
-    private Admin[] admins;
+    private Persona[] admins;
     private ArrayList<Doctor> doctores;
     private ArrayList<Secretaria> secretarias;
     private ArrayList<Paciente> pacientes;
@@ -35,8 +35,8 @@ public class ControladorLogin {
      * @throws NoEncontradoExcepcion 
      */
     public void añadirAdmin(){
-        Admin juan = new Admin("Juan Manuel Arenas Rincon", "1234567890", "juan@mihospital.co", "soyeladmin1", "3000000000", 20, "Soltero");
-        Admin bryan = new Admin("Bryan Alejandro Benavides", "9876543210", "bryan@mihospital.co", "soyeladmin2", "4000000000", 20, "Casado");
+        Persona juan = new Persona("Juan Manuel Arenas Rincon", "1234567890", "juan@mihospital.co", "soyeladmin1", "3000000000", 20, "Soltero");
+        Persona bryan = new Persona("Bryan Alejandro Benavides", "9876543210", "bryan@mihospital.co", "soyeladmin2", "4000000000", 20, "Casado");
         
         admins[0] = juan;    
         admins[1] = bryan;
@@ -48,9 +48,9 @@ public class ControladorLogin {
      * @param contraseña 
      * @return admin si lo encuentra, de lo contrario null
      */
-    public Admin buscarAdmin(String correo, String contraseña){
+    public Persona buscarAdmin(String correo, String contraseña){
         
-        for (Admin admin : admins) {
+        for (Persona admin : admins) {
             if( admin.getCorreo().equals(correo) && admin.getContraseña().equals(contraseña) ) return admin;
         }
         

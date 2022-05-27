@@ -414,7 +414,8 @@ public class GestionarDoctores extends javax.swing.JFrame {
             
             //Creamos al doctor con sus respectivos datos
             Doctor doctor = new Doctor(nombre,documento,correo,contraseña,telefono,edad,estadoCivil, especialidad);
-
+            
+            
             //VSe editan los datos del doctor
             controlador.editarDoctor(doctor);
             JOptionPane.showMessageDialog(null, "Doctor con el documento: " + documento + " editado");

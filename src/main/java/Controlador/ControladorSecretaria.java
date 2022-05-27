@@ -73,7 +73,7 @@ public class ControladorSecretaria {
      * @throws NoEncontradoExcepcion
      * @throws MayorDeEdadExcepcion 
      */
-    public boolean editarSecretaria(Secretaria secretaria) throws NoEncontradoExcepcion, MayorDeEdadExcepcion{
+    public boolean editarSecretaria(Secretaria secretaria) throws NoEncontradoExcepcion, MayorDeEdadExcepcion{        
         Secretaria aux = controladorBusqueda.buscarSecretaria(secretaria.getDocumento());
         
         //Excepciones

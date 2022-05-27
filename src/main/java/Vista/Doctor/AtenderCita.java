@@ -5,7 +5,6 @@
 package Vista.Doctor;
 
 import Controlador.ControladorAtenderCita;
-import Controlador.ControladorCancelarCita;
 import Controlador.ControladorRegistrarMulta;
 import Modelo.Cita;
 import Modelo.Doctor;

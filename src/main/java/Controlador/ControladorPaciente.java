@@ -36,9 +36,6 @@ public class ControladorPaciente {
         controladorBusqueda.buscarPaciente(paciente.getDocumento(),paciente.getCorreo(), paciente.getContraseña(), paciente.getTelefono());
         controladorBusqueda.buscarAdmin(paciente.getDocumento(),paciente.getCorreo(), paciente.getContraseña(), paciente.getTelefono());
         
-        //Excepciones    
-        if( paciente.getEdad() < 18) throw new MayorDeEdadExcepcion();
-        
         getPacientes().add(paciente);
         Singleton.getINSTANCIA().escribirPacientes();
         return true;       

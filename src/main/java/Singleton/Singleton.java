@@ -4,11 +4,11 @@
  */
 package Singleton;
 
-import Modelo.Admin;
 import Modelo.Cita;
 import Modelo.Doctor;
 import Modelo.Multa;
 import Modelo.Paciente;
+import Modelo.Persona;
 import Modelo.Secretaria;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -26,7 +26,7 @@ public class Singleton{
     
     private static Singleton INSTANCIA = new Singleton();
     
-    private Admin[] admins;
+    private Persona[] admins;
     private ArrayList<Doctor> doctores;
     private ArrayList<Secretaria> secretarias;
     private ArrayList<Paciente> pacientes;
@@ -40,7 +40,7 @@ public class Singleton{
     private String txtMultas = "multas.txt";
     
     private Singleton() {
-        admins = new Admin[2];
+        admins = new Persona[2];
         doctores = leerDoctores();
         secretarias = leerSecretarias();
         pacientes = leerPacientes();
@@ -221,7 +221,7 @@ public class Singleton{
     /**
      * @return the admins
      */
-    public Admin[] getAdmins() {
+    public Persona[] getAdmins() {
         return admins;
     }
 
