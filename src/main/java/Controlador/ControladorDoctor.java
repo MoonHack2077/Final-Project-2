@@ -6,6 +6,7 @@ package Controlador;
 
 import Excepciones.MayorDeEdadExcepcion;
 import Excepciones.NoEncontradoExcepcion;
+import Excepciones.NoSePuedeBloquearFechaExcepcion;
 import Modelo.Cita;
 import Modelo.Doctor;
 import Singleton.Singleton;
@@ -102,47 +103,24 @@ public class ControladorDoctor {
      * Metodo para que el doctor pueda bloquear una fecha
      * @return true si la fecha dada coincide con alguna cita agendada, de lo contrario false
      */
-    public boolean bloquearFecha(Doctor doctor,Date dia){
+    public void bloquearFecha(Doctor doctor,Date dia) throws NoSePuedeBloquearFechaExcepcion{
         //Convertimos a string el dia para que sea mas manejable la comparacion
         String diaAux =  String.valueOf(dia.getDate() + dia.getMonth() + dia.getYear());
-        
-        ArrayList<Cita> agenda = doctor.getAgenda();
-        
-        for (Cita cita : agenda) {
+               
+        for (Cita cita : doctor.getAgenda()) {
             //Ya que las fechas que hay en la agenda, cada una tiene una hora establecida
             //Por lo tanto aunque sea el mismo dia nunca será igual porque cuentan con una hora que se eligió manualmente
             String citaAux =  String.valueOf(cita.getFecha().getDate() + cita.getFecha().getMonth() + cita.getFecha().getYear());
             if( citaAux.equals(diaAux) ){
-                return true;
+                throw new NoSePuedeBloquearFechaExcepcion();
             }
         }
         
         //Una vez verificado que el dia no coincida, seteamos la fecha
         doctor.setFechaBloqueada(dia);
         Singleton.getINSTANCIA().escribirDoctores();
-        return false;
     }
     
-    /**
-     * Metodo para ordenar la agenda del doctor para que las citas "tengan sentido"
-     */
-    public void ordenarAgenda(Doctor doctor){
-        ArrayList<Cita> agenda = doctor.getAgenda();
-        Cita aux = null;
-        
-        //agenda.s
-        /*
-        for (int i = 0; i < agenda.size(); i++) {
-            for (int j = i+1; j < agenda.size(); j++) {
-                if( agenda.get(j).getFecha().after(agenda.get(j+1).getFecha()) ){
-                    aux = agenda.get(j);
-                    agenda.get(j) = agenda.get(j+1);
-                    agenda.get(j+1) = aux;
-                }
-            }
-        }
-        */
-    }
 
     /**
      * @return the doctores

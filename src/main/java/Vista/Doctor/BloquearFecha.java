@@ -6,6 +6,7 @@ package Vista.Doctor;
 
 import Controlador.ControladorDoctor;
 import Excepciones.DatoDigitadoExcepcion;
+import Excepciones.NoSePuedeBloquearFechaExcepcion;
 import Modelo.Doctor;
 import Modelo.Validacion;
 import java.util.Date;
@@ -191,47 +192,47 @@ public class BloquearFecha extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnBloquearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBloquearActionPerformed
-        //Validacion necesaria por si en algun combobox se selecciona un elemento que no corresponde 
-        if( cbxDia.getSelectedIndex() == 0 || cbxMes.getSelectedIndex() == 0 
-            || txtAñoCita.getText().equals("AÑO")){
-            JOptionPane.showMessageDialog(null, "Faltan campos por seleccionar");
-            return;
-        }
-        
-        //Parseamos los datos para crear la fecha
-        int dia = Integer.parseInt(cbxDia.getSelectedItem().toString());
-        int mes = Integer.parseInt(cbxMes.getSelectedItem().toString());
-        int año = Integer.parseInt(txtAñoCita.getText());
-        
-        //En caso de que el mes sea 2 (febrero), validar si los dias y el año corresponden
-        if( mes == 2 && dia >= 30 ){
-            JOptionPane.showMessageDialog(null, "Febrero no tiene esa cantidad de dias");
-            return;
-        }
-        
-        //En caso de que el mes sea 2 (febrero), validar si es un año bisiesto
-        if( mes == 2 && dia == 29 && año % 4 != 0 ){
-            JOptionPane.showMessageDialog(null, "Febrero no tiene esa cantidad de dias");
-            return;
-        }
-        
-        // los meses 4, 6, 9 y 11 solo tienen 30 dias
-        if( (mes == 4 || mes == 6 || mes == 9 || mes == 11 ) && ( dia == 31 ) ){
-            JOptionPane.showMessageDialog(null, "El mes seleccionado no tiene esa cantidad de dias");
-            return;
-        }
-        
-        //Creamos la fecha
-        Date fecha = new Date(año, mes-1, dia);
-        
-        //Se verifica que el doctor no tenga cita ese dia
-        boolean coincide = controladorDoctor.bloquearFecha(doctor,fecha);   
-        if( coincide ){
-            JOptionPane.showMessageDialog(null, "Ya tienes citas para este dia, no puedes bloquearlo\n Prueba con otro!!");
-            return;
-        }     
-        JOptionPane.showMessageDialog(null, "La fecha " + fecha.toString() + "\n Ha sido bloqueada exitosamente!!");
-        resetearCampos();
+        try{    
+            //Validacion necesaria por si en algun combobox se selecciona un elemento que no corresponde 
+            if( cbxDia.getSelectedIndex() == 0 || cbxMes.getSelectedIndex() == 0 
+                || txtAñoCita.getText().equals("AÑO")){
+                JOptionPane.showMessageDialog(null, "Faltan campos por seleccionar");
+                return;
+            }
+
+            //Parseamos los datos para crear la fecha
+            int dia = Integer.parseInt(cbxDia.getSelectedItem().toString());
+            int mes = Integer.parseInt(cbxMes.getSelectedItem().toString());
+            int año = Integer.parseInt(txtAñoCita.getText());
+
+            //En caso de que el mes sea 2 (febrero), validar si los dias y el año corresponden
+            if( mes == 2 && dia >= 30 ){
+                JOptionPane.showMessageDialog(null, "Febrero no tiene esa cantidad de dias");
+                return;
+            }
+
+            //En caso de que el mes sea 2 (febrero), validar si es un año bisiesto
+            if( mes == 2 && dia == 29 && año % 4 != 0 ){
+                JOptionPane.showMessageDialog(null, "Febrero no tiene esa cantidad de dias");
+                return;
+            }
+
+            // los meses 4, 6, 9 y 11 solo tienen 30 dias
+            if( (mes == 4 || mes == 6 || mes == 9 || mes == 11 ) && ( dia == 31 ) ){
+                JOptionPane.showMessageDialog(null, "El mes seleccionado no tiene esa cantidad de dias");
+                return;
+            }
+
+            //Creamos la fecha
+            Date fecha = new Date(año, mes-1, dia);
+
+            //Se verifica que el doctor no tenga cita ese dia
+            controladorDoctor.bloquearFecha(doctor,fecha);     
+            JOptionPane.showMessageDialog(null, "La fecha " + fecha.toString() + "\n Ha sido bloqueada exitosamente!!");
+            resetearCampos();
+        }catch(NoSePuedeBloquearFechaExcepcion ex){
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }    
     }//GEN-LAST:event_btnBloquearActionPerformed
 
     /**

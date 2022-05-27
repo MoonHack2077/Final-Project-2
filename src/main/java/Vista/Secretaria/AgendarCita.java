@@ -5,7 +5,10 @@
 package Vista.Secretaria;
 
 import Controlador.ControladorSolicitarCita;
+import Excepciones.CoincideConFechaBloqueadaExcepcion;
 import Excepciones.DatoDigitadoExcepcion;
+import Excepciones.DiaNoDisponibleExcepcion;
+import Excepciones.EspecialidadNoEncontradaExcepcion;
 import Modelo.Cita;
 import Modelo.Doctor;
 import Modelo.Paciente;
@@ -206,38 +209,25 @@ public class AgendarCita extends javax.swing.JFrame {
      * Metodo que se encarga de llenar el combobox con los doctres y su especialidad para ser seleccionados
      */
     private void llenarComboDoctores(String especialidad){
-        cbxDoctores.removeAllItems();
-        
-        //Si el primer item esta seleccionado este no es válido        
-        if( cbxEspecialidad.getSelectedIndex()==0 ){
-            cbxDoctores.addItem("Ninguna especialidad seleccionada");
-            btnSolicitar.setEnabled(false);
-            return;
-        }
-        
-        //Creamos un arrayList para añadir los doctores que tengan la especialidad seleccionada
-        ArrayList<Doctor> doctores = new ArrayList<>();
-        
-        //Recorremos la lista de doctores para añadir las coincidencias
-        for (Doctor doctor : controlador.getDoctores()) {
-            if( doctor.getEspecialidad().equals(especialidad) ) doctores.add(doctor);
-        }
-        
-        //Si la lista creada esta vacia significa que no hay ningún doctor con esa especialidadd
-        if( doctores.isEmpty() ){
-            cbxDoctores.addItem("No hay doctores con esa especialidad");
-            btnSolicitar.setEnabled(false);
-            return;
-        }
-        
-        btnSolicitar.setEnabled(true);
-        
-        //Si llega hasta aqui significa que si hay doctores con esa especialidad
-        //Por lo tanto procedemos a añadirlos
-        cbxDoctores.addItem("Seleccione un doctor");
-        
-        for (Doctor doctor : controlador.getDoctores()) {
-            if( doctor.getEspecialidad().equals(especialidad) ) cbxDoctores.addItem(doctor);
+        try{
+            cbxDoctores.removeAllItems();
+
+            //Si el primer item esta seleccionado este no es válido        
+            if( cbxEspecialidad.getSelectedIndex()==0 ){
+                btnSolicitar.setEnabled(false);
+                throw new EspecialidadNoEncontradaExcepcion("Ninguna especialidad seleccionada");
+            }
+
+            controlador.especialidades(especialidad);
+
+            btnSolicitar.setEnabled(true);
+            cbxDoctores.addItem("Seleccione un doctor");
+
+            for (Doctor doctor : controlador.getDoctores()) {
+                if( doctor.getEspecialidad().equals(especialidad) ) cbxDoctores.addItem(doctor);
+            }
+        }catch( EspecialidadNoEncontradaExcepcion ex ){
+            cbxDoctores.addItem(ex.getMessage());
         }
     }
     
@@ -259,77 +249,76 @@ public class AgendarCita extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnSolicitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSolicitarActionPerformed
-        //Validacion necesaria por si en algun combobox se selecciona un elemento que no corresponde 
-        if( cbxDia.getSelectedIndex() == 0 || cbxHora.getSelectedIndex() == 0 ||
-            cbxMes.getSelectedIndex() == 0 || cbxPacientes.getSelectedIndex() == 0 || 
-            cbxDoctores.getSelectedIndex() == 0 || txtAñoCita.getText().equals("AÑO")
-            || txtAñoCita.getText().isBlank()    
-        ){
-            JOptionPane.showMessageDialog(null, "Faltan campos por seleccionar");
-            return;
-        }
+        try{
+            //Validamos los campos 
+            if( cbxDia.getSelectedIndex() == 0 || cbxHora.getSelectedIndex() == 0 ||
+                cbxMes.getSelectedIndex() == 0 || cbxDoctores.getSelectedIndex() == 0 
+                || txtAñoCita.getText().equals("AÑO") || txtAñoCita.getText().isBlank() )
+            {
+                JOptionPane.showMessageDialog(null, "Faltan campos por seleccionar");
+                return;
+            }
 
-        //Obteniendo al doctor y al paciente
-        Doctor doctor = (Doctor) cbxDoctores.getSelectedItem();
-        Paciente paciente = (Paciente) cbxPacientes.getSelectedItem();
-        
-        //Parseamos los datos para crear la fecha
-        int dia = Integer.parseInt(cbxDia.getSelectedItem().toString());
-        int mes = Integer.parseInt(cbxMes.getSelectedItem().toString());
-        int año = Integer.parseInt(txtAñoCita.getText());
-        
-        //En caso de que el mes sea 2 (febrero), validar si los dias y el año corresponden
-        if( mes == 2 && dia >= 30 ){
-            JOptionPane.showMessageDialog(null, "Febrero no tiene esa cantidad de dias");
-            return;
-        }
-        
-        //En caso de que el mes sea 2 (febrero), validar si es un año bisiesto
-        if( mes == 2 && dia == 29 && año % 4 != 0 ){
-            JOptionPane.showMessageDialog(null, "Febrero no tiene esa cantidad de dias");
-            return;
-        }
-        
-        // los meses 4, 6, 9 y 11 solo tienen 30 dias
-        if( (mes == 4 || mes == 6 || mes == 9 || mes == 11 ) && ( dia == 31 ) ){
-            JOptionPane.showMessageDialog(null, "El mes seleccionado no tiene esa cantidad de dias");
-            return;
-        }
-        
-        //Creamos la fecha para compararla con la fecha bloqueada
-        Date fechaAux = new Date(año, mes-1, dia);
-       
-        //Validamos si la fecha elegida no es la misma que la fecha que ha bloqueado el doctor
-        boolean validar = controlador.validarFechaBloqueada(doctor, fechaAux);
-        if( validar ){            
-            JOptionPane.showMessageDialog(null, "El doctor " + doctor.getNombre() + " ha bloqueado ese dia para tener citas\n Por favor seleccione otro");
-            return;
-        }
-        
-        //El combobox de la hora viene en este formato: hora:minuto
-        //Por lo tanto se le hace un split a la hora seleccionada y así optenemos ambos por separado
-        String[] horas = cbxHora.getSelectedItem().toString().split(":");
-        int hora = Integer.parseInt(horas[0]);
-        
-        //En el anterior split el dato nos quedaria de la siguiente manera: ["hora" , "minuto AM/PM"]
-        //Por lo tanto se le hace un split nuevamente al segundo elemento para solo obtener el dato numerico
-        //El AM y PM son indicadores mas que todo
-        int minuto = Integer.parseInt(horas[1].split(" ")[0]);
-        
-        //Creamos la fecha de la cita
-        Date fecha = new Date(año, mes-1, dia, hora, minuto);
-        //Creamos la cita
-        Cita cita = new Cita( paciente,doctor,fecha );
-        
-        /*** EXCEPCION ***/
-        boolean creada = controlador.añadirCita(cita);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
-        if( creada ){
-            JOptionPane.showMessageDialog(null, "Cita creada:\n " + 
-                    cita.getFecha().toLocaleString() + "\n" +
-                    cita.toString());            
-            resetear();
-        }else{
-            JOptionPane.showMessageDialog(null, "El doctor " + doctor.getNombre() + " ya tiene una cita asignada a esa hora");
+            //Obteniendo al doctor y al paciente
+            Doctor doctor = (Doctor) cbxDoctores.getSelectedItem();
+            Paciente pacienteSolicitante = (Paciente) cbxPacientes.getSelectedItem();
+
+            //Parseamos los datos para crear la fecha
+            int dia = Integer.parseInt(cbxDia.getSelectedItem().toString());
+            int mes = Integer.parseInt(cbxMes.getSelectedItem().toString());
+            int año = Integer.parseInt(txtAñoCita.getText());
+
+            //En caso de que el mes sea 2 (febrero), validar si los dias y el año corresponden
+            if( mes == 2 && dia >= 30 ){
+                JOptionPane.showMessageDialog(null, "Febrero no tiene esa cantidad de dias");
+                return;
+            }
+
+            //En caso de que el mes sea 2 (febrero), validar si es un año bisiesto
+            if( mes == 2 && dia == 29 && año % 4 != 0 ){
+                JOptionPane.showMessageDialog(null, "Febrero no tiene esa cantidad de dias");
+                return;
+            }
+
+            // los meses 4, 6, 9 y 11 solo tienen 30 dias
+            if( (mes == 4 || mes == 6 || mes == 9 || mes == 11 ) && ( dia == 31 ) ){
+                JOptionPane.showMessageDialog(null, "El mes seleccionado no tiene esa cantidad de dias");
+                return;
+            }
+
+            //Creamos la fecha para compararla con la fecha bloqueada
+            Date fechaAux = new Date(año, mes-1, dia);
+
+            //Validamos si la fecha elegida no es la misma que la fecha que ha bloqueado el doctor
+            controlador.validarFechaBloqueada(doctor, fechaAux);
+            
+            //El combobox de la hora viene en este formato: hora:minuto
+            //Por lo tanto se le hace un split a la hora seleccionada y así optenemos ambos por separado
+            String[] horas = cbxHora.getSelectedItem().toString().split(":");
+            int hora = Integer.parseInt(horas[0]);
+
+            //En el anterior split el dato nos quedaria de la siguiente manera: ["hora" , "minuto AM/PM"]
+            //Por lo tanto se le hace un split nuevamente al segundo elemento para solo obtener el dato numerico
+            //El AM y PM son indicadores mas que todo
+            int minuto = Integer.parseInt(horas[1].split(" ")[0]);
+
+            //Creamos la fecha de la cita
+            Date fecha = new Date(año, mes-1, dia, hora, minuto);
+            //Creamos la cita
+            Cita cita = new Cita( pacienteSolicitante,doctor,fecha );
+
+            //Verificamos si el doctor no tiene citas para esa hora
+            controlador.verificarDisponibilidad(cita);
+            
+            //Añadimos la cita
+            controlador.añadirCita(cita);
+            JOptionPane.showMessageDialog(null, "Cita creada:\n " +
+                cita.getFecha().toLocaleString() + "\n" +
+                cita.toString() + "\nMotivo: " + cita.getDoctor().getEspecialidad()
+            );
+            btnSolicitar.setEnabled(false);
+        }catch(DiaNoDisponibleExcepcion | CoincideConFechaBloqueadaExcepcion ex){
+            JOptionPane.showMessageDialog(null,ex.getMessage());
         }
     }//GEN-LAST:event_btnSolicitarActionPerformed
 

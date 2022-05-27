@@ -310,8 +310,6 @@ public class GestionarDoctores extends javax.swing.JFrame {
     }
     
     
-    /*** EVENTOS DE BOTONES ***/
-    
     /**
      * Metodo que maneja el evento del boton de añadir para ejecutar su accion
      * @param evt 
@@ -512,7 +510,7 @@ public class GestionarDoctores extends javax.swing.JFrame {
         if( controlador.getDoctores().isEmpty() ) return;
         //Si el primer elemento esta seleccionado, no es válido
         if( cbxDoctores.getSelectedIndex()==0 ) {
-            limpiarInputs();
+            //limpiarInputs();
             setEnabledInputs(false);
             return;
         }

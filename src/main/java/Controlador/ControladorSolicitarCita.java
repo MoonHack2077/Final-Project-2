@@ -4,6 +4,9 @@
  */
 package Controlador;
 
+import Excepciones.CoincideConFechaBloqueadaExcepcion;
+import Excepciones.DiaNoDisponibleExcepcion;
+import Excepciones.EspecialidadNoEncontradaExcepcion;
 import Modelo.Cita;
 import Modelo.Doctor;
 import Modelo.Paciente;
@@ -31,25 +34,26 @@ public class ControladorSolicitarCita {
      * @param cita
      * @return 
      */
-    public boolean verificarDisponibilidad(Cita cita){
+    public void verificarDisponibilidad(Cita cita) throws DiaNoDisponibleExcepcion{
         Date fecha = cita.getFecha();
         
         for (Cita date : cita.getDoctor().getAgenda()) {
-            if( date.getFecha().compareTo(fecha)==0 ) return true;
+            if( date.getFecha().compareTo(fecha)==0 ) throw new DiaNoDisponibleExcepcion(cita.getDoctor());
         }
         
-        return false;
     }
     
      /**
-     * Metodo para validar que la fecha elegida para una cita no sea la misma que la que el doctor bloqueó
-     * @param doctor
-     * @param fecha
-     * @return true si la fecha elegida es la misma, de lo contrario false
-     */
-    public boolean validarFechaBloqueada(Doctor doctor, Date fecha){       
-        return doctor.getFechaBloqueada() != null && 
-               (doctor.getFechaBloqueada().compareTo(fecha)==0); 
+      * Metodo para validar que la fecha elegida para una cita no sea la misma que la que el doctor bloqueó
+      * @param doctor
+      * @param fecha
+      * @throws CoincideConFechaBloqueadaExcepcion 
+      */
+    public void validarFechaBloqueada(Doctor doctor, Date fecha)throws CoincideConFechaBloqueadaExcepcion{       
+        if( doctor.getFechaBloqueada() != null && 
+               (doctor.getFechaBloqueada().compareTo(fecha)==0)){
+            throw new CoincideConFechaBloqueadaExcepcion(doctor);
+        } 
     }
     
     /**
@@ -58,17 +62,30 @@ public class ControladorSolicitarCita {
      * @return true si pudo añadirla, de lo contrario false;
      */
     public boolean añadirCita(Cita cita){
+               
+        getCitas().add(cita);
+        cita.getDoctor().getAgenda().add(cita);
+        cita.getPaciente().setHasCita(true);
+        Singleton.getINSTANCIA().escribirCitas();
+        return true;
+    }
+    
+    /**
+     * Metodo para verificar si hay doctores con una especialidad especifica
+     * @param especialidad
+     * @throws EspecialidadNoEncontradaExcepcion 
+     */
+    public void especialidades(String especialidad) throws EspecialidadNoEncontradaExcepcion {
+        //Creamos un arrayList para añadir los doctores que tengan la especialidad seleccionada
+        ArrayList<Doctor> doctores = new ArrayList<>();
         
-        boolean verificada = verificarDisponibilidad(cita);
-        if( !verificada ){
-            getCitas().add(cita);
-            cita.getDoctor().getAgenda().add(cita);
-            cita.getPaciente().setHasCita(true);
-            Singleton.getINSTANCIA().escribirCitas();
-            return true;
+        //Recorremos la lista de doctores para añadir las coincidencias
+        for (Doctor doctor : this.doctores) {
+            if( doctor.getEspecialidad().equals(especialidad) ) doctores.add(doctor);
         }
-                
-        return false;
+        
+        //Si la lista creada esta vacia significa que no hay ningún doctor con esa especialidadd
+        if( doctores.isEmpty() ) throw new EspecialidadNoEncontradaExcepcion("No hay doctores con esa especialidad");
     }
 
     /**
