@@ -22,11 +22,13 @@ public class ControladorSolicitarCita {
     private ArrayList<Paciente> pacientes;
     private ArrayList<Doctor> doctores;
     private ArrayList<Cita> citas;
+    private ControladorBusqueda controlador;
 
     public ControladorSolicitarCita() {
         pacientes = Singleton.getINSTANCIA().getPacientes();
         doctores = Singleton.getINSTANCIA().getDoctores();
         citas = Singleton.getINSTANCIA().getCitas();
+        controlador = new ControladorBusqueda();
     }
     
     /**
@@ -115,6 +117,13 @@ public class ControladorSolicitarCita {
      */
     public ArrayList<Cita> getCitas() {
         return citas;
+    }
+
+    /**
+     * @return the controlador
+     */
+    public ControladorBusqueda getControlador() {
+        return controlador;
     }
     
     
