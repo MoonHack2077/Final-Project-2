@@ -9,6 +9,7 @@ import Excepciones.CoincideConFechaBloqueadaExcepcion;
 import Excepciones.DatoDigitadoExcepcion;
 import Excepciones.DiaNoDisponibleExcepcion;
 import Excepciones.EspecialidadNoEncontradaExcepcion;
+import Excepciones.NoEncontradoExcepcion;
 import Modelo.Cita;
 import Modelo.Doctor;
 import Modelo.Paciente;
@@ -50,7 +51,8 @@ public class AgendarCita extends javax.swing.JFrame {
         
         lbl1.setVisible(false);
         lbl2.setVisible(false);
-        txtPaciente.setVisible(false);
+        lblValidacion.setVisible(false);
+        txtDocumento.setVisible(false);
         lblPaciente.setVisible(false);
         btnBuscar.setVisible(false);
     }
@@ -64,7 +66,7 @@ public class AgendarCita extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        panel = new javax.swing.JPanel();
         cbxDoctores = new javax.swing.JComboBox();
         jLabel3 = new javax.swing.JLabel();
         btnSolicitar = new javax.swing.JButton();
@@ -73,7 +75,7 @@ public class AgendarCita extends javax.swing.JFrame {
         lblValidacion = new javax.swing.JLabel();
         dateChooser = new com.toedter.calendar.JDateChooser();
         lbl1 = new javax.swing.JLabel();
-        txtPaciente = new javax.swing.JTextField();
+        txtDocumento = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
         lbl2 = new javax.swing.JLabel();
         lblPaciente = new javax.swing.JLabel();
@@ -81,7 +83,7 @@ public class AgendarCita extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "AGENDAR CITA", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
+        panel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "AGENDAR CITA", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 
         jLabel3.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         jLabel3.setText("Ingrese la fecha de la cita:");
@@ -108,9 +110,9 @@ public class AgendarCita extends javax.swing.JFrame {
         lbl1.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         lbl1.setText("Ingrese el documento del paciente:");
 
-        txtPaciente.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtDocumento.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtPacienteKeyTyped(evt);
+                txtDocumentoKeyTyped(evt);
             }
         });
 
@@ -126,75 +128,70 @@ public class AgendarCita extends javax.swing.JFrame {
 
         lblPaciente.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(64, 64, 64)
-                        .addComponent(btnSolicitar, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
+        panel.setLayout(panelLayout);
+        panelLayout.setHorizontalGroup(
+            panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelLayout.createSequentialGroup()
+                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(lblValidacion, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(lbl2)
-                        .addGap(18, 18, 18)
-                        .addComponent(lblPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(106, 106, 106))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(txtPaciente, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelLayout.createSequentialGroup()
+                                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(txtDocumento, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lbl1, javax.swing.GroupLayout.Alignment.LEADING))
-                                .addGap(31, 31, 31)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGap(40, 40, 40)
+                                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(cbxDoctores, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(cbxEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(btnBuscar)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(cbxHora, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(dateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(btnBuscar, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelLayout.createSequentialGroup()
+                                .addComponent(lbl2)
+                                .addGap(27, 27, 27)
+                                .addComponent(lblPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(panelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lblValidacion, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelLayout.createSequentialGroup()
+                        .addGap(131, 131, 131)
+                        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cbxHora, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(dateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(panelLayout.createSequentialGroup()
+                        .addGap(152, 152, 152)
+                        .addComponent(btnSolicitar, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        panelLayout.setVerticalGroup(
+            panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelLayout.createSequentialGroup()
                 .addGap(12, 12, 12)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(panelLayout.createSequentialGroup()
                         .addComponent(lbl1)
                         .addGap(13, 13, 13)
-                        .addComponent(txtPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(txtDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelLayout.createSequentialGroup()
                         .addComponent(cbxEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(cbxDoctores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(19, 19, 19)
                 .addComponent(btnBuscar)
                 .addGap(32, 32, 32)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lbl2)
                     .addComponent(lblPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(52, 52, 52)
+                .addGap(50, 50, 50)
                 .addComponent(jLabel3)
                 .addGap(18, 18, 18)
                 .addComponent(dateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(cbxHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(74, 74, 74)
+                .addGap(70, 70, 70)
                 .addComponent(btnSolicitar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblValidacion, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -212,19 +209,21 @@ public class AgendarCita extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnVolver)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 578, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addComponent(btnVolver)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnVolver)
-                .addGap(18, 18, 18)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -238,7 +237,7 @@ public class AgendarCita extends javax.swing.JFrame {
         cbxDoctores.setSelectedItem("Seleccione un doctor");
         llenarComboDoctores("");
         cbxEspecialidad.setSelectedItem("Seleccione una especialidad");
-        txtPaciente.setText("");
+        txtDocumento.setText("");
         lblPaciente.setText("");
     }
     
@@ -321,10 +320,10 @@ public class AgendarCita extends javax.swing.JFrame {
             if( isPaciente ){
                 VistaPaciente vista = new VistaPaciente(paciente);
                 vista.setVisible(true);
+                this.dispose();
             }
             btnSolicitar.setEnabled(false);
             resetear();
-            this.dispose();
         }catch(DiaNoDisponibleExcepcion | CoincideConFechaBloqueadaExcepcion ex){
             JOptionPane.showMessageDialog(null,ex.getMessage());
         }
@@ -358,45 +357,45 @@ public class AgendarCita extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        //Obtenemos el documento
-        String documento = txtPaciente.getText();
-        Paciente pacienteBuscado = controlador.getControlador().buscarPaciente(documento);
+        try{
+            //Obtenemos el documento
+            String documento = txtDocumento.getText();
+            this.paciente = controlador.getControlador().buscarPaciente(documento);
 
-        if( pacienteBuscado!=null  ){
-            if( pacienteBuscado.hasCita() ){
+            //Si no se encuentra al paciente lanzamos esta excepcion
+            if( this.paciente==null  ) throw new NoEncontradoExcepcion();
+                
+            if( this.paciente.hasCita() ){
                 lblPaciente.setText( "El paciente seleccionado ya tiene cita" );
                 btnSolicitar.setEnabled(false);
                 return;
             }
-            
-            if( pacienteBuscado.hasMulta() ){
+
+            if( this.paciente.hasMulta() ){
                 lblPaciente.setText( "El paciente esta multado" );
                 btnSolicitar.setEnabled(false);
                 return;
             }
             
-            
-            this.paciente = pacienteBuscado;
             btnSolicitar.setEnabled(true);
-            lblPaciente.setText( pacienteBuscado.toString() );
-        }else{
-            lblPaciente.setText( "No se encontró al paciente" );
-        }
-        
+            lblPaciente.setText( this.paciente.toString() );
+        }catch(NoEncontradoExcepcion ex){
+            lblPaciente.setText( ex.getMessage() );
+        }        
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     /**
      * Metodo para que la secretaria digite unicamente numeros en el textField del documento 
      * @param evt 
      */
-    private void txtPacienteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPacienteKeyTyped
+    private void txtDocumentoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDocumentoKeyTyped
         try{
             lblValidacion.setText("");
             validacion.validarSoloNumeros(evt);
         }catch( DatoDigitadoExcepcion ex ){
             lblValidacion.setText(ex.getMessage());
         }
-    }//GEN-LAST:event_txtPacienteKeyTyped
+    }//GEN-LAST:event_txtDocumentoKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -408,11 +407,11 @@ public class AgendarCita extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cbxHora;
     private com.toedter.calendar.JDateChooser dateChooser;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lbl1;
     private javax.swing.JLabel lbl2;
     private javax.swing.JLabel lblPaciente;
     private javax.swing.JLabel lblValidacion;
-    private javax.swing.JTextField txtPaciente;
+    private javax.swing.JPanel panel;
+    private javax.swing.JTextField txtDocumento;
     // End of variables declaration//GEN-END:variables
 }

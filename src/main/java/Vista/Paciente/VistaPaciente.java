@@ -7,6 +7,7 @@ package Vista.Paciente;
 import Modelo.Paciente;
 import Vista.Secretaria.AgendarCita;
 import Vista.Login;
+import Vista.Secretaria.CancelarCita;
 
 /**
  *
@@ -163,7 +164,7 @@ public class VistaPaciente extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        Cancelar cancelar = new Cancelar(paciente);
+        CancelarCita cancelar = new CancelarCita(this.paciente);
         cambiarVentana(cancelar);
     }//GEN-LAST:event_btnCancelarActionPerformed
 

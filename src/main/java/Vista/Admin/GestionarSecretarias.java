@@ -534,6 +534,7 @@ public class GestionarSecretarias extends javax.swing.JFrame {
             txtCorreo.setText(secretaria.getCorreo());
             txtTelefono.setText(secretaria.getTelefono());
             cbxEstados.setSelectedItem(secretaria.getEstadoCivil());
+            txtAñosExp.setText( String.valueOf(secretaria.getAñosExp()) );
             
             setEnabledInputs(true);
         }

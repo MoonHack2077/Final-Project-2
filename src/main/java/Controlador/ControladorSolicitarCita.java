@@ -37,10 +37,10 @@ public class ControladorSolicitarCita {
      * @return 
      */
     public void verificarDisponibilidad(Cita cita) throws DiaNoDisponibleExcepcion{
-        Date fecha = cita.getFecha();
+        String fecha = cita.getFecha().toString();
         
         for (Cita date : cita.getDoctor().getAgenda()) {
-            if( date.getFecha().compareTo(fecha)==0 ) throw new DiaNoDisponibleExcepcion(cita.getDoctor());
+            if( date.getFecha().toString().equals(fecha)) throw new DiaNoDisponibleExcepcion(cita.getDoctor());
         }
         
     }
@@ -87,15 +87,15 @@ public class ControladorSolicitarCita {
      */
     public void especialidades(String especialidad) throws EspecialidadNoEncontradaExcepcion {
         //Creamos un arrayList para añadir los doctores que tengan la especialidad seleccionada
-        ArrayList<Doctor> doctores = new ArrayList<>();
+        ArrayList<Doctor> doctoresAux = new ArrayList<>();
         
         //Recorremos la lista de doctores para añadir las coincidencias
         for (Doctor doctor : this.doctores) {
-            if( doctor.getEspecialidad().equals(especialidad) ) doctores.add(doctor);
+            if( doctor.getEspecialidad().equals(especialidad) ) doctoresAux.add(doctor);
         }
         
         //Si la lista creada esta vacia significa que no hay ningún doctor con esa especialidadd
-        if( doctores.isEmpty() ) throw new EspecialidadNoEncontradaExcepcion("No hay doctores con esa especialidad");
+        if( doctoresAux.isEmpty() ) throw new EspecialidadNoEncontradaExcepcion("No hay doctores con esa especialidad");
     }
 
     /**
