@@ -5,7 +5,6 @@
 package Vista.Doctor;
 
 import Controlador.ControladorAtenderCita;
-import Controlador.ControladorRegistrarMulta;
 import Modelo.Cita;
 import Modelo.Doctor;
 import Modelo.Multa;
@@ -18,8 +17,7 @@ import javax.swing.JOptionPane;
  */
 public class AtenderCita extends javax.swing.JFrame {
 
-    private ControladorAtenderCita controladorCita;
-    private ControladorRegistrarMulta controladorMulta;
+    private ControladorAtenderCita controlador;
     private Doctor doctor;
     private Cita cita;
     /**
@@ -28,8 +26,7 @@ public class AtenderCita extends javax.swing.JFrame {
     public AtenderCita( Doctor doctor) {
         initComponents();
         setLocationRelativeTo(null);
-        this.controladorCita = new ControladorAtenderCita();
-        this.controladorMulta = new ControladorRegistrarMulta();
+        this.controlador = new ControladorAtenderCita();
         this.doctor = doctor;
         llenarAgenda();
     }
@@ -275,9 +272,9 @@ public class AtenderCita extends javax.swing.JFrame {
         String tratamientos = txtTratamientos.getText();
         Cita citaSeleccionada = (Cita) cbxAgenda.getSelectedItem();
         
-        controladorCita.confirmarAtencion(cita,conclusiones,tratamientos);
+        controlador.confirmarAtencion(cita,conclusiones,tratamientos);
         
-        boolean eliminada = controladorCita.getControlador().eliminarCita(citaSeleccionada.getPaciente().getDocumento());
+        boolean eliminada = controlador.getControlador().eliminarCita(citaSeleccionada.getPaciente().getDocumento());
         if( eliminada ){
             JOptionPane.showMessageDialog(null, "Cita atendida con exito");
             resetearCampos();                  
@@ -307,9 +304,9 @@ public class AtenderCita extends javax.swing.JFrame {
         if( confirmacion==0 ){
             //Creamos la multa y la registramos
             Multa multa = new Multa(cita);
-            controladorMulta.descuentoMulta(multa);
-            boolean añadida = controladorMulta.añadirMulta(multa);
-            boolean cancelada = controladorCita.getControlador().eliminarCita(cita.getPaciente().getDocumento());
+            controlador.descuentoMulta(multa);
+            boolean añadida = controlador.añadirMulta(multa);
+            boolean cancelada = controlador.getControlador().eliminarCita(cita.getPaciente().getDocumento());
             if( añadida && cancelada){
                 JOptionPane.showMessageDialog(null, "Se ha multado al paciente: " + cita.getPaciente().getNombre());
                 resetearCampos();

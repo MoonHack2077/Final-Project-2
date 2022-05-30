@@ -5,6 +5,9 @@
 package Controlador;
 
 import Modelo.Cita;
+import Modelo.Multa;
+import Singleton.Singleton;
+import java.util.ArrayList;
 
 /**
  *
@@ -13,9 +16,11 @@ import Modelo.Cita;
 public class ControladorAtenderCita {
 
     private ControladorCancelarCita controlador;
+    private ArrayList<Multa> multas;
     
     public ControladorAtenderCita() {
         controlador = new ControladorCancelarCita();
+        multas = Singleton.getINSTANCIA().getMultas();
     }
     
     /**
@@ -30,8 +35,40 @@ public class ControladorAtenderCita {
         
         //Se añade la cita al historal del paciente
         cita.getPaciente().getHistorial().add(cita);
-        Singleton.Singleton.getINSTANCIA().escribirPacientes();
-        Singleton.Singleton.getINSTANCIA().escribirCitas();
+        Singleton.getINSTANCIA().escribirPacientes();
+        Singleton.getINSTANCIA().escribirCitas();
+    }
+    
+    /**
+     * Metodo para añadir una multa al array general de las multas
+     * @param multa
+     * @return true si pudo añadirla, de lo contrario false;
+     */
+    public boolean añadirMulta(Multa multa){
+        multas.add(multa);
+        multa.getCita().getPaciente().setHasMulta(true);
+        Singleton.getINSTANCIA().escribirMultas();
+        Singleton.getINSTANCIA().escribirPacientes();
+        return true;
+    }
+    
+           
+    /**
+     * Metodo para hacer descuento de la multa si el paciente tiene SISBEN
+     * @param multa 
+     */
+    public void descuentoMulta(Multa multa){
+        if( multa.getCita().getPaciente().hasSisben() ){
+            double descuento = multa.getValorTotal()*0.25 ;
+            multa.setValorTotal( multa.getValorTotal() - descuento );
+        }
+    }
+    
+    /**
+     * @return the multas
+     */
+    public ArrayList<Multa> getMultas() {
+        return multas;
     }
 
     /**

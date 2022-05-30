@@ -38,6 +38,7 @@ public class AgendarCita extends javax.swing.JFrame {
         controlador = new ControladorSolicitarCita();
         llenarComboDoctores("");
         validacion = new Validacion();
+        btnSolicitar.setEnabled(false);
     }
     
     //Este constructor será llamado por el paciente
@@ -48,7 +49,9 @@ public class AgendarCita extends javax.swing.JFrame {
         llenarComboDoctores("");
         this.paciente = paciente;
         isPaciente = true;
+        btnSolicitar.setEnabled(false);
         
+        //Se inhabilitan las funciones que tendría la secretaria
         lbl1.setVisible(false);
         lbl2.setVisible(false);
         lblValidacion.setVisible(false);
@@ -334,7 +337,7 @@ public class AgendarCita extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-        if( isPaciente ){
+        if( this.isPaciente ){
             VistaPaciente vista = new VistaPaciente(paciente);
             vista.setVisible(true);
         }else{
