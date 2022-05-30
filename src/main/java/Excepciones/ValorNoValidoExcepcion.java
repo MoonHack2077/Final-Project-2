@@ -8,12 +8,10 @@ package Excepciones;
  *
  * @author USER
  */
-public class NoEncontradoExcepcion extends RuntimeException {
-    public NoEncontradoExcepcion(){
-        super("El usuario NO se encentra almacenado");
+public class ValorNoValidoExcepcion extends RuntimeException {
+
+    public ValorNoValidoExcepcion() {
+        super("Valor no válido");
     }
     
-    public NoEncontradoExcepcion(String mensaje){
-        super(mensaje);
-    }
 }

@@ -4,9 +4,11 @@
  */
 package Controlador;
 
+import Excepciones.ValorNoValidoExcepcion;
 import Modelo.Multa;
 import Singleton.Singleton;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -52,6 +54,16 @@ public class ControladorPagoMulta {
             }
         }
         return false;
+    }
+    
+    /**
+     * 
+     * @param valor
+     * @param multa
+     * @throws ValorNoValidoExcepcion 
+     */
+    public void verificarValorPagado(double valor, Multa multa) throws ValorNoValidoExcepcion{
+        if( valor != multa.getValorTotal() ) throw new ValorNoValidoExcepcion();
     }
     
     
