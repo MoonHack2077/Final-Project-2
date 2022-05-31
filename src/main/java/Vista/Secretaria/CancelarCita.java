@@ -51,7 +51,7 @@ public class CancelarCita extends javax.swing.JFrame {
         
         this.cita = controlador.buscarCita( paciente.getDocumento() );
         lblDoctor.setText( this.cita.getDoctor().getNombre() );
-        lblFecha.setText( this.cita.getFecha().toGMTString() );
+        lblFecha.setText( this.cita.getFecha().toLocaleString() );
         lblMotivo.setText( this.cita.getDoctor().getEspecialidad());
         lblPaciente.setText( this.cita.getPaciente().getNombre() );
                

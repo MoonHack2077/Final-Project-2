@@ -50,14 +50,22 @@ public class AgendarCita extends javax.swing.JFrame {
         this.paciente = paciente;
         isPaciente = true;
         btnSolicitar.setEnabled(false);
+       
+        //System.out.println(panel.getSize());
+        panel.setBounds(0, 0, panel.getWidth()-150, panel.getHeight());
+        //pepe@mihospital.co
+        //System.out.println(panel.getSize());
         
-        //Se inhabilitan las funciones que tendría la secretaria
-        lbl1.setVisible(false);
+        //Se inhabilitan las funciones que tendría la secretaria       
+        panelPac.setVisible(false);
         lbl2.setVisible(false);
-        lblValidacion.setVisible(false);
-        txtDocumento.setVisible(false);
         lblPaciente.setVisible(false);
-        btnBuscar.setVisible(false);
+        lblValidacion.setVisible(false);
+        
+        //Se cuadra el estilo de la ventana
+        panelDoc.setBounds(0, 0, panelDoc.getWidth(), panelDoc.getHeight());
+        panelDate.setBounds(250, 400, panelDate.getWidth(), panelDate.getHeight());
+        
     }
     
     /**
@@ -70,26 +78,26 @@ public class AgendarCita extends javax.swing.JFrame {
     private void initComponents() {
 
         panel = new javax.swing.JPanel();
-        cbxDoctores = new javax.swing.JComboBox();
-        jLabel3 = new javax.swing.JLabel();
         btnSolicitar = new javax.swing.JButton();
-        cbxHora = new javax.swing.JComboBox<>();
-        cbxEspecialidad = new javax.swing.JComboBox<>();
         lblValidacion = new javax.swing.JLabel();
+        lbl2 = new javax.swing.JLabel();
+        lblPaciente = new javax.swing.JLabel();
+        panelDate = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        cbxHora = new javax.swing.JComboBox<>();
         dateChooser = new com.toedter.calendar.JDateChooser();
+        panelDoc = new javax.swing.JPanel();
+        cbxDoctores = new javax.swing.JComboBox();
+        cbxEspecialidad = new javax.swing.JComboBox<>();
+        panelPac = new javax.swing.JPanel();
         lbl1 = new javax.swing.JLabel();
         txtDocumento = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
-        lbl2 = new javax.swing.JLabel();
-        lblPaciente = new javax.swing.JLabel();
         btnVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         panel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "AGENDAR CITA", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
-
-        jLabel3.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
-        jLabel3.setText("Ingrese la fecha de la cita:");
 
         btnSolicitar.setText("AGENDAR CITA");
         btnSolicitar.addActionListener(new java.awt.event.ActionListener() {
@@ -98,7 +106,46 @@ public class AgendarCita extends javax.swing.JFrame {
             }
         });
 
+        lblValidacion.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        lblValidacion.setForeground(new java.awt.Color(255, 0, 0));
+
+        lbl2.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
+        lbl2.setText("Paciente seleccionado:");
+
+        lblPaciente.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
+
+        panelDate.setBorder(null);
+
+        jLabel3.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        jLabel3.setText("Ingrese la fecha de la cita:");
+
         cbxHora.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hora", "7:00 AM", "7:20 AM", "7:40 AM", "8:00 AM", "8:20 AM", "8:40 AM", "9:00 AM", "9:20 AM", "9:40 AM", "10:00 AM", "10:20 AM", "10:40 AM", "11:00 AM", "11:20 AM", "11:40 AM", "1:00 PM", "1:20 PM", "1:40 PM", "2:00 PM", "2:20 PM", "2:40 PM", "3:00 PM", "3:20 PM", "3:40 PM", "4:00 PM", "4:20 PM", "4:40 PM", "5:00 PM", "5:20 PM", "5:40 PM" }));
+
+        javax.swing.GroupLayout panelDateLayout = new javax.swing.GroupLayout(panelDate);
+        panelDate.setLayout(panelDateLayout);
+        panelDateLayout.setHorizontalGroup(
+            panelDateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelDateLayout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addGroup(panelDateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbxHora, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(24, Short.MAX_VALUE))
+        );
+        panelDateLayout.setVerticalGroup(
+            panelDateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelDateLayout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addComponent(jLabel3)
+                .addGap(18, 18, 18)
+                .addComponent(dateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32)
+                .addComponent(cbxHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(50, Short.MAX_VALUE))
+        );
+
+        panelDoc.setBorder(null);
 
         cbxEspecialidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione una especialidad", "Medicina General", "Dermatologia", "Odontologia", "Pediatria", "Cardiología", "Urologia", "Gastroenterología", "Anatomía", "Ortopedia", "Oftalmología", "Oncología" }));
         cbxEspecialidad.addActionListener(new java.awt.event.ActionListener() {
@@ -107,8 +154,28 @@ public class AgendarCita extends javax.swing.JFrame {
             }
         });
 
-        lblValidacion.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
-        lblValidacion.setForeground(new java.awt.Color(255, 0, 0));
+        javax.swing.GroupLayout panelDocLayout = new javax.swing.GroupLayout(panelDoc);
+        panelDoc.setLayout(panelDocLayout);
+        panelDocLayout.setHorizontalGroup(
+            panelDocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelDocLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(panelDocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cbxDoctores, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbxEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(106, Short.MAX_VALUE))
+        );
+        panelDocLayout.setVerticalGroup(
+            panelDocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelDocLayout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addComponent(cbxEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(cbxDoctores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(20, Short.MAX_VALUE))
+        );
+
+        panelPac.setBorder(null);
 
         lbl1.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         lbl1.setText("Ingrese el documento del paciente:");
@@ -126,77 +193,77 @@ public class AgendarCita extends javax.swing.JFrame {
             }
         });
 
-        lbl2.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
-        lbl2.setText("Paciente seleccionado:");
-
-        lblPaciente.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
+        javax.swing.GroupLayout panelPacLayout = new javax.swing.GroupLayout(panelPac);
+        panelPac.setLayout(panelPacLayout);
+        panelPacLayout.setHorizontalGroup(
+            panelPacLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelPacLayout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(panelPacLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelPacLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(txtDocumento, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(lbl1, javax.swing.GroupLayout.Alignment.LEADING))
+                    .addComponent(btnBuscar, javax.swing.GroupLayout.Alignment.LEADING))
+                .addContainerGap(26, Short.MAX_VALUE))
+        );
+        panelPacLayout.setVerticalGroup(
+            panelPacLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelPacLayout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(lbl1)
+                .addGap(13, 13, 13)
+                .addComponent(txtDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnBuscar)
+                .addContainerGap(24, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
         panel.setLayout(panelLayout);
         panelLayout.setHorizontalGroup(
             panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
+                        .addComponent(panelPac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(52, 52, 52)
+                        .addComponent(panelDoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(panelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelLayout.createSequentialGroup()
-                                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(txtDocumento, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lbl1, javax.swing.GroupLayout.Alignment.LEADING))
-                                .addGap(40, 40, 40)
-                                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(cbxDoctores, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cbxEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(btnBuscar, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelLayout.createSequentialGroup()
-                                .addComponent(lbl2)
-                                .addGap(27, 27, 27)
-                                .addComponent(lblPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(panelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(lblValidacion, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panelLayout.createSequentialGroup()
-                        .addGap(131, 131, 131)
-                        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cbxHora, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(dateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(panelLayout.createSequentialGroup()
-                        .addGap(152, 152, 152)
-                        .addComponent(btnSolicitar, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(lbl2)
+                        .addGap(32, 32, 32)
+                        .addComponent(lblPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))))
+            .addGroup(panelLayout.createSequentialGroup()
+                .addGap(144, 144, 144)
+                .addComponent(btnSolicitar, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(panelLayout.createSequentialGroup()
+                .addGap(41, 41, 41)
+                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblValidacion, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(panelDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         panelLayout.setVerticalGroup(
             panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelLayout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(panelLayout.createSequentialGroup()
-                        .addComponent(lbl1)
-                        .addGap(13, 13, 13)
-                        .addComponent(txtDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panelLayout.createSequentialGroup()
-                        .addComponent(cbxEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cbxDoctores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(19, 19, 19)
-                .addComponent(btnBuscar)
-                .addGap(32, 32, 32)
+                .addContainerGap()
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(panelPac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(panelDoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(42, 42, 42)
+                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lbl2)
                     .addComponent(lblPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(50, 50, 50)
-                .addComponent(jLabel3)
-                .addGap(18, 18, 18)
-                .addComponent(dateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(cbxHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(70, 70, 70)
+                .addGap(41, 41, 41)
+                .addComponent(panelDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31)
                 .addComponent(btnSolicitar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                 .addComponent(lblValidacion, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(31, 31, 31))
         );
 
         btnVolver.setText("Volver");
@@ -211,13 +278,14 @@ public class AgendarCita extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnVolver)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addComponent(btnVolver))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, 555, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -278,7 +346,8 @@ public class AgendarCita extends javax.swing.JFrame {
     private void btnSolicitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSolicitarActionPerformed
         try{
             //Validamos los campos 
-            if( cbxHora.getSelectedIndex() == 0 || cbxDoctores.getSelectedIndex() == 0 )
+            if( cbxHora.getSelectedIndex() == 0 || cbxDoctores.getSelectedIndex() == 0 
+                    || dateChooser.getDate() == null )
             {
                 JOptionPane.showMessageDialog(null, "Faltan campos por seleccionar");
                 return;
@@ -415,6 +484,9 @@ public class AgendarCita extends javax.swing.JFrame {
     private javax.swing.JLabel lblPaciente;
     private javax.swing.JLabel lblValidacion;
     private javax.swing.JPanel panel;
+    private javax.swing.JPanel panelDate;
+    private javax.swing.JPanel panelDoc;
+    private javax.swing.JPanel panelPac;
     private javax.swing.JTextField txtDocumento;
     // End of variables declaration//GEN-END:variables
 }
