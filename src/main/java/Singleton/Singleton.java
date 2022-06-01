@@ -33,11 +33,11 @@ public class Singleton{
     private ArrayList<Cita> citas;
     private ArrayList<Multa> multas;
     
-    private String txtDoctores = "doctores.txt";
-    private String txtSecretarias = "secretarias.txt";
-    private String txtPacientes = "pacientes.txt";
-    private String txtCitas = "citas.txt";
-    private String txtMultas = "multas.txt";
+    private String txtDoctores = "doctores.dat";
+    private String txtSecretarias = "secretarias.dat";
+    private String txtPacientes = "pacientes.dat";
+    private String txtCitas = "citas.dat";
+    private String txtMultas = "multas.dat";
     
     private Singleton() {
         admins = new Persona[2];

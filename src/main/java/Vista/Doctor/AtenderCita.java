@@ -323,12 +323,18 @@ public class AtenderCita extends javax.swing.JFrame {
         if( cbxAgenda.getSelectedIndex()==0 ){
             lblFecha.setText("No hay una cita seleccionada");
             lblPaciente.setText("No hay una cita seleccionada");   
+            btnConfirmar.setEnabled(false);
+            btnHistorial.setEnabled(false);
+            btnMultar.setEnabled(false);
             return;
         }
         
         Cita citaSeleccionada = (Cita) cbxAgenda.getSelectedItem();
         
         if( citaSeleccionada != null ){
+            btnConfirmar.setEnabled(true);
+            btnHistorial.setEnabled(true);
+            btnMultar.setEnabled(true);
             lblFecha.setText( citaSeleccionada.getFecha().toString() );
             lblPaciente.setText( citaSeleccionada.getPaciente().toString() );
 

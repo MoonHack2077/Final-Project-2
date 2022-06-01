@@ -79,12 +79,6 @@ public class Cita {
         this.conclusiones = conclusiones;
     }
 
-    @Override
-    public String toString() {
-        return "Doctor: " + getDoctor().getNombre() + " - " +
-               "Paciente: " + getPaciente().getNombre();
-    }
-
     /**
      * @return the tratamientos
      */
@@ -98,5 +92,11 @@ public class Cita {
     public void setTratamientos(String tratamientos) {
         this.tratamientos = tratamientos;
     }
-       
+    
+    @Override
+    public String toString() {
+        return "Doctor: " + getDoctor().getNombre() + " - " +
+               "Paciente: " + getPaciente().getNombre();
+    }
+   
 }

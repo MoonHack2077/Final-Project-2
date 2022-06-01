@@ -79,37 +79,50 @@ public class PagoMulta extends javax.swing.JFrame {
         });
 
         jLabel1.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Ingrese el total a pagar");
 
         jLabel3.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Ingrese la fecha del pago:");
 
-        jLabel2.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
-        jLabel2.setText("Detalle de la multa:");
+        jLabel2.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel2.setText("Detalle de la multa");
 
         lblValidacion.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         lblValidacion.setForeground(new java.awt.Color(255, 0, 0));
 
         jLabel4.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Doctor:");
 
         lblDoctor.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
+        lblDoctor.setForeground(new java.awt.Color(0, 0, 0));
 
         jLabel7.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("Fecha:");
 
         lblFecha.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
+        lblFecha.setForeground(new java.awt.Color(0, 0, 0));
 
         jLabel5.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("Paciente:");
 
         lblPaciente.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
+        lblPaciente.setForeground(new java.awt.Color(0, 0, 0));
 
         jLabel8.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(0, 0, 0));
         jLabel8.setText("Total  a pagar:");
 
         lblTotal.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
+        lblTotal.setForeground(new java.awt.Color(0, 0, 0));
 
+        jLabel9.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(0, 0, 0));
         jLabel9.setText("Ingrese el numero de documento del paciente:");
 
         btnBuscar.setText("Buscar");
@@ -130,16 +143,6 @@ public class PagoMulta extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnPagar))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(dateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(btnBuscar)
-                        .addComponent(jLabel9)))
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -157,16 +160,27 @@ public class PagoMulta extends javax.swing.JFrame {
                             .addComponent(lblTotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel2))
+                        .addComponent(jLabel5)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(lblValidacion, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(txtDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(42, 42, 42)
+                        .addComponent(btnBuscar)
                         .addGap(0, 0, Short.MAX_VALUE))))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(dateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel9)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(88, 88, 88)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -176,9 +190,9 @@ public class PagoMulta extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscar))
-                .addGap(27, 27, 27)
+                .addGap(21, 21, 21)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel7)
@@ -193,10 +207,10 @@ public class PagoMulta extends javax.swing.JFrame {
                     .addComponent(jLabel5)
                     .addComponent(lblPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(56, 56, 56)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(lblTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
                     .addComponent(dateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -256,17 +270,27 @@ public class PagoMulta extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnPagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagarActionPerformed
-        try{              
+        try{  
+            //Validamos
+            if( this.multa==null ){
+                JOptionPane.showMessageDialog(null, "La multa no existe");
+            }
+            
+            if( dateChooser.getDate()==null || txtTotal.getText().isBlank() ){
+                JOptionPane.showMessageDialog(null, "Faltan campos por llenar");
+            }
+                        
             //Obtenemos el valos a pagar
             double valorTotal = Double.parseDouble(txtTotal.getText());        
 
+            //Verificamos si el valor que fue introducido es acorde al costo
             controlador.verificarValorPagado(valorTotal, multa);
 
             //Obtenemos la fecha del pago
             Date fecha = dateChooser.getDate();
 
             //Se setea la fecha de pago de la multa
-            multa.setFechaPago(fecha);
+            this.multa.setFechaPago(fecha);
             boolean pagada = controlador.eliminarMulta(multa.getCita().getPaciente().getDocumento());
             if( pagada ){
                 JOptionPane.showMessageDialog(null, "Multa pagada!!");
@@ -292,10 +316,10 @@ public class PagoMulta extends javax.swing.JFrame {
      */
     private void txtTotalKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTotalKeyTyped
         try{
-              lblValidacion.setText("");
-              validacion.validarSoloNumeros(evt);
+            lblValidacion.setText("");
+            this.validacion.validarSoloNumeros(evt);
           }catch( DatoDigitadoExcepcion ex ){
-              lblValidacion.setText(ex.getMessage());
+            lblValidacion.setText(ex.getMessage());
           }
     }//GEN-LAST:event_txtTotalKeyTyped
 
@@ -311,11 +335,19 @@ public class PagoMulta extends javax.swing.JFrame {
 
             if( this.multa == null ) throw new NoEncontradoExcepcion("No fue encontrada una multa para ese paciente");
             
-            lblFecha.setText( this.multa.getCita().getFecha().toGMTString() );
+            
+            lblValidacion.setText( "" );
+            lblFecha.setText( this.multa.getCita().getFecha().toLocaleString() );
             lblPaciente.setText( this.multa.getCita().getPaciente().getNombre() );
             lblDoctor.setText( this.multa.getCita().getDoctor().getNombre() );
             lblTotal.setText( String.valueOf(this.multa.getValorTotal()) );
+            btnPagar.setEnabled(true);
         }catch(NoEncontradoExcepcion ex){
+            lblFecha.setText( "" );
+            lblPaciente.setText( "" );
+            lblDoctor.setText( "" );
+            lblTotal.setText( "" );
+            btnPagar.setEnabled(false);
             lblValidacion.setText( ex.getMessage() );
         }       
     }//GEN-LAST:event_btnBuscarActionPerformed
