@@ -4,91 +4,102 @@
  */
 package Controlador;
 
-import Modelo.Cita;
+import Excepciones.MayorDeEdadExcepcion;
+import Excepciones.NoEncontradoExcepcion;
 import Modelo.Doctor;
+import Singleton.Singleton;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  *
  * @author USER
  */
 public class ControladorDoctor {
-    public ControladorDoctor(){}
+    private ArrayList<Doctor> doctores;
+    private ControladorBusqueda controladorBusqueda;
     
-    /**
-     * Metodo para conocer la disponibiidad del doctor
-     * @param cita
-     * @return 
-     */
-    public boolean verificarDisponibilidad(Cita cita){
-        ArrayList<Cita> agenda = cita.getDoctor().getAgenda();
-        String fecha = cita.getFecha().toString();
-        
-        for (Cita date : agenda) {
-            if( date.getFecha().toString().equals(fecha) ) return true;
-        }
-        
-        return false;
+    public ControladorDoctor(){
+        doctores = Singleton.getINSTANCIA().getDoctores();
+        controladorBusqueda = new ControladorBusqueda();
     }
     
     /**
-     * Metodo para eliminar una cita de la agenda
-     * @param cita
-     * @return true si pudo eliminarla, de lo contrario false
-     */
-    public boolean eliminarCitaDeLaAgenda(Cita cita){
-        ArrayList<Cita> agenda = cita.getDoctor().getAgenda();
-        
-        for (int i = 0; i < agenda.size(); i++) {
-            if(agenda.get(i).getFecha().toString().equals(cita.getFecha().toString())){
-                agenda.remove(i);
-                return true;
-            }      
-        }
-        
-        return false;
-    }
-    
-    /**
-     * Metodo para validar que la fecha elegida para una cita no sea la misma que la que el doctor bloqueó
+     * Metodo para añadir un doctor
      * @param doctor
-     * @param fecha
-     * @return true si la fecha elegida es la misma, de lo contrario false
+     * @return true si lo pudo añadir
+     * @throws MayorDeEdadExcepcion 
      */
-    public boolean validarFechaBloqueada(Doctor doctor, Date fecha){       
-        return doctor.getFechaBloqueada() != null && 
-               (doctor.getFechaBloqueada().toString().equals(fecha.toString())); 
+    public boolean añadirDoctor(Doctor doctor)throws MayorDeEdadExcepcion{
+        controladorBusqueda.buscarSecretaria(doctor.getDocumento(),doctor.getCorreo(), doctor.getContraseña(), doctor.getTelefono());
+        controladorBusqueda.buscarDoctor(doctor.getDocumento(),doctor.getCorreo(), doctor.getContraseña(), doctor.getTelefono());
+        controladorBusqueda.buscarPaciente(doctor.getDocumento(),doctor.getCorreo(), doctor.getContraseña(), doctor.getTelefono());
+        controladorBusqueda.buscarAdmin(doctor.getDocumento(),doctor.getCorreo(), doctor.getContraseña(), doctor.getTelefono());
+        
+        //Excepciones    
+        if( doctor.getEdad() < 18) throw new MayorDeEdadExcepcion();
+        
+        doctores.add(doctor);
+        Singleton.getINSTANCIA().escribirDoctores();
+        return true;       
     }
     
     /**
-     * Metodo para que el doctor pueda bloquear una fecha
-     * @return true si la fecha dada coincide con alguna cita agendada, de lo contrario false
+     * Metodo para eliminar un doctor
+     * @param documento
+     * @return true si lo elimina
+     * @throws NoEncontradoExcepcion 
      */
-    public boolean bloquearFecha(Doctor doctor,Date dia){
-        //Convertimos a string el dia para que sea mas manejable la comparacion
-        String diaAux =  String.valueOf(dia.getDate() + dia.getMonth() + dia.getYear());
+    public boolean eliminarDoctor(String documento) throws NoEncontradoExcepcion{
+        Doctor aux = controladorBusqueda.buscarDoctor(documento);
         
-        ArrayList<Cita> agenda = doctor.getAgenda();
+        //Excepcion
+        if( aux == null ) throw new NoEncontradoExcepcion();
         
-        for (Cita cita : agenda) {
-            //Ya que las fechas que hay en la agenda, cada una tiene una hora establecida
-            //Por lo tanto aunque sea el mismo dia nunca será igual porque cuentan con una hora que se eligió manualmente
-            String citaAux =  String.valueOf(cita.getFecha().getDate() + cita.getFecha().getMonth() + cita.getFecha().getYear());
-            if( citaAux.equals(diaAux) ){
-                return true;
+        for (int i = 0; i < doctores.size(); i++) {
+            if( doctores.get(i).getDocumento().equals(documento )){
+                doctores.remove(i);
+                Singleton.getINSTANCIA().escribirDoctores();
             }
         }
         
-        //Una vez verificado que el dia no coincida, seteamos la fecha
-        doctor.setFechaBloqueada(dia);
-        return false;
+        return true;
     }
     
     /**
-     * Metodo para ordenar la agenda del doctor para que las citas "tengan sentido"
+     * Metodo para editar la informacion de un doctor
+     * @param doctor
+     * @ true si la pudo editar
+     * @throws NoEncontradoExcepcion
+     * @throws MayorDeEdadExcepcion 
      */
-    public void ordenarAgenda(){
-        //Aun esta pendiente pero la idea es buena...
+    public boolean editarDoctor(Doctor doctor) throws NoEncontradoExcepcion, MayorDeEdadExcepcion{       
+        Doctor aux = controladorBusqueda.buscarDoctor(doctor.getDocumento());
+        
+        //Excepciones
+        if( aux == null ) throw new NoEncontradoExcepcion();
+        if( doctor.getEdad() < 18) throw new MayorDeEdadExcepcion();
+        
+        for(int i=0 ; i < doctores.size(); i++){
+            if( doctores.get(i).getDocumento().equals(doctor.getDocumento() )){
+                //Inyectando los nuevos valores
+                doctores.get(i).setNombre(doctor.getNombre());
+                doctores.get(i).setEdad(doctor.getEdad());
+                doctores.get(i).setContraseña(doctor.getContraseña());
+                doctores.get(i).setCorreo(doctor.getCorreo());
+                doctores.get(i).setEstadoCivil(doctor.getEstadoCivil());
+                doctores.get(i).setTelefono(doctor.getTelefono());
+                Singleton.getINSTANCIA().escribirDoctores();
+            }
+        }
+        
+        return true;
+    }
+    
+
+    /**
+     * @return the doctores
+     */
+    public ArrayList<Doctor> getDoctores() {
+        return doctores;
     }
 }

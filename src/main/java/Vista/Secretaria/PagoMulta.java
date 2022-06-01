@@ -4,28 +4,31 @@
  */
 package Vista.Secretaria;
 
-import Controlador.ControladorHospital;
+import Controlador.ControladorPagoMulta;
+import Excepciones.DatoDigitadoExcepcion;
+import Excepciones.NoEncontradoExcepcion;
+import Excepciones.ValorNoValidoExcepcion;
 import Modelo.Multa;
-import Modelo.Paciente;
-import java.util.ArrayList;
+import Modelo.Validacion;
 import java.util.Date;
 import javax.swing.JOptionPane;
-
 /**
  *
  * @author USER
  */
 public class PagoMulta extends javax.swing.JFrame {
 
-    private ControladorHospital controlador;
+    private ControladorPagoMulta controlador;
+    private Validacion validacion;
+    private Multa multa;
     /**
      * Creates new form PagoMulta
      */
-    public PagoMulta(ControladorHospital controlador) {
+    public PagoMulta() {
         initComponents();
         setLocationRelativeTo(null);
-        this.controlador = controlador;
-        llenarComboMultas();
+        controlador = new ControladorPagoMulta();
+        this.validacion = new Validacion();
     }
 
     /**
@@ -38,32 +41,29 @@ public class PagoMulta extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        cbxMultas = new javax.swing.JComboBox();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        txtDetalle = new javax.swing.JTextArea();
         btnPagar = new javax.swing.JButton();
         txtTotal = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        cbxDia = new javax.swing.JComboBox<>();
-        cbxMes = new javax.swing.JComboBox<>();
-        txtAñoCita = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
+        lblValidacion = new javax.swing.JLabel();
+        dateChooser = new com.toedter.calendar.JDateChooser();
+        jLabel4 = new javax.swing.JLabel();
+        lblDoctor = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        lblFecha = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        lblPaciente = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        lblTotal = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        txtDocumento = new javax.swing.JTextField();
+        btnBuscar = new javax.swing.JButton();
         btnVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "PAGO MULTA", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
-
-        cbxMultas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbxMultasActionPerformed(evt);
-            }
-        });
-
-        txtDetalle.setColumns(20);
-        txtDetalle.setRows(5);
-        jScrollPane1.setViewportView(txtDetalle);
 
         btnPagar.setText("PAGAR");
         btnPagar.addActionListener(new java.awt.event.ActionListener() {
@@ -72,82 +72,156 @@ public class PagoMulta extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("Ingrese el total a pagar");
-
-        jLabel3.setText("Ingrese la fecha del pago:");
-
-        cbxDia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dia", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
-
-        cbxMes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mes", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
-
-        txtAñoCita.setText("AÑO");
-        txtAñoCita.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtAñoCitaFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtAñoCitaFocusLost(evt);
+        txtTotal.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTotalKeyTyped(evt);
             }
         });
 
-        jLabel2.setText("Detalle de la multa:");
+        jLabel1.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel1.setText("Ingrese el total a pagar");
+
+        jLabel3.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel3.setText("Ingrese la fecha del pago:");
+
+        jLabel2.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel2.setText("Detalle de la multa");
+
+        lblValidacion.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        lblValidacion.setForeground(new java.awt.Color(255, 0, 0));
+
+        jLabel4.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel4.setText("Doctor:");
+
+        lblDoctor.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
+        lblDoctor.setForeground(new java.awt.Color(0, 0, 0));
+
+        jLabel7.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel7.setText("Fecha:");
+
+        lblFecha.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
+        lblFecha.setForeground(new java.awt.Color(0, 0, 0));
+
+        jLabel5.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel5.setText("Paciente:");
+
+        lblPaciente.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
+        lblPaciente.setForeground(new java.awt.Color(0, 0, 0));
+
+        jLabel8.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel8.setText("Total  a pagar:");
+
+        lblTotal.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
+        lblTotal.setForeground(new java.awt.Color(0, 0, 0));
+
+        jLabel9.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel9.setText("Ingrese el numero de documento del paciente:");
+
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnPagar))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(95, 95, 95)
-                        .addComponent(btnPagar))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(jLabel2))
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)
-                                .addComponent(cbxMultas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(55, 55, 55)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtAñoCita, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cbxMes, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(cbxDia, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(2, 2, 2)
+                                .addComponent(jLabel7))
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel8))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lblDoctor, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblFecha, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
+                            .addComponent(lblPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblTotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblValidacion, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(txtDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(42, 42, 42)
+                        .addComponent(btnBuscar)
+                        .addGap(0, 0, Short.MAX_VALUE))))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(dateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel9)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(88, 88, 88)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(cbxMultas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2)
-                .addGap(4, 4, 4)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel9)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(cbxDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cbxMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtAñoCita, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscar))
+                .addGap(21, 21, 21)
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel4))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblDoctor, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5)
+                    .addComponent(lblPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(56, 56, 56)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
+                    .addComponent(dateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(27, 27, 27)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addGap(18, 18, 18)
-                .addComponent(btnPagar)
-                .addContainerGap(15, Short.MAX_VALUE))
+                    .addComponent(jLabel1)
+                    .addComponent(btnPagar))
+                .addGap(39, 39, 39)
+                .addComponent(lblValidacion, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(19, 19, 19))
         );
 
         btnVolver.setText("Volver");
@@ -162,23 +236,20 @@ public class PagoMulta extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(14, 14, 14)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addComponent(btnVolver))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(43, 43, 43)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(50, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnVolver))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(15, 15, 15)
+                .addGap(9, 9, 9)
                 .addComponent(btnVolver)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         pack();
@@ -189,7 +260,7 @@ public class PagoMulta extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-        VistaSecretaria secre = new VistaSecretaria(controlador);
+        VistaSecretaria secre = new VistaSecretaria();
         secre.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnVolverActionPerformed
@@ -199,129 +270,111 @@ public class PagoMulta extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnPagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagarActionPerformed
-        //Validacion necesaria por si en algun combobox se selecciona un elemento que no corresponde 
-        if( cbxDia.getSelectedIndex() == 0 || cbxMes.getSelectedIndex() == 0  || 
-                txtAñoCita.getText().equals("AÑO"))
-        {
-            JOptionPane.showMessageDialog(null, "Faltan campos por seleccionar");
-            return;
-        }
-        
-        //Parseamos los datos para crear la fecha
-        int dia = Integer.parseInt(cbxDia.getSelectedItem().toString());
-        int mes = Integer.parseInt(cbxMes.getSelectedItem().toString());
-        int año = Integer.parseInt(txtAñoCita.getText());
-        
-        //En caso de que el mes sea 2 (febrero), validar si los dias y el año corresponden
-        if( mes == 2 && dia >= 30 ){
-            JOptionPane.showMessageDialog(null, "Febrero no tiene esa cantidad de dias");
-            return;
-        }
-        
-        //En caso de que el mes sea 2 (febrero), validar si es un año bisiesto
-        if( mes == 2 && dia == 29 && año % 4 != 0 ){
-            JOptionPane.showMessageDialog(null, "Febrero no tiene esa cantidad de dias");
-            return;
-        }
-        
-        // los meses 4, 6, 9 y 11 solo tienen 30 dias
-        if( (mes == 4 || mes == 6 || mes == 9 || mes == 11 ) && ( dia == 31 ) ){
-            JOptionPane.showMessageDialog(null, "El mes seleccionado no tiene esa cantidad de dias");
-            return;
-        }
-        
-        //Creamos la fecha del pago
-        Date fecha = new Date(año, mes-1, dia);
-        
-        //Obtenemos el valos a pagar
-        double valorTotal = Double.parseDouble(txtTotal.getText());
-        Paciente multaPaciente = (Paciente) cbxMultas.getSelectedItem();
-        
-        //No se si esto se pueda dejar aqui o haya que hacer un controlador para meter esto
-        if( valorTotal != multaPaciente.getMulta().getValorTotal() ){
-            JOptionPane.showMessageDialog(null, "Valor no válido");
-            return;
-        }
-        
-        //Se setea la fecha de pago de la multa
-        multaPaciente.getMulta().setFechaPago(fecha);
-        boolean pagada = controlador.eliminarMulta(multaPaciente.getDocumento());
-        if( pagada ){
-            JOptionPane.showMessageDialog(null, "Multa pagada!!");
-            resetear();
-        }else{
-            JOptionPane.showMessageDialog(null, "Ocurrió un error");
+        try{  
+            //Validamos
+            if( this.multa==null ){
+                JOptionPane.showMessageDialog(null, "La multa no existe");
+            }
+            
+            if( dateChooser.getDate()==null || txtTotal.getText().isBlank() ){
+                JOptionPane.showMessageDialog(null, "Faltan campos por llenar");
+            }
+                        
+            //Obtenemos el valos a pagar
+            double valorTotal = Double.parseDouble(txtTotal.getText());        
+
+            //Verificamos si el valor que fue introducido es acorde al costo
+            controlador.verificarValorPagado(valorTotal, multa);
+
+            //Obtenemos la fecha del pago
+            Date fecha = dateChooser.getDate();
+
+            //Se setea la fecha de pago de la multa
+            this.multa.setFechaPago(fecha);
+            boolean pagada = controlador.eliminarMulta(multa.getCita().getPaciente().getDocumento());
+            if( pagada ){
+                JOptionPane.showMessageDialog(null, "Multa pagada!!");
+                txtTotal.setText("");
+                txtDocumento.setText("");
+                lblFecha.setText( "" );
+                lblPaciente.setText( "" );
+                lblDoctor.setText( "" );
+                lblTotal.setText( "" );
+            }else{
+                JOptionPane.showMessageDialog(null, "Ocurrió un error");
+            }
+        }catch( ValorNoValidoExcepcion ex ){
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }//GEN-LAST:event_btnPagarActionPerformed
 
+    
+   
     /**
-     * Metodo para que cada vez que se seleccione un paciente se muestre el detalle de su multa
+     * Metodo para que el usuario solo digite numeros en el textField del total a pagar
      * @param evt 
      */
-    private void cbxMultasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxMultasActionPerformed
-        //Si el primer elemento esta seleccionado, no es válido
-        //por lo tanto se muestra ese aviso
-        if( cbxMultas.getSelectedIndex()==0 ) {
-            txtDetalle.setText("Ningun paciente seleccionado");
-            return;
-        }
-        Paciente paciente = (Paciente) cbxMultas.getSelectedItem();
-        //Se verifica que el paciente no sea nulo
-        if( paciente != null ){
-            txtDetalle.setText(paciente.getMulta().toString());
-        }
-    }//GEN-LAST:event_cbxMultasActionPerformed
-
-    private void txtAñoCitaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtAñoCitaFocusGained
-        if( txtAñoCita.getText().equals("AÑO")  ){
-            txtAñoCita.setText("");
-        }
-    }//GEN-LAST:event_txtAñoCitaFocusGained
-
-    private void txtAñoCitaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtAñoCitaFocusLost
-        if( txtAñoCita.getText().equals("")  ){
-            txtAñoCita.setText("AÑO");
-        }
-    }//GEN-LAST:event_txtAñoCitaFocusLost
+    private void txtTotalKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTotalKeyTyped
+        try{
+            lblValidacion.setText("");
+            this.validacion.validarSoloNumeros(evt);
+          }catch( DatoDigitadoExcepcion ex ){
+            lblValidacion.setText(ex.getMessage());
+          }
+    }//GEN-LAST:event_txtTotalKeyTyped
 
     /**
-     * Metodo que se encarga de llenar el combobox con los pacientes para ser seleccionados
+     * Metodo paar que la secretaria introduzca el documento del paciente multado y se muestren sus detalles
+     * @param evt 
      */
-    private void llenarComboMultas(){
-        cbxMultas.removeAllItems();
-        cbxMultas.addItem("Seleccione un paciente multado");
-        ArrayList<Multa> multas = controlador.getMultas();
-        for (Multa multa : multas) {
-            //Condicion para que el combobox solo se llene con los pacientes que tengan una multa
-            if( multa.getPaciente().hasMulta() ) cbxMultas.addItem(multa.getPaciente());
-        }
-    }
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        try{    
+            //Obtenemos el documento
+            String documento = txtDocumento.getText();
+            this.multa = controlador.buscarMulta(documento);
+
+            if( this.multa == null ) throw new NoEncontradoExcepcion("No fue encontrada una multa para ese paciente");
+            
+            
+            lblValidacion.setText( "" );
+            lblFecha.setText( this.multa.getCita().getFecha().toLocaleString() );
+            lblPaciente.setText( this.multa.getCita().getPaciente().getNombre() );
+            lblDoctor.setText( this.multa.getCita().getDoctor().getNombre() );
+            lblTotal.setText( String.valueOf(this.multa.getValorTotal()) );
+            btnPagar.setEnabled(true);
+        }catch(NoEncontradoExcepcion ex){
+            lblFecha.setText( "" );
+            lblPaciente.setText( "" );
+            lblDoctor.setText( "" );
+            lblTotal.setText( "" );
+            btnPagar.setEnabled(false);
+            lblValidacion.setText( ex.getMessage() );
+        }       
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
     
-    /**
-     * Metodo que resetea los campos
-     */
-    private void resetear(){
-        txtAñoCita.setText("AÑO");
-        cbxDia.setSelectedItem("Dia");
-        cbxMes.setSelectedItem("Mes");
-        txtTotal.setText("");
-        llenarComboMultas();
-    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnPagar;
     private javax.swing.JButton btnVolver;
-    private javax.swing.JComboBox<String> cbxDia;
-    private javax.swing.JComboBox<String> cbxMes;
-    private javax.swing.JComboBox cbxMultas;
+    private com.toedter.calendar.JDateChooser dateChooser;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField txtAñoCita;
-    private javax.swing.JTextArea txtDetalle;
+    private javax.swing.JLabel lblDoctor;
+    private javax.swing.JLabel lblFecha;
+    private javax.swing.JLabel lblPaciente;
+    private javax.swing.JLabel lblTotal;
+    private javax.swing.JLabel lblValidacion;
+    private javax.swing.JTextField txtDocumento;
     private javax.swing.JTextField txtTotal;
     // End of variables declaration//GEN-END:variables
 }

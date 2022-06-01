@@ -4,9 +4,8 @@
  */
 package Vista.Doctor;
 
-import Controlador.ControladorHospital;
 import Modelo.Doctor;
-import Vista.VistaPrincipal;
+import Vista.Login;
 
 /**
  *
@@ -14,16 +13,14 @@ import Vista.VistaPrincipal;
  */
 public class VistaDoctor extends javax.swing.JFrame {
 
-    private ControladorHospital controlador;
     private Doctor doctor;
     
     /**
      * Creates new form VistaDoctor
      */
-    public VistaDoctor(ControladorHospital controlador,Doctor doctor) {
+    public VistaDoctor(Doctor doctor) {
         initComponents();
         this.setLocationRelativeTo(null);
-        this.controlador = controlador;
         this.doctor = doctor;
         
         //Si el doctor no tiene citas no estará habilitado el botón para atenderlas
@@ -120,13 +117,21 @@ public class VistaDoctor extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     /**
+     * Metodo para la redireccion de pantalla
+     * @param ventana 
+     */
+    private void cambiarVentana(javax.swing.JFrame ventana){
+        ventana.setVisible(true);
+        this.dispose();
+    }
+    
+    /**
      * Metodo que maneja el evento del boton de volver para retroceder a la ventana principal
      * @param evt 
      */
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-        VistaPrincipal main = new VistaPrincipal(controlador);
-        main.setVisible(true);
-        this.dispose();
+        Login main = new Login();
+        cambiarVentana(main);
     }//GEN-LAST:event_btnVolverActionPerformed
 
     /**
@@ -134,9 +139,8 @@ public class VistaDoctor extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnBloquearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBloquearActionPerformed
-        BloquearFecha bloquear = new BloquearFecha(controlador,doctor);
-        bloquear.setVisible(true);
-        this.dispose();
+        BloquearFecha bloquear = new BloquearFecha(doctor);
+        cambiarVentana(bloquear);
     }//GEN-LAST:event_btnBloquearActionPerformed
 
     /**
@@ -144,9 +148,8 @@ public class VistaDoctor extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnAtenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtenderActionPerformed
-        AtenderCita atender = new AtenderCita(controlador,doctor);
-        atender.setVisible(true);
-        this.dispose();
+        AtenderCita atender = new AtenderCita(doctor);
+        cambiarVentana(atender);
     }//GEN-LAST:event_btnAtenderActionPerformed
 
     

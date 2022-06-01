@@ -8,8 +8,8 @@ package Excepciones;
  *
  * @author USER
  */
-public class Almacenado extends RuntimeException {
-    public Almacenado(){
-        super("El usuario ya se encentra almacenado");
-    }  
+public class DatoDigitadoExcepcion extends RuntimeException {
+    public DatoDigitadoExcepcion(String dato){
+        super("En ese campo solo se pueden digitar " + dato + "!!!");
+    }
 }

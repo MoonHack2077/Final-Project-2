@@ -9,7 +9,33 @@ package Modelo;
  * @author USER
  */
 public class Secretaria extends Persona {
-    public Secretaria(String nombre, String documento, int edad){
-        super(nombre, documento, edad);
+    
+    private int añosExp;
+    
+    public Secretaria(String nombre, String documento, String correo, 
+            String contraseña, String telefono, int edad, int añosExp, String estadoCivil)
+    {
+        super(nombre, documento,  correo,  contraseña, telefono, edad, estadoCivil);
     }
+
+    @Override
+    public String toString() {
+        return "Nombre: " + getNombre() + " - Documento:" + getDocumento();
+    }
+
+    /**
+     * @return the añosExp
+     */
+    public int getAñosExp() {
+        return añosExp;
+    }
+
+    /**
+     * @param añosExp the añosExp to set
+     */
+    public void setAñosExp(int añosExp) {
+        this.añosExp = añosExp;
+    }
+    
+    
 }

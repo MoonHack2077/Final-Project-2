@@ -8,8 +8,8 @@ package Excepciones;
  *
  * @author USER
  */
-public class MayorDeEdad extends RuntimeException {
-    public MayorDeEdad(){
-        super("Debe ser mayor de edad");
+public class SinLaTerminacionCorrectaExcepcion extends RuntimeException {
+    public SinLaTerminacionCorrectaExcepcion(){
+        super("El correo debe terminar en '@mihospital.co'");
     }
 }

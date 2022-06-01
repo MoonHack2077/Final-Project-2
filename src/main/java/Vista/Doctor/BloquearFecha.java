@@ -4,11 +4,12 @@
  */
 package Vista.Doctor;
 
-import Controlador.ControladorDoctor;
-import Controlador.ControladorHospital;
+import Controlador.ControladotBloquearDia;
+import Excepciones.NoSePuedeBloquearFechaExcepcion;
 import Modelo.Doctor;
 import java.util.Date;
 import javax.swing.JOptionPane;
+
 
 /**
  *
@@ -16,19 +17,17 @@ import javax.swing.JOptionPane;
  */
 public class BloquearFecha extends javax.swing.JFrame {
 
-    private ControladorDoctor controladorDoctor;
-    private ControladorHospital controlador;
+    private ControladotBloquearDia controlador;
     private Doctor doctor;
     
     /**
      * Creates new form BloqeuarFecha
      */
-    public BloquearFecha(ControladorHospital controlador,Doctor doctor) {
+    public BloquearFecha(Doctor doctor) {
         initComponents();
         setLocationRelativeTo(null);
+        this.controlador = new ControladotBloquearDia();
         this.doctor = doctor;
-        this.controlador = controlador;
-        this.controladorDoctor = new ControladorDoctor();
     }
 
     /**
@@ -43,9 +42,7 @@ public class BloquearFecha extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         btnBloquear = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        cbxDia = new javax.swing.JComboBox<>();
-        cbxMes = new javax.swing.JComboBox<>();
-        txtAñoCita = new javax.swing.JTextField();
+        dateChooser = new com.toedter.calendar.JDateChooser();
         btnVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -59,21 +56,7 @@ public class BloquearFecha extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setText("Ingrese la fecha de la cita:");
-
-        cbxDia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dia", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
-
-        cbxMes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mes", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
-
-        txtAñoCita.setText("AÑO");
-        txtAñoCita.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtAñoCitaFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtAñoCitaFocusLost(evt);
-            }
-        });
+        jLabel3.setText("Ingrese la fecha para bloquear:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -82,30 +65,24 @@ public class BloquearFecha extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
+                        .addGap(28, 28, 28)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cbxDia, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cbxMes, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtAñoCita, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(dateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(38, 38, 38)
+                        .addGap(49, 49, 49)
                         .addComponent(btnBloquear, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(cbxDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(cbxMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtAñoCita, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                .addGap(45, 45, 45)
+                .addComponent(dateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 121, Short.MAX_VALUE)
                 .addComponent(btnBloquear)
-                .addContainerGap())
+                .addGap(14, 14, 14))
         );
 
         btnVolver.setText("Volver");
@@ -120,14 +97,13 @@ public class BloquearFecha extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(btnVolver))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(25, Short.MAX_VALUE))
+                        .addGap(6, 6, 6)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnVolver))
+                .addContainerGap(48, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -136,87 +112,28 @@ public class BloquearFecha extends javax.swing.JFrame {
                 .addComponent(btnVolver)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * Metodo para remover el texto del texfield del año, ya que este es solo un indicador
-     * @param evt 
-     */
-    private void txtAñoCitaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtAñoCitaFocusGained
-        if( txtAñoCita.getText().equals("AÑO")  ){
-            txtAñoCita.setText("");
-        }
-    }//GEN-LAST:event_txtAñoCitaFocusGained
-
-    /**
-     * Metodo para insertar el indicador de AÑO si este pierde el foco y no habia nada escrito
-     * @param evt 
-     */
-    private void txtAñoCitaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtAñoCitaFocusLost
-        if( txtAñoCita.getText().equals("")  ){
-            txtAñoCita.setText("AÑO");
-        }
-    }//GEN-LAST:event_txtAñoCitaFocusLost
-
-    /**
-     * Metodo que resetea los campos
-     */
-    private void resetearCampos(){
-        txtAñoCita.setText("AÑO");
-        cbxDia.setSelectedItem("Dia");
-        cbxMes.setSelectedItem("Mes");
-    }
     
     /**
      * Metodo que maneja el evento del boton bloquear para bloquear la fecha
      * @param evt 
      */
     private void btnBloquearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBloquearActionPerformed
-        //Validacion necesaria por si en algun combobox se selecciona un elemento que no corresponde 
-        if( cbxDia.getSelectedIndex() == 0 || cbxMes.getSelectedIndex() == 0 ||
-            txtAñoCita.getText().equals("AÑO")){
-            JOptionPane.showMessageDialog(null, "Faltan campos por seleccionar");
-            return;
-        }
-        
-        //Parseamos los datos para crear la fecha
-        int dia = Integer.parseInt(cbxDia.getSelectedItem().toString());
-        int mes = Integer.parseInt(cbxMes.getSelectedItem().toString());
-        int año = Integer.parseInt(txtAñoCita.getText());
-        
-        //En caso de que el mes sea 2 (febrero), validar si los dias y el año corresponden
-        if( mes == 2 && dia >= 30 ){
-            JOptionPane.showMessageDialog(null, "Febrero no tiene esa cantidad de dias");
-            return;
-        }
-        
-        //En caso de que el mes sea 2 (febrero), validar si es un año bisiesto
-        if( mes == 2 && dia == 29 && año % 4 != 0 ){
-            JOptionPane.showMessageDialog(null, "Febrero no tiene esa cantidad de dias");
-            return;
-        }
-        
-        // los meses 4, 6, 9 y 11 solo tienen 30 dias
-        if( (mes == 4 || mes == 6 || mes == 9 || mes == 11 ) && ( dia == 31 ) ){
-            JOptionPane.showMessageDialog(null, "El mes seleccionado no tiene esa cantidad de dias");
-            return;
-        }
-        
-        //Creamos la fecha
-        Date fecha = new Date(año, mes-1, dia);
-        
-        //Se verifica que el doctor no tenga cita ese dia
-        boolean coincide = controladorDoctor.bloquearFecha(doctor,fecha);   
-        if( coincide ){
-            JOptionPane.showMessageDialog(null, "Ya tienes citas para este dia, no puedes bloquearlo\n Prueba con otro!!");
-            return;
-        }     
-        JOptionPane.showMessageDialog(null, "La fecha " + fecha.toString() + "\n Ha sido bloqueada exitosamente!!");
-        resetearCampos();
+        try{ 
+            //Obtenemos la fecha
+            Date fecha = dateChooser.getDate();
+            
+            //Se verifica que el doctor no tenga cita ese dia
+            controlador.bloquearFecha(doctor,fecha);     
+            JOptionPane.showMessageDialog(null, "La fecha " + fecha.toString() + "\n Ha sido bloqueada exitosamente!!");            
+        }catch(NoSePuedeBloquearFechaExcepcion ex){
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }    
     }//GEN-LAST:event_btnBloquearActionPerformed
 
     /**
@@ -224,7 +141,7 @@ public class BloquearFecha extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-        VistaDoctor vistaDoctor = new VistaDoctor(controlador, this.doctor);
+        VistaDoctor vistaDoctor = new VistaDoctor(this.doctor);
         vistaDoctor.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnVolverActionPerformed
@@ -233,10 +150,8 @@ public class BloquearFecha extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBloquear;
     private javax.swing.JButton btnVolver;
-    private javax.swing.JComboBox<String> cbxDia;
-    private javax.swing.JComboBox<String> cbxMes;
+    private com.toedter.calendar.JDateChooser dateChooser;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField txtAñoCita;
     // End of variables declaration//GEN-END:variables
 }

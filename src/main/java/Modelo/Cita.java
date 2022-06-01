@@ -14,14 +14,13 @@ public class Cita {
     private Paciente paciente;
     private Doctor doctor;
     private Date fecha;
-    private boolean activa;
     private String conclusiones;
+    private String tratamientos;
 
     public Cita(Paciente paciente, Doctor doctor, Date fecha){
         this.paciente = paciente;
         this.doctor = doctor;
         this.fecha = fecha;
-        this.activa = true;
     }
     
     /**
@@ -67,20 +66,6 @@ public class Cita {
     }
 
     /**
-     * @return the activa
-     */
-    public boolean isActiva() {
-        return activa;
-    }
-
-    /**
-     * @param activa the activa to set
-     */
-    public void setActiva(boolean activa) {
-        this.activa = activa;
-    }
-
-    /**
      * @return the conclusiones
      */
     public String getConclusiones() {
@@ -94,13 +79,24 @@ public class Cita {
         this.conclusiones = conclusiones;
     }
 
-    @Override
-    public String toString() {
-        return "Fecha: " + getFecha().toString() + "\n" +
-               "Doctor: " + getDoctor().getNombre() + "\n" +
-               "Paciente: " + getPaciente().getNombre() + "\n" + 
-               "Motivo: " + getDoctor().getEspecialidad() + "\n";
+    /**
+     * @return the tratamientos
+     */
+    public String getTratamientos() {
+        return tratamientos;
+    }
+
+    /**
+     * @param tratamientos the tratamientos to set
+     */
+    public void setTratamientos(String tratamientos) {
+        this.tratamientos = tratamientos;
     }
     
-    
+    @Override
+    public String toString() {
+        return "Doctor: " + getDoctor().getNombre() + " - " +
+               "Paciente: " + getPaciente().getNombre();
+    }
+   
 }

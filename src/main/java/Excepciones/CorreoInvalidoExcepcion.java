@@ -8,9 +8,8 @@ package Excepciones;
  *
  * @author USER
  */
-public class NoEncontrado extends RuntimeException {
-    public NoEncontrado(){
-        super("El usuario NO se encentra almacenado");
+public class CorreoInvalidoExcepcion extends RuntimeException{
+    public CorreoInvalidoExcepcion(){
+        super("El correo debe contener '@' !!!");
     }
-    
 }

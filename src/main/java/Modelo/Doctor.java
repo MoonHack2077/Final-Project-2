@@ -16,8 +16,9 @@ public class Doctor extends Persona {
     private Date fechaBloqueada;
     private ArrayList<Cita> agenda;
     
-    public Doctor(String nombre, String documento, int edad, String especialidad){
-        super(nombre, documento, edad);
+    public Doctor(String nombre, String documento, String correo, String contraseña,
+            String telefono, int edad,String estadoCivil, String especialidad){
+        super(nombre, documento,  correo,  contraseña, telefono, edad, estadoCivil);
         this.especialidad = especialidad;
         agenda = new ArrayList<>();
     }
