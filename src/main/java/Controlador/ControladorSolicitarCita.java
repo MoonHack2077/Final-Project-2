@@ -9,7 +9,7 @@ import Excepciones.DiaNoDisponibleExcepcion;
 import Excepciones.EspecialidadNoEncontradaExcepcion;
 import Modelo.Cita;
 import Modelo.Doctor;
-import Modelo.Paciente;
+import Modelo.Persona;
 import Singleton.Singleton;
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,14 +19,12 @@ import java.util.Date;
  * @author USER
  */
 public class ControladorSolicitarCita {
-    private ArrayList<Paciente> pacientes;
-    private ArrayList<Doctor> doctores;
+    private ArrayList<Persona> lista;
     private ArrayList<Cita> citas;
     private ControladorBusqueda controlador;
 
     public ControladorSolicitarCita() {
-        pacientes = Singleton.getINSTANCIA().getPacientes();
-        doctores = Singleton.getINSTANCIA().getDoctores();
+        lista = Singleton.getINSTANCIA().getLista();
         citas = Singleton.getINSTANCIA().getCitas();
         controlador = new ControladorBusqueda();
     }
@@ -75,8 +73,7 @@ public class ControladorSolicitarCita {
         
         //Escribimos para almacenar los datos
         Singleton.getINSTANCIA().escribirCitas();
-        Singleton.getINSTANCIA().escribirPacientes();
-        Singleton.getINSTANCIA().escribirDoctores();
+        Singleton.getINSTANCIA().escribirLista();
         return true;
     }
     
@@ -90,8 +87,11 @@ public class ControladorSolicitarCita {
         ArrayList<Doctor> doctoresAux = new ArrayList<>();
         
         //Recorremos la lista de doctores para añadir las coincidencias
-        for (Doctor doctor : this.doctores) {
-            if( doctor.getEspecialidad().equals(especialidad) ) doctoresAux.add(doctor);
+        for (Persona doctor : this.lista) {
+            if( doctor instanceof Doctor){
+                Doctor doc = (Doctor) doctor;
+                if( doc.getEspecialidad().equals(especialidad) ) doctoresAux.add(doc);
+            }
         }
         
         //Si la lista creada esta vacia significa que no hay ningún doctor con esa especialidadd
@@ -101,16 +101,10 @@ public class ControladorSolicitarCita {
     /**
      * @return the pacientes
      */
-    public ArrayList<Paciente> getPacientes() {
-        return pacientes;
+    public ArrayList<Persona> getLista() {
+        return lista;
     }
 
-    /**
-     * @return the doctores
-     */
-    public ArrayList<Doctor> getDoctores() {
-        return doctores;
-    }
 
     /**
      * @return the citas

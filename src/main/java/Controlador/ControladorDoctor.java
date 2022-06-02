@@ -7,6 +7,7 @@ package Controlador;
 import Excepciones.MayorDeEdadExcepcion;
 import Excepciones.NoEncontradoExcepcion;
 import Modelo.Doctor;
+import Modelo.Persona;
 import Singleton.Singleton;
 import java.util.ArrayList;
 
@@ -15,11 +16,11 @@ import java.util.ArrayList;
  * @author USER
  */
 public class ControladorDoctor {
-    private ArrayList<Doctor> doctores;
+    private ArrayList<Persona> doctores;
     private ControladorBusqueda controladorBusqueda;
     
     public ControladorDoctor(){
-        doctores = Singleton.getINSTANCIA().getDoctores();
+        doctores = Singleton.getINSTANCIA().getLista();
         controladorBusqueda = new ControladorBusqueda();
     }
     
@@ -30,16 +31,13 @@ public class ControladorDoctor {
      * @throws MayorDeEdadExcepcion 
      */
     public boolean añadirDoctor(Doctor doctor)throws MayorDeEdadExcepcion{
-        controladorBusqueda.buscarSecretaria(doctor.getDocumento(),doctor.getCorreo(), doctor.getContraseña(), doctor.getTelefono());
-        controladorBusqueda.buscarDoctor(doctor.getDocumento(),doctor.getCorreo(), doctor.getContraseña(), doctor.getTelefono());
-        controladorBusqueda.buscarPaciente(doctor.getDocumento(),doctor.getCorreo(), doctor.getContraseña(), doctor.getTelefono());
-        controladorBusqueda.buscarAdmin(doctor.getDocumento(),doctor.getCorreo(), doctor.getContraseña(), doctor.getTelefono());
+        controladorBusqueda.buscarCoincidencia(doctor.getDocumento(),doctor.getCorreo(), doctor.getContraseña(), doctor.getTelefono());
         
         //Excepciones    
         if( doctor.getEdad() < 18) throw new MayorDeEdadExcepcion();
         
         doctores.add(doctor);
-        Singleton.getINSTANCIA().escribirDoctores();
+        Singleton.getINSTANCIA().escribirLista();
         return true;       
     }
     
@@ -50,7 +48,7 @@ public class ControladorDoctor {
      * @throws NoEncontradoExcepcion 
      */
     public boolean eliminarDoctor(String documento) throws NoEncontradoExcepcion{
-        Doctor aux = controladorBusqueda.buscarDoctor(documento);
+        Persona aux = controladorBusqueda.buscarPersona(documento);
         
         //Excepcion
         if( aux == null ) throw new NoEncontradoExcepcion();
@@ -58,7 +56,7 @@ public class ControladorDoctor {
         for (int i = 0; i < doctores.size(); i++) {
             if( doctores.get(i).getDocumento().equals(documento )){
                 doctores.remove(i);
-                Singleton.getINSTANCIA().escribirDoctores();
+                Singleton.getINSTANCIA().escribirLista();
             }
         }
         
@@ -73,7 +71,7 @@ public class ControladorDoctor {
      * @throws MayorDeEdadExcepcion 
      */
     public boolean editarDoctor(Doctor doctor) throws NoEncontradoExcepcion, MayorDeEdadExcepcion{       
-        Doctor aux = controladorBusqueda.buscarDoctor(doctor.getDocumento());
+        Persona aux = controladorBusqueda.buscarPersona(doctor.getDocumento());
         
         //Excepciones
         if( aux == null ) throw new NoEncontradoExcepcion();
@@ -88,7 +86,7 @@ public class ControladorDoctor {
                 doctores.get(i).setCorreo(doctor.getCorreo());
                 doctores.get(i).setEstadoCivil(doctor.getEstadoCivil());
                 doctores.get(i).setTelefono(doctor.getTelefono());
-                Singleton.getINSTANCIA().escribirDoctores();
+                Singleton.getINSTANCIA().escribirLista();
             }
         }
         
@@ -99,7 +97,7 @@ public class ControladorDoctor {
     /**
      * @return the doctores
      */
-    public ArrayList<Doctor> getDoctores() {
+    public ArrayList<Persona> getDoctores() {
         return doctores;
     }
 }

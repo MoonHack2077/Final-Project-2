@@ -35,7 +35,7 @@ public class ControladorAtenderCita {
         
         //Se añade la cita al historal del paciente
         cita.getPaciente().getHistorial().add(cita);
-        Singleton.getINSTANCIA().escribirPacientes();
+        Singleton.getINSTANCIA().escribirLista();
         Singleton.getINSTANCIA().escribirCitas();
     }
     
@@ -48,7 +48,7 @@ public class ControladorAtenderCita {
         multas.add(multa);
         multa.getCita().getPaciente().setHasMulta(true);
         Singleton.getINSTANCIA().escribirMultas();
-        Singleton.getINSTANCIA().escribirPacientes();
+        Singleton.getINSTANCIA().escribirLista();
         return true;
     }
     
@@ -61,6 +61,7 @@ public class ControladorAtenderCita {
         if( multa.getCita().getPaciente().hasSisben() ){
             double descuento = multa.getValorTotal()*0.25 ;
             multa.setValorTotal( multa.getValorTotal() - descuento );
+            Singleton.getINSTANCIA().escribirMultas();
         }
     }
     

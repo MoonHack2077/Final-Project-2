@@ -13,7 +13,8 @@ import Excepciones.NoEncontradoExcepcion;
 import Modelo.Cita;
 import Modelo.Doctor;
 import Modelo.Paciente;
-import Modelo.Validacion;
+import Modelo.Persona;
+import Validacion.Validacion;
 import Vista.Paciente.VistaPaciente;
 import java.util.Date;
 import javax.swing.JOptionPane;
@@ -330,8 +331,11 @@ public class AgendarCita extends javax.swing.JFrame {
             btnSolicitar.setEnabled(true);
             cbxDoctores.addItem("Seleccione un doctor");
 
-            for (Doctor doctor : controlador.getDoctores()) {
-                if( doctor.getEspecialidad().equals(especialidad) ) cbxDoctores.addItem(doctor);
+            for (Persona doctor : controlador.getLista()) {
+                if( doctor instanceof Doctor){
+                    Doctor doc = (Doctor) doctor;
+                    if( doc.getEspecialidad().equals(especialidad) ) cbxDoctores.addItem(doc);
+                }
             }
         }catch( EspecialidadNoEncontradaExcepcion ex ){
             cbxDoctores.addItem(ex.getMessage());
@@ -347,7 +351,7 @@ public class AgendarCita extends javax.swing.JFrame {
         try{
             //Validamos los campos 
             if( cbxHora.getSelectedIndex() == 0 || cbxDoctores.getSelectedIndex() == 0 
-                    || dateChooser.getDate() == null )
+                    || dateChooser.getDate() == null || this.paciente == null )
             {
                 JOptionPane.showMessageDialog(null, "Faltan campos por seleccionar");
                 return;
@@ -432,10 +436,13 @@ public class AgendarCita extends javax.swing.JFrame {
         try{
             //Obtenemos el documento
             String documento = txtDocumento.getText();
-            this.paciente = controlador.getControlador().buscarPaciente(documento);
+            this.paciente = (Paciente) controlador.getControlador().buscarPersona(documento);
 
             //Si no se encuentra al paciente lanzamos esta excepcion
-            if( this.paciente==null  ) throw new NoEncontradoExcepcion();
+            if( this.paciente==null  ){
+                btnSolicitar.setEnabled(false);
+                throw new NoEncontradoExcepcion();
+            }
                 
             if( this.paciente.hasCita() ){
                 lblPaciente.setText( "El paciente seleccionado ya tiene cita" );

@@ -37,6 +37,6 @@ public class ControladotBloquearDia {
         
         //Una vez verificado que el dia no coincida, seteamos la fecha
         doctor.setFechaBloqueada(dia);
-        Singleton.getINSTANCIA().escribirDoctores();
+        Singleton.getINSTANCIA().escribirLista();
     }
 }

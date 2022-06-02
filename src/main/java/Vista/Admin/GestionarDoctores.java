@@ -14,7 +14,8 @@ import Excepciones.NoEncontradoExcepcion;
 import Excepciones.SinLaTerminacionCorrectaExcepcion;
 import Excepciones.TelefonoCortoExcepcion;
 import Modelo.Doctor;
-import Modelo.Validacion;
+import Modelo.Persona;
+import Validacion.Validacion;
 import javax.swing.JOptionPane;
 
 /**
@@ -496,8 +497,8 @@ public class GestionarDoctores extends javax.swing.JFrame {
         cbxDoctores.removeAllItems();
         cbxDoctores.addItem("Buscar un doctor");
         
-        for (Doctor doctor : controlador.getDoctores()) {
-            cbxDoctores.addItem(doctor);
+        for (Persona doctor : controlador.getDoctores()) {
+            if( doctor instanceof Doctor) cbxDoctores.addItem(doctor);
         }       
     }
     

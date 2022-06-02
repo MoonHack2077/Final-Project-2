@@ -45,7 +45,7 @@ public class ControladorCancelarCita {
         for (int i = 0; i < agenda.size(); i++) {
             if(agenda.get(i).getFecha().compareTo(cita.getFecha())==0){
                 agenda.remove(i);
-                Singleton.getINSTANCIA().escribirDoctores();
+                Singleton.getINSTANCIA().escribirLista();
                 return true;
             }      
         }
@@ -68,6 +68,7 @@ public class ControladorCancelarCita {
                         getCitas().get(i).getPaciente().setHasCita(false);
                         getCitas().remove(i);
                         Singleton.getINSTANCIA().escribirCitas();
+                        Singleton.getINSTANCIA().escribirLista();
                         return true;                  
                     }
                 }

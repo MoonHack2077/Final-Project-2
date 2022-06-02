@@ -14,8 +14,9 @@ import Excepciones.NoCuentaConExpExcepcion;
 import Excepciones.NoEncontradoExcepcion;
 import Excepciones.SinLaTerminacionCorrectaExcepcion;
 import Excepciones.TelefonoCortoExcepcion;
+import Modelo.Persona;
 import Modelo.Secretaria;
-import Modelo.Validacion;
+import Validacion.Validacion;
 import javax.swing.JOptionPane;
 
 /**
@@ -504,8 +505,8 @@ public class GestionarSecretarias extends javax.swing.JFrame {
         cbxSecretarias.removeAllItems();
         cbxSecretarias.addItem("Buscar una secretaria");
         
-        for (Secretaria secretaria : controlador.getSecretarias()) {
-            cbxSecretarias.addItem(secretaria);
+        for (Persona secretaria : controlador.getSecretarias()) {
+            if( secretaria instanceof Secretaria) cbxSecretarias.addItem(secretaria);
         }       
     }
     

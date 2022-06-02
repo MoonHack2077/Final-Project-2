@@ -8,7 +8,6 @@ import Excepciones.ValorNoValidoExcepcion;
 import Modelo.Multa;
 import Singleton.Singleton;
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -48,7 +47,7 @@ public class ControladorPagoMulta {
                     multas.get(i).getCita().getPaciente().setHasMulta(false);
                     multas.remove(i);
                     Singleton.getINSTANCIA().escribirMultas();
-                    Singleton.getINSTANCIA().escribirPacientes();
+                    Singleton.getINSTANCIA().escribirLista();
                     return true;                                     
                 }
             }

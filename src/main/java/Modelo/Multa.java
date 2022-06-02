@@ -4,13 +4,14 @@
  */
 package Modelo;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  *
  * @author USER
  */
-public class Multa {
+public class Multa implements Serializable{
     private Cita cita;
     private double valorTotal;
     private Date fechaPago;

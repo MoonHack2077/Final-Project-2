@@ -6,6 +6,7 @@ package Controlador;
 
 import Excepciones.MayorDeEdadExcepcion;
 import Excepciones.NoEncontradoExcepcion;
+import Modelo.Persona;
 import Modelo.Secretaria;
 import Singleton.Singleton;
 import java.util.ArrayList;
@@ -16,11 +17,11 @@ import java.util.ArrayList;
  */
 public class ControladorSecretaria {
     
-    private ArrayList<Secretaria> secretarias;
+    private ArrayList<Persona> secretarias;
     private ControladorBusqueda controladorBusqueda;
     
     public ControladorSecretaria() {
-        secretarias = Singleton.getINSTANCIA().getSecretarias();
+        secretarias = Singleton.getINSTANCIA().getLista();
         controladorBusqueda = new ControladorBusqueda();
     }
     
@@ -31,16 +32,13 @@ public class ControladorSecretaria {
      * @throws MayorDeEdadExcepcion 
      */
     public boolean añadirSecretaria(Secretaria secretaria)throws MayorDeEdadExcepcion{
-        controladorBusqueda.buscarSecretaria(secretaria.getDocumento(),secretaria.getCorreo(), secretaria.getContraseña(), secretaria.getTelefono());
-        controladorBusqueda.buscarDoctor(secretaria.getDocumento(),secretaria.getCorreo(), secretaria.getContraseña(), secretaria.getTelefono());
-        controladorBusqueda.buscarPaciente(secretaria.getDocumento(),secretaria.getCorreo(), secretaria.getContraseña(), secretaria.getTelefono());
-        controladorBusqueda.buscarAdmin(secretaria.getDocumento(),secretaria.getCorreo(), secretaria.getContraseña(), secretaria.getTelefono());
+        controladorBusqueda.buscarCoincidencia(secretaria.getDocumento(),secretaria.getCorreo(), secretaria.getContraseña(), secretaria.getTelefono());
         
         //Excepciones    
         if( secretaria.getEdad() < 18) throw new MayorDeEdadExcepcion();
         
         getSecretarias().add(secretaria);
-        Singleton.getINSTANCIA().escribirSecretarias();
+        Singleton.getINSTANCIA().escribirLista();
         return true;       
     }
     
@@ -51,7 +49,7 @@ public class ControladorSecretaria {
      * @throws NoEncontradoExcepcion 
      */
     public boolean eliminarSecretaria(String documento) throws NoEncontradoExcepcion{
-        Secretaria aux = controladorBusqueda.buscarSecretaria(documento);
+        Secretaria aux = (Secretaria) controladorBusqueda.buscarPersona(documento);
         
         //Excepcion
         if( aux == null ) throw new NoEncontradoExcepcion();
@@ -59,7 +57,7 @@ public class ControladorSecretaria {
         for (int i = 0; i < getSecretarias().size(); i++) {
             if( getSecretarias().get(i).getDocumento().equals(documento )){
                 getSecretarias().remove(i);
-                Singleton.getINSTANCIA().escribirSecretarias();
+                Singleton.getINSTANCIA().escribirLista();
             }
         }
         
@@ -74,7 +72,7 @@ public class ControladorSecretaria {
      * @throws MayorDeEdadExcepcion 
      */
     public boolean editarSecretaria(Secretaria secretaria) throws NoEncontradoExcepcion, MayorDeEdadExcepcion{        
-        Secretaria aux = controladorBusqueda.buscarSecretaria(secretaria.getDocumento());
+        Secretaria aux = (Secretaria) controladorBusqueda.buscarPersona(secretaria.getDocumento());
         
         //Excepciones
         if( aux == null ) throw new NoEncontradoExcepcion();
@@ -89,7 +87,7 @@ public class ControladorSecretaria {
                 getSecretarias().get(i).setCorreo(secretaria.getCorreo());
                 getSecretarias().get(i).setEstadoCivil(secretaria.getEstadoCivil());
                 getSecretarias().get(i).setTelefono(secretaria.getTelefono());
-                Singleton.getINSTANCIA().escribirSecretarias();
+                Singleton.getINSTANCIA().escribirLista();
             }
         }
         
@@ -99,7 +97,7 @@ public class ControladorSecretaria {
     /**
      * @return the secretarias
      */
-    public ArrayList<Secretaria> getSecretarias() {
+    public ArrayList<Persona> getSecretarias() {
         return secretarias;
     }
 }

@@ -13,7 +13,7 @@ import Excepciones.MayorDeEdadExcepcion;
 import Excepciones.SinLaTerminacionCorrectaExcepcion;
 import Excepciones.TelefonoCortoExcepcion;
 import Modelo.Paciente;
-import Modelo.Validacion;
+import Validacion.Validacion;
 import Vista.Login;
 import javax.swing.JOptionPane;
 

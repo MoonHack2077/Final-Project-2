@@ -157,23 +157,22 @@ public class Login extends javax.swing.JFrame {
             String contraseña = txtContraseña.getText();
             
             //Buscamos entre todos los usuarios la coincidencia
-            Persona admin = controlador.buscarAdmin(correo, contraseña);
-            Doctor doctor = controlador.buscarDoctor(correo, contraseña);
-            Secretaria secretaria = controlador.buscarSecretaria(correo, contraseña);
-            Paciente paciente = controlador.buscarPaciente(correo, contraseña);
+            Persona usuario = controlador.buscarUsuario(correo, contraseña);
 
-            if( admin != null ){
-                VistaAdmin vistaAdmin = new VistaAdmin();
-                cambiarVentana(vistaAdmin);
-            }else if( doctor != null ){
+            if( usuario instanceof Doctor){
+                Doctor doctor = (Doctor) usuario;
                 VistaDoctor vistaDoc = new VistaDoctor(doctor);
                 cambiarVentana(vistaDoc);
-            }else if( secretaria != null ){
+            }else if( usuario instanceof Secretaria){
                 VistaSecretaria vistaSec = new VistaSecretaria();
                 cambiarVentana(vistaSec);
-            }else if( paciente != null ){
+            }else if( usuario instanceof Paciente ){
+                Paciente paciente = (Paciente) usuario;
                 VistaPaciente vistaPac = new VistaPaciente(paciente);
                 cambiarVentana(vistaPac);
+            }else if(usuario != null) {
+                VistaAdmin vistaAdmin = new VistaAdmin();
+                cambiarVentana(vistaAdmin);
             }else{
                 throw new NoEncontradoExcepcion();
             }

@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Modelo;
+package Validacion;
 
 import Excepciones.ContraseñaInseguraExcepcion;
 import Excepciones.CorreoInvalidoExcepcion;
@@ -62,9 +62,7 @@ public class Validacion {
      * @throws CorreoInvalidoExcepcion 
      */
     public void verificarArroba(String correo) throws CorreoInvalidoExcepcion {      
-       if( !correo.contains("@") ){
-           throw new CorreoInvalidoExcepcion();
-       }       
+       if( !correo.contains("@") ) throw new CorreoInvalidoExcepcion();             
     }
     
     /**
@@ -73,9 +71,7 @@ public class Validacion {
      * @throws SinLaTerminacionCorrectaExcepcion 
      */
     public void verificarLaTerminacionCorrecta(String correo) throws SinLaTerminacionCorrectaExcepcion {      
-       if( !correo.endsWith("@mihospital.co") ){
-           throw new SinLaTerminacionCorrectaExcepcion();
-       }       
+       if( !correo.endsWith("@mihospital.co") ) throw new SinLaTerminacionCorrectaExcepcion();              
     }
     
     /**
@@ -84,9 +80,7 @@ public class Validacion {
      * @throws TelefonoCortoExcepcion 
      */
     public void validarTelefono(String telefono) throws TelefonoCortoExcepcion{   
-        if( telefono.length() < 8 ){
-            throw new TelefonoCortoExcepcion();
-        }    
+        if( telefono.length() < 8 ) throw new TelefonoCortoExcepcion();            
     }
     
     /**
@@ -95,9 +89,7 @@ public class Validacion {
      * @throws ContraseñaInseguraExcepcion 
      */
     public void validarContraseña(String contraseña) throws ContraseñaInseguraExcepcion{
-        if( contraseña.length() < 5 ){
-            throw new ContraseñaInseguraExcepcion();
-        }
+        if( contraseña.length() < 5 ) throw new ContraseñaInseguraExcepcion();        
     }
     
     /**
@@ -106,9 +98,7 @@ public class Validacion {
      * @throws NoCuentaConExpExcepcion 
      */
     public void validarAñosExp(int exp) throws NoCuentaConExpExcepcion{
-        if( exp < 4){
-            throw new NoCuentaConExpExcepcion();
-        }
+        if( exp < 4) throw new NoCuentaConExpExcepcion();        
     }
     
 }

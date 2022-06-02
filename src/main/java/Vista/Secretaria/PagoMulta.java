@@ -9,7 +9,7 @@ import Excepciones.DatoDigitadoExcepcion;
 import Excepciones.NoEncontradoExcepcion;
 import Excepciones.ValorNoValidoExcepcion;
 import Modelo.Multa;
-import Modelo.Validacion;
+import Validacion.Validacion;
 import java.util.Date;
 import javax.swing.JOptionPane;
 /**
