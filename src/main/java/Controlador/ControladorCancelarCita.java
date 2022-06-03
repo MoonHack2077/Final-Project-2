@@ -43,7 +43,7 @@ public class ControladorCancelarCita {
         ArrayList<Cita> agenda = cita.getDoctor().getAgenda();
         
         for (int i = 0; i < agenda.size(); i++) {
-            if(agenda.get(i).getFecha().compareTo(cita.getFecha())==0){
+            if(agenda.get(i).getPaciente().getDocumento().equals(cita.getPaciente().getDocumento())){
                 agenda.remove(i);
                 Singleton.getINSTANCIA().escribirLista();
                 return true;
