@@ -30,9 +30,8 @@ public class ControladotBloquearDia {
             //Ya que las fechas que hay en la agenda, cada una tiene una hora establecida
             //Por lo tanto aunque sea el mismo dia nunca será igual porque cuentan con una hora que se eligió manualmente
             String citaAux =  String.valueOf(cita.getFecha().getDate() + cita.getFecha().getMonth() + cita.getFecha().getYear());
-            if( citaAux.equals(diaAux) ){
-                throw new NoSePuedeBloquearFechaExcepcion();
-            }
+            
+            if( citaAux.equals(diaAux) ) throw new NoSePuedeBloquearFechaExcepcion();            
         }
         
         //Una vez verificado que el dia no coincida, seteamos la fecha

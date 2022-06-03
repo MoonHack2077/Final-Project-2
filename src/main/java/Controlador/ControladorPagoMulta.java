@@ -14,7 +14,7 @@ import java.util.ArrayList;
  * @author USER
  */
 public class ControladorPagoMulta {
-     private ArrayList<Multa> multas;
+    private ArrayList<Multa> multas;
     
     public ControladorPagoMulta() {
         multas = Singleton.getINSTANCIA().getMultas();

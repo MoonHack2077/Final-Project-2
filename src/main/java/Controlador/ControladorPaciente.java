@@ -20,7 +20,8 @@ import java.util.ArrayList;
 public class ControladorPaciente {
     private ArrayList<Persona> pacientes;
     private ControladorBusqueda controladorBusqueda;
-    private ControladorCancelarCita controlador;
+    private ControladorCancelarCita controladorCita;
+    private ControladorPagoMulta controladorMulta;
     
     public ControladorPaciente() {
         pacientes = Singleton.getINSTANCIA().getLista();
@@ -46,30 +47,35 @@ public class ControladorPaciente {
      * @return true si pudo eliminarlo, de lo contrario false
      */
     public boolean eliminarPaciente(String documento) throws NoEncontradoExcepcion{
-        Persona aux = controladorBusqueda.buscarPersona(documento);
+        Paciente aux = (Paciente) controladorBusqueda.buscarPersona(documento);
         
         //Excepcion
         if( aux == null ) throw new NoEncontradoExcepcion();
         
         for (int i = 0; i < getPacientes().size(); i++) {
             if( getPacientes().get(i).getDocumento().equals(documento )){
-                if(controlador.eliminarCita(documento)){
-                    getPacientes().remove(i);
-                    Singleton.getINSTANCIA().escribirLista();
-                }
+                Paciente pacienteAux = (Paciente) getPacientes().get(i);
+                
+                //Si el paciente tania una cita asignada esta será eliminada 
+                if( pacienteAux.hasCita() ) controladorCita.eliminarCita(documento);
+                
+                //Si el paciente tania una multa esta será eliminada 
+                if( pacienteAux.hasMulta() ) controladorMulta.eliminarMulta(documento);
+                     
+                getPacientes().remove(i);
+                Singleton.getINSTANCIA().escribirLista();
             }
         }
-        
+    
         return true;
     }
-    
     /**
      * Metodo para editar la informacion de un paciente
      * @param paciente
      * @return true si pudo editarla, de lo contrario false
      */
     public boolean editarPaciente(Paciente paciente) throws NoEncontradoExcepcion, MayorDeEdadExcepcion{
-        Persona aux = (Paciente) controladorBusqueda.buscarPersona(paciente.getDocumento());
+        Paciente aux = (Paciente) controladorBusqueda.buscarPersona(paciente.getDocumento());
         
         //Excepciones
         if( aux == null ) throw new NoEncontradoExcepcion();

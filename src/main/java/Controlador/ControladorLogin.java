@@ -5,9 +5,6 @@
 package Controlador;
 
 import Modelo.Persona;
-import Modelo.Doctor;
-import Modelo.Paciente;
-import Modelo.Secretaria;
 import Singleton.Singleton;
 import java.util.ArrayList;
 
@@ -18,9 +15,6 @@ import java.util.ArrayList;
 public class ControladorLogin {
 
     private ArrayList<Persona> lista;
-    //private ArrayList<Doctor> doctores;
-    //private ArrayList<Secretaria> secretarias;
-    //private ArrayList<Paciente> pacientes;
     
     public ControladorLogin() {
         lista = Singleton.getINSTANCIA().getLista();
@@ -28,8 +22,6 @@ public class ControladorLogin {
     
     /**
      * Metodo para añadir los admins
-     * @return
-     * @throws NoEncontradoExcepcion 
      */
     public void añadirAdmin(){
         Persona juan = new Persona("Juan Manuel Arenas Rincon", "1234567890", "juan@mihospital.co", "soyadmin1", "3000000000", 20, "Soltero");
@@ -40,10 +32,10 @@ public class ControladorLogin {
     }
     
     /**
-     * 
+     * Metodo para buscar el usuario que coincida con los datos introducidos en el login
      * @param correo
      * @param contraseña
-     * @return 
+     * @return la persona que coincida, de lo contrario null
      */
     public Persona buscarUsuario(String correo, String contraseña){
         

@@ -48,7 +48,7 @@ public class ControladorDoctor {
      * @throws NoEncontradoExcepcion 
      */
     public boolean eliminarDoctor(String documento) throws NoEncontradoExcepcion{
-        Persona aux = controladorBusqueda.buscarPersona(documento);
+        Doctor aux = (Doctor) controladorBusqueda.buscarPersona(documento);
         
         //Excepcion
         if( aux == null ) throw new NoEncontradoExcepcion();
@@ -66,12 +66,12 @@ public class ControladorDoctor {
     /**
      * Metodo para editar la informacion de un doctor
      * @param doctor
-     * @ true si la pudo editar
+     * @return true si la pudo editar
      * @throws NoEncontradoExcepcion
      * @throws MayorDeEdadExcepcion 
      */
     public boolean editarDoctor(Doctor doctor) throws NoEncontradoExcepcion, MayorDeEdadExcepcion{       
-        Persona aux = controladorBusqueda.buscarPersona(doctor.getDocumento());
+        Doctor aux = (Doctor) controladorBusqueda.buscarPersona(doctor.getDocumento());
         
         //Excepciones
         if( aux == null ) throw new NoEncontradoExcepcion();
