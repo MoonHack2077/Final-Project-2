@@ -4,7 +4,7 @@
  */
 package Vista.Secretaria;
 
-import Controlador.ControladorPaciente;
+import Controlador.ControladorCrud;
 import Excepciones.AlmacenadoExcepcion;
 import Excepciones.ContraseñaInseguraExcepcion;
 import Excepciones.CorreoInvalidoExcepcion;
@@ -24,7 +24,7 @@ import javax.swing.JOptionPane;
  */
 public class GestionarPacientes extends javax.swing.JFrame {
 
-    private ControladorPaciente controlador;
+    private ControladorCrud controlador;
     private Validacion validacion;
     /**
      * Creates new form GestionarPacientes
@@ -32,14 +32,10 @@ public class GestionarPacientes extends javax.swing.JFrame {
     public GestionarPacientes() {
         initComponents();
         setLocationRelativeTo(null);
-        this.controlador = new ControladorPaciente();
+        this.controlador = new ControladorCrud();
         this.validacion = new Validacion();
         setEnabledInputs(false);
         llenarComboPacientes();
-        
-        //Se añaden los botones de EPS Y SISBEN al radioGroup de salud
-        salud.add(rbnEps);
-        salud.add(rbnSisben);
     }
     
     /**
@@ -64,9 +60,7 @@ public class GestionarPacientes extends javax.swing.JFrame {
         txtTelefono = new javax.swing.JTextField();
         txtDocumento = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        rbnSisben = new javax.swing.JRadioButton();
         jLabel6 = new javax.swing.JLabel();
-        rbnEps = new javax.swing.JRadioButton();
         txtEdad = new javax.swing.JTextField();
         txtContraseña = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
@@ -74,6 +68,7 @@ public class GestionarPacientes extends javax.swing.JFrame {
         cbxEstados = new javax.swing.JComboBox<>();
         btnEditar = new javax.swing.JButton();
         lblValidacion = new javax.swing.JLabel();
+        cbxRegimen = new javax.swing.JComboBox<>();
         btnVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -127,11 +122,7 @@ public class GestionarPacientes extends javax.swing.JFrame {
 
         jLabel2.setText("Documento: ");
 
-        rbnSisben.setText("SISBEN");
-
         jLabel6.setText("Contraseña:");
-
-        rbnEps.setText("EPS");
 
         txtEdad.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -158,6 +149,8 @@ public class GestionarPacientes extends javax.swing.JFrame {
 
         lblValidacion.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         lblValidacion.setForeground(new java.awt.Color(255, 0, 0));
+
+        cbxRegimen.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Regimen de salud", "SISBEN", "EPS" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -197,19 +190,18 @@ public class GestionarPacientes extends javax.swing.JFrame {
                         .addGap(27, 27, 27)
                         .addComponent(btnLimpiar))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(rbnSisben)
-                        .addGap(30, 30, 30)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(rbnEps)
-                            .addComponent(cbxEstados, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(lblValidacion, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(lblValidacion, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(96, 96, 96)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(cbxEstados, 0, 196, Short.MAX_VALUE)
+                            .addComponent(cbxRegimen, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(cbxPacientes, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(81, 81, 81))
+                .addGap(83, 83, 83))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -238,24 +230,25 @@ public class GestionarPacientes extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(txtContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(25, 25, 25)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(37, 37, 37)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addComponent(jLabel7))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(31, 31, 31)
                 .addComponent(cbxEstados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rbnSisben)
-                    .addComponent(rbnEps))
-                .addGap(18, 18, 18)
+                .addComponent(cbxRegimen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31)
                 .addComponent(cbxPacientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45)
+                .addGap(30, 30, 30)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRegistrar)
                     .addComponent(btnEliminar)
                     .addComponent(btnEditar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addComponent(lblValidacion, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -305,6 +298,7 @@ public class GestionarPacientes extends javax.swing.JFrame {
         cbxPacientes.setSelectedItem("Buscar un paciente");
         salud.clearSelection();
         cbxEstados.setSelectedItem("Seleccione su estado civil");
+        cbxRegimen.setSelectedItem("Regimen de salud");
     }
     
     /**
@@ -328,7 +322,7 @@ public class GestionarPacientes extends javax.swing.JFrame {
                 txtNombre2.getText().isBlank() || txtDocumento.getText().isBlank() 
                 || txtEdad.getText().isBlank() || txtCorreo.getText().isBlank() 
                 || txtContraseña.getText().isBlank() ||  txtTelefono.getText().isBlank()
-                || cbxEstados.getSelectedIndex() == 0 || ( !rbnSisben.isSelected() && !rbnEps.isSelected() ) )
+                || cbxEstados.getSelectedIndex() == 0 || cbxRegimen.getSelectedIndex()==0 )
             {
                 JOptionPane.showMessageDialog(null, "Faltan campos por llenar");
                 return;
@@ -347,15 +341,14 @@ public class GestionarPacientes extends javax.swing.JFrame {
             String contraseña = txtContraseña.getText();
             String telefono = txtTelefono.getText();
             int edad = Integer.parseInt(txtEdad.getText());
-            boolean hasSisben = rbnSisben.isSelected();
-            boolean hasEps = rbnEps.isSelected();
+            String regimen = cbxRegimen.getSelectedItem().toString();
             String estadoCivil = cbxEstados.getSelectedItem().toString();
 
             //Creamos al paciente con sus respectivos datos
-            Paciente paciente = new Paciente(nombre,documento,correo,contraseña,edad,estadoCivil,telefono,hasSisben,hasEps);
+            Paciente paciente = new Paciente(nombre,documento,correo,contraseña,edad,estadoCivil,telefono,regimen);
             
             //Añadiendo al paciente
-            controlador.añadirPaciente(paciente);
+            controlador.añadirUsuario(paciente);
             JOptionPane.showMessageDialog(null, "Se añadio el paciente con documento " + documento);
             limpiarInputs();
             llenarComboPacientes();
@@ -386,7 +379,7 @@ public class GestionarPacientes extends javax.swing.JFrame {
             if( txtNombre2.getText().isBlank() || txtDocumento.getText().isBlank() 
                 || txtEdad.getText().isBlank() || txtCorreo.getText().isBlank() 
                 || txtContraseña.getText().isBlank() ||  txtTelefono.getText().isBlank()
-                || cbxEstados.getSelectedIndex() == 0 || ( !rbnSisben.isSelected() && !rbnEps.isSelected() )    )
+                || cbxEstados.getSelectedIndex() == 0 || cbxRegimen.getSelectedIndex()==0 )
             {
                 JOptionPane.showMessageDialog(null, "Faltan campos por llenar");
                 return;
@@ -405,14 +398,13 @@ public class GestionarPacientes extends javax.swing.JFrame {
             String contraseña = txtContraseña.getText();
             String telefono = txtTelefono.getText();
             int edad = Integer.parseInt(txtEdad.getText());
-            boolean hasSisben = rbnSisben.isSelected();
-            boolean hasEps = rbnEps.isSelected();
+            String regimen = cbxRegimen.getSelectedItem().toString();           
             String estadoCivil = cbxEstados.getSelectedItem().toString();
 
             //Creamos al paciente con sus respectivos datos
-            Paciente paciente = new Paciente(nombre,documento,correo,contraseña,edad,estadoCivil,telefono,hasSisben,hasEps);
+            Paciente paciente = new Paciente(nombre,documento,correo,contraseña,edad,estadoCivil,telefono,regimen);
             
-            controlador.editarPaciente(paciente);
+            controlador.editarUsuario(paciente);
             JOptionPane.showMessageDialog(null, "Se editó la información el paciente con documento " + documento);
             limpiarInputs();
             llenarComboPacientes();
@@ -437,7 +429,7 @@ public class GestionarPacientes extends javax.swing.JFrame {
             Paciente paciente = (Paciente) cbxPacientes.getSelectedItem();
 
             //Se elimina al paciente
-            controlador.eliminarPaciente(paciente.getDocumento());
+            controlador.eliminarUsuario(paciente.getDocumento());
             JOptionPane.showMessageDialog(null, "Se eliminó el paciente con documento " + paciente.getDocumento());
             limpiarInputs();
             llenarComboPacientes();
@@ -502,7 +494,7 @@ public class GestionarPacientes extends javax.swing.JFrame {
         cbxPacientes.removeAllItems();
         cbxPacientes.addItem("Buscar un paciente");
         
-        for (Persona paciente : controlador.getPacientes()) {
+        for (Persona paciente : controlador.getLista()) {
             if( paciente instanceof Paciente) cbxPacientes.addItem(paciente);
         }       
     }
@@ -514,7 +506,7 @@ public class GestionarPacientes extends javax.swing.JFrame {
      */
     private void cbxPacientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxPacientesActionPerformed
         
-        if( controlador.getPacientes().isEmpty() ) return;
+        if( controlador.getLista().isEmpty() ) return;
 
         //Si el primer elemento esta seleccionado, no es válido
         if( cbxPacientes.getSelectedIndex()==0 ) {
@@ -531,8 +523,7 @@ public class GestionarPacientes extends javax.swing.JFrame {
             txtContraseña.setText(paciente.getContraseña());
             txtCorreo.setText(paciente.getCorreo());
             txtTelefono.setText(paciente.getTelefono());
-            rbnEps.setSelected(paciente.hasEps());
-            rbnSisben.setSelected(paciente.hasSisben());
+            cbxRegimen.setSelectedItem( paciente.getRegimenDeSalud() );
             cbxEstados.setSelectedItem(paciente.getEstadoCivil());
             
             setEnabledInputs(true);
@@ -561,6 +552,7 @@ public class GestionarPacientes extends javax.swing.JFrame {
     private javax.swing.JButton btnVolver;
     private javax.swing.JComboBox<String> cbxEstados;
     private javax.swing.JComboBox cbxPacientes;
+    private javax.swing.JComboBox<String> cbxRegimen;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
@@ -569,8 +561,6 @@ public class GestionarPacientes extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblValidacion;
-    private javax.swing.JRadioButton rbnEps;
-    private javax.swing.JRadioButton rbnSisben;
     private javax.swing.ButtonGroup salud;
     private javax.swing.JTextField txtContraseña;
     private javax.swing.JTextField txtCorreo;

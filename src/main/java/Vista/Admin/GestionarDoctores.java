@@ -4,7 +4,7 @@
  */
 package Vista.Admin;
 
-import Controlador.ControladorDoctor;
+import Controlador.ControladorCrud;
 import Excepciones.AlmacenadoExcepcion;
 import Excepciones.ContraseñaInseguraExcepcion;
 import Excepciones.CorreoInvalidoExcepcion;
@@ -24,7 +24,7 @@ import javax.swing.JOptionPane;
  */
 public class GestionarDoctores extends javax.swing.JFrame {
 
-    private ControladorDoctor controlador;
+    private ControladorCrud controlador;
     private Validacion validacion;
     
     /**
@@ -33,7 +33,7 @@ public class GestionarDoctores extends javax.swing.JFrame {
     public GestionarDoctores() {
         initComponents();
         this.setLocationRelativeTo(null);
-        this.controlador = new ControladorDoctor();
+        this.controlador = new ControladorCrud();
         this.validacion = new Validacion();
         setEnabledInputs(false);
         llenarComboDoctores();
@@ -347,7 +347,7 @@ public class GestionarDoctores extends javax.swing.JFrame {
             Doctor doctor = new Doctor(nombre,documento,correo,contraseña,telefono,edad,estadoCivil, especialidad);
 
             //Se añade al doctor
-            controlador.añadirDoctor(doctor);
+            controlador.añadirUsuario(doctor);
             JOptionPane.showMessageDialog(null, "Doctor con el documento: " + documento + " añadido");
             limpiarInputs();
             llenarComboDoctores();
@@ -371,7 +371,7 @@ public class GestionarDoctores extends javax.swing.JFrame {
             Doctor doctor = (Doctor) cbxDoctores.getSelectedItem();
 
             //Se elimina el empleado
-            controlador.eliminarDoctor(doctor.getDocumento());
+            controlador.eliminarUsuario(doctor.getDocumento());
             JOptionPane.showMessageDialog(null, "Doctor con el documento: " + doctor.getDocumento() + " eliminado");
             limpiarInputs();
             llenarComboDoctores();
@@ -418,7 +418,7 @@ public class GestionarDoctores extends javax.swing.JFrame {
             
             
             //VSe editan los datos del doctor
-            controlador.editarDoctor(doctor);
+            controlador.editarUsuario(doctor);
             JOptionPane.showMessageDialog(null, "Doctor con el documento: " + documento + " editado");
             limpiarInputs();
             llenarComboDoctores();
@@ -497,7 +497,7 @@ public class GestionarDoctores extends javax.swing.JFrame {
         cbxDoctores.removeAllItems();
         cbxDoctores.addItem("Buscar un doctor");
         
-        for (Persona doctor : controlador.getDoctores()) {
+        for (Persona doctor : controlador.getLista()) {
             if( doctor instanceof Doctor) cbxDoctores.addItem(doctor);
         }       
     }
@@ -509,7 +509,7 @@ public class GestionarDoctores extends javax.swing.JFrame {
      */
     private void cbxDoctoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxDoctoresActionPerformed
         
-        if( controlador.getDoctores().isEmpty() ) return;
+        if( controlador.getLista().isEmpty() ) return;
         //Si el primer elemento esta seleccionado, no es válido
         if( cbxDoctores.getSelectedIndex()==0 ) {
             //limpiarInputs();

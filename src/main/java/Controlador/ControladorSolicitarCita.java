@@ -21,12 +21,12 @@ import java.util.Date;
 public class ControladorSolicitarCita {
     private ArrayList<Persona> lista;
     private ArrayList<Cita> citas;
-    private ControladorBusqueda controlador;
+    private ControladorCrud controlador;
 
     public ControladorSolicitarCita() {
         lista = Singleton.getINSTANCIA().getLista();
         citas = Singleton.getINSTANCIA().getCitas();
-        controlador = new ControladorBusqueda();
+        controlador = new ControladorCrud();
     }
     
     /**
@@ -116,7 +116,7 @@ public class ControladorSolicitarCita {
     /**
      * @return the controlador
      */
-    public ControladorBusqueda getControlador() {
+    public ControladorCrud getControlador() {
         return controlador;
     }
     

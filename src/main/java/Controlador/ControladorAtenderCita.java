@@ -58,7 +58,7 @@ public class ControladorAtenderCita {
      * @param multa 
      */
     public void descuentoMulta(Multa multa){
-        if( multa.getCita().getPaciente().hasSisben() ){
+        if( multa.getCita().getPaciente().getRegimenDeSalud().equals("SISBEN") ){
             double descuento = multa.getValorTotal()*0.25 ;
             multa.setValorTotal( multa.getValorTotal() - descuento );
             Singleton.getINSTANCIA().escribirMultas();

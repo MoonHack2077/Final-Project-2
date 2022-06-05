@@ -4,7 +4,7 @@
  */
 package Vista.Admin;
 
-import Controlador.ControladorSecretaria;
+import Controlador.ControladorCrud;
 import Excepciones.AlmacenadoExcepcion;
 import Excepciones.ContraseñaInseguraExcepcion;
 import Excepciones.CorreoInvalidoExcepcion;
@@ -25,7 +25,7 @@ import javax.swing.JOptionPane;
  */
 public class GestionarSecretarias extends javax.swing.JFrame {
 
-    private ControladorSecretaria controlador;
+    private ControladorCrud controlador;
     private Validacion validacion;
     
     /**
@@ -34,7 +34,7 @@ public class GestionarSecretarias extends javax.swing.JFrame {
     public GestionarSecretarias() {
         initComponents();
         this.setLocationRelativeTo(null);
-        this.controlador = new ControladorSecretaria();
+        this.controlador = new ControladorCrud();
         this.validacion = new Validacion();
         setEnabledInputs(false);
         llenarComboSecretarias();
@@ -400,7 +400,7 @@ public class GestionarSecretarias extends javax.swing.JFrame {
             Secretaria secretaria = new Secretaria(nombre,documento,correo,contraseña,telefono,edad,añosExp,estadoCivil);
 
             //Verificamos se se añade el doctor
-            controlador.añadirSecretaria(secretaria);
+            controlador.añadirUsuario(secretaria);
             JOptionPane.showMessageDialog(null, "Secretaria con el documento: " + documento + " añadida");
             limpiarInputs();
             llenarComboSecretarias();
@@ -424,7 +424,7 @@ public class GestionarSecretarias extends javax.swing.JFrame {
             }
             Secretaria secretaria = (Secretaria) cbxSecretarias.getSelectedItem();
 
-            controlador.eliminarSecretaria(secretaria.getDocumento());
+            controlador.eliminarUsuario(secretaria.getDocumento());
             JOptionPane.showMessageDialog(null, "Secretaria con el documento: " + secretaria.getDocumento() + " eliminado");
             limpiarInputs();
             llenarComboSecretarias();
@@ -463,15 +463,15 @@ public class GestionarSecretarias extends javax.swing.JFrame {
             String correo = txtCorreo.getText();
             String contraseña = txtContraseña.getText();
             String telefono = txtTelefono.getText();
+            String estadoCivil = cbxEstados.getSelectedItem().toString();
             int edad = Integer.parseInt(txtEdad.getText());
             int añosExp = Integer.parseInt(txtAñosExp.getText());
-            String estadoCivil = cbxEstados.getSelectedItem().toString();
 
-            //Creamos al doctor con sus respectivos datos
+            //Creamos a la secretaria con sus respectivos datos
             Secretaria secretaria = new Secretaria(nombre,documento,correo,contraseña,telefono,edad,añosExp,estadoCivil);
 
             //Verificamos si los datos del doctor fueron editados
-            controlador.editarSecretaria(secretaria);
+            controlador.editarUsuario(secretaria);
             JOptionPane.showMessageDialog(null, "Secretaria con el documento: " + documento + " editada");
             limpiarInputs();
             llenarComboSecretarias();
@@ -505,7 +505,7 @@ public class GestionarSecretarias extends javax.swing.JFrame {
         cbxSecretarias.removeAllItems();
         cbxSecretarias.addItem("Buscar una secretaria");
         
-        for (Persona secretaria : controlador.getSecretarias()) {
+        for (Persona secretaria : controlador.getLista()) {
             if( secretaria instanceof Secretaria) cbxSecretarias.addItem(secretaria);
         }       
     }
@@ -516,7 +516,7 @@ public class GestionarSecretarias extends javax.swing.JFrame {
      */
     private void cbxSecretariasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxSecretariasActionPerformed
       
-        if( controlador.getSecretarias().isEmpty() ) return;
+        if( controlador.getLista().isEmpty() ) return;
 
         //Si el primer elemento esta seleccionado, no es válido
         if( cbxSecretarias.getSelectedIndex()==0 ) {

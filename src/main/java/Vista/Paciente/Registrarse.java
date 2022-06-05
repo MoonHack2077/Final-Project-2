@@ -4,7 +4,7 @@
  */
 package Vista.Paciente;
 
-import Controlador.ControladorPaciente;
+import Controlador.ControladorCrud;
 import Excepciones.AlmacenadoExcepcion;
 import Excepciones.ContraseñaInseguraExcepcion;
 import Excepciones.CorreoInvalidoExcepcion;
@@ -23,7 +23,7 @@ import javax.swing.JOptionPane;
  */
 public class Registrarse extends javax.swing.JFrame {
 
-    private ControladorPaciente controlador;
+    private ControladorCrud controlador;
     private Validacion validacion;
     
     /**
@@ -32,12 +32,8 @@ public class Registrarse extends javax.swing.JFrame {
     public Registrarse() {
         initComponents();
         setLocationRelativeTo(null);
-        this.controlador = new ControladorPaciente();
+        this.controlador = new ControladorCrud();
         this.validacion = new Validacion();
-        
-        //Se añaden los botones de EPS Y SISBEN al radioGroup de salud
-        salud.add(rbnEps);
-        salud.add(rbnSisben);
     }
 
     /**
@@ -52,8 +48,6 @@ public class Registrarse extends javax.swing.JFrame {
         estadosCiviles = new javax.swing.ButtonGroup();
         salud = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
-        rbnSisben = new javax.swing.JRadioButton();
-        rbnEps = new javax.swing.JRadioButton();
         btnRegistrar = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         txtNombre2 = new javax.swing.JTextField();
@@ -70,15 +64,12 @@ public class Registrarse extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         cbxEstados = new javax.swing.JComboBox<>();
         lblValidacion = new javax.swing.JLabel();
+        cbxRegimen = new javax.swing.JComboBox<>();
         btnVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "REGISTRARSE", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
-
-        rbnSisben.setText("SISBEN");
-
-        rbnEps.setText("EPS");
 
         btnRegistrar.setText("REGISTRAR");
         btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
@@ -135,16 +126,12 @@ public class Registrarse extends javax.swing.JFrame {
         lblValidacion.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         lblValidacion.setForeground(new java.awt.Color(255, 0, 0));
 
+        cbxRegimen.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Regimen de salud", "SISBEN", "EPS" }));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(rbnSisben)
-                .addGap(30, 30, 30)
-                .addComponent(rbnEps)
-                .addGap(136, 136, 136))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -166,11 +153,12 @@ public class Registrarse extends javax.swing.JFrame {
                                     .addComponent(jLabel7))
                                 .addGap(32, 32, 32)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(cbxRegimen, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(cbxEstados, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(txtEdad, javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(txtCorreo)
                                     .addComponent(txtContraseña)
-                                    .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(cbxEstados, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(txtTelefono, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE))))
                         .addGap(27, 27, 27)
                         .addComponent(btnLimpiar))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -214,11 +202,9 @@ public class Registrarse extends javax.swing.JFrame {
                     .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(cbxEstados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rbnSisben)
-                    .addComponent(rbnEps))
-                .addGap(38, 38, 38)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(cbxRegimen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(51, 51, 51)
                 .addComponent(btnRegistrar)
                 .addGap(18, 18, 18)
                 .addComponent(lblValidacion, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -267,7 +253,7 @@ public class Registrarse extends javax.swing.JFrame {
                txtNombre2.getText().isBlank() ||  txtDocumento.getText().isBlank() 
                || txtEdad.getText().isBlank() || txtCorreo.getText().isBlank() 
                || txtContraseña.getText().isBlank() || txtTelefono.getText().isBlank()
-               || ( !rbnSisben.isSelected() && !rbnEps.isSelected() )
+               || cbxRegimen.getSelectedIndex()==0
              ){
                 JOptionPane.showMessageDialog(null, "Faltan campos por llenar");
                 return;
@@ -285,15 +271,14 @@ public class Registrarse extends javax.swing.JFrame {
             String correo = txtCorreo.getText();
             String contraseña = txtContraseña.getText();
             String telefono = txtTelefono.getText();
-            int edad = Integer.parseInt(txtEdad.getText());
-            boolean hasSisben = rbnSisben.isSelected();
-            boolean hasEps = rbnEps.isSelected();
+            int edad = Integer.parseInt(txtEdad.getText());            
+            String regimen = cbxRegimen.getSelectedItem().toString();
             String estadoCivil = cbxEstados.getSelectedItem().toString();
 
             //Creamos al paciente con sus respectivos datos
-            Paciente paciente = new Paciente(nombre,documento,correo,contraseña,edad,estadoCivil,telefono,hasSisben,hasEps);
+            Paciente paciente = new Paciente(nombre,documento,correo,contraseña,edad,estadoCivil,telefono,regimen);
             
-            controlador.añadirPaciente(paciente);
+            controlador.añadirUsuario(paciente);
             JOptionPane.showMessageDialog(null, "Se añadio el paciente con documento " + documento);
             abrirVistaPaciente(paciente);
         }catch(MayorDeEdadExcepcion | AlmacenadoExcepcion | TelefonoCortoExcepcion
@@ -365,6 +350,7 @@ public class Registrarse extends javax.swing.JFrame {
         txtTelefono.setText("");
         salud.clearSelection();
         cbxEstados.setSelectedItem("Seleccione su estado civil");
+        cbxRegimen.setSelectedItem("Regimen de salud");
     }//GEN-LAST:event_btnLimpiarActionPerformed
     
     /**
@@ -395,6 +381,7 @@ public class Registrarse extends javax.swing.JFrame {
     private javax.swing.JButton btnRegistrar;
     private javax.swing.JButton btnVolver;
     private javax.swing.JComboBox<String> cbxEstados;
+    private javax.swing.JComboBox<String> cbxRegimen;
     private javax.swing.ButtonGroup estadosCiviles;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -404,8 +391,6 @@ public class Registrarse extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblValidacion;
-    private javax.swing.JRadioButton rbnEps;
-    private javax.swing.JRadioButton rbnSisben;
     private javax.swing.ButtonGroup salud;
     private javax.swing.JTextField txtContraseña;
     private javax.swing.JTextField txtCorreo;
