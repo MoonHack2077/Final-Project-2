@@ -16,6 +16,7 @@ public class Secretaria extends Persona {
             String contraseña, String telefono, int edad, int añosExp, String estadoCivil)
     {
         super(nombre, documento,  correo,  contraseña, telefono, edad, estadoCivil);
+        this.añosExp = añosExp;
     }
 
     @Override

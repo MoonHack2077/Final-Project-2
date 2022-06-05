@@ -68,9 +68,10 @@ public class ControladorCrud {
     /**
      * Metodo para añadir un usuario a la lista
      * @param persona
-     * @return 
+     * @return
+     * @throws MayorDeEdadExcepcion 
      */
-    public boolean añadirUsuario(Persona persona){
+    public boolean añadirUsuario(Persona persona)throws MayorDeEdadExcepcion {
         buscarCoincidencia(persona.getDocumento(), persona.getCorreo(), persona.getContraseña(), persona.getTelefono());
         
         //Excepciones

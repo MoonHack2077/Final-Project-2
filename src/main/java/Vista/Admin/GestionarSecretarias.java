@@ -62,6 +62,7 @@ public class GestionarSecretarias extends javax.swing.JFrame {
         txtTelefono.setText("");
         cbxSecretarias.setSelectedItem("Buscar una secretaria");
         txtAñosExp.setText("");
+        cbxEstados.setSelectedItem("Seleccione su estado civil");
     }
 
     /**
@@ -392,9 +393,9 @@ public class GestionarSecretarias extends javax.swing.JFrame {
             String correo = txtCorreo.getText();
             String contraseña = txtContraseña.getText();
             String telefono = txtTelefono.getText();
+            String estadoCivil = cbxEstados.getSelectedItem().toString();
             int edad = Integer.parseInt(txtEdad.getText());
             int añosExp = Integer.parseInt(txtAñosExp.getText());
-            String estadoCivil = cbxEstados.getSelectedItem().toString();
 
             //Creamos al doctor con sus respectivos datos
             Secretaria secretaria = new Secretaria(nombre,documento,correo,contraseña,telefono,edad,añosExp,estadoCivil);
