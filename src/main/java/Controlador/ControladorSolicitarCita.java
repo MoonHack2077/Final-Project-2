@@ -82,7 +82,7 @@ public class ControladorSolicitarCita {
      * @param especialidad
      * @throws EspecialidadNoEncontradaExcepcion 
      */
-    public void especialidades(String especialidad) throws EspecialidadNoEncontradaExcepcion {
+    public void filtrarEspecialidades(String especialidad) throws EspecialidadNoEncontradaExcepcion {
         //Creamos un arrayList para añadir los doctores que tengan la especialidad seleccionada
         ArrayList<Doctor> doctoresAux = new ArrayList<>();
         

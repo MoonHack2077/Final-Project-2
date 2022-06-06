@@ -4,10 +4,14 @@
  */
 package Controlador;
 
+import Excepciones.CoincideConFechaBloqueadaExcepcion;
+import Excepciones.NoHayCitasExcepcion;
 import Modelo.Cita;
+import Modelo.Doctor;
 import Modelo.Multa;
 import Singleton.Singleton;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
@@ -63,6 +67,27 @@ public class ControladorAtenderCita {
             multa.setValorTotal( multa.getValorTotal() - descuento );
             Singleton.getINSTANCIA().escribirMultas();
         }
+    }
+    
+     /**
+      * Metodo para validar que la fecha elegida para una cita no sea la misma que la que el doctor bloqueó
+      * @param doctor
+      * @param fecha
+      * @throws CoincideConFechaBloqueadaExcepcion 
+      */
+    public ArrayList<Cita> filtrarCitasPorDia(Doctor doctor, Date fecha)throws NoHayCitasExcepcion{       
+        ArrayList<Cita> citas = new ArrayList<>();
+        String fechaAux =  String.valueOf(fecha.getDate() + fecha.getMonth() + fecha.getYear());
+        for (Cita cita : doctor.getAgenda()) {
+            String fechaDoc = String.valueOf(cita.getFecha().getDate() + cita.getFecha().getMonth() + cita.getFecha().getYear());
+            if( fechaDoc.equals(fechaAux) ){
+                citas.add(cita);
+            }
+        }
+           
+        if( citas.isEmpty() ) throw new NoHayCitasExcepcion();
+        
+        return citas;
     }
     
     /**

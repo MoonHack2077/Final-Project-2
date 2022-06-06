@@ -15,6 +15,7 @@ import Vista.Doctor.VistaDoctor;
 import Vista.Paciente.Registrarse;
 import Vista.Paciente.VistaPaciente;
 import Vista.Secretaria.VistaSecretaria;
+import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 
 /**
@@ -56,6 +57,12 @@ public class Login extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "LOGIN", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 
+        txtCorreo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCorreoKeyPressed(evt);
+            }
+        });
+
         btnEntrar.setText("Entrar");
         btnEntrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -69,6 +76,12 @@ public class Login extends javax.swing.JFrame {
         btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRegistrarActionPerformed(evt);
+            }
+        });
+
+        txtContraseña.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtContraseñaKeyPressed(evt);
             }
         });
 
@@ -198,6 +211,22 @@ public class Login extends javax.swing.JFrame {
         Registrarse registrarse = new Registrarse();
         cambiarVentana(registrarse);
     }//GEN-LAST:event_btnRegistrarActionPerformed
+
+    /**
+     * Metodo para que el usuario al presionar la tecla enter se llame al evento del boton para entrar
+     * @param evt 
+     */
+    private void txtContraseñaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtContraseñaKeyPressed
+        if( evt.getKeyCode() == 10  ) btnEntrarActionPerformed( null );       
+    }//GEN-LAST:event_txtContraseñaKeyPressed
+
+    /**
+     * Metodo para que el usuario al presionar la tecla enter se llame al evento del boton para entrar
+     * @param evt 
+     */
+    private void txtCorreoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCorreoKeyPressed
+        if( evt.getKeyCode() == 10  ) btnEntrarActionPerformed( null );
+    }//GEN-LAST:event_txtCorreoKeyPressed
 
     /**
      * @param args the command line arguments

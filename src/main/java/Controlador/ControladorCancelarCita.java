@@ -64,13 +64,11 @@ public class ControladorCancelarCita {
         if( aux != null ){
             for (int i = 0; i < getCitas().size(); i++) {
                 if(getCitas().get(i).getPaciente().getDocumento().equals(documento)){
-                    if(eliminarCitaDeLaAgenda(getCitas().get(i))){
-                        getCitas().get(i).getPaciente().setHasCita(false);
-                        getCitas().remove(i);
-                        Singleton.getINSTANCIA().escribirCitas();
-                        Singleton.getINSTANCIA().escribirLista();
-                        return true;                  
-                    }
+                    getCitas().get(i).getPaciente().setHasCita(false);
+                    getCitas().remove(i);
+                    Singleton.getINSTANCIA().escribirCitas();
+                    Singleton.getINSTANCIA().escribirLista();
+                    return true;
                 }
                 
             }

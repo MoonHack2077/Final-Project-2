@@ -247,6 +247,7 @@ public class CancelarCita extends javax.swing.JFrame {
         lblFecha.setText( "" );
         lblMotivo.setText( "");
         lblPaciente.setText( "" );
+        txtDocumento.setText( "" );
         btnCancelar.setEnabled(false);
     }
     
@@ -275,7 +276,8 @@ public class CancelarCita extends javax.swing.JFrame {
 
         if( confirmacion==0 ){
             boolean cancelada = controlador.eliminarCita(this.cita.getPaciente().getDocumento());
-            if( cancelada ){
+            boolean eliminada = controlador.eliminarCitaDeLaAgenda(this.cita);
+            if( cancelada && eliminada ){
                 JOptionPane.showMessageDialog(null, "Cita cancelada");
                 
                 if( this.isPaciente ){

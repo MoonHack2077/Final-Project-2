@@ -325,7 +325,7 @@ public class AgendarCita extends javax.swing.JFrame {
                 throw new EspecialidadNoEncontradaExcepcion("Ninguna especialidad seleccionada");
             }
 
-            controlador.especialidades(especialidad);
+            controlador.filtrarEspecialidades(especialidad);
 
             btnSolicitar.setEnabled(true);
             cbxDoctores.addItem("Seleccione un doctor");
