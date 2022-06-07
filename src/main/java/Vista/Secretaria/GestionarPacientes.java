@@ -295,8 +295,8 @@ public class GestionarPacientes extends javax.swing.JFrame {
         txtContraseña.setText("");
         txtCorreo.setText("");
         txtTelefono.setText("");
-        cbxPacientes.setSelectedItem("Buscar un paciente");
         salud.clearSelection();
+        cbxPacientes.setSelectedItem("Buscar un paciente");
         cbxEstados.setSelectedItem("Seleccione su estado civil");
         cbxRegimen.setSelectedItem("Regimen de salud");
     }
@@ -318,8 +318,7 @@ public class GestionarPacientes extends javax.swing.JFrame {
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         try{
             //Se validan los campos
-            if(
-                txtNombre2.getText().isBlank() || txtDocumento.getText().isBlank() 
+            if(txtNombre2.getText().isBlank() || txtDocumento.getText().isBlank() 
                 || txtEdad.getText().isBlank() || txtCorreo.getText().isBlank() 
                 || txtContraseña.getText().isBlank() ||  txtTelefono.getText().isBlank()
                 || cbxEstados.getSelectedIndex() == 0 || cbxRegimen.getSelectedIndex()==0 )
@@ -340,9 +339,9 @@ public class GestionarPacientes extends javax.swing.JFrame {
             String correo = txtCorreo.getText();
             String contraseña = txtContraseña.getText();
             String telefono = txtTelefono.getText();
-            int edad = Integer.parseInt(txtEdad.getText());
             String regimen = cbxRegimen.getSelectedItem().toString();
             String estadoCivil = cbxEstados.getSelectedItem().toString();
+            int edad = Integer.parseInt(txtEdad.getText());
 
             //Creamos al paciente con sus respectivos datos
             Paciente paciente = new Paciente(nombre,documento,correo,contraseña,edad,estadoCivil,telefono,regimen);
@@ -397,9 +396,9 @@ public class GestionarPacientes extends javax.swing.JFrame {
             String correo = txtCorreo.getText();
             String contraseña = txtContraseña.getText();
             String telefono = txtTelefono.getText();
-            int edad = Integer.parseInt(txtEdad.getText());
             String regimen = cbxRegimen.getSelectedItem().toString();           
             String estadoCivil = cbxEstados.getSelectedItem().toString();
+            int edad = Integer.parseInt(txtEdad.getText());
 
             //Creamos al paciente con sus respectivos datos
             Paciente paciente = new Paciente(nombre,documento,correo,contraseña,edad,estadoCivil,telefono,regimen);
@@ -485,8 +484,7 @@ public class GestionarPacientes extends javax.swing.JFrame {
             lblValidacion.setText(ex.getMessage());
         }
     }//GEN-LAST:event_txtEdadKeyTyped
-
-    
+   
     /**
      * Metodo para llenar el combobox de los pacientes
      */
@@ -498,8 +496,7 @@ public class GestionarPacientes extends javax.swing.JFrame {
             if( paciente instanceof Paciente) cbxPacientes.addItem(paciente);
         }       
     }
-
-    
+   
     /**
      * Metodo para que cada vez que se seleccione un paciente los campos se llenen con su respeciva informacion
      * @param evt 

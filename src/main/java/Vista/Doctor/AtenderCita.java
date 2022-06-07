@@ -307,15 +307,12 @@ public class AtenderCita extends javax.swing.JFrame {
         //Obtenemos los datos para anexarlos al historial del paciente
         String conclusiones = txtConclusiones.getText();
         String tratamientos = txtTratamientos.getText();
-        Cita citaSeleccionada = (Cita) cbxAgenda.getSelectedItem();
         
-        controlador.confirmarAtencion(cita,conclusiones,tratamientos);
+        boolean atendida = controlador.confirmarAtencion(this.cita,conclusiones,tratamientos);
         
-        boolean eliminada = controlador.getControlador().eliminarCita(citaSeleccionada.getPaciente().getDocumento());
-        boolean eliminada2 = controlador.getControlador().eliminarCitaDeLaAgenda(citaSeleccionada);
-        if( eliminada && eliminada2 ){
+        if( atendida ){
             JOptionPane.showMessageDialog(null, "Cita atendida con exito");
-            resetearCampos();                  
+            resetearCampos(); 
         }else{
             JOptionPane.showMessageDialog(null, "Ocurrió algún error");
         }
@@ -344,9 +341,7 @@ public class AtenderCita extends javax.swing.JFrame {
             Multa multa = new Multa(cita);
             controlador.descuentoMulta(multa);
             boolean añadida = controlador.añadirMulta(multa);
-            boolean cancelada = controlador.getControlador().eliminarCita(this.cita.getPaciente().getDocumento());
-            boolean eliminada = controlador.getControlador().eliminarCitaDeLaAgenda(this.cita);
-            if( añadida && cancelada && eliminada ){
+            if( añadida ){
                 JOptionPane.showMessageDialog(null, "Se ha multado al paciente: " + cita.getPaciente().getNombre());
                 resetearCampos();
             }
@@ -368,16 +363,14 @@ public class AtenderCita extends javax.swing.JFrame {
             return;
         }
         
-        Cita citaSeleccionada = (Cita) cbxAgenda.getSelectedItem();
+        this.cita = (Cita) cbxAgenda.getSelectedItem();
         
-        if( citaSeleccionada != null ){
+        if( this.cita != null ){
             btnConfirmar.setEnabled(true);
             btnHistorial.setEnabled(true);
             btnMultar.setEnabled(true);
-            lblFecha.setText( citaSeleccionada.getFecha().toString() );
-            lblPaciente.setText( citaSeleccionada.getPaciente().toString() );
-
-            this.cita = citaSeleccionada;
+            lblFecha.setText( this.cita.getFecha().toString() );
+            lblPaciente.setText( this.cita.getPaciente().toString() );
         }
     }//GEN-LAST:event_cbxAgendaActionPerformed
 

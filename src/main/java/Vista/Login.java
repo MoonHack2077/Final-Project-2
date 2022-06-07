@@ -15,7 +15,6 @@ import Vista.Doctor.VistaDoctor;
 import Vista.Paciente.Registrarse;
 import Vista.Paciente.VistaPaciente;
 import Vista.Secretaria.VistaSecretaria;
-import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 
 /**

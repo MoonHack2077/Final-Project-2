@@ -63,7 +63,12 @@ public class VerHistorial extends javax.swing.JFrame {
         txtConclusiones.setRows(5);
         jScrollPane1.setViewportView(txtConclusiones);
 
+        jLabel1.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Historial de: ");
+
+        lblPaciente.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        lblPaciente.setForeground(new java.awt.Color(0, 0, 0));
 
         cbxCitas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -204,7 +209,7 @@ public class VerHistorial extends javax.swing.JFrame {
                 .addComponent(btnVolver)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         pack();

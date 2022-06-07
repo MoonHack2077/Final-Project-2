@@ -52,19 +52,14 @@ public class AgendarCita extends javax.swing.JFrame {
         isPaciente = true;
         btnSolicitar.setEnabled(false);
        
-        btnVolver.setBounds(5, 5, btnVolver.getWidth(), btnVolver.getHeight());
-        panel.setBounds(10, 90, panel.getWidth()/2, panel.getHeight());
+        //btnVolver.setBounds(5, 5, btnVolver.getWidth(), btnVolver.getHeight());
+        //panel.setBounds(10, 90, panel.getWidth()/2, panel.getHeight());
         
         //Se inhabilitan las funciones que tendría la secretaria       
         panelPac.setVisible(false);
         lbl2.setVisible(false);
         lblPaciente.setVisible(false);
         lblValidacion.setVisible(false);
-        
-        //Se cuadra el estilo de la ventana
-        //panelDoc.setBounds(0, 0, panelDoc.getWidth(), panelDoc.getHeight());
-        //panelDate.setBounds(250, 400, panelDate.getWidth(), panelDate.getHeight());
-        
     }
     
     /**
@@ -278,23 +273,22 @@ public class AgendarCita extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
+                        .addGap(6, 6, 6)
                         .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(btnVolver)))
-                .addContainerGap(25, Short.MAX_VALUE))
+                    .addComponent(btnVolver))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(22, Short.MAX_VALUE)
+                .addGap(14, 14, 14)
                 .addComponent(btnVolver)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         pack();
@@ -324,7 +318,7 @@ public class AgendarCita extends javax.swing.JFrame {
                 btnSolicitar.setEnabled(false);
                 throw new EspecialidadNoEncontradaExcepcion("Ninguna especialidad seleccionada");
             }
-
+            
             controlador.filtrarEspecialidades(especialidad);
 
             btnSolicitar.setEnabled(true);
@@ -392,7 +386,7 @@ public class AgendarCita extends javax.swing.JFrame {
                 cita.getFecha().toLocaleString() + "\n" +
                 cita.toString() + "\nMotivo: " + cita.getDoctor().getEspecialidad()
             );
-            if( isPaciente ){
+            if( this.isPaciente ){
                 VistaPaciente vista = new VistaPaciente(paciente);
                 vista.setVisible(true);
                 this.dispose();
@@ -433,25 +427,21 @@ public class AgendarCita extends javax.swing.JFrame {
      */
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         try{
+            btnSolicitar.setEnabled(false);
             //Obtenemos el documento
             String documento = txtDocumento.getText();
             this.paciente = (Paciente) controlador.getControlador().buscarPersona(documento);
 
             //Si no se encuentra al paciente lanzamos esta excepcion
-            if( this.paciente==null  ){
-                btnSolicitar.setEnabled(false);
-                throw new NoEncontradoExcepcion();
-            }
-                
+            if( this.paciente==null  ) throw new NoEncontradoExcepcion();
+                            
             if( this.paciente.hasCita() ){
                 lblPaciente.setText( "El paciente seleccionado ya tiene cita" );
-                btnSolicitar.setEnabled(false);
                 return;
             }
 
             if( this.paciente.hasMulta() ){
                 lblPaciente.setText( "El paciente esta multado" );
-                btnSolicitar.setEnabled(false);
                 return;
             }
             

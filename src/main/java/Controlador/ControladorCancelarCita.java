@@ -22,7 +22,7 @@ public class ControladorCancelarCita {
     
     /**
      * Metodo para buscar una cita registrada por medio del documento del paciente
-     * @param documento
+     * @param documento, el documento del paciente, un dato unico
      * @return cita si la encuentra, de lo contrario null
      */
     public Cita buscarCita(String documento){
@@ -36,7 +36,7 @@ public class ControladorCancelarCita {
         
     /**
      * Metodo para eliminar una cita de la agenda
-     * @param cita
+     * @param cita, la cita que será eñiminada
      * @return true si pudo eliminarla, de lo contrario false
      */
     public boolean eliminarCitaDeLaAgenda(Cita cita){
@@ -55,7 +55,7 @@ public class ControladorCancelarCita {
     
     /**
      * Metodo para eliminar una cita almacenada
-     * @param documento
+     * @param documento, el documento del paciente, un dato unico
      * @return true si pudo eliminarla, de lo contrario false
      */
     public boolean eliminarCita(String documento){

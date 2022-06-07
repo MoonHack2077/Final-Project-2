@@ -29,37 +29,54 @@ public class ControladorAtenderCita {
     
     /**
      * Metodo para añadir la cita al historial del usuario
-     * @param cita
-     * @param conclusiones
-     * @param tratamientos 
+     * @param cita, la cita atendida, la cual se setearan sus conclusiones y tratamientos
+     * @param conclusiones, las conclusiones de la cita atendida
+     * @param tratamientos, los tratamientos de la cita atendida 
      */
-    public void confirmarAtencion(Cita cita, String conclusiones, String tratamientos){
+    public boolean confirmarAtencion(Cita cita, String conclusiones, String tratamientos){
         cita.setConclusiones(conclusiones );
         cita.setTratamientos(tratamientos);
         
         //Se añade la cita al historal del paciente
         cita.getPaciente().getHistorial().add(cita);
-        Singleton.getINSTANCIA().escribirLista();
-        Singleton.getINSTANCIA().escribirCitas();
+        
+        
+        boolean eliminada = controlador.eliminarCita(cita.getPaciente().getDocumento());
+        boolean eliminada2 = controlador.eliminarCitaDeLaAgenda(cita);
+        
+        if( eliminada && eliminada2 ){
+            Singleton.getINSTANCIA().escribirLista();
+            Singleton.getINSTANCIA().escribirCitas();
+            return true;
+        }
+        
+        return false;
     }
     
     /**
      * Metodo para añadir una multa al array general de las multas
-     * @param multa
+     * @param multa la multa que será añadida
      * @return true si pudo añadirla, de lo contrario false;
      */
     public boolean añadirMulta(Multa multa){
         multas.add(multa);
         multa.getCita().getPaciente().setHasMulta(true);
-        Singleton.getINSTANCIA().escribirMultas();
-        Singleton.getINSTANCIA().escribirLista();
+        boolean cancelada = controlador.eliminarCita(multa.getCita().getPaciente().getDocumento());
+        boolean eliminada = controlador.eliminarCitaDeLaAgenda(multa.getCita());
+        
+        if( cancelada && eliminada ){
+            Singleton.getINSTANCIA().escribirMultas();
+            Singleton.getINSTANCIA().escribirLista();
+        }else{
+            return false;
+        }
         return true;
     }
     
            
     /**
      * Metodo para hacer descuento de la multa si el paciente tiene SISBEN
-     * @param multa 
+     * @param multa, la multa a evaluar
      */
     public void descuentoMulta(Multa multa){
         if( multa.getCita().getPaciente().getRegimenDeSalud().equals("SISBEN") ){
@@ -71,9 +88,9 @@ public class ControladorAtenderCita {
     
      /**
       * Metodo para validar que la fecha elegida para una cita no sea la misma que la que el doctor bloqueó
-      * @param doctor
-      * @param fecha
-      * @throws CoincideConFechaBloqueadaExcepcion 
+      * @param doctor, el doctor que va a atender las citas
+      * @param fecha, la fecha de las citas que serán filtradas
+      * @throws NoHayCitasExcepcion, si no hay citas para la fecha seleccionada  
       */
     public ArrayList<Cita> filtrarCitasPorDia(Doctor doctor, Date fecha)throws NoHayCitasExcepcion{       
         ArrayList<Cita> citas = new ArrayList<>();
@@ -96,13 +113,5 @@ public class ControladorAtenderCita {
     public ArrayList<Multa> getMultas() {
         return multas;
     }
-
-    /**
-     * @return the controlador
-     */
-    public ControladorCancelarCita getControlador() {
-        return controlador;
-    }
-    
-    
+        
 }

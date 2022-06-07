@@ -29,11 +29,11 @@ public class ControladorCrud {
     
     /**
      * Metodo para buscar coincidencias en los datos irrepetibles en los administradores
-     * @param documento
-     * @param correo
-     * @param contraseña
-     * @param telefono
-     * @throws AlmacenadoExcepcion 
+     * @param documento, el documento a comparar del usuario 
+     * @param correo, el correo a comparar del usuario
+     * @param contraseña, la contraseñaa comparar del usuario
+     * @param telefono, el telefono a comparar del usuario
+     * @throws AlmacenadoExcepcion, si alguno de los datos por parametro coincide con alguno de los almacenados 
      */
     public void buscarCoincidencia(String documento,String correo, String contraseña, String telefono) throws AlmacenadoExcepcion{
         
@@ -48,7 +48,7 @@ public class ControladorCrud {
     
     /**
      * Metodo para buscar un doctor registrado por medio del documento, correo y contraseña
-     * @param documento
+     * @param documento, el documento del usuario a ser buscado
      * @return doctor si lo encuentra, de lo contrario null
      */
     public Persona buscarPersona(String documento){   
@@ -67,9 +67,10 @@ public class ControladorCrud {
     
     /**
      * Metodo para añadir un usuario a la lista
-     * @param persona
-     * @return
-     * @throws MayorDeEdadExcepcion 
+     * @param persona, la persona a ser añadida
+     * @return true al ser añadida la persona
+     * @throws MayorDeEdadExcepcion en el caso de que la persona sea instancia de un doctor o secretaria, si 
+     * es menor deedad no será añadido
      */
     public boolean añadirUsuario(Persona persona)throws MayorDeEdadExcepcion {
         buscarCoincidencia(persona.getDocumento(), persona.getCorreo(), persona.getContraseña(), persona.getTelefono());
@@ -87,9 +88,9 @@ public class ControladorCrud {
     
     /**
      * Metodo para eliminar un usuario
-     * @param documento
+     * @param documento, el documento de la persona a eliminar
      * @return true si lo elimina
-     * @throws NoEncontradoExcepcion 
+     * @throws NoEncontradoExcepcion, en caso de que el documento no coincida con alguno de los que estan almacenados 
      */
     public boolean eliminarUsuario(String documento) throws NoEncontradoExcepcion{
         Persona persona = buscarPersona(documento);
@@ -109,10 +110,11 @@ public class ControladorCrud {
     
     /**
      * Metodo para editar la informacion de un usuario
-     * @param usuario
+     * @param usuario, el usuario con la informacion a editar
      * @return true si la pudo editar
-     * @throws NoEncontradoExcepcion
-     * @throws MayorDeEdadExcepcion 
+     * @throws NoEncontradoExcepcion, en caso de que el documento no coincida con alguno de los que estan almacenados 
+     * @throws MayorDeEdadExcepcionen el caso de que la persona sea instancia de un doctor o secretaria, si 
+     * es menor deedad no será añadido 
      */
     public boolean editarUsuario(Persona usuario) throws NoEncontradoExcepcion, MayorDeEdadExcepcion{       
         Persona persona = buscarPersona(usuario.getDocumento());

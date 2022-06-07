@@ -33,8 +33,8 @@ public class ControladorLogin {
     
     /**
      * Metodo para buscar el usuario que coincida con los datos introducidos en el login
-     * @param correo
-     * @param contraseña
+     * @param correo, el correo que es introducido en el textField
+     * @param contraseña, la contraseña que es introducido en el textField
      * @return la persona que coincida, de lo contrario null
      */
     public Persona buscarUsuario(String correo, String contraseña){

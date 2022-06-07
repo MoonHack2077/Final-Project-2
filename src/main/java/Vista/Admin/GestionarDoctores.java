@@ -508,7 +508,6 @@ public class GestionarDoctores extends javax.swing.JFrame {
      * @param evt 
      */
     private void cbxDoctoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxDoctoresActionPerformed
-        
         if( controlador.getLista().isEmpty() ) return;
         //Si el primer elemento esta seleccionado, no es válido
         if( cbxDoctores.getSelectedIndex()==0 ) {

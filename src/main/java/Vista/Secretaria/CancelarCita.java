@@ -302,7 +302,6 @@ public class CancelarCita extends javax.swing.JFrame {
         try{
             //Obtenemos el documento
             String documento = txtDocumento.getText();
-
             this.cita = controlador.buscarCita(documento);
 
             if( this.cita == null ){

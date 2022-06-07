@@ -249,8 +249,7 @@ public class Registrarse extends javax.swing.JFrame {
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         try{
             // se validan los campos
-            if(
-               txtNombre2.getText().isBlank() ||  txtDocumento.getText().isBlank() 
+            if( txtNombre2.getText().isBlank() ||  txtDocumento.getText().isBlank() 
                || txtEdad.getText().isBlank() || txtCorreo.getText().isBlank() 
                || txtContraseña.getText().isBlank() || txtTelefono.getText().isBlank()
                || cbxRegimen.getSelectedIndex()==0
@@ -270,10 +269,10 @@ public class Registrarse extends javax.swing.JFrame {
             String documento = txtDocumento.getText();
             String correo = txtCorreo.getText();
             String contraseña = txtContraseña.getText();
-            String telefono = txtTelefono.getText();
-            int edad = Integer.parseInt(txtEdad.getText());            
+            String telefono = txtTelefono.getText();     
             String regimen = cbxRegimen.getSelectedItem().toString();
             String estadoCivil = cbxEstados.getSelectedItem().toString();
+            int edad = Integer.parseInt(txtEdad.getText());       
 
             //Creamos al paciente con sus respectivos datos
             Paciente paciente = new Paciente(nombre,documento,correo,contraseña,edad,estadoCivil,telefono,regimen);
