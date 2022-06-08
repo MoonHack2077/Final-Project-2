@@ -26,6 +26,7 @@ public class GestionarPacientes extends javax.swing.JFrame {
 
     private ControladorCrud controlador;
     private Validacion validacion;
+    private Paciente paciente;
     /**
      * Creates new form GestionarPacientes
      */
@@ -35,7 +36,6 @@ public class GestionarPacientes extends javax.swing.JFrame {
         this.controlador = new ControladorCrud();
         this.validacion = new Validacion();
         setEnabledInputs(false);
-        llenarComboPacientes();
     }
     
     /**
@@ -64,11 +64,13 @@ public class GestionarPacientes extends javax.swing.JFrame {
         txtEdad = new javax.swing.JTextField();
         txtContraseña = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        cbxPacientes = new javax.swing.JComboBox();
         cbxEstados = new javax.swing.JComboBox<>();
         btnEditar = new javax.swing.JButton();
         lblValidacion = new javax.swing.JLabel();
         cbxRegimen = new javax.swing.JComboBox<>();
+        txtBuscar = new javax.swing.JTextField();
+        btnBuscar = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
         btnVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -132,12 +134,6 @@ public class GestionarPacientes extends javax.swing.JFrame {
 
         jLabel5.setText("Correo:");
 
-        cbxPacientes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbxPacientesActionPerformed(evt);
-            }
-        });
-
         cbxEstados.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione su estado civil", "Casado", "Soltero", "Viudo", "Divorciado" }));
 
         btnEditar.setText("EDITAR");
@@ -152,6 +148,21 @@ public class GestionarPacientes extends javax.swing.JFrame {
 
         cbxRegimen.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Regimen de salud", "SISBEN", "EPS" }));
 
+        txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtBuscarKeyTyped(evt);
+            }
+        });
+
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+
+        jLabel8.setText("Ingrese el documento del paciente para buscarlo");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -160,11 +171,9 @@ public class GestionarPacientes extends javax.swing.JFrame {
                 .addGap(19, 19, 19)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnRegistrar)
-                        .addGap(32, 32, 32)
-                        .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(48, 48, 48)
-                        .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(cbxEstados, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cbxRegimen, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -191,17 +200,26 @@ public class GestionarPacientes extends javax.swing.JFrame {
                         .addComponent(btnLimpiar))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(lblValidacion, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(96, 96, 96)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(cbxEstados, 0, 196, Short.MAX_VALUE)
-                            .addComponent(cbxRegimen, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(btnRegistrar)
+                                .addGap(32, 32, 32)
+                                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(37, 37, 37)
+                                .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(31, 31, 31)
+                                        .addComponent(btnBuscar))
+                                    .addComponent(jLabel8))
+                                .addGap(96, 96, 96)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(cbxPacientes, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(83, 83, 83))
+                .addComponent(lblValidacion, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -238,17 +256,21 @@ public class GestionarPacientes extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(31, 31, 31)
-                .addComponent(cbxEstados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(cbxRegimen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
-                .addComponent(cbxPacientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbxEstados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbxRegimen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(42, 42, 42)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRegistrar)
                     .addComponent(btnEliminar)
                     .addComponent(btnEditar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel8)
+                .addGap(12, 12, 12)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                 .addComponent(lblValidacion, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -296,7 +318,6 @@ public class GestionarPacientes extends javax.swing.JFrame {
         txtCorreo.setText("");
         txtTelefono.setText("");
         salud.clearSelection();
-        cbxPacientes.setSelectedItem("Buscar un paciente");
         cbxEstados.setSelectedItem("Seleccione su estado civil");
         cbxRegimen.setSelectedItem("Regimen de salud");
     }
@@ -344,13 +365,12 @@ public class GestionarPacientes extends javax.swing.JFrame {
             int edad = Integer.parseInt(txtEdad.getText());
 
             //Creamos al paciente con sus respectivos datos
-            Paciente paciente = new Paciente(nombre,documento,correo,contraseña,edad,estadoCivil,telefono,regimen);
+            Persona newPaciente = new Paciente(nombre,documento,correo,contraseña,edad,estadoCivil,telefono,regimen);
             
             //Añadiendo al paciente
-            controlador.añadirUsuario(paciente);
+            controlador.añadirUsuario(newPaciente);
             JOptionPane.showMessageDialog(null, "Se añadio el paciente con documento " + documento);
             limpiarInputs();
-            llenarComboPacientes();
         }catch(MayorDeEdadExcepcion | AlmacenadoExcepcion | TelefonoCortoExcepcion
                 | ContraseñaInseguraExcepcion | SinLaTerminacionCorrectaExcepcion
                 | CorreoInvalidoExcepcion ex){
@@ -401,12 +421,11 @@ public class GestionarPacientes extends javax.swing.JFrame {
             int edad = Integer.parseInt(txtEdad.getText());
 
             //Creamos al paciente con sus respectivos datos
-            Paciente paciente = new Paciente(nombre,documento,correo,contraseña,edad,estadoCivil,telefono,regimen);
+            Persona newPaciente = new Paciente(nombre,documento,correo,contraseña,edad,estadoCivil,telefono,regimen);
             
-            controlador.editarUsuario(paciente);
+            controlador.editarUsuario(newPaciente);
             JOptionPane.showMessageDialog(null, "Se editó la información el paciente con documento " + documento);
             limpiarInputs();
-            llenarComboPacientes();
             setEnabledInputs(false);
         }catch(MayorDeEdadExcepcion | AlmacenadoExcepcion | TelefonoCortoExcepcion
                 | ContraseñaInseguraExcepcion | SinLaTerminacionCorrectaExcepcion
@@ -421,17 +440,10 @@ public class GestionarPacientes extends javax.swing.JFrame {
      */
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         try{
-            if( cbxPacientes.getSelectedIndex()==0 ){
-                JOptionPane.showMessageDialog(null, "No hay un paciente seleccionado");
-                return;
-            }
-            Paciente paciente = (Paciente) cbxPacientes.getSelectedItem();
-
             //Se elimina al paciente
-            controlador.eliminarUsuario(paciente.getDocumento());
-            JOptionPane.showMessageDialog(null, "Se eliminó el paciente con documento " + paciente.getDocumento());
+            controlador.eliminarUsuario(this.paciente.getDocumento());
+            JOptionPane.showMessageDialog(null, "Se eliminó el paciente con documento " + this.paciente.getDocumento());
             limpiarInputs();
-            llenarComboPacientes();
             setEnabledInputs(false);
         }catch(NoEncontradoExcepcion ex){
             JOptionPane.showMessageDialog(null, ex.getMessage());
@@ -484,49 +496,8 @@ public class GestionarPacientes extends javax.swing.JFrame {
             lblValidacion.setText(ex.getMessage());
         }
     }//GEN-LAST:event_txtEdadKeyTyped
-   
-    /**
-     * Metodo para llenar el combobox de los pacientes
-     */
-    private void llenarComboPacientes(){
-        cbxPacientes.removeAllItems();
-        cbxPacientes.addItem("Buscar un paciente");
-        
-        for (Persona paciente : controlador.getLista()) {
-            if( paciente instanceof Paciente) cbxPacientes.addItem(paciente);
-        }       
-    }
-   
-    /**
-     * Metodo para que cada vez que se seleccione un paciente los campos se llenen con su respeciva informacion
-     * @param evt 
-     */
-    private void cbxPacientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxPacientesActionPerformed
-        
-        if( controlador.getLista().isEmpty() ) return;
 
-        //Si el primer elemento esta seleccionado, no es válido
-        if( cbxPacientes.getSelectedIndex()==0 ) {
-            limpiarInputs();
-            setEnabledInputs(false);
-            return;
-        }
-        Paciente paciente = (Paciente) cbxPacientes.getSelectedItem();
-        //Se verifica que la cita no sea nula
-        if( paciente != null ){
-            txtDocumento.setText(paciente.getDocumento());
-            txtEdad.setText(String.valueOf(paciente.getEdad()));
-            txtNombre2.setText(paciente.getNombre());
-            txtContraseña.setText(paciente.getContraseña());
-            txtCorreo.setText(paciente.getCorreo());
-            txtTelefono.setText(paciente.getTelefono());
-            cbxRegimen.setSelectedItem( paciente.getRegimenDeSalud() );
-            cbxEstados.setSelectedItem(paciente.getEstadoCivil());
-            
-            setEnabledInputs(true);
-        }
-    }//GEN-LAST:event_cbxPacientesActionPerformed
-     
+      
     /**
      * Metodo para que el usuario solo digite numeros en el textField de telefono
      * @param evt 
@@ -540,15 +511,60 @@ public class GestionarPacientes extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtTelefonoKeyTyped
 
+    /**
+     * Metodo para que en el textfield de la busqueda por documento unicamente se digiten numeros
+     * @param evt 
+     */
+    private void txtBuscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyTyped
+        try{
+            lblValidacion.setText("");
+            validacion.validarSoloNumeros(evt);
+        }catch( DatoDigitadoExcepcion ex ){
+            lblValidacion.setText(ex.getMessage());
+        }
+    }//GEN-LAST:event_txtBuscarKeyTyped
+
+    /**
+     * Metodo para buscar una secretaria por medio del documento
+     * @param evt 
+     */
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        try{
+            String documento = txtBuscar.getText();
+            this.paciente = (Paciente) controlador.buscarPersona(documento);
+
+            if( this.paciente == null ) throw new NoEncontradoExcepcion();
+
+            lblValidacion.setText("");
+            txtDocumento.setText(this.paciente.getDocumento() );
+            txtEdad.setText(String.valueOf(this.paciente.getEdad()) );
+            txtNombre2.setText(this.paciente.getNombre() );
+            txtContraseña.setText(this.paciente.getContraseña());
+            txtCorreo.setText(this.paciente.getCorreo() );
+            txtTelefono.setText(this.paciente.getTelefono());
+            cbxEstados.setSelectedItem(this.paciente.getEstadoCivil());
+            cbxRegimen.setSelectedItem( this.paciente.getRegimenDeSalud() );
+            setEnabledInputs(true);
+        }catch( NoEncontradoExcepcion ex ){
+            limpiarInputs();
+            setEnabledInputs(false);
+            lblValidacion.setText( ex.getMessage() );
+        }catch( ClassCastException ex){
+            limpiarInputs();
+            setEnabledInputs(false);
+            lblValidacion.setText( "EL documento ingresado no corresponde a un paciente" );
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnRegistrar;
     private javax.swing.JButton btnVolver;
     private javax.swing.JComboBox<String> cbxEstados;
-    private javax.swing.JComboBox cbxPacientes;
     private javax.swing.JComboBox<String> cbxRegimen;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -556,9 +572,11 @@ public class GestionarPacientes extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblValidacion;
     private javax.swing.ButtonGroup salud;
+    private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextField txtContraseña;
     private javax.swing.JTextField txtCorreo;
     private javax.swing.JTextField txtDocumento;

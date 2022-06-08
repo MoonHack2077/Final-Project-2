@@ -14,7 +14,6 @@ import Excepciones.NoEncontradoExcepcion;
 import Excepciones.SinLaTerminacionCorrectaExcepcion;
 import Excepciones.TelefonoCortoExcepcion;
 import Modelo.Doctor;
-import Modelo.Persona;
 import Validacion.Validacion;
 import javax.swing.JOptionPane;
 
@@ -26,6 +25,7 @@ public class GestionarDoctores extends javax.swing.JFrame {
 
     private ControladorCrud controlador;
     private Validacion validacion;
+    private Doctor doctor;
     
     /**
      * Creates new form GestionarDoctores
@@ -36,7 +36,6 @@ public class GestionarDoctores extends javax.swing.JFrame {
         this.controlador = new ControladorCrud();
         this.validacion = new Validacion();
         setEnabledInputs(false);
-        llenarComboDoctores();
     }
 
     /**
@@ -67,9 +66,11 @@ public class GestionarDoctores extends javax.swing.JFrame {
         txtContraseña = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         txtTelefono = new javax.swing.JTextField();
-        cbxDoctores = new javax.swing.JComboBox();
         cbxEstados = new javax.swing.JComboBox<>();
         lblValidacion = new javax.swing.JLabel();
+        txtBuscar = new javax.swing.JTextField();
+        btnBuscar = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
         btnVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -144,16 +145,25 @@ public class GestionarDoctores extends javax.swing.JFrame {
             }
         });
 
-        cbxDoctores.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbxDoctoresActionPerformed(evt);
-            }
-        });
-
         cbxEstados.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione su estado civil", "Casado", "Soltero", "Viudo", "Divorciado" }));
 
         lblValidacion.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         lblValidacion.setForeground(new java.awt.Color(255, 0, 0));
+
+        txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtBuscarKeyTyped(evt);
+            }
+        });
+
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+
+        jLabel8.setText("Ingrese el documento del doctor para buscarlo");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -185,23 +195,23 @@ public class GestionarDoctores extends javax.swing.JFrame {
                             .addComponent(cbxEstados, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(27, 27, 27)
                 .addComponent(btnLimpiar)
-                .addGap(0, 11, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(17, 17, 17)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(77, 77, 77)
-                        .addComponent(cbxDoctores, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(31, 31, 31)
+                        .addComponent(btnBuscar))
+                    .addComponent(jLabel8)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblValidacion, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(btnAñadir, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(58, 58, 58)
-                                .addComponent(btnEliminar)
-                                .addGap(52, 52, 52)
-                                .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(btnAñadir, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(58, 58, 58)
+                        .addComponent(btnEliminar)
+                        .addGap(52, 52, 52)
+                        .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(56, Short.MAX_VALUE))
+            .addComponent(lblValidacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -240,16 +250,20 @@ public class GestionarDoctores extends javax.swing.JFrame {
                     .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
                 .addComponent(cbxEstados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(cbxDoctores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
+                .addGap(31, 31, 31)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEditar)
                     .addComponent(btnAñadir)
                     .addComponent(btnEliminar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addComponent(jLabel8)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscar))
+                .addGap(28, 28, 28)
                 .addComponent(lblValidacion, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(15, 15, 15))
+                .addContainerGap())
         );
 
         btnVolver.setText("Volver");
@@ -295,8 +309,8 @@ public class GestionarDoctores extends javax.swing.JFrame {
         txtContraseña.setText("");
         txtCorreo.setText("");
         txtTelefono.setText("");
+        txtBuscar.setText("");
         cbxEspecialidad.setSelectedItem("Seleccione una especialidad");
-        cbxDoctores.setSelectedItem("Buscar un doctor");
         cbxEstados.setSelectedItem("Seleccione su estado civil");
     }
     
@@ -339,18 +353,17 @@ public class GestionarDoctores extends javax.swing.JFrame {
             String correo = txtCorreo.getText();
             String contraseña = txtContraseña.getText();
             String telefono = txtTelefono.getText();
-            int edad = Integer.parseInt(txtEdad.getText());
             String especialidad = cbxEspecialidad.getSelectedItem().toString();
             String estadoCivil = cbxEstados.getSelectedItem().toString();
+            int edad = Integer.parseInt(txtEdad.getText());
             
             //Creamos al doctor con sus respectivos datos
-            Doctor doctor = new Doctor(nombre,documento,correo,contraseña,telefono,edad,estadoCivil, especialidad);
+            Doctor newDoctor = new Doctor(nombre,documento,correo,contraseña,telefono,edad,estadoCivil, especialidad);
 
             //Se añade al doctor
-            controlador.añadirUsuario(doctor);
+            controlador.añadirUsuario(newDoctor);
             JOptionPane.showMessageDialog(null, "Doctor con el documento: " + documento + " añadido");
             limpiarInputs();
-            llenarComboDoctores();
         }catch(MayorDeEdadExcepcion | AlmacenadoExcepcion | TelefonoCortoExcepcion
                 | ContraseñaInseguraExcepcion | SinLaTerminacionCorrectaExcepcion
                 | CorreoInvalidoExcepcion ex){
@@ -364,17 +377,10 @@ public class GestionarDoctores extends javax.swing.JFrame {
      */
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         try{
-            if( cbxDoctores.getSelectedIndex()==0 ){
-                JOptionPane.showMessageDialog(null, "No hay un doctor seleccionado");
-                return;
-            }
-            Doctor doctor = (Doctor) cbxDoctores.getSelectedItem();
-
-            //Se elimina el empleado
-            controlador.eliminarUsuario(doctor.getDocumento());
-            JOptionPane.showMessageDialog(null, "Doctor con el documento: " + doctor.getDocumento() + " eliminado");
+            //Se elimina el doctor
+            controlador.eliminarUsuario(this.doctor.getDocumento());
+            JOptionPane.showMessageDialog(null, "Doctor con el documento: " + this.doctor.getDocumento() + " eliminado");
             limpiarInputs();
-            llenarComboDoctores();
             setEnabledInputs(false);
         }catch(NoEncontradoExcepcion ex){
             JOptionPane.showMessageDialog(null, ex.getMessage());
@@ -414,14 +420,13 @@ public class GestionarDoctores extends javax.swing.JFrame {
             String estadoCivil = cbxEstados.getSelectedItem().toString();
             
             //Creamos al doctor con sus respectivos datos
-            Doctor doctor = new Doctor(nombre,documento,correo,contraseña,telefono,edad,estadoCivil, especialidad);
+            Doctor newDoctor = new Doctor(nombre,documento,correo,contraseña,telefono,edad,estadoCivil, especialidad);
             
             
-            //VSe editan los datos del doctor
-            controlador.editarUsuario(doctor);
+            //Se editan los datos del doctor
+            controlador.editarUsuario(newDoctor);
             JOptionPane.showMessageDialog(null, "Doctor con el documento: " + documento + " editado");
             limpiarInputs();
-            llenarComboDoctores();
             setEnabledInputs(false);
         }catch(MayorDeEdadExcepcion | AlmacenadoExcepcion | TelefonoCortoExcepcion
                 | ContraseñaInseguraExcepcion | SinLaTerminacionCorrectaExcepcion
@@ -490,47 +495,7 @@ public class GestionarDoctores extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtEdadKeyTyped
   
-    /**
-     * Metodo para llenar el combobox de los doctores
-     */
-    private void llenarComboDoctores(){
-        cbxDoctores.removeAllItems();
-        cbxDoctores.addItem("Buscar un doctor");
-        
-        for (Persona doctor : controlador.getLista()) {
-            if( doctor instanceof Doctor) cbxDoctores.addItem(doctor);
-        }       
-    }
     
-    
-    /**
-     * Metodo para que cada vez que se seleccione un doctor los campos se llenen con su respeciva informacion
-     * @param evt 
-     */
-    private void cbxDoctoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxDoctoresActionPerformed
-        if( controlador.getLista().isEmpty() ) return;
-        //Si el primer elemento esta seleccionado, no es válido
-        if( cbxDoctores.getSelectedIndex()==0 ) {
-            //limpiarInputs();
-            setEnabledInputs(false);
-            return;
-        }
-        Doctor doctor = (Doctor) cbxDoctores.getSelectedItem();
-        //Se verifica que la cita no sea nula
-        if( doctor != null ){
-            txtDocumento.setText(doctor.getDocumento());
-            txtEdad.setText(String.valueOf(doctor.getEdad()));
-            txtNombre2.setText(doctor.getNombre());
-            txtContraseña.setText(doctor.getContraseña());
-            txtCorreo.setText(doctor.getCorreo());
-            txtTelefono.setText(doctor.getTelefono());
-            cbxEspecialidad.setSelectedItem(doctor.getEspecialidad());
-            cbxEstados.setSelectedItem(doctor.getEstadoCivil());
-                      
-            setEnabledInputs(true);
-        }
-    }//GEN-LAST:event_cbxDoctoresActionPerformed
-
     /**
      * Metodo para que en el textfield del telefono unicamente se digiten numeros
      * @param evt 
@@ -544,14 +509,60 @@ public class GestionarDoctores extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtTelefonoKeyTyped
 
+    /**
+     * Metodo para buscar un doctor por medio del documento
+     * @param evt 
+     */
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        try{
+            String documento = txtBuscar.getText();
+            this.doctor = (Doctor) controlador.buscarPersona(documento);
+            
+            if( this.doctor == null ) throw new NoEncontradoExcepcion();
+            
+            lblValidacion.setText("");
+            txtDocumento.setText( this.doctor.getDocumento() );
+            txtEdad.setText( String.valueOf(this.doctor.getEdad()) );
+            txtNombre2.setText( this.doctor.getNombre() );
+            txtContraseña.setText( this.doctor.getContraseña());
+            txtCorreo.setText( this.doctor.getCorreo() );
+            txtTelefono.setText( this.doctor.getTelefono());
+            cbxEspecialidad.setSelectedItem( this.doctor.getEspecialidad());
+            cbxEstados.setSelectedItem( this.doctor.getEstadoCivil());
+            
+            setEnabledInputs(true);
+        }catch( NoEncontradoExcepcion ex ){
+            limpiarInputs();
+            setEnabledInputs(false);
+            lblValidacion.setText( ex.getMessage() );
+        }catch( ClassCastException ex){
+            limpiarInputs();
+            setEnabledInputs(false);
+            lblValidacion.setText( "El documento ingresado no corresponde a un doctor" );
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    /**
+     * Metodo para que en el textfield de la busqueda por documento unicamente se digiten numeros
+     * @param evt 
+     */
+    private void txtBuscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyTyped
+        try{
+            lblValidacion.setText("");
+            validacion.validarSoloNumeros(evt);
+        }catch( DatoDigitadoExcepcion ex ){
+            lblValidacion.setText(ex.getMessage());
+        }
+    }//GEN-LAST:event_txtBuscarKeyTyped
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAñadir;
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnVolver;
-    private javax.swing.JComboBox cbxDoctores;
     private javax.swing.JComboBox<String> cbxEspecialidad;
     private javax.swing.JComboBox<String> cbxEstados;
     private javax.swing.JLabel jLabel1;
@@ -561,8 +572,10 @@ public class GestionarDoctores extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblValidacion;
+    private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextField txtContraseña;
     private javax.swing.JTextField txtCorreo;
     private javax.swing.JTextField txtDocumento;

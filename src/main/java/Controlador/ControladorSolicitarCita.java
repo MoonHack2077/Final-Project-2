@@ -80,7 +80,7 @@ public class ControladorSolicitarCita {
      * @param especialidad, la especialidad seleccionada para el filtro
      * @throws EspecialidadNoEncontradaExcepcion, En el caso de que no hayan doctores con la especialidad seleccionada 
      */
-    public void filtrarEspecialidades(String especialidad) throws EspecialidadNoEncontradaExcepcion {
+    public ArrayList<Doctor> filtrarEspecialidades(String especialidad) throws EspecialidadNoEncontradaExcepcion {
         //Creamos un arrayList para añadir los doctores que tengan la especialidad seleccionada
         ArrayList<Doctor> doctoresAux = new ArrayList<>();
         
@@ -93,6 +93,8 @@ public class ControladorSolicitarCita {
         }
 
         if( doctoresAux.isEmpty() ) throw new EspecialidadNoEncontradaExcepcion("No hay doctores con esa especialidad");
+        
+        return doctoresAux;
     }
 
     /**

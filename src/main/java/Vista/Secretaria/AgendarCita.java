@@ -16,6 +16,7 @@ import Modelo.Paciente;
 import Modelo.Persona;
 import Validacion.Validacion;
 import Vista.Paciente.VistaPaciente;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JOptionPane;
 
@@ -319,16 +320,13 @@ public class AgendarCita extends javax.swing.JFrame {
                 throw new EspecialidadNoEncontradaExcepcion("Ninguna especialidad seleccionada");
             }
             
-            controlador.filtrarEspecialidades(especialidad);
+            ArrayList<Doctor> doctores = controlador.filtrarEspecialidades(especialidad);
 
             btnSolicitar.setEnabled(true);
             cbxDoctores.addItem("Seleccione un doctor");
 
-            for (Persona doctor : controlador.getLista()) {
-                if( doctor instanceof Doctor){
-                    Doctor doc = (Doctor) doctor;
-                    if( doc.getEspecialidad().equals(especialidad) ) cbxDoctores.addItem(doc);
-                }
+            for (Persona doctor : doctores) {
+                cbxDoctores.addItem(doctor);
             }
         }catch( EspecialidadNoEncontradaExcepcion ex ){
             cbxDoctores.addItem(ex.getMessage());
@@ -344,7 +342,7 @@ public class AgendarCita extends javax.swing.JFrame {
         try{
             //Validamos los campos 
             if( cbxHora.getSelectedIndex() == 0 || cbxDoctores.getSelectedIndex() == 0 
-                    || dateChooser.getDate() == null || this.paciente == null )
+                || dateChooser.getDate() == null || this.paciente == null )
             {
                 JOptionPane.showMessageDialog(null, "Faltan campos por seleccionar");
                 return;
@@ -427,23 +425,25 @@ public class AgendarCita extends javax.swing.JFrame {
      */
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         try{
+            this.paciente = null;
             btnSolicitar.setEnabled(false);
             //Obtenemos el documento
             String documento = txtDocumento.getText();
-            this.paciente = (Paciente) controlador.getControlador().buscarPersona(documento);
+            Paciente pacienteEncontrado = (Paciente) controlador.getControlador().buscarPersona(documento);
 
             //Si no se encuentra al paciente lanzamos esta excepcion
-            if( this.paciente==null  ) throw new NoEncontradoExcepcion();
+            if( pacienteEncontrado==null  ) throw new NoEncontradoExcepcion();
                             
-            if( this.paciente.hasCita() ){
+            if( pacienteEncontrado.hasCita() ){
                 lblPaciente.setText( "El paciente seleccionado ya tiene cita" );
                 return;
             }
 
-            if( this.paciente.hasMulta() ){
+            if( pacienteEncontrado.hasMulta() ){
                 lblPaciente.setText( "El paciente esta multado" );
                 return;
             }
+            this.paciente = pacienteEncontrado;
             
             btnSolicitar.setEnabled(true);
             lblPaciente.setText( this.paciente.toString() );
