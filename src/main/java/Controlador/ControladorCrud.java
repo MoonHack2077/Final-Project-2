@@ -116,13 +116,23 @@ public class ControladorCrud {
      * @throws MayorDeEdadExcepcionen el caso de que la persona sea instancia de un doctor o secretaria, si 
      * es menor deedad no será añadido 
      */
-    public boolean editarUsuario(Persona usuario) throws NoEncontradoExcepcion, MayorDeEdadExcepcion{       
+    public boolean editarUsuario(Persona usuario, Persona usuarioAnterior) throws NoEncontradoExcepcion, MayorDeEdadExcepcion{       
         Persona persona = buscarPersona(usuario.getDocumento());
-        
         //Excepciones
         if( persona == null ) throw new NoEncontradoExcepcion();
         if( persona instanceof Doctor ||  persona instanceof Secretaria ){
             if( persona.getEdad() < 18) throw new MayorDeEdadExcepcion();
+        }
+        
+        //Validamos si los datos que deben ser unicos en cada usuario son iguales al usuario que se va a editar
+        if( !usuario.getContraseña().equals( usuarioAnterior.getContraseña() ) ){
+            buscarCoincidencia("", "", usuario.getContraseña(), "");
+        }
+        if( !usuario.getCorreo().equals( usuarioAnterior.getCorreo() ) ){
+            buscarCoincidencia("", usuario.getCorreo(), "", "");
+        }
+        if( !usuario.getTelefono().equals( usuarioAnterior.getTelefono() ) ){
+            buscarCoincidencia("", "", "", usuario.getTelefono());
         }
         
         for(int i=0 ; i < lista.size(); i++){

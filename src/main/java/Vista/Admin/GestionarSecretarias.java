@@ -480,7 +480,7 @@ public class GestionarSecretarias extends javax.swing.JFrame {
             Persona newSecretaria = new Secretaria(nombre,documento,correo,contraseña,telefono,edad,añosExp,estadoCivil);
 
             //Verificamos si los datos del doctor fueron editados
-            controlador.editarUsuario(newSecretaria);
+            controlador.editarUsuario(newSecretaria, this.secretaria);
             JOptionPane.showMessageDialog(null, "Secretaria con el documento: " + documento + " editada");
             limpiarInputs();
             setEnabledInputs(false);

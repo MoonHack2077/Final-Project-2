@@ -77,14 +77,14 @@ public class GestionarPacientes extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "GESTIONAR PACIENTES", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 
-        btnRegistrar.setText("REGISTRAR");
+        btnRegistrar.setText("Registrar");
         btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRegistrarActionPerformed(evt);
             }
         });
 
-        btnEliminar.setText("ELIMINAR");
+        btnEliminar.setText("Eliminar");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarActionPerformed(evt);
@@ -136,7 +136,7 @@ public class GestionarPacientes extends javax.swing.JFrame {
 
         cbxEstados.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione su estado civil", "Casado", "Soltero", "Viudo", "Divorciado" }));
 
-        btnEditar.setText("EDITAR");
+        btnEditar.setText("Editar");
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditarActionPerformed(evt);
@@ -423,7 +423,7 @@ public class GestionarPacientes extends javax.swing.JFrame {
             //Creamos al paciente con sus respectivos datos
             Persona newPaciente = new Paciente(nombre,documento,correo,contraseña,edad,estadoCivil,telefono,regimen);
             
-            controlador.editarUsuario(newPaciente);
+            controlador.editarUsuario(newPaciente,this.paciente);
             JOptionPane.showMessageDialog(null, "Se editó la información el paciente con documento " + documento);
             limpiarInputs();
             setEnabledInputs(false);

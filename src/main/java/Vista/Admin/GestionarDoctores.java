@@ -424,7 +424,7 @@ public class GestionarDoctores extends javax.swing.JFrame {
             
             
             //Se editan los datos del doctor
-            controlador.editarUsuario(newDoctor);
+            controlador.editarUsuario(newDoctor, this.doctor);
             JOptionPane.showMessageDialog(null, "Doctor con el documento: " + documento + " editado");
             limpiarInputs();
             setEnabledInputs(false);
