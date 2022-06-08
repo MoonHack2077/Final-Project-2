@@ -4,7 +4,6 @@
  */
 package Controlador;
 
-import Excepciones.CoincideConFechaBloqueadaExcepcion;
 import Excepciones.NoHayCitasExcepcion;
 import Modelo.Cita;
 import Modelo.Doctor;
@@ -39,12 +38,11 @@ public class ControladorAtenderCita {
         
         //Se añade la cita al historal del paciente
         cita.getPaciente().getHistorial().add(cita);
-        
-        
+                
         boolean eliminada = controlador.eliminarCita(cita.getPaciente().getDocumento());
-        boolean eliminada2 = controlador.eliminarCitaDeLaAgenda(cita);
+        boolean eliminadaDeLaAgenda = controlador.eliminarCitaDeLaAgenda(cita);
         
-        if( eliminada && eliminada2 ){
+        if( eliminada && eliminadaDeLaAgenda ){
             Singleton.getINSTANCIA().escribirLista();
             Singleton.getINSTANCIA().escribirCitas();
             return true;

@@ -4,9 +4,12 @@
  */
 package Controlador;
 
+import Excepciones.PocasHorasAntesExcepcion;
 import Modelo.Cita;
 import Singleton.Singleton;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 /**
  *
@@ -77,6 +80,21 @@ public class ControladorCancelarCita {
         return false;
     }
     
+    /**
+     * Metodo para saber si la cita es cancelada 24 horas antes de la misma
+     * @param fecha, la fecha actual
+     * @param cita, la cita que contiene su fecha 
+     * @throws PocasHorasAntesExcepcion, en el caso de que la cita esté siendo cancelada 24 horas antes de ella
+     * se lanza esta excepcion porque está prohibido
+     */
+    public void verificarHoras(Date fecha, Cita cita) throws PocasHorasAntesExcepcion {
+       if( fecha.before( cita.getFecha() ) ){       
+           long diferenciaHoras = Math.abs( fecha.getTime() - cita.getFecha().getTime() );
+           long horasTotales = TimeUnit.MILLISECONDS.toHours(diferenciaHoras);
+           
+           if( horasTotales <= 24 ) throw new PocasHorasAntesExcepcion();
+       } 
+    }
     
     /**
      * @return the citas

@@ -7,10 +7,12 @@ package Vista.Secretaria;
 import Controlador.ControladorCancelarCita;
 import Excepciones.DatoDigitadoExcepcion;
 import Excepciones.NoEncontradoExcepcion;
+import Excepciones.PocasHorasAntesExcepcion;
 import Modelo.Cita;
 import Modelo.Paciente;
 import Validacion.Validacion;
 import Vista.Paciente.VistaPaciente;
+import java.util.Date;
 import javax.swing.JOptionPane;
 
 /**
@@ -24,14 +26,16 @@ public class CancelarCita extends javax.swing.JFrame {
     private boolean isPaciente;
     private Validacion validacion;
     private Cita cita;
+    private Date hoy;
     /**
      * Creates new form CancelarCita
      */
     public CancelarCita() {
         initComponents();
         setLocationRelativeTo(null);
-        controlador = new ControladorCancelarCita();
-        validacion = new Validacion();
+        this.controlador = new ControladorCancelarCita();
+        this.validacion = new Validacion();
+        this.hoy = new Date();
         btnCancelar.setEnabled(false);
     }
 
@@ -39,9 +43,10 @@ public class CancelarCita extends javax.swing.JFrame {
     public CancelarCita(Paciente paciente) {
         initComponents();
         setLocationRelativeTo(null);
-        controlador = new ControladorCancelarCita();
+        this.controlador = new ControladorCancelarCita();
         this.paciente = paciente;
-        isPaciente = true;
+        this.isPaciente = true;
+        this.hoy = new Date();
         
         //Se inhabilitan las funciones que tendría la secretaria
         lbl1.setVisible(false);
@@ -271,27 +276,34 @@ public class CancelarCita extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        //Confirmamos si se desea cancelar la cita
-        int confirmacion = JOptionPane.showConfirmDialog(null, "¿Seguro desea cancelar esta cita?");
+        try{
+            //Confirmamos si se desea cancelar la cita
+            int confirmacion = JOptionPane.showConfirmDialog(null, "¿Seguro desea cancelar esta cita?");
 
-        if( confirmacion==0 ){
-            boolean cancelada = controlador.eliminarCita(this.cita.getPaciente().getDocumento());
-            boolean eliminada = controlador.eliminarCitaDeLaAgenda(this.cita);
-            if( cancelada && eliminada ){
-                JOptionPane.showMessageDialog(null, "Cita cancelada");
-                
-                if( this.isPaciente ){
-                    VistaPaciente vista = new VistaPaciente(this.paciente);
-                    vista.setVisible(true); 
-                    this.dispose();
-                    return;
+            if( confirmacion==0 ){
+
+                controlador.verificarHoras(this.hoy, this.cita);
+
+                boolean cancelada = controlador.eliminarCita(this.cita.getPaciente().getDocumento());
+                boolean eliminada = controlador.eliminarCitaDeLaAgenda(this.cita);
+                if( cancelada && eliminada ){
+                    JOptionPane.showMessageDialog(null, "Cita cancelada");
+
+                    if( this.isPaciente ){
+                        VistaPaciente vista = new VistaPaciente(this.paciente);
+                        vista.setVisible(true); 
+                        this.dispose();
+                        return;
+                    }
+
+                    limpiar();
+                }else{
+                    JOptionPane.showMessageDialog(null, "No se pudo cancelar la cita");
                 }
-                
-                limpiar();
-            }else{
-                JOptionPane.showMessageDialog(null, "No se pudo cancelar la cita");
             }
-        }
+        }catch( PocasHorasAntesExcepcion ex ){
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }    
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
