@@ -62,6 +62,8 @@ public class GestionarSecretarias extends javax.swing.JFrame {
         txtTelefono.setText("");
         txtAñosExp.setText("");
         cbxEstados.setSelectedItem("Seleccione su estado civil");
+        setEnabledInputs(false);
+        txtBuscar.setText("");
     }
 
     /**

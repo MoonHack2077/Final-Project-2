@@ -320,6 +320,8 @@ public class GestionarPacientes extends javax.swing.JFrame {
         salud.clearSelection();
         cbxEstados.setSelectedItem("Seleccione su estado civil");
         cbxRegimen.setSelectedItem("Regimen de salud");
+        setEnabledInputs(false);
+        txtBuscar.setText("");
     }
     
     /**

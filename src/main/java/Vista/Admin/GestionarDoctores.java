@@ -312,6 +312,8 @@ public class GestionarDoctores extends javax.swing.JFrame {
         txtBuscar.setText("");
         cbxEspecialidad.setSelectedItem("Seleccione una especialidad");
         cbxEstados.setSelectedItem("Seleccione su estado civil");
+        setEnabledInputs(false);
+        txtBuscar.setText("");
     }
     
     /**
