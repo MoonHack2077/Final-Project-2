@@ -8,8 +8,10 @@ package Excepciones;
  *
  * @author USER
  */
-public class ContraseñaInseguraExcepcion extends RuntimeException{
-    public ContraseñaInseguraExcepcion(){
-        super("La contraseña es muy corta, podria ser insegura \nPrueba con una mas larga!!");
+public class NoHayCitasExcepcion extends RuntimeException {
+
+    public NoHayCitasExcepcion() {
+        super( "No hay citas para el dia seleccionado" );
     }
+    
 }

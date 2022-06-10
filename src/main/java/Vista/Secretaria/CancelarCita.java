@@ -7,10 +7,12 @@ package Vista.Secretaria;
 import Controlador.ControladorCancelarCita;
 import Excepciones.DatoDigitadoExcepcion;
 import Excepciones.NoEncontradoExcepcion;
+import Excepciones.PocasHorasAntesExcepcion;
 import Modelo.Cita;
 import Modelo.Paciente;
-import Modelo.Validacion;
+import Validacion.Validacion;
 import Vista.Paciente.VistaPaciente;
+import java.util.Date;
 import javax.swing.JOptionPane;
 
 /**
@@ -24,14 +26,16 @@ public class CancelarCita extends javax.swing.JFrame {
     private boolean isPaciente;
     private Validacion validacion;
     private Cita cita;
+    private Date hoy;
     /**
      * Creates new form CancelarCita
      */
     public CancelarCita() {
         initComponents();
         setLocationRelativeTo(null);
-        controlador = new ControladorCancelarCita();
-        validacion = new Validacion();
+        this.controlador = new ControladorCancelarCita();
+        this.validacion = new Validacion();
+        this.hoy = new Date();
         btnCancelar.setEnabled(false);
     }
 
@@ -39,9 +43,10 @@ public class CancelarCita extends javax.swing.JFrame {
     public CancelarCita(Paciente paciente) {
         initComponents();
         setLocationRelativeTo(null);
-        controlador = new ControladorCancelarCita();
+        this.controlador = new ControladorCancelarCita();
         this.paciente = paciente;
-        isPaciente = true;
+        this.isPaciente = true;
+        this.hoy = new Date();
         
         //Se inhabilitan las funciones que tendría la secretaria
         lbl1.setVisible(false);
@@ -139,10 +144,6 @@ public class CancelarCita extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(54, 54, 54)
-                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(32, 32, 32)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -173,6 +174,10 @@ public class CancelarCita extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lblValidacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(64, 64, 64)
+                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -204,9 +209,9 @@ public class CancelarCita extends javax.swing.JFrame {
                         .addComponent(lblPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(27, 27, 27)
                         .addComponent(lblMotivo, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 86, Short.MAX_VALUE)
                 .addComponent(btnCancelar)
-                .addGap(26, 26, 26)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblValidacion, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -223,28 +228,33 @@ public class CancelarCita extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnVolver))
-                .addContainerGap(19, Short.MAX_VALUE))
+                    .addComponent(btnVolver)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(15, 15, 15)
+                .addGap(9, 9, 9)
                 .addComponent(btnVolver)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
+    private void limpiar(){
+        lblDoctor.setText( "" );
+        lblFecha.setText( "" );
+        lblMotivo.setText( "");
+        lblPaciente.setText( "" );
+        txtDocumento.setText( "" );
+        btnCancelar.setEnabled(false);
+    }
     
     /**
      * Metodo que maneja el evento del boton volver para ejecutar su acción
@@ -266,29 +276,34 @@ public class CancelarCita extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        //Confirmamos si se desea cancelar la cita
-        int confirmacion = JOptionPane.showConfirmDialog(null, "¿Seguro desea cancelar esta cita?");
+        try{
+            //Confirmamos si se desea cancelar la cita
+            int confirmacion = JOptionPane.showConfirmDialog(null, "¿Seguro desea cancelar esta cita?");
 
-        if( confirmacion==0 ){
-            boolean cancelada = controlador.eliminarCita(this.cita.getPaciente().getDocumento());
-            if( cancelada ){
-                JOptionPane.showMessageDialog(null, "Cita cancelada");
-                
-                if( this.isPaciente ){
-                    VistaPaciente vista = new VistaPaciente(this.paciente);
-                    vista.setVisible(true); 
-                    this.dispose();
-                    return;
+            if( confirmacion==0 ){
+
+                controlador.verificarHoras(this.hoy, this.cita);
+
+                boolean cancelada = controlador.eliminarCita(this.cita.getPaciente().getDocumento());
+                boolean eliminada = controlador.eliminarCitaDeLaAgenda(this.cita);
+                if( cancelada && eliminada ){
+                    JOptionPane.showMessageDialog(null, "Cita cancelada");
+
+                    if( this.isPaciente ){
+                        VistaPaciente vista = new VistaPaciente(this.paciente);
+                        vista.setVisible(true); 
+                        this.dispose();
+                        return;
+                    }
+
+                    limpiar();
+                }else{
+                    JOptionPane.showMessageDialog(null, "No se pudo cancelar la cita");
                 }
-                
-                lblDoctor.setText( "" );
-                lblFecha.setText( "" );
-                lblMotivo.setText( "");
-                lblPaciente.setText( "" );
-            }else{
-                JOptionPane.showMessageDialog(null, "No se pudo cancelar la cita");
             }
-        }
+        }catch( PocasHorasAntesExcepcion ex ){
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }    
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
@@ -299,10 +314,12 @@ public class CancelarCita extends javax.swing.JFrame {
         try{
             //Obtenemos el documento
             String documento = txtDocumento.getText();
-
             this.cita = controlador.buscarCita(documento);
 
-            if( this.cita == null ) throw new NoEncontradoExcepcion("No se encontró una cita con ese documento");
+            if( this.cita == null ){
+                limpiar();
+                throw new NoEncontradoExcepcion("No se encontró una cita con ese documento");
+            }
 
             lblDoctor.setText( this.cita.getDoctor().getNombre() );
             lblFecha.setText( this.cita.getFecha().toLocaleString());

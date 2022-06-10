@@ -4,13 +4,14 @@
  */
 package Modelo;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  *
  * @author USER
  */
-public class Cita {
+public class Cita implements Serializable{
     private Paciente paciente;
     private Doctor doctor;
     private Date fecha;

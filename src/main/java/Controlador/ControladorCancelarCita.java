@@ -4,9 +4,12 @@
  */
 package Controlador;
 
+import Excepciones.PocasHorasAntesExcepcion;
 import Modelo.Cita;
 import Singleton.Singleton;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 /**
  *
@@ -22,7 +25,7 @@ public class ControladorCancelarCita {
     
     /**
      * Metodo para buscar una cita registrada por medio del documento del paciente
-     * @param documento
+     * @param documento, el documento del paciente, un dato unico
      * @return cita si la encuentra, de lo contrario null
      */
     public Cita buscarCita(String documento){
@@ -36,16 +39,16 @@ public class ControladorCancelarCita {
         
     /**
      * Metodo para eliminar una cita de la agenda
-     * @param cita
+     * @param cita, la cita que será eñiminada
      * @return true si pudo eliminarla, de lo contrario false
      */
     public boolean eliminarCitaDeLaAgenda(Cita cita){
         ArrayList<Cita> agenda = cita.getDoctor().getAgenda();
         
         for (int i = 0; i < agenda.size(); i++) {
-            if(agenda.get(i).getFecha().compareTo(cita.getFecha())==0){
+            if(agenda.get(i).getPaciente().getDocumento().equals(cita.getPaciente().getDocumento())){
                 agenda.remove(i);
-                Singleton.getINSTANCIA().escribirDoctores();
+                Singleton.getINSTANCIA().escribirLista();
                 return true;
             }      
         }
@@ -55,7 +58,7 @@ public class ControladorCancelarCita {
     
     /**
      * Metodo para eliminar una cita almacenada
-     * @param documento
+     * @param documento, el documento del paciente, un dato unico
      * @return true si pudo eliminarla, de lo contrario false
      */
     public boolean eliminarCita(String documento){
@@ -64,12 +67,11 @@ public class ControladorCancelarCita {
         if( aux != null ){
             for (int i = 0; i < getCitas().size(); i++) {
                 if(getCitas().get(i).getPaciente().getDocumento().equals(documento)){
-                    if(eliminarCitaDeLaAgenda(getCitas().get(i))){
-                        getCitas().get(i).getPaciente().setHasCita(false);
-                        getCitas().remove(i);
-                        Singleton.getINSTANCIA().escribirCitas();
-                        return true;                  
-                    }
+                    getCitas().get(i).getPaciente().setHasCita(false);
+                    getCitas().remove(i);
+                    Singleton.getINSTANCIA().escribirCitas();
+                    Singleton.getINSTANCIA().escribirLista();
+                    return true;
                 }
                 
             }
@@ -78,6 +80,21 @@ public class ControladorCancelarCita {
         return false;
     }
     
+    /**
+     * Metodo para saber si la cita es cancelada 24 horas antes de la misma
+     * @param fecha, la fecha actual
+     * @param cita, la cita que contiene su fecha 
+     * @throws PocasHorasAntesExcepcion, en el caso de que la cita esté siendo cancelada 24 horas antes de ella
+     * se lanza esta excepcion porque está prohibido
+     */
+    public void verificarHoras(Date fecha, Cita cita) throws PocasHorasAntesExcepcion {
+       if( fecha.before( cita.getFecha() ) ){       
+           long diferenciaHoras = Math.abs( fecha.getTime() - cita.getFecha().getTime() );
+           long horasTotales = TimeUnit.MILLISECONDS.toHours(diferenciaHoras);
+           
+           if( horasTotales <= 24 ) throw new PocasHorasAntesExcepcion();
+       } 
+    }
     
     /**
      * @return the citas

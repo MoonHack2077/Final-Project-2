@@ -11,49 +11,20 @@ import java.util.ArrayList;
  * @author USER
  */
 public class Paciente extends Persona {
-    private boolean hasSisben;
-    private boolean hasEps;
+    private String regimenDeSalud;
     private boolean hasCita;
     private boolean hasMulta;
     private ArrayList<Cita> historial;
     
     public Paciente(String nombre, String documento,String correo, String contraseña, int edad, 
-           String estadoCivil, String telefono, boolean hasSisben, boolean hasEps)
+           String estadoCivil, String telefono, String regimenDeSalud)
     {
         super(nombre, documento,  correo,  contraseña, telefono, edad, estadoCivil);
-        this.hasSisben = hasSisben;
-        this.hasEps = hasEps;
+        this.regimenDeSalud = regimenDeSalud;
         this.historial = new ArrayList<>();
         this.hasCita = false;
     }
 
-    /**
-     * @return the hasSisben
-     */
-    public boolean hasSisben() {
-        return hasSisben;
-    }
-
-    /**
-     * @param hasSisben the hasSisben to set
-     */
-    public void setHasSisben(boolean hasSisben) {
-        this.hasSisben = hasSisben;
-    }
-
-    /**
-     * @return the hasEps
-     */
-    public boolean hasEps() {
-        return hasEps;
-    }
-
-    /**
-     * @param hasEps the hasEps to set
-     */
-    public void setHasEps(boolean hasEps) {
-        this.hasEps = hasEps;
-    }
 
     /**
      * @return the hasCita
@@ -93,5 +64,19 @@ public class Paciente extends Persona {
     @Override
     public String toString() {
         return "Nombre: " + getNombre() + " - Documento:" + getDocumento();
+    }
+
+    /**
+     * @return the regimenDeSalud
+     */
+    public String getRegimenDeSalud() {
+        return regimenDeSalud;
+    }
+
+    /**
+     * @param regimenDeSalud the regimenDeSalud to set
+     */
+    public void setRegimenDeSalud(String regimenDeSalud) {
+        this.regimenDeSalud = regimenDeSalud;
     }
 }

@@ -8,8 +8,10 @@ package Excepciones;
  *
  * @author USER
  */
-public class ContraseñaInseguraExcepcion extends RuntimeException{
-    public ContraseñaInseguraExcepcion(){
-        super("La contraseña es muy corta, podria ser insegura \nPrueba con una mas larga!!");
+public class PocasHorasAntesExcepcion extends RuntimeException {
+
+    public PocasHorasAntesExcepcion() {
+        super("La cita no se puede cancelar 24 horas antes de la misma");
     }
+    
 }

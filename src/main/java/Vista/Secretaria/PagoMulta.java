@@ -6,10 +6,11 @@ package Vista.Secretaria;
 
 import Controlador.ControladorPagoMulta;
 import Excepciones.DatoDigitadoExcepcion;
+import Excepciones.FechaImposbleExcepcion;
 import Excepciones.NoEncontradoExcepcion;
 import Excepciones.ValorNoValidoExcepcion;
 import Modelo.Multa;
-import Modelo.Validacion;
+import Validacion.Validacion;
 import java.util.Date;
 import javax.swing.JOptionPane;
 /**
@@ -272,11 +273,11 @@ public class PagoMulta extends javax.swing.JFrame {
     private void btnPagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagarActionPerformed
         try{  
             //Validamos
-            if( this.multa==null ){
+            if( this.multa == null ){
                 JOptionPane.showMessageDialog(null, "La multa no existe");
             }
             
-            if( dateChooser.getDate()==null || txtTotal.getText().isBlank() ){
+            if( dateChooser.getDate() == null || txtTotal.getText().isBlank() ){
                 JOptionPane.showMessageDialog(null, "Faltan campos por llenar");
             }
                         
@@ -284,31 +285,27 @@ public class PagoMulta extends javax.swing.JFrame {
             double valorTotal = Double.parseDouble(txtTotal.getText());        
 
             //Verificamos si el valor que fue introducido es acorde al costo
-            controlador.verificarValorPagado(valorTotal, multa);
+            controlador.verificarValorPagado(valorTotal, this.multa);
 
             //Obtenemos la fecha del pago
             Date fecha = dateChooser.getDate();
 
+            //Verificamos la fecha
+            controlador.verificarFechaPago(this.multa, fecha);
+            
             //Se setea la fecha de pago de la multa
             this.multa.setFechaPago(fecha);
-            boolean pagada = controlador.eliminarMulta(multa.getCita().getPaciente().getDocumento());
+            boolean pagada = controlador.eliminarMulta(this.multa.getCita().getPaciente().getDocumento());
             if( pagada ){
                 JOptionPane.showMessageDialog(null, "Multa pagada!!");
-                txtTotal.setText("");
-                txtDocumento.setText("");
-                lblFecha.setText( "" );
-                lblPaciente.setText( "" );
-                lblDoctor.setText( "" );
-                lblTotal.setText( "" );
+                resetear();
             }else{
                 JOptionPane.showMessageDialog(null, "Ocurrió un error");
             }
-        }catch( ValorNoValidoExcepcion ex ){
+        }catch( ValorNoValidoExcepcion | FechaImposbleExcepcion ex ){
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }//GEN-LAST:event_btnPagarActionPerformed
-
-    
    
     /**
      * Metodo para que el usuario solo digite numeros en el textField del total a pagar
@@ -334,8 +331,7 @@ public class PagoMulta extends javax.swing.JFrame {
             this.multa = controlador.buscarMulta(documento);
 
             if( this.multa == null ) throw new NoEncontradoExcepcion("No fue encontrada una multa para ese paciente");
-            
-            
+                      
             lblValidacion.setText( "" );
             lblFecha.setText( this.multa.getCita().getFecha().toLocaleString() );
             lblPaciente.setText( this.multa.getCita().getPaciente().getNombre() );
@@ -343,16 +339,23 @@ public class PagoMulta extends javax.swing.JFrame {
             lblTotal.setText( String.valueOf(this.multa.getValorTotal()) );
             btnPagar.setEnabled(true);
         }catch(NoEncontradoExcepcion ex){
-            lblFecha.setText( "" );
-            lblPaciente.setText( "" );
-            lblDoctor.setText( "" );
-            lblTotal.setText( "" );
-            btnPagar.setEnabled(false);
+            resetear();
             lblValidacion.setText( ex.getMessage() );
         }       
     }//GEN-LAST:event_btnBuscarActionPerformed
 
-    
+    /**
+     * Metodo para resetear los campos
+     */
+    private void resetear(){
+        txtTotal.setText("");
+        txtDocumento.setText("");
+        lblFecha.setText( "" );
+        lblPaciente.setText( "" );
+        lblDoctor.setText( "" );
+        lblTotal.setText( "" );
+        btnPagar.setEnabled(false);
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

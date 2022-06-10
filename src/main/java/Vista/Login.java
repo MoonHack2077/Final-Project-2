@@ -56,6 +56,12 @@ public class Login extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "LOGIN", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 
+        txtCorreo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCorreoKeyPressed(evt);
+            }
+        });
+
         btnEntrar.setText("Entrar");
         btnEntrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -69,6 +75,12 @@ public class Login extends javax.swing.JFrame {
         btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRegistrarActionPerformed(evt);
+            }
+        });
+
+        txtContraseña.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtContraseñaKeyPressed(evt);
             }
         });
 
@@ -157,23 +169,22 @@ public class Login extends javax.swing.JFrame {
             String contraseña = txtContraseña.getText();
             
             //Buscamos entre todos los usuarios la coincidencia
-            Persona admin = controlador.buscarAdmin(correo, contraseña);
-            Doctor doctor = controlador.buscarDoctor(correo, contraseña);
-            Secretaria secretaria = controlador.buscarSecretaria(correo, contraseña);
-            Paciente paciente = controlador.buscarPaciente(correo, contraseña);
+            Persona usuario = controlador.buscarUsuario(correo, contraseña);
 
-            if( admin != null ){
-                VistaAdmin vistaAdmin = new VistaAdmin();
-                cambiarVentana(vistaAdmin);
-            }else if( doctor != null ){
+            if( usuario instanceof Doctor){
+                Doctor doctor = (Doctor) usuario;
                 VistaDoctor vistaDoc = new VistaDoctor(doctor);
                 cambiarVentana(vistaDoc);
-            }else if( secretaria != null ){
+            }else if( usuario instanceof Secretaria){
                 VistaSecretaria vistaSec = new VistaSecretaria();
                 cambiarVentana(vistaSec);
-            }else if( paciente != null ){
+            }else if( usuario instanceof Paciente ){
+                Paciente paciente = (Paciente) usuario;
                 VistaPaciente vistaPac = new VistaPaciente(paciente);
                 cambiarVentana(vistaPac);
+            }else if(usuario != null) {
+                VistaAdmin vistaAdmin = new VistaAdmin();
+                cambiarVentana(vistaAdmin);
             }else{
                 throw new NoEncontradoExcepcion();
             }
@@ -199,6 +210,22 @@ public class Login extends javax.swing.JFrame {
         Registrarse registrarse = new Registrarse();
         cambiarVentana(registrarse);
     }//GEN-LAST:event_btnRegistrarActionPerformed
+
+    /**
+     * Metodo para que el usuario al presionar la tecla enter se llame al evento del boton para entrar
+     * @param evt 
+     */
+    private void txtContraseñaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtContraseñaKeyPressed
+        if( evt.getKeyCode() == 10  ) btnEntrarActionPerformed( null );       
+    }//GEN-LAST:event_txtContraseñaKeyPressed
+
+    /**
+     * Metodo para que el usuario al presionar la tecla enter se llame al evento del boton para entrar
+     * @param evt 
+     */
+    private void txtCorreoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCorreoKeyPressed
+        if( evt.getKeyCode() == 10  ) btnEntrarActionPerformed( null );
+    }//GEN-LAST:event_txtCorreoKeyPressed
 
     /**
      * @param args the command line arguments

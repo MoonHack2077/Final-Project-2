@@ -4,7 +4,7 @@
  */
 package Vista.Admin;
 
-import Controlador.ControladorSecretaria;
+import Controlador.ControladorCrud;
 import Excepciones.AlmacenadoExcepcion;
 import Excepciones.ContraseñaInseguraExcepcion;
 import Excepciones.CorreoInvalidoExcepcion;
@@ -14,8 +14,10 @@ import Excepciones.NoCuentaConExpExcepcion;
 import Excepciones.NoEncontradoExcepcion;
 import Excepciones.SinLaTerminacionCorrectaExcepcion;
 import Excepciones.TelefonoCortoExcepcion;
+import Modelo.Doctor;
+import Modelo.Persona;
 import Modelo.Secretaria;
-import Modelo.Validacion;
+import Validacion.Validacion;
 import javax.swing.JOptionPane;
 
 /**
@@ -24,19 +26,18 @@ import javax.swing.JOptionPane;
  */
 public class GestionarSecretarias extends javax.swing.JFrame {
 
-    private ControladorSecretaria controlador;
+    private ControladorCrud controlador;
     private Validacion validacion;
-    
+    private Secretaria secretaria;
     /**
      * Creates new form GestionarSecretarias
      */
     public GestionarSecretarias() {
         initComponents();
         this.setLocationRelativeTo(null);
-        this.controlador = new ControladorSecretaria();
+        this.controlador = new ControladorCrud();
         this.validacion = new Validacion();
         setEnabledInputs(false);
-        llenarComboSecretarias();
    }
     
     /**
@@ -59,8 +60,10 @@ public class GestionarSecretarias extends javax.swing.JFrame {
         txtContraseña.setText("");
         txtCorreo.setText("");
         txtTelefono.setText("");
-        cbxSecretarias.setSelectedItem("Buscar una secretaria");
         txtAñosExp.setText("");
+        cbxEstados.setSelectedItem("Seleccione su estado civil");
+        setEnabledInputs(false);
+        txtBuscar.setText("");
     }
 
     /**
@@ -89,11 +92,13 @@ public class GestionarSecretarias extends javax.swing.JFrame {
         btnEditar = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         txtEdad = new javax.swing.JTextField();
-        cbxSecretarias = new javax.swing.JComboBox();
         cbxEstados = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         txtAñosExp = new javax.swing.JTextField();
         lblValidacion = new javax.swing.JLabel();
+        txtBuscar = new javax.swing.JTextField();
+        btnBuscar = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
         btnVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -164,12 +169,6 @@ public class GestionarSecretarias extends javax.swing.JFrame {
             }
         });
 
-        cbxSecretarias.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbxSecretariasActionPerformed(evt);
-            }
-        });
-
         cbxEstados.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione su estado civil", "Casada", "Soltera", "Viuda", "Divorciada" }));
 
         jLabel3.setText("Años de experiencia:");
@@ -183,57 +182,75 @@ public class GestionarSecretarias extends javax.swing.JFrame {
         lblValidacion.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         lblValidacion.setForeground(new java.awt.Color(255, 0, 0));
 
+        txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtBuscarKeyTyped(evt);
+            }
+        });
+
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+
+        jLabel8.setText("Ingrese el documento de la secretaria para buscarla");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jLabel2))
-                                .addGap(30, 30, 30)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(txtDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtNombre2, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel7))
-                                .addGap(32, 32, 32)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(cbxEstados, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(txtEdad, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(txtCorreo)
-                                    .addComponent(txtContraseña)
-                                    .addComponent(txtTelefono, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtAñosExp)))
-                        .addGap(27, 27, 27)
-                        .addComponent(btnLimpiar))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(43, 43, 43)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(cbxSecretarias, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(45, 45, 45)
+                        .addComponent(btnAñadir, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnEliminar)
+                        .addGap(41, 41, 41)
+                        .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(btnAñadir, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnEliminar)
-                                .addGap(41, 41, 41)
-                                .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(0, 10, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addComponent(lblValidacion, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(31, 31, 31)
+                                .addComponent(btnBuscar))
+                            .addComponent(jLabel8))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))
+                        .addGap(30, 30, 30)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtNombre2, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel7))
+                        .addGap(32, 32, 32)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(cbxEstados, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtEdad, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtCorreo)
+                            .addComponent(txtContraseña)
+                            .addComponent(txtTelefono, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtAñosExp)))
+                .addGap(27, 27, 27)
+                .addComponent(btnLimpiar)
+                .addGap(0, 10, Short.MAX_VALUE))
+            .addComponent(lblValidacion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -272,16 +289,19 @@ public class GestionarSecretarias extends javax.swing.JFrame {
                     .addComponent(txtAñosExp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(22, 22, 22)
                 .addComponent(cbxEstados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(cbxSecretarias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(26, 26, 26)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEditar)
                     .addComponent(btnEliminar)
                     .addComponent(btnAñadir))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
-                .addComponent(lblValidacion, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addComponent(jLabel8)
+                .addGap(12, 12, 12)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscar))
+                .addGap(18, 18, 18)
+                .addComponent(lblValidacion, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         btnVolver.setText("Volver");
@@ -391,18 +411,17 @@ public class GestionarSecretarias extends javax.swing.JFrame {
             String correo = txtCorreo.getText();
             String contraseña = txtContraseña.getText();
             String telefono = txtTelefono.getText();
+            String estadoCivil = cbxEstados.getSelectedItem().toString();
             int edad = Integer.parseInt(txtEdad.getText());
             int añosExp = Integer.parseInt(txtAñosExp.getText());
-            String estadoCivil = cbxEstados.getSelectedItem().toString();
 
             //Creamos al doctor con sus respectivos datos
-            Secretaria secretaria = new Secretaria(nombre,documento,correo,contraseña,telefono,edad,añosExp,estadoCivil);
+            Persona newSecretaria = new Secretaria(nombre,documento,correo,contraseña,telefono,edad,añosExp,estadoCivil);
 
             //Verificamos se se añade el doctor
-            controlador.añadirSecretaria(secretaria);
+            controlador.añadirUsuario(newSecretaria);
             JOptionPane.showMessageDialog(null, "Secretaria con el documento: " + documento + " añadida");
             limpiarInputs();
-            llenarComboSecretarias();
         }catch(MayorDeEdadExcepcion | AlmacenadoExcepcion | TelefonoCortoExcepcion
                 | ContraseñaInseguraExcepcion | SinLaTerminacionCorrectaExcepcion
                 | CorreoInvalidoExcepcion | NoCuentaConExpExcepcion ex)
@@ -416,17 +435,10 @@ public class GestionarSecretarias extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        try{
-            if( cbxSecretarias.getSelectedIndex()==0 ){
-                JOptionPane.showMessageDialog(null, "No hay una secretaria seleccionada");
-                return;
-            }
-            Secretaria secretaria = (Secretaria) cbxSecretarias.getSelectedItem();
-
-            controlador.eliminarSecretaria(secretaria.getDocumento());
-            JOptionPane.showMessageDialog(null, "Secretaria con el documento: " + secretaria.getDocumento() + " eliminado");
+        try{           
+            controlador.eliminarUsuario(this.secretaria.getDocumento());
+            JOptionPane.showMessageDialog(null, "Secretaria con el documento: " + this.secretaria.getDocumento() + " eliminado");
             limpiarInputs();
-            llenarComboSecretarias();
             setEnabledInputs(false);
         }catch(NoEncontradoExcepcion ex){
             JOptionPane.showMessageDialog(null, ex.getMessage());
@@ -462,18 +474,17 @@ public class GestionarSecretarias extends javax.swing.JFrame {
             String correo = txtCorreo.getText();
             String contraseña = txtContraseña.getText();
             String telefono = txtTelefono.getText();
+            String estadoCivil = cbxEstados.getSelectedItem().toString();
             int edad = Integer.parseInt(txtEdad.getText());
             int añosExp = Integer.parseInt(txtAñosExp.getText());
-            String estadoCivil = cbxEstados.getSelectedItem().toString();
 
-            //Creamos al doctor con sus respectivos datos
-            Secretaria secretaria = new Secretaria(nombre,documento,correo,contraseña,telefono,edad,añosExp,estadoCivil);
+            //Creamos a la secretaria con sus respectivos datos
+            Persona newSecretaria = new Secretaria(nombre,documento,correo,contraseña,telefono,edad,añosExp,estadoCivil);
 
             //Verificamos si los datos del doctor fueron editados
-            controlador.editarSecretaria(secretaria);
+            controlador.editarUsuario(newSecretaria, this.secretaria);
             JOptionPane.showMessageDialog(null, "Secretaria con el documento: " + documento + " editada");
             limpiarInputs();
-            llenarComboSecretarias();
             setEnabledInputs(false);
         }catch(MayorDeEdadExcepcion | AlmacenadoExcepcion | TelefonoCortoExcepcion
                 | ContraseñaInseguraExcepcion | SinLaTerminacionCorrectaExcepcion
@@ -495,51 +506,8 @@ public class GestionarSecretarias extends javax.swing.JFrame {
             lblValidacion.setText(ex.getMessage());
         }
     }//GEN-LAST:event_txtEdadKeyTyped
+   
     
-    
-    /**
-     * Metodo para llenar el combobox de las secretarias
-     */
-    private void llenarComboSecretarias(){
-        cbxSecretarias.removeAllItems();
-        cbxSecretarias.addItem("Buscar una secretaria");
-        
-        for (Secretaria secretaria : controlador.getSecretarias()) {
-            cbxSecretarias.addItem(secretaria);
-        }       
-    }
-    
-    /**
-     * Metodo para que cada vez que se seleccione una secretaria los campos se llenen con su respeciva informacion
-     * @param evt 
-     */
-    private void cbxSecretariasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxSecretariasActionPerformed
-      
-        if( controlador.getSecretarias().isEmpty() ) return;
-
-        //Si el primer elemento esta seleccionado, no es válido
-        if( cbxSecretarias.getSelectedIndex()==0 ) {
-            limpiarInputs();
-            setEnabledInputs(false);
-            return;
-        }
-        Secretaria secretaria = (Secretaria) cbxSecretarias.getSelectedItem();
-        
-        //Se verifica que la cita no sea nula
-        if( secretaria != null ){
-            txtDocumento.setText(secretaria.getDocumento());
-            txtEdad.setText(String.valueOf(secretaria.getEdad()));
-            txtNombre2.setText(secretaria.getNombre());
-            txtContraseña.setText(secretaria.getContraseña());
-            txtCorreo.setText(secretaria.getCorreo());
-            txtTelefono.setText(secretaria.getTelefono());
-            cbxEstados.setSelectedItem(secretaria.getEstadoCivil());
-            txtAñosExp.setText( String.valueOf(secretaria.getAñosExp()) );
-            
-            setEnabledInputs(true);
-        }
-    }//GEN-LAST:event_cbxSecretariasActionPerformed
-
     /**
      * Metodo para que en el textField del año solo se puedan ingresar numeros
      * @param evt 
@@ -565,16 +533,61 @@ public class GestionarSecretarias extends javax.swing.JFrame {
             lblValidacion.setText(ex.getMessage());
         }
     }//GEN-LAST:event_txtTelefonoKeyTyped
+
+    /**
+     * Metodo para que en el textfield de la busqueda por documento unicamente se digiten numeros
+     * @param evt 
+     */
+    private void txtBuscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyTyped
+        try{
+            lblValidacion.setText("");
+            validacion.validarSoloNumeros(evt);
+        }catch( DatoDigitadoExcepcion ex ){
+            lblValidacion.setText(ex.getMessage());
+        }
+    }//GEN-LAST:event_txtBuscarKeyTyped
+
+    /**
+     * Metodo para buscar una secretaria por medio del documento
+     * @param evt 
+     */
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        try{
+            String documento = txtBuscar.getText();
+            this.secretaria = (Secretaria) controlador.buscarPersona(documento);
+
+            if( this.secretaria == null ) throw new NoEncontradoExcepcion();
+
+            lblValidacion.setText("");
+            txtDocumento.setText(this.secretaria.getDocumento() );
+            txtEdad.setText(String.valueOf(this.secretaria.getEdad()) );
+            txtNombre2.setText(this.secretaria.getNombre() );
+            txtContraseña.setText(this.secretaria.getContraseña());
+            txtCorreo.setText(this.secretaria.getCorreo() );
+            txtTelefono.setText(this.secretaria.getTelefono());
+            cbxEstados.setSelectedItem(this.secretaria.getEstadoCivil());
+            txtAñosExp.setText( String.valueOf(this.secretaria.getAñosExp())  );
+            setEnabledInputs(true);
+        }catch( NoEncontradoExcepcion ex ){
+            limpiarInputs();
+            setEnabledInputs(false);
+            lblValidacion.setText( ex.getMessage() );
+        }catch( ClassCastException ex){
+            limpiarInputs();
+            setEnabledInputs(false);
+            lblValidacion.setText( "EL documento ingresado no corresponde a una secretaria" );
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAñadir;
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnVolver;
     private javax.swing.JComboBox<String> cbxEstados;
-    private javax.swing.JComboBox cbxSecretarias;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -582,9 +595,11 @@ public class GestionarSecretarias extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblValidacion;
     private javax.swing.JTextField txtAñosExp;
+    private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextField txtContraseña;
     private javax.swing.JTextField txtCorreo;
     private javax.swing.JTextField txtDocumento;

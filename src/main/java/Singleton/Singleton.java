@@ -5,11 +5,8 @@
 package Singleton;
 
 import Modelo.Cita;
-import Modelo.Doctor;
 import Modelo.Multa;
-import Modelo.Paciente;
 import Modelo.Persona;
-import Modelo.Secretaria;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -26,36 +23,25 @@ public class Singleton{
     
     private static Singleton INSTANCIA = new Singleton();
     
-    private Persona[] admins;
-    private ArrayList<Doctor> doctores;
-    private ArrayList<Secretaria> secretarias;
-    private ArrayList<Paciente> pacientes;
+    private ArrayList<Persona> lista;
     private ArrayList<Cita> citas;
     private ArrayList<Multa> multas;
     
-    private String txtDoctores = "doctores.dat";
-    private String txtSecretarias = "secretarias.dat";
-    private String txtPacientes = "pacientes.dat";
-    private String txtCitas = "citas.dat";
-    private String txtMultas = "multas.dat";
     
     private Singleton() {
-        admins = new Persona[2];
-        doctores = leerDoctores();
-        secretarias = leerSecretarias();
-        pacientes = leerPacientes();
+        lista = leerLista();
         citas = leerCitas();
         multas = leerMultas();
     }
     
     /**
-     * Metodo para escribir los doctores 
+     * Metodo para escribir la lista de los usuarios registrados
      */
-    public void escribirDoctores(){
+    public void escribirLista(){
         try{
-            FileOutputStream archivo = new FileOutputStream(txtDoctores);
+            FileOutputStream archivo = new FileOutputStream("lista.dat");
             ObjectOutputStream escritor = new ObjectOutputStream(archivo);
-            escritor.writeObject(doctores);
+            escritor.writeObject(getLista());
         }catch(FileNotFoundException ex){
             ex.getStackTrace();
         }catch(IOException ex){
@@ -64,96 +50,30 @@ public class Singleton{
     }
 
     /**
-     * Metodo para leer los doctores
-     * @return ArrayList
+     * Metodo para leer los usuarios registrados
+     * @return 
      */
-    public ArrayList<Doctor> leerDoctores(){
+    public ArrayList<Persona> leerLista(){
     
         try{
-            FileInputStream archivo = new FileInputStream(txtDoctores);
+            FileInputStream archivo = new FileInputStream("lista.dat");
             ObjectInputStream lector = new ObjectInputStream(archivo);
-            return (ArrayList<Doctor>) lector.readObject();
+            return (ArrayList<Persona>) lector.readObject();
         }catch(IOException | ClassNotFoundException ex){
             ex.getStackTrace();
             return new ArrayList<>();
         }
         
     }
-    
-    /**
-     * Metodo para escribir las secretarias
-     */
-    public void escribirSecretarias(){
-        try{
-            FileOutputStream archivo = new FileOutputStream(txtSecretarias);
-            ObjectOutputStream escritor = new ObjectOutputStream(archivo);
-            escritor.writeObject(secretarias);
-        }catch(FileNotFoundException ex){
-            ex.getStackTrace();
-        }catch(IOException ex){
-            ex.getStackTrace();
-        }
-    }
-
-    /**
-     * Metodo para leer las secretarias
-     * @return ArrayList
-     */
-    public ArrayList<Secretaria> leerSecretarias(){
-    
-        try{
-            FileInputStream archivo = new FileInputStream(txtSecretarias);
-            ObjectInputStream lector = new ObjectInputStream(archivo);
-            return (ArrayList<Secretaria>) lector.readObject();
-        }catch(IOException | ClassNotFoundException ex){
-            ex.getStackTrace();
-            return new ArrayList<>();
-        }
-        
-    }
-    
-    
-    /**
-     * Metodo para escribir los pacientes
-     */
-    public void escribirPacientes(){
-        try{
-            FileOutputStream archivo = new FileOutputStream(txtPacientes);
-            ObjectOutputStream escritor = new ObjectOutputStream(archivo);
-            escritor.writeObject(pacientes);
-        }catch(FileNotFoundException ex){
-            ex.getStackTrace();
-        }catch(IOException ex){
-            ex.getStackTrace();
-        }
-    }
-
-    /**
-     * Metodo para leer los pacientes
-     * @return ArrayList
-     */
-    public ArrayList<Paciente> leerPacientes(){
-    
-        try{
-            FileInputStream archivo = new FileInputStream(txtPacientes);
-            ObjectInputStream lector = new ObjectInputStream(archivo);
-            return (ArrayList<Paciente>) lector.readObject();
-        }catch(IOException | ClassNotFoundException ex){
-            ex.getStackTrace();
-            return new ArrayList<>();
-        }
-        
-    }
-    
     
     /**
      * Metodo para escribir las citas
-     */
+    */
     public void escribirCitas(){
         try{
-            FileOutputStream archivo = new FileOutputStream(txtCitas);
+            FileOutputStream archivo = new FileOutputStream("citas.dat");
             ObjectOutputStream escritor = new ObjectOutputStream(archivo);
-            escritor.writeObject(citas);
+            escritor.writeObject(getCitas());
         }catch(FileNotFoundException ex){
             ex.getStackTrace();
         }catch(IOException ex){
@@ -168,7 +88,7 @@ public class Singleton{
     public ArrayList<Cita> leerCitas(){
     
         try{
-            FileInputStream archivo = new FileInputStream(txtCitas);
+            FileInputStream archivo = new FileInputStream("citas.dat");
             ObjectInputStream lector = new ObjectInputStream(archivo);
             return (ArrayList<Cita>) lector.readObject();
         }catch(IOException | ClassNotFoundException ex){
@@ -177,15 +97,15 @@ public class Singleton{
         }
         
     }
-    
+   
     /**
      * Metodo para escribir las multas
      */
     public void escribirMultas(){
         try{
-            FileOutputStream archivo = new FileOutputStream(txtMultas);
+            FileOutputStream archivo = new FileOutputStream("multas.dat");
             ObjectOutputStream escritor = new ObjectOutputStream(archivo);
-            escritor.writeObject(multas);
+            escritor.writeObject(getMultas());
         }catch(FileNotFoundException ex){
             ex.getStackTrace();
         }catch(IOException ex){
@@ -200,7 +120,7 @@ public class Singleton{
     public ArrayList<Multa> leerMultas(){
     
         try{
-            FileInputStream archivo = new FileInputStream(txtMultas);
+            FileInputStream archivo = new FileInputStream("multas.dat");
             ObjectInputStream lector = new ObjectInputStream(archivo);
             return (ArrayList<Multa>) lector.readObject();
         }catch(IOException | ClassNotFoundException ex){
@@ -219,34 +139,6 @@ public class Singleton{
     }
 
     /**
-     * @return the admins
-     */
-    public Persona[] getAdmins() {
-        return admins;
-    }
-
-    /**
-     * @return the doctores
-     */
-    public ArrayList<Doctor> getDoctores() {
-        return doctores;
-    }
-
-    /**
-     * @return the secretarias
-     */
-    public ArrayList<Secretaria> getSecretarias() {
-        return secretarias;
-    }
-
-    /**
-     * @return the pacientes
-     */
-    public ArrayList<Paciente> getPacientes() {
-        return pacientes;
-    }
-
-    /**
      * @return the citas
      */
     public ArrayList<Cita> getCitas() {
@@ -259,4 +151,12 @@ public class Singleton{
     public ArrayList<Multa> getMultas() {
         return multas;
     }
+
+    /**
+     * @return the lista
+     */
+    public ArrayList<Persona> getLista() {
+        return lista;
+    }
+
 }
